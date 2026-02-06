@@ -55,4 +55,5 @@ void Identification(unsigned char tab[], unsigned char recu[]){
 	else{
 		sprintf(texte,"Badge non reconnu");
 	}
+
 }
