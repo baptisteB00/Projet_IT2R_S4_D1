@@ -5,8 +5,6 @@
 #include "Board_GLCD.h"                 // Board Support:Graphic LCD
 #include "stdio.h"
 
-
-
 extern ARM_DRIVER_USART Driver_USART1;
 extern GLCD_FONT GLCD_Font_6x8;
 extern GLCD_FONT GLCD_Font_16x24;
@@ -26,7 +24,6 @@ void Init_UART(void){
 	Driver_USART1.Control(ARM_USART_CONTROL_RX,1); 
 }
 
-
 int main(){
 	unsigned char chaine_lue[10];
 	unsigned char badge[10] = {0,0,0,5,0,8,4,6,2,6};
@@ -38,7 +35,7 @@ int main(){
 	
 	while (1){
 		Driver_USART1.Receive(chaine_lue,10);
-		Identification(chaine_lue, badge);
+		Identification(badge, chaine_lue);
 	}	
 	return 0;
 }
@@ -55,4 +52,5 @@ void Identification(unsigned char tab[], unsigned char recu[]){
 	else{
 		sprintf(texte,"Badge non reconnu");
 	}
+	GLCD_DrawString(10,10,texte);
 }
