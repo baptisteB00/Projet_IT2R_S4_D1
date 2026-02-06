@@ -1,58 +1,81 @@
-#include "LPC17xx.h"                    // Device header
-#include "Driver_USART.h"               // CMSIS Driver:USART
-#include "RTE_Components.h"             // Component selection
-#include "GLCD_Config.h"                // Board Support:Graphic LCD
-#include "Board_GLCD.h"                 // Board Support:Graphic LCD
+#include "LPC17xx.h"
+#include "Driver_USART.h"
+#include "RTE_Components.h"
+#include "GLCD_Config.h"
+#include "Board_GLCD.h"
 #include "stdio.h"
 
+// Déclarations Externes
 extern ARM_DRIVER_USART Driver_USART1;
-extern GLCD_FONT GLCD_Font_6x8;
 extern GLCD_FONT GLCD_Font_16x24;
 
-void Identification(unsigned char badge[], unsigned char recu[]);
+// Variables partagées entre la fonction d'interruption interne au driver et le main
+// volatile est crucial -> badge_complet est modifié dans le Callback (=>nécessité de stockage dans la ram)
+volatile bool badge_complet = false; 
+uint8_t buffer_rfid[10]; 
 
-void Init_UART(void){ 
-	Driver_USART1.Initialize(NULL); 
-	Driver_USART1.PowerControl(ARM_POWER_FULL); 
-	Driver_USART1.Control( ARM_USART_MODE_ASYNCHRONOUS | 
-	ARM_USART_DATA_BITS_8 | 
-	ARM_USART_STOP_BITS_1 | 
-	ARM_USART_PARITY_NONE | 
-	ARM_USART_FLOW_CONTROL_NONE, 
-	115200); 
-	Driver_USART1.Control(ARM_USART_CONTROL_TX,1); 
-	Driver_USART1.Control(ARM_USART_CONTROL_RX,1); 
+// Prototypes
+void My_USART_Callback(int event);
+void Init_Systeme(void);
+void Identification(unsigned char badge_maitre[], uint8_t recu[]);
+
+// Fonction de callback (évite l'écriture d'une fonction d'interruption en utilisant une configurée pralablement dans le driver UART)
+void My_USART_Callback(int event) {
+    if (event & ARM_USART_EVENT_RECEIVE_COMPLETE) {
+        badge_complet = true; // Préviens qu'une trame prête à être lue
+    }
 }
 
+// Initialisation
+void Init_Systeme(void) {
+    // Initialisation de l'UART via le Driver CMSIS
+    Driver_USART1.Initialize(My_USART_Callback); // Liaison du Callback
+    Driver_USART1.PowerControl(ARM_POWER_FULL);
+    Driver_USART1.Control(ARM_USART_MODE_ASYNCHRONOUS |
+                          ARM_USART_DATA_BITS_8       |
+                          ARM_USART_STOP_BITS_1       |
+                          ARM_USART_PARITY_NONE, 115200);
+    Driver_USART1.Control(ARM_USART_CONTROL_RX, 1); // Activer la réception
 
-int main(){
-	unsigned char chaine_lue[10];
-	unsigned char badge[10] = {0,0,0,5,0,8,4,6,2,6};
-	
-	Init_UART();
-	GLCD_Initialize();
-	GLCD_ClearScreen();
-	GLCD_SetFont(&GLCD_Font_16x24);
-	
-	while (1){
-		Driver_USART1.Receive(chaine_lue, 10);
-		Identification(badge, chaine_lue);
-	}	
-	return 0;
+    GLCD_Initialize();
+    GLCD_ClearScreen();
+    GLCD_SetFont(&GLCD_Font_16x24);
+    GLCD_DrawString(0, 0, "En attente badge...");
 }
 
-void Identification(unsigned char tab[], unsigned char recu[]){
-	int i, b = 0;
-	uint8_t texte[24];
-	for(i=0;i<10;i++){
-		if (tab[i] == recu[i]) b++;
-	}
-	if (b == 10){
-		sprintf(texte,"Badge reconnu");
-	}
-	else{
-		sprintf(texte,"Badge non reconnu");
-	}
+int main(void) {
+    unsigned char badge_maitre[10] = {0,0,0,5,0,8,4,6,2,6};
+    
+    Init_Systeme();
 
+    while (1) {
+        if (badge_complet) {
+            // On traite le badge reçu
+            Identification(badge_maitre, buffer_rfid);
+            
+            badge_complet = false;
+            
+            Driver_USART1.Receive(buffer_rfid, 10);
+        }
+    }
 }
 
+void Identification(unsigned char tab[], uint8_t recu[]) {
+    int i, j, b = 0;
+    
+    for(i=0; i<10; i++) {
+        if (tab[i] == recu[i]) b++;
+    }
+
+    GLCD_ClearScreen();
+    if (b == 10) {
+        GLCD_DrawString(0, 50, "Badge reconnu !");
+    } else {
+        GLCD_DrawString(0, 50, "Acces refuse");
+    }
+    
+    // Pause visuelle avant de revenir à l'état d'attente
+    for(j=0; j<10000000; j++); 
+    GLCD_ClearScreen();
+    GLCD_DrawString(0, 0, "En attente badge...");
+}
