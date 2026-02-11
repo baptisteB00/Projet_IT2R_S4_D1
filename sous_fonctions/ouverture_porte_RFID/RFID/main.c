@@ -45,6 +45,7 @@ void Init_Systeme(void) {
 
 int main(void) {
     unsigned char badge_maitre[10] = {0,0,0,5,0,8,4,6,2,6};
+    unsigned char badge_maitre2[10] = {0,0,0,0,0,0,0,0,0,0};
     
     Init_Systeme();
 
@@ -79,3 +80,4 @@ void Identification(unsigned char tab[], uint8_t recu[]) {
     GLCD_ClearScreen();
     GLCD_DrawString(0, 0, "En attente badge...");
 }
+
