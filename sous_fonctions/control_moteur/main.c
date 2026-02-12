@@ -1,0 +1,66 @@
+#include "LPC17xx.h"                    // Device header
+
+
+/*................PIN....................
+P0.23 => moteur de motricite
+P2.25 => moteur de direction
+.......................................*/
+
+
+
+ void init_moteur_motricite(void);
+
+
+int main(void){
+
+init_moteur_motricite();
+
+
+}
+
+void init_moteur_motricite(void){
+
+	LPC_SC->PCONP |= 0x00000040; // Enable PWM1
+	LPC_PINCON->PINSEL7 |= (1<<19)|(1<<18);
+	LPC_PWM1->PR = 0; // Prescaler
+	LPC_PWM1->MR0 = 1250; // MR0+1=25000, comptage à 1kHz
+	LPC_PWM1->MCR |= 0x00000002; // RAZ on MR0
+	LPC_PWM1->LER |= 0x0000000F; // Autorise Modification PWM en cours de fonctionnement
+	LPC_PWM1->PCR |= 0x00000E00; // Autorise les sorties PWM1/2/3
+	LPC_PWM1->TCR |= 0x00000001; // Démarrage Timer
+
+	LPC_PWM1->MR2 = 0;
+	
+	
+	
+}
+
+enum sens {AVANT = 1 , ARRIERE = -1 , STOP = 0};
+
+void direction_moteur(enum sens direction ){
+
+	switch (direction){
+	
+		case AVANT :
+				LPC_GPIO0->FIOPIN2 |=(1<<3);
+				LPC_GPIO0->FIOPIN2 &=~(1<<0);
+			break;
+		
+		case ARRIERE:
+				LPC_GPIO0->FIOPIN2 &=~(1<<3);
+				LPC_GPIO0->FIOPIN2 |=(1<<0);
+			break;
+		case STOP:
+			LPC_GPIO0->FIOPIN2 &=~(1<<3);
+			LPC_GPIO0->FIOPIN2 &=~(1<<0);
+			break;
+			
+		
+		
+		default:
+			break;
+
+		}
+	
+}  
+
