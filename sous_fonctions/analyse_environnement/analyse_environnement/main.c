@@ -31,7 +31,7 @@ void Init_UART_Lidar(void)
 												ARM_USART_PARITY_NONE | 
 												ARM_USART_FLOW_CONTROL_NONE , 115200); 
 	
-	Driver_USART1.Control(ARM_USART_CONTROL_RX, 1);			// réception
+	Driver_USART1.Control(ARM_USART_CONTROL_RX, 1);			// reception
 	Driver_USART1.Control(ARM_USART_CONTROL_TX, 1);			// transmission
 }
 
