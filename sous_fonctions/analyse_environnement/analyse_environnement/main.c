@@ -69,7 +69,7 @@ void SCAN(void)
 	
 	
 	Driver_USART0.Send(cmd, 2);
-	while(Driver_USART0.GetRxCount() < 2);
+	while(Driver_USART0.GetTxCount() < 2);
 	
 	Driver_USART0.Receive(descriptor, 7); 				// On receptionne les paquets descriptors
 	while(Driver_USART0.GetRxCount() < 7);
