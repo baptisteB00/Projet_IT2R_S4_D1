@@ -848,7 +848,7 @@
 
 // <e> SSP1 (Synchronous Serial Port 1) [Driver_SPI1]
 // <i> Configuration settings for Driver_SPI1 in component ::Drivers:SPI
-#define RTE_SSP1                        1
+#define RTE_SSP1                        0
 
 //   <h> Pin Configuration
 //     <o> SSP1_SSEL <0=>Not used <1=>P0_6

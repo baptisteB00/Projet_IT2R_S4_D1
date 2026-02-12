@@ -27,17 +27,10 @@ Project File Date:  02/12/2026
 <h2>Output:</h2>
 *** Using Compiler 'V6.24', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Target_1'
-main.c(64): warning: variable 'angle_degree' set but not used [-Wunused-but-set-variable]
-   64 |         float angle_degree, distance_mm;
-      |               ^
-main.c(64): warning: variable 'distance_mm' set but not used [-Wunused-but-set-variable]
-   64 |         float angle_degree, distance_mm;
-      |                             ^
-2 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=12618 RO-data=794 RW-data=4 ZI-data=876  
-".\analyse_environnement_projet.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=12878 RO-data=718 RW-data=4 ZI-data=836  
+".\analyse_environnement_projet.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -46,58 +39,32 @@ Package Vendor: ARM
                 ARM::CMSIS@6.3.0
                 CMSIS (Common Microcontroller Software Interface Standard)
    * Component: CORE Version: 6.2.0
-   * Component: SPI Version: 2.3.0
    * Component: USART Version: 2.4.0
 
 Package Vendor: Keil
                 https://www.keil.com/pack/Keil.LPC1700_DFP.3.0.0.pack
                 Keil::LPC1700_DFP@3.0.0
                 NXP LPC1700 Series Device Support, Drivers and Examples for MCB1700 and LPC1788-32
-   * Component: Graphic LCD Version: 1.0.0
-   * Component: SSP Version: 2.10.0
    * Component: USART Version: 2.13.0
    * Component: GPDMA Version: 1.4.0
    * Component: GPIO Version: 1.1.0
    * Component: PIN Version: 1.0.0
    * Component: Startup Version: 1.0.0
 
-Package Vendor: Keil
-                https://www.keil.com/pack/Keil.MDK-Middleware.7.17.0.pack
-                Keil::MDK-Middleware@7.17.0
-                Middleware for Keil MDK-Professional and MDK-Plus
-   * Component: Graphic LCD Version: 1.0.0
-
 <h2>Collection of Component include folders:</h2>
   ./RTE/Device/LPC1768
   ./RTE/_Target_1
   C:/Keil_v5/ARM/PACK/ARM/CMSIS/6.3.0/CMSIS/Core/Include
   C:/Keil_v5/ARM/PACK/ARM/CMSIS/6.3.0/CMSIS/Driver/Include
-  C:/Keil_v5/ARM/PACK/Keil/LPC1700_DFP/3.0.0/Boards/Keil/MCB1700/Common
   C:/Keil_v5/ARM/PACK/Keil/LPC1700_DFP/3.0.0/Device/Include
   C:/Keil_v5/ARM/PACK/Keil/LPC1700_DFP/3.0.0/RTE_Driver
-  C:/Keil_v5/ARM/PACK/Keil/MDK-Middleware/7.17.0/Board
 
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE@6.2.0
 
-   * Component: Board Support:Graphic LCD(API)@1.0.0
-      Include file:  Board/Board_GLCD.h
-
-   * Component: CMSIS Driver:SPI(API)@2.3.0
-      Include file:  CMSIS/Driver/Include/Driver_SPI.h
-
    * Component: CMSIS Driver:USART(API)@2.4.0
       Include file:  CMSIS/Driver/Include/Driver_USART.h
-
-   * Component: Keil::Board Support&MCB1700:Graphic LCD@1.0.0
-      Include file:  Boards/Keil/MCB1700/Common/GLCD_Config.h
-      Source file:   Boards/Keil/MCB1700/Common/GLCD_Fonts.c
-      Include file:  Boards/Keil/MCB1700/Common/GLCD_Fonts.h
-      Source file:   Boards/Keil/MCB1700/Common/GLCD_MCB1700.c
-
-   * Component: Keil::CMSIS Driver:SPI:SSP@2.10.0
-      Source file:   RTE_Driver/SSP_LPC17xx.c
 
    * Component: Keil::CMSIS Driver:USART@2.13.0
       Source file:   RTE_Driver/UART_LPC17xx.c
