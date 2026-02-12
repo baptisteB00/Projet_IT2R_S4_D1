@@ -50,6 +50,7 @@ void direction_moteur(enum sens direction ){
 				LPC_GPIO0->FIOPIN2 &=~(1<<3);
 				LPC_GPIO0->FIOPIN2 |=(1<<0);
 			break;
+		default:
 		case STOP:
 			LPC_GPIO0->FIOPIN2 &=~(1<<3);
 			LPC_GPIO0->FIOPIN2 &=~(1<<0);
@@ -57,8 +58,8 @@ void direction_moteur(enum sens direction ){
 			
 		
 		
-		default:
-			break;
+		
+			
 
 		}
 	
