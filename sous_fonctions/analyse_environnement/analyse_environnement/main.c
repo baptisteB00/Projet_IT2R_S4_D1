@@ -1,5 +1,7 @@
 #include "LPC17xx.h"                    // Device header
 #include "Driver_USART.h"               // CMSIS Driver:USART
+#include "Board_GLCD.h"                 // Board Support:Graphic LCD
+#include "GLCD_Config.h"                // Board Support:Graphic LCD
 
 extern ARM_DRIVER_USART Driver_USART0;
 
@@ -8,18 +10,21 @@ extern ARM_DRIVER_USART Driver_USART0;
 void Init_UART_Lidar(void);
 void SCAN(void);
 
+
+
 int main()
 {
+	 Init_UART_Lidar();
+	
 	LPC_GPIO2->FIODIR0 |= 0x20; // Configuration de la broche P2.5 en sortie pour le moteur du Lidar
-	LPC_GPIO2->FIODIR0 &= 0xA3; // Configuration des LEDS P2.2, P2.3, P2.4 et P2.6 en entrée 
+	LPC_GPIO2->FIODIR0 |= 0x5C; // Configuration des LEDS P2.2, P2.3, P2.4 et P2.6 en sortie 
 	LPC_GPIO2->FIOPIN0 |= 0x20;	// Allume Moteur Lidar 
 	
-	SCAN();
-	while(1)
-	{
-		//LPC_GPIO2->FIOPIN0 &= 0xD0;	// Eteint Moteur Lidar 
+
 	
-	}
+	//LPC_GPIO2->FIOPIN0 |= 0x04; // allume
+	
+	SCAN();
 	
 	return 0; 
 }
@@ -38,6 +43,15 @@ void Init_UART_Lidar(void)
 	Driver_USART0.Control(ARM_USART_CONTROL_TX, 1);			// transmission
 }
 
+/*********************************************************
+Fonction : void SCAN(void)
+
+Request packet (2 octets): 0xA5, 0x20
+Response descriptor (7 octets): 0xA5, 0x5A, 0x05, 0x00, 0x00, 0x40, 0x81
+Data response length : 5 octets 
+Response mode : Multiple
+*********************************************************/
+
 void SCAN(void)
 {
 	char cmd[2];
@@ -52,11 +66,15 @@ void SCAN(void)
 	cmd[0] = 0xA5;
 	cmd[1] = 0x20;
 	
+	
+	
 	Driver_USART0.Send(cmd, 2);
 	while(Driver_USART0.GetRxCount() < 2);
 	
-	Driver_USART0.Receive(descriptor, 7); 				// On receptionne les paquets
+	Driver_USART0.Receive(descriptor, 7); 				// On receptionne les paquets descriptors
 	while(Driver_USART0.GetRxCount() < 7);
+	
+	LPC_GPIO2->FIOPIN0 |= 0x04; // allume
 	
 	while(1)
 	{
@@ -74,20 +92,17 @@ void SCAN(void)
 		angle_degree = angle_q6 / 64.0;
 		distance_mm = distance_q2 / 4.0;
 		
-		if( (angle_degree > 0) && (angle_degree < 90) && (distance_mm > 0) && (distance_mm > 300) )
-		{
-			LPC_GPIO2->FIOPIN0 |= 0x04;
-		}			
-		
-		else 
-		{
-			LPC_GPIO2->FIOPIN0 &= 0xFB;
-		}
-	
-			
-			
-				
-		
+//		if( (distance_mm > 0.0) && (distance_mm < 400.0) )
+//		{
+//			if( (angle_degree > 0.0) && (angle_degree < 90.0) )
+//				{
+//					LPC_GPIO2->FIOPIN0 |= 0x04; // allume
+//				}
+//			else 
+//				{
+//					LPC_GPIO2->FIOPIN0 &= 0xFB; // eteint		
+//				}				
+//		}
 	}
 }
 
