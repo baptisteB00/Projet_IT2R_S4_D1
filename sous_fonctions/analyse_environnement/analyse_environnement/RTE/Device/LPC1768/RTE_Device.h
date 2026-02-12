@@ -310,11 +310,11 @@
 // </e>
 
 // <e> UART0 (Universal asynchronous receiver transmitter)
-#define RTE_UART0                       0
+#define RTE_UART0                       1
 
 //   <o> UART0_TX Pin <0=>Not used <1=>P0_2
 //   <i> UART0 Serial Output pin
-#define RTE_UART0_TX_ID                 0
+#define RTE_UART0_TX_ID                 1
 #if    (RTE_UART0_TX_ID == 0)
 #define RTE_UART0_TX_PIN_EN             0
 #elif  (RTE_UART0_TX_ID == 1)
@@ -330,7 +330,7 @@
 
 //   <o> UART0_RX Pin <0=>Not used <1=>P0_3
 //   <i> UART0 Serial Input pin
-#define RTE_UART0_RX_ID                 0
+#define RTE_UART0_RX_ID                 1
 #if    (RTE_UART0_RX_ID == 0)
 #define RTE_UART0_RX_PIN_EN             0
 #elif  (RTE_UART0_RX_ID == 1)
@@ -359,7 +359,7 @@
 
 //     </e>
 // <e> UART1 (Universal asynchronous receiver transmitter)
-#define RTE_UART1                       1
+#define RTE_UART1                       0
 
 //   <o> U1_TX Pin <0=>Not used <1=>P0_15 <2=>P2_0
 //   <i> UART1 Serial Output pin
