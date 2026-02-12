@@ -14,8 +14,9 @@ int main()
 {
 	Init_UART_Lidar();
 	
-	LPC_GPIO2->FIODIR0 |= 0x20; // Configuration de la broche P2.5 en sortie pour le moteur du Lidar
+	LPC_GPIO2->FIODIR0 |= 0x20; // Configuration de la broche P2.5 en sortie pour le moteur du Lidar (à 100%)
 	LPC_GPIO2->FIODIR0 |= 0x5C; // Configuration des LEDS P2.2, P2.3, P2.4 et P2.6 en sortie 
+	LPC_GPIO1->FIODIR3 |= 0xB0; // Configuration des LEDS P1.28, P1.29 P1.31 en sortie
 	LPC_GPIO2->FIOPIN0 |= 0x20;	// Allume Moteur Lidar 
 	
 	
@@ -71,7 +72,7 @@ void SCAN(void)
 	Driver_USART0.Receive(descriptor, 7); 				// On receptionne les paquets descriptors
 	while(Driver_USART0.GetRxCount() < 7);
 	
-	//LPC_GPIO2->FIOPIN0 |= 0x04; // allume
+	LPC_GPIO2->FIOPIN0 |= 0x04; // allume
 	
 	while(1)
 	{
@@ -93,15 +94,58 @@ void SCAN(void)
 		angle_degree = angle_q6 / 64.0;
 		distance_mm = distance_q2 / 4.0;
 		
-		if( (distance_mm > 0.0) && (distance_mm < 700.0) )
+		
+		/* 0 - 90 */ 
+		if( (distance_mm > 0.0) && (distance_mm < 500.0) )
 		{
 			if( (angle_degree > 0.0) && (angle_degree < 90.0) )
 				{
-					LPC_GPIO2->FIOPIN0 |= 0x04; // allume
+					LPC_GPIO2->FIOPIN0 |= 0x04; // allume P2.2
 				}
 			else 
 				{
 					LPC_GPIO2->FIOPIN0 &= 0xFB; // eteint		
+				}				
+		}
+		
+
+		/* 90 - 180 */ 
+		if( (distance_mm > 0.0) && (distance_mm < 500.0) )
+		{
+			if( (angle_degree > 90.0) && (angle_degree < 180.0) )
+				{
+					LPC_GPIO1->FIOPIN3 |= 0x80; // allume P1.31
+				}
+			else 
+				{
+					LPC_GPIO1->FIOPIN3 &= 0x7F; // eteint		
+				}				
+		}
+		
+			
+		/* 180 - 270 */ 
+		if( (distance_mm > 0.0) && (distance_mm < 500.0) )
+		{
+			if( (angle_degree > 180.0) && (angle_degree < 270.0) )
+				{
+					LPC_GPIO1->FIOPIN3 |= 0x20; // allume P1.29
+				}
+			else 
+				{
+					LPC_GPIO1->FIOPIN3 &= 0xDF; // eteint		
+				}				
+		}
+		
+		/* 270 - 360 */ 
+		if( (distance_mm > 0.0) && (distance_mm < 500.0) )
+		{
+			if( (angle_degree > 270.0) && (angle_degree < 360.0) )
+				{
+					LPC_GPIO1->FIOPIN3 |= 0x10; // allume P1.28
+				}
+			else 
+				{
+					LPC_GPIO1->FIOPIN3 &= 0xEF; // eteint		
 				}				
 		}
 	
