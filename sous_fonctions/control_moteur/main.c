@@ -21,7 +21,7 @@ init_moteur_motricite();
 void init_moteur_motricite(void){
 
 	LPC_SC->PCONP |= 0x00000040; // Enable PWM1
-	LPC_PINCON->PINSEL7 |= (1<<19)|(1<<18);
+	LPC_PINCON->PINSEL7 |= (0x11<<20)|(0x11<<18); //met les Pin P3.25 et P3.26 sur PWM1.2 et PWM 1.3
 	LPC_PWM1->PR = 0; // Prescaler
 	LPC_PWM1->MR0 = 1250; // MR0+1=25000, comptage à 1kHz
 	LPC_PWM1->MCR |= 0x00000002; // RAZ on MR0
@@ -30,9 +30,7 @@ void init_moteur_motricite(void){
 	LPC_PWM1->TCR |= 0x00000001; // Démarrage Timer
 
 	LPC_PWM1->MR2 = 0;
-	
-	
-	
+	LPC_PWM1->MR3 = 50;
 }
 
 
@@ -59,6 +57,16 @@ void direction_moteur(enum sens direction ){
 	
 }  
 
+//valeur entre 0 et 100
+void vitesse(uint8_t val_vitesse){
+
+	if(val_vitesse<=100 && val_vitesse>=0){
+	
+	LPC_PWM1->MR2 = val_vitesse * 6; //*6 car valeur entre 0;100 => 0;600
+		
+	}
+
+}
 
 void direction_roue(int8_t angle){
 	uint8_t valeur_PWM;
@@ -71,5 +79,3 @@ void direction_roue(int8_t angle){
 		
 	}
 }
-
-
