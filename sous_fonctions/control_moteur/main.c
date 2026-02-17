@@ -7,15 +7,15 @@ P2.25 => moteur de direction
 .......................................*/
 
 
+enum sens {AVANT = 1 , ARRIERE = -1 , STOP = 0};
 
- void init_moteur_motricite(void);
+void init_moteur_motricite(void);
 
 
 int main(void){
 
 init_moteur_motricite();
-
-
+	
 }
 
 void init_moteur_motricite(void){
@@ -35,7 +35,7 @@ void init_moteur_motricite(void){
 	
 }
 
-enum sens {AVANT = 1 , ARRIERE = -1 , STOP = 0};
+
 
 void direction_moteur(enum sens direction ){
 
@@ -55,13 +55,21 @@ void direction_moteur(enum sens direction ){
 			LPC_GPIO0->FIOPIN2 &=~(1<<3);
 			LPC_GPIO0->FIOPIN2 &=~(1<<0);
 			break;
-			
-		
-		
-		
-			
-
 		}
 	
 }  
+
+
+void direction_roue(int8_t angle){
+	uint8_t valeur_PWM;
+	
+	if ( angle < 100 && angle > -100){
+	
+		valeur_PWM = (angle+ 100)/2.0;
+		
+		LPC_PWM1->MR2 = (char) valeur_PWM;
+		
+	}
+}
+
 
