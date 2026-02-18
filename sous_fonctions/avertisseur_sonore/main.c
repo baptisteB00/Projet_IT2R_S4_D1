@@ -28,7 +28,7 @@ void sendDFCommand(uint8_t cmd, uint8_t para1, uint8_t para2) {
 }
 
 void delay_ms(uint32_t ms) {
-    // Boucle de délai simplifiée (à ajuster selon la fréquence de votre CPU).
+    // Boucle de délai simplifiée (à ajuster selon la fréquence de votre CPU)
     for (volatile uint32_t i = 0; i < ms * 12000; i++);
 }
 
