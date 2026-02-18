@@ -3,25 +3,28 @@
 
 extern ARM_DRIVER_USART Driver_USART0;
 
+#define LED_P1_28 	0
+#define LED_P1_29 	1
+#define LED_P1_31 	2
+#define LED_P2_2 		3
+#define LED_P2_3 		4
+#define LED_P2_4 		5
+#define LED_P2_6 		6
+
 /*-------------- Prototypes des fonctions --------------*/
 
 void Init_UART_Lidar(void);
 void SCAN(void);
-
-
+void Allumer_LED(char Num_LED);
+void Eteindre_LED(char Num_LED);
 
 int main()
 {
-	//short i;
 	Init_UART_Lidar();
 	
 	LPC_GPIO2->FIODIR0 |= 0x20; // Configuration de la broche P2.5 en sortie pour le moteur du Lidar (à 100%)
 	LPC_GPIO2->FIODIR0 |= 0x5C; // Configuration des LEDS P2.2, P2.3, P2.4 et P2.6 en sortie 
 	LPC_GPIO1->FIODIR3 |= 0xB0; // Configuration des LEDS P1.28, P1.29 P1.31 en sortie
-	//LPC_GPIO2->FIOPIN0 |= 0x20;	// Allume Moteur Lidar 
-	
-	//for(i=0; i<100000; i++); // Pour laisser le temps au lidar d'activer les moteurs (car le scan fonctionne pas si c'est pas stable -> Protocole avec les schémas) 
-	//LPC_GPIO2->FIOPIN0 |= 0x04; // allume
 	
 	SCAN();
 	
@@ -59,37 +62,35 @@ void SCAN(void)
 	char LSB_angle, MSB_angle, LSB_distance, MSB_distance;
 	char flag, octet_0;
 	char ang_0_90 = 0, ang_90_180 = 0, ang_180_270 = 0, ang_270_360 = 0;
+	
 	unsigned short angle_q6, distance_q2; 
-	volatile int d;
+	
+	int i;
+	
 	float angle_degree, distance_mm;
 	
 	cmd[0] = 0xA5;
 	cmd[1] = 0x20;
 	
-	LPC_GPIO2->FIOPIN0 |= 0x20;	// Allume Moteur Lidar 
+	LPC_GPIO2->FIOPIN0 |= 0x20;										// Allume le moteur Lidar
 	
-	for(d = 0; d < 2000000; d++);
+	for(i = 0; i < 2000000; i++); 								// Delais pour laisser au moteur de tourner 
 	
-	Driver_USART0.Send(cmd, 2);
+	Driver_USART0.Send(cmd, 2);										// Envoie des commandes CMD pour activer le SCAN
 	while(Driver_USART0.GetTxCount() < 2);
 	
-	Driver_USART0.Receive(descriptor, 7); 				// On receptionne les paquets descriptors
+	Driver_USART0.Receive(descriptor, 7); 				// On receptionne les paquets DESCRIPTOR
 	while(Driver_USART0.GetRxCount() < 7);
-	
-	LPC_GPIO2->FIOPIN0 |= 0x04; // allume
 	
 	while(1)
 	{
-		LPC_GPIO2->FIOPIN0 |= 0x08; // allume
+		Driver_USART0.Receive(reception, 5); 				// On receptionne les paquets RECEPTION
+		while(Driver_USART0.GetRxCount() < 5); 
 		
 		
+		/* Reception des octets du SCAN */ 
 		
-		
-		Driver_USART0.Receive(reception, 5); 		// On receptionne les paquets
-		while(Driver_USART0.GetRxCount() < 5); 	// Boucle while pour mettre un délais
-		
-		
-	  octet_0 = reception[0];	// Pour mettre le bit de flag pour connaitre chaque tour 			
+	  octet_0 = reception[0];				
 		LSB_angle = reception[1];
 		MSB_angle = reception[2];
 		LSB_distance = reception[3];
@@ -105,11 +106,16 @@ void SCAN(void)
 		
 		if(flag == 1) // 1 tour effectué
 		{
-		if(ang_0_90) LPC_GPIO2->FIOPIN0 |= 0x04; else LPC_GPIO2->FIOPIN0 &= ~0x04;// allume P2.2 // Led allumé; else  Led éteinte // entre chaque tour on laisse allumer ou eteindre (très vite donc pour nous pas de clignotement)
-		if(ang_90_180) LPC_GPIO1->FIOPIN3 |= 0x80; else LPC_GPIO1->FIOPIN3 &= ~0x80; // allume P1.31 // Led allumé; else  Led éteinte
-		if(ang_180_270) LPC_GPIO1->FIOPIN3 |= 0x20; else LPC_GPIO1->FIOPIN3 &= ~0x20;// allume P1.29// Led allumé; else  Led éteinte
-		if(ang_270_360) LPC_GPIO1->FIOPIN3 |= 0x10; else LPC_GPIO1->FIOPIN3 &= ~0x10;// allume P1.28 // Led allumé; else  Led éteinte
+//		if(ang_0_90) LPC_GPIO2->FIOPIN0 |= 0x04; else LPC_GPIO2->FIOPIN0 &= ~0x04;// allume P2.2 // Led allumé; else  Led éteinte // entre chaque tour on laisse allumer ou eteindre (très vite donc pour nous pas de clignotement)
+//		if(ang_90_180) LPC_GPIO1->FIOPIN3 |= 0x80; else LPC_GPIO1->FIOPIN3 &= ~0x80; // allume P1.31 // Led allumé; else  Led éteinte
+//		if(ang_180_270) LPC_GPIO1->FIOPIN3 |= 0x20; else LPC_GPIO1->FIOPIN3 &= ~0x20;// allume P1.29// Led allumé; else  Led éteinte
+//		if(ang_270_360) LPC_GPIO1->FIOPIN3 |= 0x10; else LPC_GPIO1->FIOPIN3 &= ~0x10;// allume P1.28 // Led allumé; else  Led éteinte
 
+		if(ang_0_90) 		Allumer_LED(LED_P2_2); else Eteindre_LED(LED_P2_2);
+		if(ang_90_180) 	Allumer_LED(LED_P1_31); else Eteindre_LED(LED_P1_31);
+		if(ang_180_270) Allumer_LED(LED_P1_29); else Eteindre_LED(LED_P1_29);
+		if(ang_270_360) Allumer_LED(LED_P1_28); else Eteindre_LED(LED_P1_28);
+			
 		ang_0_90 = 0; // on reset tout à 0 a chaque tour
 		ang_90_180 = 0;
 		ang_180_270 =0;
@@ -123,70 +129,35 @@ void SCAN(void)
 		if(angle_degree > 180.0 && angle_degree < 270.0) ang_180_270 = 1;
 		if(angle_degree > 270.0 && angle_degree < 360.0) ang_270_360 = 1;
 		}
-		
-
-
-
-//		
-//		/* 0 - 90 */ 
-//		if( (distance_mm > 0.0) && (distance_mm < 500.0) )
-//		{
-//			if( (angle_degree > 0.0) && (angle_degree < 90.0) )
-//				{
-//					LPC_GPIO2->FIOPIN0 |= 0x04; // allume P2.2
-//				}
-//			else 
-//				{
-//					LPC_GPIO2->FIOPIN0 &= 0xFB; // eteint		
-//				}				
-//		}
-//		
-
-//		/* 90 - 180 */ 
-//		if( (distance_mm > 0.0) && (distance_mm < 500.0) )
-//		{
-//			if( (angle_degree > 90.0) && (angle_degree < 180.0) )
-//				{
-//					LPC_GPIO1->FIOPIN3 |= 0x80; // allume P1.31
-//				}
-//			else 
-//				{
-//					LPC_GPIO1->FIOPIN3 &= 0x7F; // eteint		
-//				}				
-//		}
-//		
-//			
-//		/* 180 - 270 */ 
-//		if( (distance_mm > 0.0) && (distance_mm < 500.0) )
-//		{
-//			if( (angle_degree > 180.0) && (angle_degree < 270.0) )
-//				{
-//					LPC_GPIO1->FIOPIN3 |= 0x20; // allume P1.29
-//				}
-//			else 
-//				{
-//					LPC_GPIO1->FIOPIN3 &= 0xDF; // eteint		
-//				}				
-//		}
-//		
-//		/* 270 - 360 */ 
-//		if( (distance_mm > 0.0) && (distance_mm < 500.0) )
-//		{
-//			if( (angle_degree > 270.0) && (angle_degree < 360.0) )
-//				{
-//					LPC_GPIO1->FIOPIN3 |= 0x10; // allume P1.28
-//				}
-//			else 
-//				{
-//					LPC_GPIO1->FIOPIN3 &= 0xEF; // eteint		
-//				}				
-//		}
-//	
-
-
-		
 	
-		
 	}
 }
+
+void Allumer_LED(char Num_LED)
+	{
+		switch (Num_LED)
+			{
+				case 0: LPC_GPIO1->FIOPIN3 |= (1<<4); 	break;		// LED P1.28
+				case 1: LPC_GPIO1->FIOPIN3 |= (1<<5); 	break;		// LED P1.29
+				case 2: LPC_GPIO1->FIOPIN3 |= (1<<7); 	break;		// LED P1.31
+				case 3: LPC_GPIO2->FIOPIN0 |= (1<<2); 	break;		// LED P2.2
+				case 4: LPC_GPIO2->FIOPIN0 |= (1<<3); 	break;		// LED P2.3
+				case 5: LPC_GPIO2->FIOPIN0 |= (1<<4); 	break;		// LED P2.4
+				case 6: LPC_GPIO2->FIOPIN0 |= (1<<6); 	break;		// LED P2.6
+			}
+	}
+
+void Eteindre_LED(char Num_LED)
+	{
+		switch (Num_LED)
+			{
+				case 0: LPC_GPIO1->FIOPIN3 &= ~(1<<4); 	break;		// LED P1.28
+				case 1: LPC_GPIO1->FIOPIN3 &= ~(1<<5); 	break;		// LED P1.29
+				case 2: LPC_GPIO1->FIOPIN3 &= ~(1<<7); 	break;		// LED P1.31
+				case 3: LPC_GPIO2->FIOPIN0 &= ~(1<<2); 	break;		// LED P2.2
+				case 4: LPC_GPIO2->FIOPIN0 &= ~(1<<3); 	break;		// LED P2.3
+				case 5: LPC_GPIO2->FIOPIN0 &= ~(1<<4); 	break;		// LED P2.4
+				case 6: LPC_GPIO2->FIOPIN0 &= ~(1<<6); 	break;		// LED P2.6
+			}
+	}
 
