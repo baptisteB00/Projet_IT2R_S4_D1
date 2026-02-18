@@ -1,78 +1,67 @@
-#include "LPC17xx.h"                    // Device header
-
+#include "LPC17xx.h"
 #include "Driver_USART.h"
-extern ARM_DRIVER_USART Driver_USART1; // "déclaration" structure UART1
-void Init_UART(void)
-{
 
-Driver_USART1.Initialize(NULL); // début initialisation
-Driver_USART1.PowerControl(ARM_POWER_FULL); // alimentation périphérique
-Driver_USART1.Control( ARM_USART_MODE_ASYNCHRONOUS |
+extern ARM_DRIVER_USART Driver_USART1;
 
-ARM_USART_DATA_BITS_8 |
-ARM_USART_STOP_BITS_1 |
-ARM_USART_PARITY_NONE |
-ARM_USART_FLOW_CONTROL_NONE ,
-9600);
+// Fonction pour envoyer une trame de commande au DFPlayer
+void sendDFCommand(uint8_t cmd, uint8_t para1, uint8_t para2) {
+    uint8_t packet[10];
+    uint16_t checksum;
 
-Driver_USART1.Control(ARM_USART_CONTROL_TX,1); // validation émission
-Driver_USART1.Control(ARM_USART_CONTROL_RX,1); // validation réception
+    packet[0] = 0x7E;          // Start byte [cite: 474]
+    packet[1] = 0xFF;          // Version [cite: 474]
+    packet[2] = 0x06;          // Data length [cite: 474]
+    packet[3] = cmd;           // Command ID [cite: 474]
+    packet[4] = 0x00;          // Feedback (0x00 = No, 0x01 = Yes) 
+    packet[5] = para1;         // Parameter high byte 
+    packet[6] = para2;         // Parameter low byte 
+    
+    // Calcul du Checksum : 0xFFFF - (VER + Len + CMD + Feedback + Para1 + Para2) + 1
+    checksum = 0 - (packet[1] + packet[2] + packet[3] + packet[4] + packet[5] + packet[6]);
+    
+    packet[7] = (uint8_t)(checksum >> 8); // Checksum high byte [cite: 519]
+    packet[8] = (uint8_t)(checksum & 0xFF); // Checksum low byte [cite: 519]
+    packet[9] = 0xEF;          // End byte [cite: 474]
+
+    Driver_USART1.Send(packet, 10);
+    while (Driver_USART1.GetStatus().tx_busy);
 }
 
-int main (void)
-{
-	int i;
-	char reset[10];
-	char cmd[10];
-	uint8_t tab[50];
-	Init_UART();
-	
-	reset[0]=0x7E;
-	reset[1]=0xFF;
-	reset[2]=0x06;
-	reset[3]=0x0C;
-	reset[4]=0x00;
-	reset[5]=0x00;
-	reset[6]=0x00;
-	reset[7]=0xFE;
-	reset[8]=0xF7;
-	reset[9]=0xEF;
-	
-	cmd[0]=0x7E;
-	cmd[1]=0xFF;
-	cmd[2]=0x06;
-	cmd[3]=0x03;
-	cmd[4]=0x00;
-	cmd[5]=0x00;
-	cmd[6]=0x01;
-	cmd[7]=0xFE;
-	cmd[8]=0xF6;
-	cmd[9]=0xEF;
-	uint8_t selectTF[10] = {0x7E,0xFF,0x06,0x09,0x00,0x00,0x02,0xFE,0xF0,0xEF};
-	for(i=0;i<8000000;i++);
-	// RESET
-//	Driver_USART1.Send(reset,10);
-//	while (Driver_USART1.GetStatus().tx_busy);
-	
-	for(i=0;i<800000;i++);
-	// SD CARD
-	Driver_USART1.Send(selectTF,10);
-	while (Driver_USART1.GetStatus().tx_busy);
-	for(i=0;i<800000;i++);
-	// play
-	Driver_USART1.Send(cmd,10);
-	while (Driver_USART1.GetStatus().tx_busy);
-		for(i=0;i<800000;i++);
-	
-
+void delay_ms(uint32_t ms) {
+    // Boucle de délai simplifiée (à ajuster selon la fréquence de votre CPU).
+    for (volatile uint32_t i = 0; i < ms * 12000; i++);
 }
 
+void Init_UART(void) {
+    Driver_USART1.Initialize(NULL);
+    Driver_USART1.PowerControl(ARM_POWER_FULL);
+    Driver_USART1.Control(ARM_USART_MODE_ASYNCHRONOUS |
+                          ARM_USART_DATA_BITS_8 |
+                          ARM_USART_STOP_BITS_1 |
+                          ARM_USART_PARITY_NONE |
+                          ARM_USART_FLOW_CONTROL_NONE, 9600); // 9600 bps par défaut 
+    Driver_USART1.Control(ARM_USART_CONTROL_TX, 1);
+    Driver_USART1.Control(ARM_USART_CONTROL_RX, 1);
+}
 
+int main(void) {
+		Initialise_GPIO ();
+    Init_UART();
+	
+    delay_ms(1000); // Attendre la stabilisation du module au démarrage [cite: 484]
 
-
-
-
-
-
-
-
+    // 1. Spécifier la source de lecture : Carte TF (0x09, param: 0x02) [cite: 529]
+    sendDFCommand(0x09, 0x00, 0x02);
+    delay_ms(200); // Délai nécessaire après sélection de la source [cite: 529]
+		Allumer_1LED(1);
+    // 2. Régler le volume à 15 (0x06, param: 0x0F) [cite: 525]
+    sendDFCommand(0x06, 0x00, 0x1E);
+    delay_ms(100);
+		Allumer_1LED(2);
+    // 3. Jouer le premier morceau (0x03, param: 0x0001) [cite: 519]
+    sendDFCommand(0x08, 0x00, 0x04);
+		Allumer_1LED(3);
+    while (1) {
+        // Le programme boucle ici pendant que le son joue
+    }
+}
