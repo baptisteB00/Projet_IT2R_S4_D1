@@ -15,16 +15,18 @@ extern ARM_DRIVER_USART Driver_USART0;
 
 void Init_UART_Lidar(void);
 void SCAN(void);
+void Secteur_angle_4_parts(char dist_max);
+void Secteur_angle_8_parts(char dist_max);
+void Init_LED(void);
 void Allumer_LED(char Num_LED);
 void Eteindre_LED(char Num_LED);
 
 int main()
 {
 	Init_UART_Lidar();
+	Init_LED();
 	
 	LPC_GPIO2->FIODIR0 |= 0x20; // Configuration de la broche P2.5 en sortie pour le moteur du Lidar (à 100%)
-	LPC_GPIO2->FIODIR0 |= 0x5C; // Configuration des LEDS P2.2, P2.3, P2.4 et P2.6 en sortie 
-	LPC_GPIO1->FIODIR3 |= 0xB0; // Configuration des LEDS P1.28, P1.29 P1.31 en sortie
 	
 	SCAN();
 	
@@ -87,7 +89,6 @@ void SCAN(void)
 		Driver_USART0.Receive(reception, 5); 				// On receptionne les paquets RECEPTION
 		while(Driver_USART0.GetRxCount() < 5); 
 		
-		
 		/* Reception des octets du SCAN */ 
 		
 	  octet_0 = reception[0];				
@@ -106,10 +107,6 @@ void SCAN(void)
 		
 		if(flag == 1) // 1 tour effectué
 		{
-//		if(ang_0_90) LPC_GPIO2->FIOPIN0 |= 0x04; else LPC_GPIO2->FIOPIN0 &= ~0x04;// allume P2.2 // Led allumé; else  Led éteinte // entre chaque tour on laisse allumer ou eteindre (très vite donc pour nous pas de clignotement)
-//		if(ang_90_180) LPC_GPIO1->FIOPIN3 |= 0x80; else LPC_GPIO1->FIOPIN3 &= ~0x80; // allume P1.31 // Led allumé; else  Led éteinte
-//		if(ang_180_270) LPC_GPIO1->FIOPIN3 |= 0x20; else LPC_GPIO1->FIOPIN3 &= ~0x20;// allume P1.29// Led allumé; else  Led éteinte
-//		if(ang_270_360) LPC_GPIO1->FIOPIN3 |= 0x10; else LPC_GPIO1->FIOPIN3 &= ~0x10;// allume P1.28 // Led allumé; else  Led éteinte
 
 		if(ang_0_90) 		Allumer_LED(LED_P2_2); else Eteindre_LED(LED_P2_2);
 		if(ang_90_180) 	Allumer_LED(LED_P1_31); else Eteindre_LED(LED_P1_31);
@@ -132,6 +129,23 @@ void SCAN(void)
 	
 	}
 }
+/*********************************************************
+Fonction : void Init_LED(void)
+
+Configuration des LEDS de la carte
+*********************************************************/
+
+void Init_LED(void)
+	{
+		LPC_GPIO2->FIODIR0 |= 0x5C; // Configuration des LEDS P2.2, P2.3, P2.4 et P2.6 en sortie 
+		LPC_GPIO1->FIODIR3 |= 0xB0; // Configuration des LEDS P1.28, P1.29 P1.31 en sortie
+	}
+
+/*********************************************************
+Fonction : void Allumer_LED(char Num_LED)
+
+Allume la LED choisi en paramètre -> Utiliser les constantes définit au début du code ou numéro des cases..
+*********************************************************/
 
 void Allumer_LED(char Num_LED)
 	{
@@ -147,6 +161,12 @@ void Allumer_LED(char Num_LED)
 			}
 	}
 
+/*********************************************************
+Fonction : void Eteindre(char Num_LED)
+
+Eteint la LED choisi en paramètre -> Utiliser les constantes définit au début du code ou numéro des cases..
+*********************************************************/
+	
 void Eteindre_LED(char Num_LED)
 	{
 		switch (Num_LED)
