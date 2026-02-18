@@ -68,7 +68,7 @@ unsigned short get_distance(uint8_t capt_addr) {
     
     return (uint16_t)(high << 8 | low); // Reconstruction 16-bits 
 }
-
+//kljbgn, ;; GIT GIT
 
 int main(void)
 {
