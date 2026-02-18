@@ -2,10 +2,10 @@
 ".\main.o"
 ".\uart_lpc17xx.o"
 ".\gpdma_lpc17xx.o"
+".\gpio_lpc17xx.o"
 ".\pin_lpc17xx.o"
 ".\startup_lpc17xx.o"
 ".\system_lpc17xx.o"
-".\gpio_lpc17xx.o"
 --strict --scatter ".\analyse_environnement_projet.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
