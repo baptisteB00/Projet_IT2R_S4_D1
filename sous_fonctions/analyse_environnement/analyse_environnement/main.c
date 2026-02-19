@@ -1,7 +1,21 @@
+/* --------------------------------------------------------------------------
+ * Projet BUT2 Semestre 4 : L'embarqué pour véhicule intelligent et communicant 
+ * Auteurs : Groupe IT2R1
+ * 
+ * Objectif de ce code : Analyse environnement à l'aide d'un lidar
+ * 
+ * Utilisation d'un Lidar A2M6 -> Voir protocole/datasheet sur le site SLAMTEC (dans support)
+ * Programmé sur carte KEIL
+ * -------------------------------------------------------------------------- */
+
 #include "LPC17xx.h"                    // Device header
 #include "Driver_USART.h"               // CMSIS Driver:USART
+#include "Board_GLCD.h"                 // Board Support:Graphic LCD
+#include "GLCD_Config.h"                // Board Support:Graphic LCD
 
 extern ARM_DRIVER_USART Driver_USART0;
+extern GLCD_FONT GLCD_Font_16x24;				
+extern GLCD_FONT GLCD_Font_6x8; 
 
 #define LED_P1_28 	0
 #define LED_P1_29 	1
@@ -15,14 +29,28 @@ extern ARM_DRIVER_USART Driver_USART0;
 
 void Init_UART_Lidar(void);
 void SCAN(void);
-void Secteur_angle_4_parts(char dist_max);
+void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, char flag);
 void Secteur_angle_8_parts(char dist_max);
 void Init_LED(void);
 void Allumer_LED(char Num_LED);
 void Eteindre_LED(char Num_LED);
 
+/*-------------- Variables globales --------------*/
+
+char detect_obst_0_90 = 0, detect_obst_90_180 = 0, detect_obst_180_270 = 0, detect_obst_270_360 = 0; 			// 360 / 4
+
+char detect_obst_0_45 = 0, detect_obst_45_90 = 0, detect_obst_90_135 = 0, detect_obst_135_180 = 0, 				// 360 / 8
+		 detect_obst_180_225 = 0, detect_obst_225_270 = 0, detect_obst_270_315 = 0, detect_obst_315_360 = 0;
+
+/*-------------- Programme principal --------------*/
+
 int main()
 {
+	GLCD_Initialize();
+	GLCD_SetFont(&GLCD_Font_6x8); 											// & car pointeurs => adresse
+	GLCD_SetBackgroundColor(GLCD_COLOR_BLUE);
+	GLCD_SetForegroundColor(GLCD_COLOR_YELLOW); 
+	GLCD_ClearScreen();
 	Init_UART_Lidar();
 	Init_LED();
 	
@@ -32,6 +60,12 @@ int main()
 	
 	return 0; 
 }
+
+/* --------------------------------------------------------
+ * Fonction : void Init_UART_Lidar(void)
+ *
+ * Initialisation de l'UART0 pour le lidar (P0.2 (RX)/ P0.3 (TX))
+ *-------------------------------------------------------*/
 
 void Init_UART_Lidar(void)
 {
@@ -47,14 +81,14 @@ void Init_UART_Lidar(void)
 	Driver_USART0.Control(ARM_USART_CONTROL_TX, 1);			// transmission
 }
 
-/*********************************************************
-Fonction : void SCAN(void)
-
-Request packet (2 octets): 0xA5, 0x20
-Response descriptor (7 octets): 0xA5, 0x5A, 0x05, 0x00, 0x00, 0x40, 0x81
-Data response length : 5 octets 
-Response mode : Multiple
-*********************************************************/
+/* --------------------------------------------------------
+ * Fonction : void SCAN(void)
+ *
+ * Request packet (2 octets): 0xA5, 0x20
+ * Response descriptor (7 octets): 0xA5, 0x5A, 0x05, 0x00, 0x00, 0x40, 0x81
+ * Data response length : 5 octets 
+ * Response mode : Multiple
+ *-------------------------------------------------------*/
 
 void SCAN(void)
 {
@@ -63,7 +97,6 @@ void SCAN(void)
 	char reception[5];
 	char LSB_angle, MSB_angle, LSB_distance, MSB_distance;
 	char flag, octet_0;
-	char ang_0_90 = 0, ang_90_180 = 0, ang_180_270 = 0, ang_270_360 = 0;
 	
 	unsigned short angle_q6, distance_q2; 
 	
@@ -93,7 +126,7 @@ void SCAN(void)
 		
 	  octet_0 = reception[0];				
 		LSB_angle = reception[1];
-		MSB_angle = reception[2];
+		MSB_angle = reception[2];             
 		LSB_distance = reception[3];
 		MSB_distance = reception[4];
 		
@@ -104,36 +137,51 @@ void SCAN(void)
 		angle_degree = angle_q6 / 64.0;
 		distance_mm = distance_q2 / 4.0;
 		
+		Analyse_environnement_4_secteurs(distance_mm, angle_degree, flag);
 		
-		if(flag == 1) // 1 tour effectué
-		{
-
-		if(ang_0_90) 		Allumer_LED(LED_P2_2); else Eteindre_LED(LED_P2_2);
-		if(ang_90_180) 	Allumer_LED(LED_P1_31); else Eteindre_LED(LED_P1_31);
-		if(ang_180_270) Allumer_LED(LED_P1_29); else Eteindre_LED(LED_P1_29);
-		if(ang_270_360) Allumer_LED(LED_P1_28); else Eteindre_LED(LED_P1_28);
-			
-		ang_0_90 = 0; // on reset tout à 0 a chaque tour
-		ang_90_180 = 0;
-		ang_180_270 =0;
-		ang_270_360 = 0;
-		}
-
-		if(distance_mm > 100.0 && distance_mm < 300.0) // 100.0 car peut avoir des erreurs donc dist = 0 -> protocole 
-		{
-		if(angle_degree > 0.0 && angle_degree < 90.0) ang_0_90 = 1;
-		if(angle_degree > 90.0 && angle_degree < 180.0) ang_90_180 = 1;
-		if(angle_degree > 180.0 && angle_degree < 270.0) ang_180_270 = 1;
-		if(angle_degree > 270.0 && angle_degree < 360.0) ang_270_360 = 1;
-		}
 	
 	}
 }
-/*********************************************************
+
+/* --------------------------------------------------------
+ * Fonction : void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, char flag)
+ *
+ * Analyse l'environnement sur 4 secteurs, affiche sur 4 LEDS.
+ *
+ *-------------------------*/
+
+void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, char flag)
+	{
+		if(flag == 1) 		// 1 tour effectué
+			{
+				if(detect_obst_0_90) 		Allumer_LED(LED_P2_2) ; else Eteindre_LED(LED_P2_2);
+				if(detect_obst_90_180) 	Allumer_LED(LED_P1_31); else Eteindre_LED(LED_P1_31);
+				if(detect_obst_180_270) Allumer_LED(LED_P1_29); else Eteindre_LED(LED_P1_29);
+				if(detect_obst_270_360) Allumer_LED(LED_P1_28); else Eteindre_LED(LED_P1_28);
+			
+				detect_obst_0_90 = 0; // on reset tout à 0 a chaque tour
+				detect_obst_90_180 = 0;
+				detect_obst_180_270 =0;
+				detect_obst_270_360 = 0;
+			}
+			
+		if(distance_mm > 100.0 && distance_mm < 300.0) // 100.0 car peut avoir des erreurs donc dist = 0 -> protocole 
+			{
+				if(angle_degree > 0.0 && angle_degree < 90.0) detect_obst_0_90 = 1;
+				if(angle_degree > 90.0 && angle_degree < 180.0) detect_obst_90_180 = 1;
+				if(angle_degree > 180.0 && angle_degree < 270.0) detect_obst_180_270 = 1;
+				if(angle_degree > 270.0 && angle_degree < 360.0) detect_obst_270_360 = 1;
+			}	
+
+}
+
+/*--------------------------------------------------------
+
 Fonction : void Init_LED(void)
 
 Configuration des LEDS de la carte
-*********************************************************/
+
+---------------------------------------------------------*/
 
 void Init_LED(void)
 	{
@@ -141,11 +189,13 @@ void Init_LED(void)
 		LPC_GPIO1->FIODIR3 |= 0xB0; // Configuration des LEDS P1.28, P1.29 P1.31 en sortie
 	}
 
-/*********************************************************
+/*--------------------------------------------------------
+
 Fonction : void Allumer_LED(char Num_LED)
 
 Allume la LED choisi en paramètre -> Utiliser les constantes définit au début du code ou numéro des cases..
-*********************************************************/
+	
+---------------------------------------------------------*/
 
 void Allumer_LED(char Num_LED)
 	{
@@ -161,11 +211,13 @@ void Allumer_LED(char Num_LED)
 			}
 	}
 
-/*********************************************************
+/*--------------------------------------------------------
+	
 Fonction : void Eteindre(char Num_LED)
 
 Eteint la LED choisi en paramètre -> Utiliser les constantes définit au début du code ou numéro des cases..
-*********************************************************/
+	
+---------------------------------------------------------*/
 	
 void Eteindre_LED(char Num_LED)
 	{

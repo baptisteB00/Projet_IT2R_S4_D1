@@ -3,16 +3,16 @@
 <title>Static Call Graph - [.\analyse_environnement_projet.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\analyse_environnement_projet.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6240002: Last Updated: Thu Feb 19 13:51:21 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6240002: Last Updated: Thu Feb 19 15:15:52 2026
 <BR><P>
-<H3>Maximum Stack Usage =        220 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        284 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-USART0_Transfer &rArr; USART_Transfer &rArr; USART_Send &rArr; USART_Receive &rArr;  USART_Send (Cycle)
+__rt_entry_main &rArr; main &rArr; GLCD_Initialize &rArr; rd_id_man &rArr; spi_tran_man &rArr; GPIO_PinWrite
 <P>
 <H3>
 Functions with no stack information
 </H3><UL>
- <LI><a href="#[50]">__user_initial_stackheap</a>
+ <LI><a href="#[5d]">__user_initial_stackheap</a>
 </UL>
 </UL>
 <P>
@@ -28,7 +28,7 @@ Mutually Recursive functions
  <LI><a href="#[8]">PendSV_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[8]">PendSV_Handler</a><BR>
  <LI><a href="#[9]">SysTick_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[9]">SysTick_Handler</a><BR>
  <LI><a href="#[20]">ADC_IRQHandler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[20]">ADC_IRQHandler</a><BR>
- <LI><a href="#[6e]">USART_Receive</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[6f]">USART_Send</a><BR>
+ <LI><a href="#[9d]">USART_Receive</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[9e]">USART_Send</a><BR>
 </UL>
 <P>
 <H3>
@@ -64,7 +64,20 @@ Function Pointers
  <LI><a href="#[0]">Reset_Handler</a> from startup_lpc17xx.o(.text) referenced from startup_lpc17xx.o(RESET)
  <LI><a href="#[17]">SPI_IRQHandler</a> from startup_lpc17xx.o(.text) referenced from startup_lpc17xx.o(RESET)
  <LI><a href="#[18]">SSP0_IRQHandler</a> from startup_lpc17xx.o(.text) referenced from startup_lpc17xx.o(RESET)
- <LI><a href="#[19]">SSP1_IRQHandler</a> from startup_lpc17xx.o(.text) referenced from startup_lpc17xx.o(RESET)
+ <LI><a href="#[38]">SSP1_Control</a> from ssp_lpc17xx.o(.text.SSP1_Control) referenced from ssp_lpc17xx.o(.rodata.Driver_SPI1)
+ <LI><a href="#[49]">SSP1_GPDMA_Rx_SignalEvent</a> from ssp_lpc17xx.o(.text.SSP1_GPDMA_Rx_SignalEvent) referenced from ssp_lpc17xx.o(.rodata.SSP1_Resources)
+ <LI><a href="#[48]">SSP1_GPDMA_Tx_SignalEvent</a> from ssp_lpc17xx.o(.text.SSP1_GPDMA_Tx_SignalEvent) referenced from ssp_lpc17xx.o(.rodata.SSP1_Resources)
+ <LI><a href="#[37]">SSP1_GetDataCount</a> from ssp_lpc17xx.o(.text.SSP1_GetDataCount) referenced from ssp_lpc17xx.o(.rodata.Driver_SPI1)
+ <LI><a href="#[39]">SSP1_GetStatus</a> from ssp_lpc17xx.o(.text.SSP1_GetStatus) referenced from ssp_lpc17xx.o(.rodata.Driver_SPI1)
+ <LI><a href="#[19]">SSP1_IRQHandler</a> from ssp_lpc17xx.o(.text.SSP1_IRQHandler) referenced from startup_lpc17xx.o(RESET)
+ <LI><a href="#[31]">SSP1_Initialize</a> from ssp_lpc17xx.o(.text.SSP1_Initialize) referenced from ssp_lpc17xx.o(.rodata.Driver_SPI1)
+ <LI><a href="#[33]">SSP1_PowerControl</a> from ssp_lpc17xx.o(.text.SSP1_PowerControl) referenced from ssp_lpc17xx.o(.rodata.Driver_SPI1)
+ <LI><a href="#[35]">SSP1_Receive</a> from ssp_lpc17xx.o(.text.SSP1_Receive) referenced from ssp_lpc17xx.o(.rodata.Driver_SPI1)
+ <LI><a href="#[34]">SSP1_Send</a> from ssp_lpc17xx.o(.text.SSP1_Send) referenced from ssp_lpc17xx.o(.rodata.Driver_SPI1)
+ <LI><a href="#[36]">SSP1_Transfer</a> from ssp_lpc17xx.o(.text.SSP1_Transfer) referenced from ssp_lpc17xx.o(.rodata.Driver_SPI1)
+ <LI><a href="#[32]">SSP1_Uninitialize</a> from ssp_lpc17xx.o(.text.SSP1_Uninitialize) referenced from ssp_lpc17xx.o(.rodata.Driver_SPI1)
+ <LI><a href="#[30]">SSP_GetCapabilities</a> from ssp_lpc17xx.o(.text.SSP_GetCapabilities) referenced from ssp_lpc17xx.o(.rodata.Driver_SPI1)
+ <LI><a href="#[2f]">SSP_GetVersion</a> from ssp_lpc17xx.o(.text.SSP_GetVersion) referenced from ssp_lpc17xx.o(.rodata.Driver_SPI1)
  <LI><a href="#[6]">SVC_Handler</a> from startup_lpc17xx.o(.text) referenced from startup_lpc17xx.o(RESET)
  <LI><a href="#[9]">SysTick_Handler</a> from startup_lpc17xx.o(.text) referenced from startup_lpc17xx.o(RESET)
  <LI><a href="#[2d]">SystemInit</a> from system_lpc17xx.o(.text.SystemInit) referenced from startup_lpc17xx.o(.text)
@@ -76,22 +89,22 @@ Function Pointers
  <LI><a href="#[10]">UART1_IRQHandler</a> from startup_lpc17xx.o(.text) referenced from startup_lpc17xx.o(RESET)
  <LI><a href="#[11]">UART2_IRQHandler</a> from startup_lpc17xx.o(.text) referenced from startup_lpc17xx.o(RESET)
  <LI><a href="#[12]">UART3_IRQHandler</a> from startup_lpc17xx.o(.text) referenced from startup_lpc17xx.o(RESET)
- <LI><a href="#[39]">USART0_Control</a> from uart_lpc17xx.o(.text.USART0_Control) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
- <LI><a href="#[3d]">USART0_GPDMA_Rx_Event</a> from uart_lpc17xx.o(.text.USART0_GPDMA_Rx_Event) referenced from uart_lpc17xx.o(.rodata.UART0_DMA_Rx)
- <LI><a href="#[3e]">USART0_GPDMA_Tx_Event</a> from uart_lpc17xx.o(.text.USART0_GPDMA_Tx_Event) referenced from uart_lpc17xx.o(.rodata.UART0_DMA_Tx)
- <LI><a href="#[30]">USART0_GetCapabilities</a> from uart_lpc17xx.o(.text.USART0_GetCapabilities) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
- <LI><a href="#[3c]">USART0_GetModemStatus</a> from uart_lpc17xx.o(.text.USART0_GetModemStatus) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
- <LI><a href="#[38]">USART0_GetRxCount</a> from uart_lpc17xx.o(.text.USART0_GetRxCount) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
- <LI><a href="#[3a]">USART0_GetStatus</a> from uart_lpc17xx.o(.text.USART0_GetStatus) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
- <LI><a href="#[37]">USART0_GetTxCount</a> from uart_lpc17xx.o(.text.USART0_GetTxCount) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
- <LI><a href="#[31]">USART0_Initialize</a> from uart_lpc17xx.o(.text.USART0_Initialize) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
- <LI><a href="#[33]">USART0_PowerControl</a> from uart_lpc17xx.o(.text.USART0_PowerControl) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
- <LI><a href="#[35]">USART0_Receive</a> from uart_lpc17xx.o(.text.USART0_Receive) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
- <LI><a href="#[34]">USART0_Send</a> from uart_lpc17xx.o(.text.USART0_Send) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
- <LI><a href="#[3b]">USART0_SetModemControl</a> from uart_lpc17xx.o(.text.USART0_SetModemControl) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
- <LI><a href="#[36]">USART0_Transfer</a> from uart_lpc17xx.o(.text.USART0_Transfer) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
- <LI><a href="#[32]">USART0_Uninitialize</a> from uart_lpc17xx.o(.text.USART0_Uninitialize) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
- <LI><a href="#[2f]">USARTx_GetVersion</a> from uart_lpc17xx.o(.text.USARTx_GetVersion) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
+ <LI><a href="#[44]">USART0_Control</a> from uart_lpc17xx.o(.text.USART0_Control) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
+ <LI><a href="#[4a]">USART0_GPDMA_Rx_Event</a> from uart_lpc17xx.o(.text.USART0_GPDMA_Rx_Event) referenced from uart_lpc17xx.o(.rodata.UART0_DMA_Rx)
+ <LI><a href="#[4b]">USART0_GPDMA_Tx_Event</a> from uart_lpc17xx.o(.text.USART0_GPDMA_Tx_Event) referenced from uart_lpc17xx.o(.rodata.UART0_DMA_Tx)
+ <LI><a href="#[3b]">USART0_GetCapabilities</a> from uart_lpc17xx.o(.text.USART0_GetCapabilities) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
+ <LI><a href="#[47]">USART0_GetModemStatus</a> from uart_lpc17xx.o(.text.USART0_GetModemStatus) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
+ <LI><a href="#[43]">USART0_GetRxCount</a> from uart_lpc17xx.o(.text.USART0_GetRxCount) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
+ <LI><a href="#[45]">USART0_GetStatus</a> from uart_lpc17xx.o(.text.USART0_GetStatus) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
+ <LI><a href="#[42]">USART0_GetTxCount</a> from uart_lpc17xx.o(.text.USART0_GetTxCount) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
+ <LI><a href="#[3c]">USART0_Initialize</a> from uart_lpc17xx.o(.text.USART0_Initialize) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
+ <LI><a href="#[3e]">USART0_PowerControl</a> from uart_lpc17xx.o(.text.USART0_PowerControl) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
+ <LI><a href="#[40]">USART0_Receive</a> from uart_lpc17xx.o(.text.USART0_Receive) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
+ <LI><a href="#[3f]">USART0_Send</a> from uart_lpc17xx.o(.text.USART0_Send) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
+ <LI><a href="#[46]">USART0_SetModemControl</a> from uart_lpc17xx.o(.text.USART0_SetModemControl) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
+ <LI><a href="#[41]">USART0_Transfer</a> from uart_lpc17xx.o(.text.USART0_Transfer) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
+ <LI><a href="#[3d]">USART0_Uninitialize</a> from uart_lpc17xx.o(.text.USART0_Uninitialize) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
+ <LI><a href="#[3a]">USARTx_GetVersion</a> from uart_lpc17xx.o(.text.USARTx_GetVersion) referenced from uart_lpc17xx.o(.rodata.Driver_USART0)
  <LI><a href="#[2b]">USBActivity_IRQHandler</a> from startup_lpc17xx.o(.text) referenced from startup_lpc17xx.o(RESET)
  <LI><a href="#[22]">USB_IRQHandler</a> from startup_lpc17xx.o(.text) referenced from startup_lpc17xx.o(RESET)
  <LI><a href="#[5]">UsageFault_Handler</a> from startup_lpc17xx.o(.text) referenced from startup_lpc17xx.o(RESET)
@@ -103,141 +116,141 @@ Function Pointers
 Global Symbols
 </H3>
 <P><STRONG><a name="[2e]"></a>__main</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, __main.o(!!!main))
-<BR><BR>[Calls]<UL><LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
-<LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
+<BR><BR>[Calls]<UL><LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
+<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(.text)
 </UL>
-<P><STRONG><a name="[3f]"></a>__scatterload</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter))
+<P><STRONG><a name="[4c]"></a>__scatterload</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter))
 <BR><BR>[Called By]<UL><LI><a href="#[2e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
 </UL>
 
-<P><STRONG><a name="[41]"></a>__scatterload_rt2</STRONG> (Thumb, 84 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
+<P><STRONG><a name="[4e]"></a>__scatterload_rt2</STRONG> (Thumb, 84 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
 </UL>
 
-<P><STRONG><a name="[91]"></a>__scatterload_rt2_thumb_only</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
+<P><STRONG><a name="[c4]"></a>__scatterload_rt2_thumb_only</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
 
-<P><STRONG><a name="[92]"></a>__scatterload_loop</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
+<P><STRONG><a name="[c5]"></a>__scatterload_loop</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
 
-<P><STRONG><a name="[42]"></a>__scatterload_copy</STRONG> (Thumb, 26 bytes, Stack size unknown bytes, __scatter_copy.o(!!handler_copy), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_copy
+<P><STRONG><a name="[4f]"></a>__scatterload_copy</STRONG> (Thumb, 26 bytes, Stack size unknown bytes, __scatter_copy.o(!!handler_copy), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_copy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_copy
-</UL>
-
-<P><STRONG><a name="[93]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, __scatter.o(!!handler_null), UNUSED)
-
-<P><STRONG><a name="[94]"></a>__scatterload_zeroinit</STRONG> (Thumb, 28 bytes, Stack size unknown bytes, __scatter_zi.o(!!handler_zi), UNUSED)
-
-<P><STRONG><a name="[46]"></a>__rt_lib_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit.o(.ARM.Collect$$libinit$$00000000))
-<BR><BR>[Called By]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_li
+<BR>[Called By]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_copy
 </UL>
 
-<P><STRONG><a name="[95]"></a>__rt_lib_init_alloca_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000030))
+<P><STRONG><a name="[c6]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, __scatter.o(!!handler_null), UNUSED)
 
-<P><STRONG><a name="[96]"></a>__rt_lib_init_argv_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000002E))
+<P><STRONG><a name="[c7]"></a>__scatterload_zeroinit</STRONG> (Thumb, 28 bytes, Stack size unknown bytes, __scatter_zi.o(!!handler_zi), UNUSED)
 
-<P><STRONG><a name="[97]"></a>__rt_lib_init_atexit_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001D))
-
-<P><STRONG><a name="[98]"></a>__rt_lib_init_clock_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000023))
-
-<P><STRONG><a name="[99]"></a>__rt_lib_init_cpp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000034))
-
-<P><STRONG><a name="[9a]"></a>__rt_lib_init_exceptions_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000032))
-
-<P><STRONG><a name="[9b]"></a>__rt_lib_init_fp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000002))
-
-<P><STRONG><a name="[9c]"></a>__rt_lib_init_fp_trap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000021))
-
-<P><STRONG><a name="[9d]"></a>__rt_lib_init_getenv_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000025))
-
-<P><STRONG><a name="[9e]"></a>__rt_lib_init_heap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000C))
-
-<P><STRONG><a name="[9f]"></a>__rt_lib_init_lc_collate_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000013))
-
-<P><STRONG><a name="[a0]"></a>__rt_lib_init_lc_ctype_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000015))
-
-<P><STRONG><a name="[a1]"></a>__rt_lib_init_lc_monetary_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000017))
-
-<P><STRONG><a name="[a2]"></a>__rt_lib_init_lc_numeric_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000019))
-
-<P><STRONG><a name="[a3]"></a>__rt_lib_init_lc_time_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001B))
-
-<P><STRONG><a name="[a4]"></a>__rt_lib_init_preinit_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000006))
-
-<P><STRONG><a name="[a5]"></a>__rt_lib_init_rand_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000010))
-
-<P><STRONG><a name="[a6]"></a>__rt_lib_init_relocate_pie_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000004))
-
-<P><STRONG><a name="[a7]"></a>__rt_lib_init_return</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000035))
-
-<P><STRONG><a name="[a8]"></a>__rt_lib_init_signal_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001F))
-
-<P><STRONG><a name="[a9]"></a>__rt_lib_init_stdio_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000027))
-
-<P><STRONG><a name="[aa]"></a>__rt_lib_init_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000E))
-
-<P><STRONG><a name="[4b]"></a>__rt_lib_shutdown</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown.o(.ARM.Collect$$libshutdown$$00000000))
-<BR><BR>[Called By]<UL><LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_ls
+<P><STRONG><a name="[53]"></a>__rt_lib_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit.o(.ARM.Collect$$libinit$$00000000))
+<BR><BR>[Called By]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_li
 </UL>
 
-<P><STRONG><a name="[ab]"></a>__rt_lib_shutdown_cpp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000002))
+<P><STRONG><a name="[c8]"></a>__rt_lib_init_alloca_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000030))
 
-<P><STRONG><a name="[ac]"></a>__rt_lib_shutdown_fp_trap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000007))
+<P><STRONG><a name="[c9]"></a>__rt_lib_init_argv_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000002E))
 
-<P><STRONG><a name="[ad]"></a>__rt_lib_shutdown_heap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000F))
+<P><STRONG><a name="[ca]"></a>__rt_lib_init_atexit_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001D))
 
-<P><STRONG><a name="[ae]"></a>__rt_lib_shutdown_return</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000010))
+<P><STRONG><a name="[cb]"></a>__rt_lib_init_clock_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000023))
 
-<P><STRONG><a name="[af]"></a>__rt_lib_shutdown_signal_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000A))
+<P><STRONG><a name="[cc]"></a>__rt_lib_init_cpp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000034))
 
-<P><STRONG><a name="[b0]"></a>__rt_lib_shutdown_stdio_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000004))
+<P><STRONG><a name="[cd]"></a>__rt_lib_init_exceptions_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000032))
 
-<P><STRONG><a name="[b1]"></a>__rt_lib_shutdown_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000C))
+<P><STRONG><a name="[ce]"></a>__rt_lib_init_fp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000002))
 
-<P><STRONG><a name="[40]"></a>__rt_entry</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry.o(.ARM.Collect$$rtentry$$00000000))
-<BR><BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_rt2
-<LI><a href="#[2e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
+<P><STRONG><a name="[cf]"></a>__rt_lib_init_fp_trap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000021))
+
+<P><STRONG><a name="[d0]"></a>__rt_lib_init_getenv_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000025))
+
+<P><STRONG><a name="[d1]"></a>__rt_lib_init_heap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000C))
+
+<P><STRONG><a name="[d2]"></a>__rt_lib_init_lc_collate_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000013))
+
+<P><STRONG><a name="[d3]"></a>__rt_lib_init_lc_ctype_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000015))
+
+<P><STRONG><a name="[d4]"></a>__rt_lib_init_lc_monetary_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000017))
+
+<P><STRONG><a name="[d5]"></a>__rt_lib_init_lc_numeric_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000019))
+
+<P><STRONG><a name="[d6]"></a>__rt_lib_init_lc_time_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001B))
+
+<P><STRONG><a name="[d7]"></a>__rt_lib_init_preinit_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000006))
+
+<P><STRONG><a name="[d8]"></a>__rt_lib_init_rand_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000010))
+
+<P><STRONG><a name="[d9]"></a>__rt_lib_init_relocate_pie_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000004))
+
+<P><STRONG><a name="[da]"></a>__rt_lib_init_return</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000035))
+
+<P><STRONG><a name="[db]"></a>__rt_lib_init_signal_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001F))
+
+<P><STRONG><a name="[dc]"></a>__rt_lib_init_stdio_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000027))
+
+<P><STRONG><a name="[dd]"></a>__rt_lib_init_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000E))
+
+<P><STRONG><a name="[58]"></a>__rt_lib_shutdown</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown.o(.ARM.Collect$$libshutdown$$00000000))
+<BR><BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_ls
 </UL>
 
-<P><STRONG><a name="[b2]"></a>__rt_entry_presh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000002))
+<P><STRONG><a name="[de]"></a>__rt_lib_shutdown_cpp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000002))
 
-<P><STRONG><a name="[43]"></a>__rt_entry_sh</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry4.o(.ARM.Collect$$rtentry$$00000004))
+<P><STRONG><a name="[df]"></a>__rt_lib_shutdown_fp_trap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000007))
+
+<P><STRONG><a name="[e0]"></a>__rt_lib_shutdown_heap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000F))
+
+<P><STRONG><a name="[e1]"></a>__rt_lib_shutdown_return</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000010))
+
+<P><STRONG><a name="[e2]"></a>__rt_lib_shutdown_signal_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000A))
+
+<P><STRONG><a name="[e3]"></a>__rt_lib_shutdown_stdio_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000004))
+
+<P><STRONG><a name="[e4]"></a>__rt_lib_shutdown_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000C))
+
+<P><STRONG><a name="[4d]"></a>__rt_entry</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry.o(.ARM.Collect$$rtentry$$00000000))
+<BR><BR>[Called By]<UL><LI><a href="#[2e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_rt2
+</UL>
+
+<P><STRONG><a name="[e5]"></a>__rt_entry_presh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000002))
+
+<P><STRONG><a name="[50]"></a>__rt_entry_sh</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry4.o(.ARM.Collect$$rtentry$$00000004))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
 <LI>Call Chain = __rt_entry_sh &rArr; __user_setup_stackheap
 </UL>
-<BR>[Calls]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
+<BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[45]"></a>__rt_entry_li</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000A))
-<BR><BR>[Calls]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init
+<P><STRONG><a name="[52]"></a>__rt_entry_li</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000A))
+<BR><BR>[Calls]<UL><LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init
 </UL>
 
-<P><STRONG><a name="[b3]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
+<P><STRONG><a name="[e6]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
-<P><STRONG><a name="[47]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 104 + Unknown Stack Size
-<LI>Call Chain = __rt_entry_main &rArr; main &rArr; SCAN &rArr; __aeabi_dmul
+<P><STRONG><a name="[54]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
+<BR><BR>[Stack]<UL><LI>Max Depth = 284 + Unknown Stack Size
+<LI>Call Chain = __rt_entry_main &rArr; main &rArr; GLCD_Initialize &rArr; rd_id_man &rArr; spi_tran_man &rArr; GPIO_PinWrite
 </UL>
-<BR>[Calls]<UL><LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
-<LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[b4]"></a>__rt_entry_postli_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000C))
-
-<P><STRONG><a name="[4e]"></a>__rt_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit.o(.ARM.Collect$$rtexit$$00000000))
-<BR><BR>[Called By]<UL><LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
+<BR>[Calls]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
+<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[4a]"></a>__rt_exit_ls</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000003))
-<BR><BR>[Calls]<UL><LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_shutdown
+<P><STRONG><a name="[e7]"></a>__rt_entry_postli_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000C))
+
+<P><STRONG><a name="[5b]"></a>__rt_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit.o(.ARM.Collect$$rtexit$$00000000))
+<BR><BR>[Called By]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
 </UL>
 
-<P><STRONG><a name="[b5]"></a>__rt_exit_prels_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000002))
+<P><STRONG><a name="[57]"></a>__rt_exit_ls</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000003))
+<BR><BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_shutdown
+</UL>
 
-<P><STRONG><a name="[4c]"></a>__rt_exit_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000004))
-<BR><BR>[Calls]<UL><LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sys_exit
+<P><STRONG><a name="[e8]"></a>__rt_exit_prels_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000002))
+
+<P><STRONG><a name="[59]"></a>__rt_exit_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000004))
+<BR><BR>[Calls]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sys_exit
 </UL>
 
 <P><STRONG><a name="[0]"></a>Reset_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, startup_lpc17xx.o(.text))
@@ -376,9 +389,6 @@ Global Symbols
 <P><STRONG><a name="[18]"></a>SSP0_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_lpc17xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
-<P><STRONG><a name="[19]"></a>SSP1_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_lpc17xx.o(.text))
-<BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
-</UL>
 <P><STRONG><a name="[b]"></a>TIMER0_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_lpc17xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
@@ -409,169 +419,294 @@ Global Symbols
 <P><STRONG><a name="[a]"></a>WDT_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_lpc17xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
-<P><STRONG><a name="[50]"></a>__user_initial_stackheap</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup_lpc17xx.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
+<P><STRONG><a name="[5d]"></a>__user_initial_stackheap</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup_lpc17xx.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[7d]"></a>__aeabi_uldivmod</STRONG> (Thumb, 0 bytes, Stack size 48 bytes, lludivv7m.o(.text))
+<P><STRONG><a name="[a9]"></a>__aeabi_uldivmod</STRONG> (Thumb, 0 bytes, Stack size 48 bytes, lludivv7m.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = __aeabi_uldivmod
 </UL>
-<BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SetBaudrate
+<BR>[Called By]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SetBaudrate
 </UL>
 
-<P><STRONG><a name="[b6]"></a>_ll_udiv</STRONG> (Thumb, 240 bytes, Stack size 48 bytes, lludivv7m.o(.text), UNUSED)
+<P><STRONG><a name="[e9]"></a>_ll_udiv</STRONG> (Thumb, 240 bytes, Stack size 48 bytes, lludivv7m.o(.text), UNUSED)
 
-<P><STRONG><a name="[b7]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[ea]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
-<P><STRONG><a name="[b8]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[eb]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
-<P><STRONG><a name="[b9]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[ec]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
-<P><STRONG><a name="[49]"></a>exit</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, exit.o(.text))
+<P><STRONG><a name="[56]"></a>exit</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, exit.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
 <LI>Call Chain = exit
 </UL>
-<BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit
+<BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit
 </UL>
-<BR>[Called By]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
-</UL>
-
-<P><STRONG><a name="[ba]"></a>__user_libspace</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
-
-<P><STRONG><a name="[4f]"></a>__user_perproc_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
+<BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[bb]"></a>__user_perthread_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
+<P><STRONG><a name="[ed]"></a>__user_libspace</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
 
-<P><STRONG><a name="[4d]"></a>_sys_exit</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, sys_exit.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_exit
+<P><STRONG><a name="[5c]"></a>__user_perproc_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[bc]"></a>__I$use$semihosting</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
+<P><STRONG><a name="[ee]"></a>__user_perthread_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
 
-<P><STRONG><a name="[bd]"></a>__use_no_semihosting_swi</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
-
-<P><STRONG><a name="[88]"></a>__fpl_dretinf</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, dretinf.o(x$fpl$dretinf), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_f2d
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dmul
+<P><STRONG><a name="[5a]"></a>_sys_exit</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, sys_exit.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_exit
 </UL>
 
-<P><STRONG><a name="[be]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, indicate_semi.o(.text), UNUSED)
+<P><STRONG><a name="[ef]"></a>__I$use$semihosting</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[44]"></a>__user_setup_stackheap</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, sys_stackheap_outer.o(.text))
+<P><STRONG><a name="[f0]"></a>__use_no_semihosting_swi</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
+
+<P><STRONG><a name="[f1]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
+
+<P><STRONG><a name="[51]"></a>__user_setup_stackheap</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, sys_stackheap_outer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
 <LI>Call Chain = __user_setup_stackheap
 </UL>
-<BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_perproc_libspace
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_initial_stackheap
+<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_perproc_libspace
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_initial_stackheap
 </UL>
-<BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_sh
+<BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_sh
 </UL>
 
-<P><STRONG><a name="[5e]"></a>Allumer_LED</STRONG> (Thumb, 162 bytes, Stack size 8 bytes, main.o(.text.Allumer_LED))
+<P><STRONG><a name="[5f]"></a>Allumer_LED</STRONG> (Thumb, 162 bytes, Stack size 8 bytes, main.o(.text.Allumer_LED))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Allumer_LED
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCAN
+<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Analyse_environnement_4_secteurs
+</UL>
+
+<P><STRONG><a name="[5e]"></a>Analyse_environnement_4_secteurs</STRONG> (Thumb, 486 bytes, Stack size 24 bytes, main.o(.text.Analyse_environnement_4_secteurs))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Analyse_environnement_4_secteurs &rArr; __aeabi_f2d
+</UL>
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dcmple
+<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dcmpge
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Eteindre_LED
+<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Allumer_LED
+</UL>
+<BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCAN
 </UL>
 
 <P><STRONG><a name="[24]"></a>DMA_IRQHandler</STRONG> (Thumb, 544 bytes, Stack size 24 bytes, gpdma_lpc17xx.o(.text.DMA_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = DMA_IRQHandler &rArr; Clear_Channel_active_flag
 </UL>
-<BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clear_Channel_active_flag
+<BR>[Calls]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clear_Channel_active_flag
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
-<P><STRONG><a name="[5f]"></a>Eteindre_LED</STRONG> (Thumb, 162 bytes, Stack size 8 bytes, main.o(.text.Eteindre_LED))
+<P><STRONG><a name="[60]"></a>Eteindre_LED</STRONG> (Thumb, 162 bytes, Stack size 8 bytes, main.o(.text.Eteindre_LED))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Eteindre_LED
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCAN
+<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Analyse_environnement_4_secteurs
 </UL>
 
-<P><STRONG><a name="[52]"></a>GPDMA_ChannelConfigure</STRONG> (Thumb, 416 bytes, Stack size 32 bytes, gpdma_lpc17xx.o(.text.GPDMA_ChannelConfigure))
+<P><STRONG><a name="[65]"></a>GLCD_ClearScreen</STRONG> (Thumb, 80 bytes, Stack size 16 bytes, glcd_mcb1700.o(.text.GLCD_ClearScreen))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = GLCD_ClearScreen &rArr; GLCD_SetWindow &rArr; wr_reg
+</UL>
+<BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wr_dat_stop
+<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wr_dat_only
+<LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wr_dat_start
+<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_SetWindow
+<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wr_cmd
+</UL>
+<BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[6b]"></a>GLCD_Initialize</STRONG> (Thumb, 1606 bytes, Stack size 184 bytes, glcd_mcb1700.o(.text.GLCD_Initialize))
+<BR><BR>[Stack]<UL><LI>Max Depth = 268<LI>Call Chain = GLCD_Initialize &rArr; rd_id_man &rArr; spi_tran_man &rArr; GPIO_PinWrite
+</UL>
+<BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinWrite
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetDir
+<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
+<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PortClock
+<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
+<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wr_reg
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rd_reg
+<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rd_id_man
+</UL>
+<BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[ab]"></a>GLCD_SetBackgroundColor</STRONG> (Thumb, 22 bytes, Stack size 4 bytes, glcd_mcb1700.o(.text.GLCD_SetBackgroundColor))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = GLCD_SetBackgroundColor
+</UL>
+<BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[aa]"></a>GLCD_SetFont</STRONG> (Thumb, 22 bytes, Stack size 4 bytes, glcd_mcb1700.o(.text.GLCD_SetFont))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = GLCD_SetFont
+</UL>
+<BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[ac]"></a>GLCD_SetForegroundColor</STRONG> (Thumb, 22 bytes, Stack size 4 bytes, glcd_mcb1700.o(.text.GLCD_SetForegroundColor))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = GLCD_SetForegroundColor
+</UL>
+<BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[74]"></a>GPDMA_ChannelConfigure</STRONG> (Thumb, 416 bytes, Stack size 32 bytes, gpdma_lpc17xx.o(.text.GPDMA_ChannelConfigure))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = GPDMA_ChannelConfigure &rArr; Set_Channel_active_flag
 </UL>
-<BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clear_Channel_active_flag
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Set_Channel_active_flag
+<BR>[Calls]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clear_Channel_active_flag
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Set_Channel_active_flag
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
+<BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Transfer
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Receive
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Send
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
 </UL>
 
-<P><STRONG><a name="[54]"></a>GPDMA_ChannelDisable</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, gpdma_lpc17xx.o(.text.GPDMA_ChannelDisable))
+<P><STRONG><a name="[76]"></a>GPDMA_ChannelDisable</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, gpdma_lpc17xx.o(.text.GPDMA_ChannelDisable))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = GPDMA_ChannelDisable &rArr; Clear_Channel_active_flag
 </UL>
-<BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clear_Channel_active_flag
+<BR>[Calls]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Clear_Channel_active_flag
 </UL>
-<BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
-<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
+<BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Control
+<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_PowerControl
+<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
+<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
 </UL>
 
-<P><STRONG><a name="[77]"></a>GPDMA_ChannelGetCount</STRONG> (Thumb, 72 bytes, Stack size 8 bytes, gpdma_lpc17xx.o(.text.GPDMA_ChannelGetCount))
+<P><STRONG><a name="[8d]"></a>GPDMA_ChannelGetCount</STRONG> (Thumb, 72 bytes, Stack size 8 bytes, gpdma_lpc17xx.o(.text.GPDMA_ChannelGetCount))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = GPDMA_ChannelGetCount
 </UL>
-<BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetRxCount
-<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetTxCount
+<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_GetDataCount
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetRxCount
+<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetTxCount
 </UL>
 
-<P><STRONG><a name="[55]"></a>GPDMA_Initialize</STRONG> (Thumb, 190 bytes, Stack size 24 bytes, gpdma_lpc17xx.o(.text.GPDMA_Initialize))
+<P><STRONG><a name="[77]"></a>GPDMA_Initialize</STRONG> (Thumb, 190 bytes, Stack size 24 bytes, gpdma_lpc17xx.o(.text.GPDMA_Initialize))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = GPDMA_Initialize &rArr; __NVIC_EnableIRQ
 </UL>
-<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
-<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
+<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Initialize
+<BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Initialize
+<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Initialize
 </UL>
 
-<P><STRONG><a name="[7c]"></a>GPDMA_PeripheralSelect</STRONG> (Thumb, 136 bytes, Stack size 12 bytes, gpdma_lpc17xx.o(.text.GPDMA_PeripheralSelect))
+<P><STRONG><a name="[8e]"></a>GPDMA_PeripheralSelect</STRONG> (Thumb, 136 bytes, Stack size 12 bytes, gpdma_lpc17xx.o(.text.GPDMA_PeripheralSelect))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = GPDMA_PeripheralSelect
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
+<BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Initialize
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
 </UL>
 
-<P><STRONG><a name="[58]"></a>GPDMA_Uninitialize</STRONG> (Thumb, 94 bytes, Stack size 16 bytes, gpdma_lpc17xx.o(.text.GPDMA_Uninitialize))
+<P><STRONG><a name="[7a]"></a>GPDMA_Uninitialize</STRONG> (Thumb, 94 bytes, Stack size 16 bytes, gpdma_lpc17xx.o(.text.GPDMA_Uninitialize))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = GPDMA_Uninitialize &rArr; __NVIC_DisableIRQ
 </UL>
-<BR>[Calls]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_DisableIRQ
-<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
+<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_DisableIRQ
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
 </UL>
-<BR>[Called By]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Uninitialize
-</UL>
-
-<P><STRONG><a name="[7f]"></a>Init_LED</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, main.o(.text.Init_LED))
-<BR><BR>[Called By]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Uninitialize
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Uninitialize
 </UL>
 
-<P><STRONG><a name="[7e]"></a>Init_UART_Lidar</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, main.o(.text.Init_UART_Lidar))
+<P><STRONG><a name="[b2]"></a>GPIO_PinRead</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, gpio_lpc17xx.o(.text.GPIO_PinRead))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = GPIO_PinRead
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_tran_man
+</UL>
+
+<P><STRONG><a name="[6f]"></a>GPIO_PinWrite</STRONG> (Thumb, 62 bytes, Stack size 12 bytes, gpio_lpc17xx.o(.text.GPIO_PinWrite))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = GPIO_PinWrite
+</UL>
+<BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Control
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_tran_man
+<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rd_id_man
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_Initialize
+</UL>
+
+<P><STRONG><a name="[6c]"></a>GPIO_PortClock</STRONG> (Thumb, 50 bytes, Stack size 4 bytes, gpio_lpc17xx.o(.text.GPIO_PortClock))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = GPIO_PortClock
+</UL>
+<BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_Initialize
+</UL>
+
+<P><STRONG><a name="[6e]"></a>GPIO_SetDir</STRONG> (Thumb, 74 bytes, Stack size 12 bytes, gpio_lpc17xx.o(.text.GPIO_SetDir))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = GPIO_SetDir
+</UL>
+<BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Control
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_tran_man
+<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rd_id_man
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_Initialize
+</UL>
+
+<P><STRONG><a name="[ae]"></a>Init_LED</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, main.o(.text.Init_LED))
+<BR><BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[ad]"></a>Init_UART_Lidar</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, main.o(.text.Init_UART_Lidar))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = Init_UART_Lidar
 </UL>
-<BR>[Called By]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[76]"></a>PIN_Configure</STRONG> (Thumb, 292 bytes, Stack size 24 bytes, pin_lpc17xx.o(.text.PIN_Configure))
+<P><STRONG><a name="[6d]"></a>PIN_Configure</STRONG> (Thumb, 292 bytes, Stack size 24 bytes, pin_lpc17xx.o(.text.PIN_Configure))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = PIN_Configure
 </UL>
-<BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PIN_Configure
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
-<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
-<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Uninitialize
-<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Initialize
+<BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Control
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Uninitialize
+<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Initialize
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PIN_Configure
+<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
+<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Uninitialize
+<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Initialize
+<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rd_id_man
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_Initialize
 </UL>
 
-<P><STRONG><a name="[5a]"></a>SCAN</STRONG> (Thumb, 740 bytes, Stack size 56 bytes, main.o(.text.SCAN))
-<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = SCAN &rArr; __aeabi_dmul
+<P><STRONG><a name="[7c]"></a>SCAN</STRONG> (Thumb, 340 bytes, Stack size 48 bytes, main.o(.text.SCAN))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = SCAN &rArr; Analyse_environnement_4_secteurs &rArr; __aeabi_f2d
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dcmple
-<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dcmpge
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Eteindre_LED
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Allumer_LED
+<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Analyse_environnement_4_secteurs
 </UL>
-<BR>[Called By]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[49]"></a>SSP1_GPDMA_Rx_SignalEvent</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, ssp_lpc17xx.o(.text.SSP1_GPDMA_Rx_SignalEvent))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = SSP1_GPDMA_Rx_SignalEvent &rArr; SSPx_GPDMA_Rx_SignalEvent
+</UL>
+<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_GPDMA_Rx_SignalEvent
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> ssp_lpc17xx.o(.rodata.SSP1_Resources)
+</UL>
+<P><STRONG><a name="[48]"></a>SSP1_GPDMA_Tx_SignalEvent</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, ssp_lpc17xx.o(.text.SSP1_GPDMA_Tx_SignalEvent))
+<BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = SSP1_GPDMA_Tx_SignalEvent &rArr; SSPx_GPDMA_Tx_SignalEvent
+</UL>
+<BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_GPDMA_Tx_SignalEvent
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> ssp_lpc17xx.o(.rodata.SSP1_Resources)
+</UL>
+<P><STRONG><a name="[19]"></a>SSP1_IRQHandler</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, ssp_lpc17xx.o(.text.SSP1_IRQHandler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = SSP1_IRQHandler &rArr; SSPx_IRQHandler
+</UL>
+<BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_IRQHandler
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
+</UL>
+<P><STRONG><a name="[81]"></a>SSPx_GPDMA_Rx_SignalEvent</STRONG> (Thumb, 74 bytes, Stack size 24 bytes, ssp_lpc17xx.o(.text.SSPx_GPDMA_Rx_SignalEvent))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = SSPx_GPDMA_Rx_SignalEvent
+</UL>
+<BR>[Called By]<UL><LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSP1_GPDMA_Rx_SignalEvent
+</UL>
+
+<P><STRONG><a name="[82]"></a>SSPx_GPDMA_Tx_SignalEvent</STRONG> (Thumb, 42 bytes, Stack size 12 bytes, ssp_lpc17xx.o(.text.SSPx_GPDMA_Tx_SignalEvent))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = SSPx_GPDMA_Tx_SignalEvent
+</UL>
+<BR>[Called By]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSP1_GPDMA_Tx_SignalEvent
 </UL>
 
 <P><STRONG><a name="[2d]"></a>SystemInit</STRONG> (Thumb, 388 bytes, Stack size 0 bytes, system_lpc17xx.o(.text.SystemInit))
@@ -580,483 +715,771 @@ Global Symbols
 <P><STRONG><a name="[f]"></a>UART0_IRQHandler</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, uart_lpc17xx.o(.text.UART0_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = UART0_IRQHandler &rArr; USART_IRQHandler &rArr; USART_RxLineIntHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_IRQHandler
+<BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
-<P><STRONG><a name="[3d]"></a>USART0_GPDMA_Rx_Event</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_GPDMA_Rx_Event))
+<P><STRONG><a name="[4a]"></a>USART0_GPDMA_Rx_Event</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_GPDMA_Rx_Event))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = USART0_GPDMA_Rx_Event &rArr; USART_GPDMA_Rx_Event
 </UL>
-<BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GPDMA_Rx_Event
+<BR>[Calls]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GPDMA_Rx_Event
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.UART0_DMA_Rx)
 </UL>
-<P><STRONG><a name="[3e]"></a>USART0_GPDMA_Tx_Event</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_GPDMA_Tx_Event))
+<P><STRONG><a name="[4b]"></a>USART0_GPDMA_Tx_Event</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_GPDMA_Tx_Event))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = USART0_GPDMA_Tx_Event &rArr; USART_GPDMA_Tx_Event
 </UL>
-<BR>[Calls]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GPDMA_Tx_Event
+<BR>[Calls]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GPDMA_Tx_Event
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.UART0_DMA_Tx)
 </UL>
-<P><STRONG><a name="[75]"></a>USART_SetBaudrate</STRONG> (Thumb, 420 bytes, Stack size 64 bytes, uart_lpc17xx.o(.text.USART_SetBaudrate))
+<P><STRONG><a name="[a4]"></a>USART_SetBaudrate</STRONG> (Thumb, 420 bytes, Stack size 64 bytes, uart_lpc17xx.o(.text.USART_SetBaudrate))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = USART_SetBaudrate &rArr; __aeabi_uldivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
-<LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetUsartClockFreq
+<BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetUsartClockFreq
 </UL>
-<BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
-</UL>
-
-<P><STRONG><a name="[48]"></a>main</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, main.o(.text.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = main &rArr; SCAN &rArr; __aeabi_dmul
-</UL>
-<BR>[Calls]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCAN
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_LED
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_UART_Lidar
-</UL>
-<BR>[Called By]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
+<BR>[Called By]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
 </UL>
 
-<P><STRONG><a name="[5d]"></a>__aeabi_d2f</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, d2f.o(x$fpl$d2f))
+<P><STRONG><a name="[55]"></a>main</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, main.o(.text.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 284<LI>Call Chain = main &rArr; GLCD_Initialize &rArr; rd_id_man &rArr; spi_tran_man &rArr; GPIO_PinWrite
+</UL>
+<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCAN
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_LED
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_UART_Lidar
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_ClearScreen
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_SetForegroundColor
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_SetBackgroundColor
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_SetFont
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_Initialize
+</UL>
+<BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
+</UL>
+
+<P><STRONG><a name="[7f]"></a>__aeabi_d2f</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, d2f.o(x$fpl$d2f))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_d2f
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCAN
+<BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCAN
 </UL>
 
-<P><STRONG><a name="[80]"></a>_d2f</STRONG> (Thumb, 98 bytes, Stack size 32 bytes, d2f.o(x$fpl$d2f), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_fretinf
-<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
+<P><STRONG><a name="[b3]"></a>_d2f</STRONG> (Thumb, 98 bytes, Stack size 32 bytes, d2f.o(x$fpl$d2f), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_fretinf
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
-<P><STRONG><a name="[84]"></a>__fpl_dcmp_Inf</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, dcmpi.o(x$fpl$dcmpinf), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmple
-<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpge
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpeq
+<P><STRONG><a name="[b7]"></a>__fpl_dcmp_Inf</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, dcmpi.o(x$fpl$dcmpinf), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmple
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpge
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpeq
 </UL>
 
-<P><STRONG><a name="[bf]"></a>__aeabi_cdcmpeq</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, deqf.o(x$fpl$deqf), UNUSED)
+<P><STRONG><a name="[f2]"></a>__aeabi_cdcmpeq</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, deqf.o(x$fpl$deqf), UNUSED)
 
-<P><STRONG><a name="[83]"></a>_dcmpeq</STRONG> (Thumb, 120 bytes, Stack size 32 bytes, deqf.o(x$fpl$deqf), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dcmp_Inf
-<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
+<P><STRONG><a name="[b6]"></a>_dcmpeq</STRONG> (Thumb, 120 bytes, Stack size 32 bytes, deqf.o(x$fpl$deqf), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dcmp_Inf
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dneq
-<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_deq
-</UL>
-
-<P><STRONG><a name="[5b]"></a>__aeabi_i2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt))
-<BR><BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCAN
+<BR>[Called By]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dneq
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_deq
 </UL>
 
-<P><STRONG><a name="[c0]"></a>_dflt</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt), UNUSED)
-
-<P><STRONG><a name="[c1]"></a>__aeabi_cdcmpge</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dgeqf.o(x$fpl$dgeqf), UNUSED)
-
-<P><STRONG><a name="[85]"></a>_dcmpge</STRONG> (Thumb, 120 bytes, Stack size 32 bytes, dgeqf.o(x$fpl$dgeqf), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dcmp_Inf
-<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
-</UL>
-<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dgeq
-<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dgr
+<P><STRONG><a name="[7d]"></a>__aeabi_i2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt))
+<BR><BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCAN
 </UL>
 
-<P><STRONG><a name="[c2]"></a>__aeabi_cdcmple</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dleqf.o(x$fpl$dleqf), UNUSED)
+<P><STRONG><a name="[f3]"></a>_dflt</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt), UNUSED)
 
-<P><STRONG><a name="[86]"></a>_dcmple</STRONG> (Thumb, 120 bytes, Stack size 32 bytes, dleqf.o(x$fpl$dleqf), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dcmp_Inf
-<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
+<P><STRONG><a name="[f4]"></a>__aeabi_cdcmpge</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dgeqf.o(x$fpl$dgeqf), UNUSED)
+
+<P><STRONG><a name="[b8]"></a>_dcmpge</STRONG> (Thumb, 120 bytes, Stack size 32 bytes, dgeqf.o(x$fpl$dgeqf), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dcmp_Inf
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dls
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dleq
+<BR>[Called By]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dgeq
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dgr
 </UL>
 
-<P><STRONG><a name="[c3]"></a>__fpl_dcmple_InfNaN</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, dleqf.o(x$fpl$dleqf), UNUSED)
+<P><STRONG><a name="[f5]"></a>__aeabi_cdcmple</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dleqf.o(x$fpl$dleqf), UNUSED)
 
-<P><STRONG><a name="[5c]"></a>__aeabi_dmul</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dmul.o(x$fpl$dmul))
+<P><STRONG><a name="[b9]"></a>_dcmple</STRONG> (Thumb, 120 bytes, Stack size 32 bytes, dleqf.o(x$fpl$dleqf), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dcmp_Inf
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
+</UL>
+<BR>[Called By]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dls
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dleq
+</UL>
+
+<P><STRONG><a name="[f6]"></a>__fpl_dcmple_InfNaN</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, dleqf.o(x$fpl$dleqf), UNUSED)
+
+<P><STRONG><a name="[7e]"></a>__aeabi_dmul</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dmul.o(x$fpl$dmul))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_dmul
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCAN
+<BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCAN
 </UL>
 
-<P><STRONG><a name="[87]"></a>_dmul</STRONG> (Thumb, 332 bytes, Stack size 32 bytes, dmul.o(x$fpl$dmul), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dretinf
-<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
+<P><STRONG><a name="[ba]"></a>_dmul</STRONG> (Thumb, 332 bytes, Stack size 32 bytes, dmul.o(x$fpl$dmul), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dretinf
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
-<P><STRONG><a name="[82]"></a>__fpl_dnaninf</STRONG> (Thumb, 156 bytes, Stack size 16 bytes, dnaninf.o(x$fpl$dnaninf), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmple
-<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpge
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpeq
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dmul
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_d2f
+<P><STRONG><a name="[b5]"></a>__fpl_dnaninf</STRONG> (Thumb, 156 bytes, Stack size 16 bytes, dnaninf.o(x$fpl$dnaninf), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmple
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpge
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpeq
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dmul
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_d2f
 </UL>
 
-<P><STRONG><a name="[60]"></a>__aeabi_f2d</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, f2d.o(x$fpl$f2d))
+<P><STRONG><a name="[bb]"></a>__fpl_dretinf</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, dretinf.o(x$fpl$dretinf), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_f2d
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dmul
+</UL>
+
+<P><STRONG><a name="[61]"></a>__aeabi_f2d</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, f2d.o(x$fpl$f2d))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_f2d
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCAN
+<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Analyse_environnement_4_secteurs
 </UL>
 
-<P><STRONG><a name="[89]"></a>_f2d</STRONG> (Thumb, 86 bytes, Stack size 16 bytes, f2d.o(x$fpl$f2d), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_fnaninf
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dretinf
+<P><STRONG><a name="[bc]"></a>_f2d</STRONG> (Thumb, 86 bytes, Stack size 16 bytes, f2d.o(x$fpl$f2d), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_fnaninf
+<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dretinf
 </UL>
 
-<P><STRONG><a name="[c4]"></a>__aeabi_dcmpeq</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
+<P><STRONG><a name="[f7]"></a>__aeabi_dcmpeq</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
 
-<P><STRONG><a name="[8b]"></a>_deq</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpeq
+<P><STRONG><a name="[be]"></a>_deq</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpeq
 </UL>
 
-<P><STRONG><a name="[8c]"></a>_dneq</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpeq
+<P><STRONG><a name="[bf]"></a>_dneq</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpeq
 </UL>
 
-<P><STRONG><a name="[c5]"></a>__aeabi_dcmpgt</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
+<P><STRONG><a name="[f8]"></a>__aeabi_dcmpgt</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
 
-<P><STRONG><a name="[8d]"></a>_dgr</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpge
+<P><STRONG><a name="[c0]"></a>_dgr</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpge
 </UL>
 
-<P><STRONG><a name="[62]"></a>__aeabi_dcmpge</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp))
+<P><STRONG><a name="[63]"></a>__aeabi_dcmpge</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_dcmpge
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCAN
+<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Analyse_environnement_4_secteurs
 </UL>
 
-<P><STRONG><a name="[8e]"></a>_dgeq</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpge
+<P><STRONG><a name="[c1]"></a>_dgeq</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmpge
 </UL>
 
-<P><STRONG><a name="[61]"></a>__aeabi_dcmple</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp))
+<P><STRONG><a name="[62]"></a>__aeabi_dcmple</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_dcmple
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCAN
+<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Analyse_environnement_4_secteurs
 </UL>
 
-<P><STRONG><a name="[8f]"></a>_dleq</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmple
+<P><STRONG><a name="[c2]"></a>_dleq</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmple
 </UL>
 
-<P><STRONG><a name="[c6]"></a>__aeabi_dcmplt</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
+<P><STRONG><a name="[f9]"></a>__aeabi_dcmplt</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
 
-<P><STRONG><a name="[90]"></a>_dls</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmple
+<P><STRONG><a name="[c3]"></a>_dls</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, dcmp.o(x$fpl$fcmp), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmple
 </UL>
 
-<P><STRONG><a name="[8a]"></a>__fpl_fnaninf</STRONG> (Thumb, 140 bytes, Stack size 8 bytes, fnaninf.o(x$fpl$fnaninf), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_f2d
+<P><STRONG><a name="[bd]"></a>__fpl_fnaninf</STRONG> (Thumb, 140 bytes, Stack size 8 bytes, fnaninf.o(x$fpl$fnaninf), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_f2d
 </UL>
 
-<P><STRONG><a name="[81]"></a>__fpl_fretinf</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, fretinf.o(x$fpl$fretinf), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_d2f
+<P><STRONG><a name="[b4]"></a>__fpl_fretinf</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, fretinf.o(x$fpl$fretinf), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_d2f
 </UL>
 <P>
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[74]"></a>GetUsartClockFreq</STRONG> (Thumb, 90 bytes, Stack size 20 bytes, uart_lpc17xx.o(.text.GetUsartClockFreq))
-<BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = GetUsartClockFreq
+<P><STRONG><a name="[70]"></a>rd_id_man</STRONG> (Thumb, 194 bytes, Stack size 40 bytes, glcd_mcb1700.o(.text.rd_id_man))
+<BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = rd_id_man &rArr; spi_tran_man &rArr; GPIO_PinWrite
 </UL>
-<BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SetBaudrate
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
+<BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinWrite
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetDir
+<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_tran_man
+</UL>
+<BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_Initialize
 </UL>
 
-<P><STRONG><a name="[63]"></a>USART_IRQHandler</STRONG> (Thumb, 804 bytes, Stack size 48 bytes, uart_lpc17xx.o(.text.USART_IRQHandler))
+<P><STRONG><a name="[71]"></a>rd_reg</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, glcd_mcb1700.o(.text.rd_reg))
+<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = rd_reg &rArr; rd_dat &rArr; spi_tran
+</UL>
+<BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rd_dat
+<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wr_cmd
+</UL>
+<BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_Initialize
+</UL>
+
+<P><STRONG><a name="[72]"></a>wr_reg</STRONG> (Thumb, 204 bytes, Stack size 40 bytes, glcd_mcb1700.o(.text.wr_reg))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = wr_reg
+</UL>
+<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_SetWindow
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_Initialize
+</UL>
+
+<P><STRONG><a name="[73]"></a>delay_ms</STRONG> (Thumb, 68 bytes, Stack size 4 bytes, glcd_mcb1700.o(.text.delay_ms))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = delay_ms
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_tran_man
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_Initialize
+</UL>
+
+<P><STRONG><a name="[b1]"></a>spi_tran_man</STRONG> (Thumb, 154 bytes, Stack size 32 bytes, glcd_mcb1700.o(.text.spi_tran_man))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = spi_tran_man &rArr; GPIO_PinWrite
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinRead
+<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinWrite
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetDir
+<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
+</UL>
+<BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rd_id_man
+</UL>
+
+<P><STRONG><a name="[67]"></a>wr_cmd</STRONG> (Thumb, 104 bytes, Stack size 24 bytes, glcd_mcb1700.o(.text.wr_cmd))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = wr_cmd
+</UL>
+<BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rd_reg
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_ClearScreen
+</UL>
+
+<P><STRONG><a name="[af]"></a>rd_dat</STRONG> (Thumb, 104 bytes, Stack size 24 bytes, glcd_mcb1700.o(.text.rd_dat))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = rd_dat &rArr; spi_tran
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_tran
+</UL>
+<BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rd_reg
+</UL>
+
+<P><STRONG><a name="[66]"></a>GLCD_SetWindow</STRONG> (Thumb, 194 bytes, Stack size 32 bytes, glcd_mcb1700.o(.text.GLCD_SetWindow))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = GLCD_SetWindow &rArr; wr_reg
+</UL>
+<BR>[Calls]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wr_reg
+</UL>
+<BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_ClearScreen
+</UL>
+
+<P><STRONG><a name="[68]"></a>wr_dat_start</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, glcd_mcb1700.o(.text.wr_dat_start))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = wr_dat_start &rArr; spi_tran
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_tran
+</UL>
+<BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_ClearScreen
+</UL>
+
+<P><STRONG><a name="[69]"></a>wr_dat_only</STRONG> (Thumb, 72 bytes, Stack size 16 bytes, glcd_mcb1700.o(.text.wr_dat_only))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = wr_dat_only
+</UL>
+<BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_ClearScreen
+</UL>
+
+<P><STRONG><a name="[6a]"></a>wr_dat_stop</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, glcd_mcb1700.o(.text.wr_dat_stop))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = wr_dat_stop
+</UL>
+<BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_ClearScreen
+</UL>
+
+<P><STRONG><a name="[b0]"></a>spi_tran</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, glcd_mcb1700.o(.text.spi_tran))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = spi_tran
+</UL>
+<BR>[Called By]<UL><LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wr_dat_start
+<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rd_dat
+</UL>
+
+<P><STRONG><a name="[a3]"></a>GetUsartClockFreq</STRONG> (Thumb, 90 bytes, Stack size 20 bytes, uart_lpc17xx.o(.text.GetUsartClockFreq))
+<BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = GetUsartClockFreq
+</UL>
+<BR>[Called By]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SetBaudrate
+<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
+</UL>
+
+<P><STRONG><a name="[92]"></a>USART_IRQHandler</STRONG> (Thumb, 804 bytes, Stack size 48 bytes, uart_lpc17xx.o(.text.USART_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = USART_IRQHandler &rArr; USART_RxLineIntHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_RxLineIntHandler
+<BR>[Calls]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_RxLineIntHandler
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART0_IRQHandler
 </UL>
 
-<P><STRONG><a name="[78]"></a>USART_RxLineIntHandler</STRONG> (Thumb, 186 bytes, Stack size 12 bytes, uart_lpc17xx.o(.text.USART_RxLineIntHandler))
+<P><STRONG><a name="[a5]"></a>USART_RxLineIntHandler</STRONG> (Thumb, 186 bytes, Stack size 12 bytes, uart_lpc17xx.o(.text.USART_RxLineIntHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = USART_RxLineIntHandler
 </UL>
-<BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_IRQHandler
 </UL>
 
-<P><STRONG><a name="[66]"></a>USART_GPDMA_Tx_Event</STRONG> (Thumb, 106 bytes, Stack size 24 bytes, uart_lpc17xx.o(.text.USART_GPDMA_Tx_Event))
+<P><STRONG><a name="[95]"></a>USART_GPDMA_Tx_Event</STRONG> (Thumb, 106 bytes, Stack size 24 bytes, uart_lpc17xx.o(.text.USART_GPDMA_Tx_Event))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART_GPDMA_Tx_Event
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_GPDMA_Tx_Event
+<BR>[Called By]<UL><LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_GPDMA_Tx_Event
 </UL>
 
-<P><STRONG><a name="[65]"></a>USART_GPDMA_Rx_Event</STRONG> (Thumb, 202 bytes, Stack size 32 bytes, uart_lpc17xx.o(.text.USART_GPDMA_Rx_Event))
+<P><STRONG><a name="[94]"></a>USART_GPDMA_Rx_Event</STRONG> (Thumb, 202 bytes, Stack size 32 bytes, uart_lpc17xx.o(.text.USART_GPDMA_Rx_Event))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = USART_GPDMA_Rx_Event
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_GPDMA_Rx_Event
+<BR>[Called By]<UL><LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_GPDMA_Rx_Event
 </UL>
 
-<P><STRONG><a name="[2f]"></a>USARTx_GetVersion</STRONG> (Thumb, 18 bytes, Stack size 4 bytes, uart_lpc17xx.o(.text.USARTx_GetVersion))
+<P><STRONG><a name="[3a]"></a>USARTx_GetVersion</STRONG> (Thumb, 18 bytes, Stack size 4 bytes, uart_lpc17xx.o(.text.USARTx_GetVersion))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = USARTx_GetVersion
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.Driver_USART0)
 </UL>
-<P><STRONG><a name="[30]"></a>USART0_GetCapabilities</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_GetCapabilities))
+<P><STRONG><a name="[3b]"></a>USART0_GetCapabilities</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_GetCapabilities))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART0_GetCapabilities &rArr; USART_GetCapabilities
 </UL>
-<BR>[Calls]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetCapabilities
+<BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetCapabilities
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.Driver_USART0)
 </UL>
-<P><STRONG><a name="[67]"></a>USART_GetCapabilities</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, uart_lpc17xx.o(.text.USART_GetCapabilities))
+<P><STRONG><a name="[96]"></a>USART_GetCapabilities</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, uart_lpc17xx.o(.text.USART_GetCapabilities))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART_GetCapabilities
 </UL>
-<BR>[Called By]<UL><LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_GetCapabilities
+<BR>[Called By]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_GetCapabilities
 </UL>
 
-<P><STRONG><a name="[31]"></a>USART0_Initialize</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_Initialize))
+<P><STRONG><a name="[3c]"></a>USART0_Initialize</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_Initialize))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = USART0_Initialize &rArr; USART_Initialize &rArr; GPDMA_Initialize &rArr; __NVIC_EnableIRQ
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Initialize
+<BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Initialize
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.Driver_USART0)
 </UL>
-<P><STRONG><a name="[6c]"></a>USART_Initialize</STRONG> (Thumb, 356 bytes, Stack size 24 bytes, uart_lpc17xx.o(.text.USART_Initialize))
+<P><STRONG><a name="[9b]"></a>USART_Initialize</STRONG> (Thumb, 356 bytes, Stack size 24 bytes, uart_lpc17xx.o(.text.USART_Initialize))
 <BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = USART_Initialize &rArr; GPDMA_Initialize &rArr; __NVIC_EnableIRQ
 </UL>
-<BR>[Calls]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_Initialize
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
+<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_Initialize
+<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
 </UL>
-<BR>[Called By]<UL><LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_Initialize
+<BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_Initialize
 </UL>
 
-<P><STRONG><a name="[32]"></a>USART0_Uninitialize</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, uart_lpc17xx.o(.text.USART0_Uninitialize))
+<P><STRONG><a name="[3d]"></a>USART0_Uninitialize</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, uart_lpc17xx.o(.text.USART0_Uninitialize))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = USART0_Uninitialize &rArr; USART_Uninitialize &rArr; PIN_Configure
 </UL>
-<BR>[Calls]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Uninitialize
+<BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Uninitialize
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.Driver_USART0)
 </UL>
-<P><STRONG><a name="[72]"></a>USART_Uninitialize</STRONG> (Thumb, 306 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART_Uninitialize))
+<P><STRONG><a name="[a1]"></a>USART_Uninitialize</STRONG> (Thumb, 306 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART_Uninitialize))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = USART_Uninitialize &rArr; PIN_Configure
 </UL>
-<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_Uninitialize
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
+<BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_Uninitialize
+<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
 </UL>
-<BR>[Called By]<UL><LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_Uninitialize
+<BR>[Called By]<UL><LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_Uninitialize
 </UL>
 
-<P><STRONG><a name="[33]"></a>USART0_PowerControl</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_PowerControl))
+<P><STRONG><a name="[3e]"></a>USART0_PowerControl</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_PowerControl))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = USART0_PowerControl &rArr; USART_PowerControl &rArr; PIN_Configure
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.Driver_USART0)
 </UL>
-<P><STRONG><a name="[6d]"></a>USART_PowerControl</STRONG> (Thumb, 658 bytes, Stack size 40 bytes, uart_lpc17xx.o(.text.USART_PowerControl))
+<P><STRONG><a name="[9c]"></a>USART_PowerControl</STRONG> (Thumb, 658 bytes, Stack size 40 bytes, uart_lpc17xx.o(.text.USART_PowerControl))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = USART_PowerControl &rArr; PIN_Configure
 </UL>
-<BR>[Calls]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelDisable
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
-<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_DisableIRQ
+<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelDisable
+<LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
+<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
+<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_DisableIRQ
+<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
 </UL>
-<BR>[Called By]<UL><LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_PowerControl
+<BR>[Called By]<UL><LI><a href="#[3e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_PowerControl
 </UL>
 
-<P><STRONG><a name="[34]"></a>USART0_Send</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_Send))
+<P><STRONG><a name="[3f]"></a>USART0_Send</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_Send))
 <BR><BR>[Stack]<UL><LI>Max Depth = 180<LI>Call Chain = USART0_Send &rArr; USART_Send &rArr; USART_Receive &rArr;  USART_Send (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
+<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.Driver_USART0)
 </UL>
-<P><STRONG><a name="[6f]"></a>USART_Send</STRONG> (Thumb, 578 bytes, Stack size 64 bytes, uart_lpc17xx.o(.text.USART_Send))
+<P><STRONG><a name="[9e]"></a>USART_Send</STRONG> (Thumb, 578 bytes, Stack size 64 bytes, uart_lpc17xx.o(.text.USART_Send))
 <BR><BR>[Stack]<UL><LI>Max Depth = 164<LI>Call Chain = USART_Send &rArr; USART_Receive &rArr;  USART_Send (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelConfigure
-<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_PeripheralSelect
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
+<BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelConfigure
+<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_PeripheralSelect
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
 </UL>
-<BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Transfer
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
-<LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_Send
+<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Transfer
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
+<LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_Send
 </UL>
 
-<P><STRONG><a name="[35]"></a>USART0_Receive</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_Receive))
+<P><STRONG><a name="[40]"></a>USART0_Receive</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_Receive))
 <BR><BR>[Stack]<UL><LI>Max Depth = 116<LI>Call Chain = USART0_Receive &rArr; USART_Receive &rArr;  USART_Send (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
+<BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.Driver_USART0)
 </UL>
-<P><STRONG><a name="[6e]"></a>USART_Receive</STRONG> (Thumb, 390 bytes, Stack size 56 bytes, uart_lpc17xx.o(.text.USART_Receive))
+<P><STRONG><a name="[9d]"></a>USART_Receive</STRONG> (Thumb, 390 bytes, Stack size 56 bytes, uart_lpc17xx.o(.text.USART_Receive))
 <BR><BR>[Stack]<UL><LI>Max Depth = 100 + In Cycle
 <LI>Call Chain = USART_Receive &rArr;  USART_Send (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelConfigure
-<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_PeripheralSelect
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
+<BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelConfigure
+<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_PeripheralSelect
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
 </UL>
-<BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Transfer
-<LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_Receive
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
+<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Transfer
+<LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_Receive
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
 </UL>
 
-<P><STRONG><a name="[36]"></a>USART0_Transfer</STRONG> (Thumb, 32 bytes, Stack size 24 bytes, uart_lpc17xx.o(.text.USART0_Transfer))
+<P><STRONG><a name="[41]"></a>USART0_Transfer</STRONG> (Thumb, 32 bytes, Stack size 24 bytes, uart_lpc17xx.o(.text.USART0_Transfer))
 <BR><BR>[Stack]<UL><LI>Max Depth = 220<LI>Call Chain = USART0_Transfer &rArr; USART_Transfer &rArr; USART_Send &rArr; USART_Receive &rArr;  USART_Send (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Transfer
+<BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Transfer
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.Driver_USART0)
 </UL>
-<P><STRONG><a name="[71]"></a>USART_Transfer</STRONG> (Thumb, 170 bytes, Stack size 32 bytes, uart_lpc17xx.o(.text.USART_Transfer))
+<P><STRONG><a name="[a0]"></a>USART_Transfer</STRONG> (Thumb, 170 bytes, Stack size 32 bytes, uart_lpc17xx.o(.text.USART_Transfer))
 <BR><BR>[Stack]<UL><LI>Max Depth = 196<LI>Call Chain = USART_Transfer &rArr; USART_Send &rArr; USART_Receive &rArr;  USART_Send (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
+<BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
 </UL>
-<BR>[Called By]<UL><LI><a href="#[36]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_Transfer
+<BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_Transfer
 </UL>
 
-<P><STRONG><a name="[37]"></a>USART0_GetTxCount</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, uart_lpc17xx.o(.text.USART0_GetTxCount))
+<P><STRONG><a name="[42]"></a>USART0_GetTxCount</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, uart_lpc17xx.o(.text.USART0_GetTxCount))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = USART0_GetTxCount &rArr; USART_GetTxCount &rArr; GPDMA_ChannelGetCount
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetTxCount
+<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetTxCount
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.Driver_USART0)
 </UL>
-<P><STRONG><a name="[6b]"></a>USART_GetTxCount</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART_GetTxCount))
+<P><STRONG><a name="[9a]"></a>USART_GetTxCount</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART_GetTxCount))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART_GetTxCount &rArr; GPDMA_ChannelGetCount
 </UL>
-<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelGetCount
+<BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelGetCount
 </UL>
-<BR>[Called By]<UL><LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_GetTxCount
+<BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_GetTxCount
 </UL>
 
-<P><STRONG><a name="[38]"></a>USART0_GetRxCount</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, uart_lpc17xx.o(.text.USART0_GetRxCount))
+<P><STRONG><a name="[43]"></a>USART0_GetRxCount</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, uart_lpc17xx.o(.text.USART0_GetRxCount))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = USART0_GetRxCount &rArr; USART_GetRxCount &rArr; GPDMA_ChannelGetCount
 </UL>
-<BR>[Calls]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetRxCount
+<BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetRxCount
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.Driver_USART0)
 </UL>
-<P><STRONG><a name="[69]"></a>USART_GetRxCount</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART_GetRxCount))
+<P><STRONG><a name="[98]"></a>USART_GetRxCount</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART_GetRxCount))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART_GetRxCount &rArr; GPDMA_ChannelGetCount
 </UL>
-<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelGetCount
+<BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelGetCount
 </UL>
-<BR>[Called By]<UL><LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_GetRxCount
+<BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_GetRxCount
 </UL>
 
-<P><STRONG><a name="[39]"></a>USART0_Control</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_Control))
+<P><STRONG><a name="[44]"></a>USART0_Control</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_Control))
 <BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = USART0_Control &rArr; USART_Control &rArr; USART_SetBaudrate &rArr; __aeabi_uldivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
+<BR>[Calls]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.Driver_USART0)
 </UL>
-<P><STRONG><a name="[64]"></a>USART_Control</STRONG> (Thumb, 1968 bytes, Stack size 80 bytes, uart_lpc17xx.o(.text.USART_Control))
+<P><STRONG><a name="[93]"></a>USART_Control</STRONG> (Thumb, 1968 bytes, Stack size 80 bytes, uart_lpc17xx.o(.text.USART_Control))
 <BR><BR>[Stack]<UL><LI>Max Depth = 192<LI>Call Chain = USART_Control &rArr; USART_SetBaudrate &rArr; __aeabi_uldivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelDisable
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
-<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SetBaudrate
-<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PIN_Configure
-<LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetUsartClockFreq
+<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelDisable
+<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SetBaudrate
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PIN_Configure
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetUsartClockFreq
+<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
 </UL>
-<BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_Control
+<BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_Control
 </UL>
 
-<P><STRONG><a name="[3a]"></a>USART0_GetStatus</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_GetStatus))
+<P><STRONG><a name="[45]"></a>USART0_GetStatus</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_GetStatus))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART0_GetStatus &rArr; USART_GetStatus
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetStatus
+<BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetStatus
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.Driver_USART0)
 </UL>
-<P><STRONG><a name="[6a]"></a>USART_GetStatus</STRONG> (Thumb, 152 bytes, Stack size 8 bytes, uart_lpc17xx.o(.text.USART_GetStatus))
+<P><STRONG><a name="[99]"></a>USART_GetStatus</STRONG> (Thumb, 152 bytes, Stack size 8 bytes, uart_lpc17xx.o(.text.USART_GetStatus))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART_GetStatus
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_GetStatus
+<BR>[Called By]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_GetStatus
 </UL>
 
-<P><STRONG><a name="[3b]"></a>USART0_SetModemControl</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_SetModemControl))
+<P><STRONG><a name="[46]"></a>USART0_SetModemControl</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_SetModemControl))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = USART0_SetModemControl &rArr; USART_SetModemControl
 </UL>
-<BR>[Calls]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SetModemControl
+<BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SetModemControl
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.Driver_USART0)
 </UL>
-<P><STRONG><a name="[70]"></a>USART_SetModemControl</STRONG> (Thumb, 242 bytes, Stack size 12 bytes, uart_lpc17xx.o(.text.USART_SetModemControl))
+<P><STRONG><a name="[9f]"></a>USART_SetModemControl</STRONG> (Thumb, 242 bytes, Stack size 12 bytes, uart_lpc17xx.o(.text.USART_SetModemControl))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = USART_SetModemControl
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_SetModemControl
+<BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_SetModemControl
 </UL>
 
-<P><STRONG><a name="[3c]"></a>USART0_GetModemStatus</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_GetModemStatus))
+<P><STRONG><a name="[47]"></a>USART0_GetModemStatus</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, uart_lpc17xx.o(.text.USART0_GetModemStatus))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = USART0_GetModemStatus &rArr; USART_GetModemStatus
 </UL>
-<BR>[Calls]<UL><LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetModemStatus
+<BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetModemStatus
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.Driver_USART0)
 </UL>
-<P><STRONG><a name="[68]"></a>USART_GetModemStatus</STRONG> (Thumb, 246 bytes, Stack size 12 bytes, uart_lpc17xx.o(.text.USART_GetModemStatus))
+<P><STRONG><a name="[97]"></a>USART_GetModemStatus</STRONG> (Thumb, 246 bytes, Stack size 12 bytes, uart_lpc17xx.o(.text.USART_GetModemStatus))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = USART_GetModemStatus
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_GetModemStatus
+<BR>[Called By]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART0_GetModemStatus
 </UL>
 
-<P><STRONG><a name="[79]"></a>__NVIC_DisableIRQ</STRONG> (Thumb, 56 bytes, Stack size 4 bytes, uart_lpc17xx.o(.text.__NVIC_DisableIRQ))
+<P><STRONG><a name="[a6]"></a>__NVIC_DisableIRQ</STRONG> (Thumb, 56 bytes, Stack size 4 bytes, uart_lpc17xx.o(.text.__NVIC_DisableIRQ))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_DisableIRQ
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
+<BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
 </UL>
 
-<P><STRONG><a name="[7a]"></a>__NVIC_ClearPendingIRQ</STRONG> (Thumb, 48 bytes, Stack size 4 bytes, uart_lpc17xx.o(.text.__NVIC_ClearPendingIRQ))
+<P><STRONG><a name="[a7]"></a>__NVIC_ClearPendingIRQ</STRONG> (Thumb, 48 bytes, Stack size 4 bytes, uart_lpc17xx.o(.text.__NVIC_ClearPendingIRQ))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_ClearPendingIRQ
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
+<BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
 </UL>
 
-<P><STRONG><a name="[7b]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 48 bytes, Stack size 4 bytes, uart_lpc17xx.o(.text.__NVIC_EnableIRQ))
+<P><STRONG><a name="[a8]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 48 bytes, Stack size 4 bytes, uart_lpc17xx.o(.text.__NVIC_EnableIRQ))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_EnableIRQ
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
+<BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
 </UL>
 
-<P><STRONG><a name="[73]"></a>USART_PIN_Configure</STRONG> (Thumb, 312 bytes, Stack size 32 bytes, uart_lpc17xx.o(.text.USART_PIN_Configure))
+<P><STRONG><a name="[a2]"></a>USART_PIN_Configure</STRONG> (Thumb, 312 bytes, Stack size 32 bytes, uart_lpc17xx.o(.text.USART_PIN_Configure))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = USART_PIN_Configure &rArr; PIN_Configure
 </UL>
-<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
+<BR>[Calls]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
 </UL>
-<BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
-</UL>
-
-<P><STRONG><a name="[56]"></a>__NVIC_ClearPendingIRQ</STRONG> (Thumb, 48 bytes, Stack size 4 bytes, gpdma_lpc17xx.o(.text.__NVIC_ClearPendingIRQ))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_ClearPendingIRQ
-</UL>
-<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_Uninitialize
-<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_Initialize
+<BR>[Called By]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
 </UL>
 
-<P><STRONG><a name="[57]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 48 bytes, Stack size 4 bytes, gpdma_lpc17xx.o(.text.__NVIC_EnableIRQ))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_EnableIRQ
+<P><STRONG><a name="[85]"></a>SSPx_IRQHandler</STRONG> (Thumb, 376 bytes, Stack size 24 bytes, ssp_lpc17xx.o(.text.SSPx_IRQHandler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = SSPx_IRQHandler
 </UL>
-<BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_Initialize
+<BR>[Called By]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSP1_IRQHandler
 </UL>
 
-<P><STRONG><a name="[59]"></a>__NVIC_DisableIRQ</STRONG> (Thumb, 56 bytes, Stack size 4 bytes, gpdma_lpc17xx.o(.text.__NVIC_DisableIRQ))
+<P><STRONG><a name="[2f]"></a>SSP_GetVersion</STRONG> (Thumb, 18 bytes, Stack size 4 bytes, ssp_lpc17xx.o(.text.SSP_GetVersion))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = SSP_GetVersion
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> ssp_lpc17xx.o(.rodata.Driver_SPI1)
+</UL>
+<P><STRONG><a name="[30]"></a>SSP_GetCapabilities</STRONG> (Thumb, 12 bytes, Stack size 4 bytes, ssp_lpc17xx.o(.text.SSP_GetCapabilities))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = SSP_GetCapabilities
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> ssp_lpc17xx.o(.rodata.Driver_SPI1)
+</UL>
+<P><STRONG><a name="[31]"></a>SSP1_Initialize</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, ssp_lpc17xx.o(.text.SSP1_Initialize))
+<BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = SSP1_Initialize &rArr; SSPx_Initialize &rArr; GPDMA_Initialize &rArr; __NVIC_EnableIRQ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Initialize
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> ssp_lpc17xx.o(.rodata.Driver_SPI1)
+</UL>
+<P><STRONG><a name="[86]"></a>SSPx_Initialize</STRONG> (Thumb, 252 bytes, Stack size 32 bytes, ssp_lpc17xx.o(.text.SSPx_Initialize))
+<BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = SSPx_Initialize &rArr; GPDMA_Initialize &rArr; __NVIC_EnableIRQ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_PeripheralSelect
+<LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_Initialize
+<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
+</UL>
+<BR>[Called By]<UL><LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSP1_Initialize
+</UL>
+
+<P><STRONG><a name="[32]"></a>SSP1_Uninitialize</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, ssp_lpc17xx.o(.text.SSP1_Uninitialize))
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = SSP1_Uninitialize &rArr; SSPx_Uninitialize &rArr; PIN_Configure
+</UL>
+<BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Uninitialize
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> ssp_lpc17xx.o(.rodata.Driver_SPI1)
+</UL>
+<P><STRONG><a name="[8b]"></a>SSPx_Uninitialize</STRONG> (Thumb, 154 bytes, Stack size 16 bytes, ssp_lpc17xx.o(.text.SSPx_Uninitialize))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = SSPx_Uninitialize &rArr; PIN_Configure
+</UL>
+<BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_Uninitialize
+<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
+</UL>
+<BR>[Called By]<UL><LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSP1_Uninitialize
+</UL>
+
+<P><STRONG><a name="[33]"></a>SSP1_PowerControl</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, ssp_lpc17xx.o(.text.SSP1_PowerControl))
+<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = SSP1_PowerControl &rArr; SSPx_PowerControl &rArr; GPDMA_ChannelDisable &rArr; Clear_Channel_active_flag
+</UL>
+<BR>[Calls]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_PowerControl
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> ssp_lpc17xx.o(.rodata.Driver_SPI1)
+</UL>
+<P><STRONG><a name="[87]"></a>SSPx_PowerControl</STRONG> (Thumb, 516 bytes, Stack size 32 bytes, ssp_lpc17xx.o(.text.SSPx_PowerControl))
+<BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = SSPx_PowerControl &rArr; GPDMA_ChannelDisable &rArr; Clear_Channel_active_flag
+</UL>
+<BR>[Calls]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
+<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_DisableIRQ
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelDisable
+</UL>
+<BR>[Called By]<UL><LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSP1_PowerControl
+</UL>
+
+<P><STRONG><a name="[34]"></a>SSP1_Send</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, ssp_lpc17xx.o(.text.SSP1_Send))
+<BR><BR>[Stack]<UL><LI>Max Depth = 108<LI>Call Chain = SSP1_Send &rArr; SSPx_Send &rArr; GPDMA_ChannelConfigure &rArr; Set_Channel_active_flag
+</UL>
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Send
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> ssp_lpc17xx.o(.rodata.Driver_SPI1)
+</UL>
+<P><STRONG><a name="[89]"></a>SSPx_Send</STRONG> (Thumb, 420 bytes, Stack size 48 bytes, ssp_lpc17xx.o(.text.SSPx_Send))
+<BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = SSPx_Send &rArr; GPDMA_ChannelConfigure &rArr; Set_Channel_active_flag
+</UL>
+<BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelConfigure
+</UL>
+<BR>[Called By]<UL><LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSP1_Send
+</UL>
+
+<P><STRONG><a name="[35]"></a>SSP1_Receive</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, ssp_lpc17xx.o(.text.SSP1_Receive))
+<BR><BR>[Stack]<UL><LI>Max Depth = 108<LI>Call Chain = SSP1_Receive &rArr; SSPx_Receive &rArr; GPDMA_ChannelConfigure &rArr; Set_Channel_active_flag
+</UL>
+<BR>[Calls]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Receive
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> ssp_lpc17xx.o(.rodata.Driver_SPI1)
+</UL>
+<P><STRONG><a name="[88]"></a>SSPx_Receive</STRONG> (Thumb, 436 bytes, Stack size 48 bytes, ssp_lpc17xx.o(.text.SSPx_Receive))
+<BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = SSPx_Receive &rArr; GPDMA_ChannelConfigure &rArr; Set_Channel_active_flag
+</UL>
+<BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelConfigure
+</UL>
+<BR>[Called By]<UL><LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSP1_Receive
+</UL>
+
+<P><STRONG><a name="[36]"></a>SSP1_Transfer</STRONG> (Thumb, 32 bytes, Stack size 24 bytes, ssp_lpc17xx.o(.text.SSP1_Transfer))
+<BR><BR>[Stack]<UL><LI>Max Depth = 116<LI>Call Chain = SSP1_Transfer &rArr; SSPx_Transfer &rArr; GPDMA_ChannelConfigure &rArr; Set_Channel_active_flag
+</UL>
+<BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Transfer
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> ssp_lpc17xx.o(.rodata.Driver_SPI1)
+</UL>
+<P><STRONG><a name="[8a]"></a>SSPx_Transfer</STRONG> (Thumb, 420 bytes, Stack size 48 bytes, ssp_lpc17xx.o(.text.SSPx_Transfer))
+<BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = SSPx_Transfer &rArr; GPDMA_ChannelConfigure &rArr; Set_Channel_active_flag
+</UL>
+<BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelConfigure
+</UL>
+<BR>[Called By]<UL><LI><a href="#[36]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSP1_Transfer
+</UL>
+
+<P><STRONG><a name="[37]"></a>SSP1_GetDataCount</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, ssp_lpc17xx.o(.text.SSP1_GetDataCount))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = SSP1_GetDataCount &rArr; SSPx_GetDataCount &rArr; GPDMA_ChannelGetCount
+</UL>
+<BR>[Calls]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_GetDataCount
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> ssp_lpc17xx.o(.rodata.Driver_SPI1)
+</UL>
+<P><STRONG><a name="[83]"></a>SSPx_GetDataCount</STRONG> (Thumb, 72 bytes, Stack size 24 bytes, ssp_lpc17xx.o(.text.SSPx_GetDataCount))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = SSPx_GetDataCount &rArr; GPDMA_ChannelGetCount
+</UL>
+<BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelGetCount
+</UL>
+<BR>[Called By]<UL><LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSP1_GetDataCount
+</UL>
+
+<P><STRONG><a name="[38]"></a>SSP1_Control</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, ssp_lpc17xx.o(.text.SSP1_Control))
+<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = SSP1_Control &rArr; SSPx_Control &rArr; PIN_Configure
+</UL>
+<BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Control
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> ssp_lpc17xx.o(.rodata.Driver_SPI1)
+</UL>
+<P><STRONG><a name="[80]"></a>SSPx_Control</STRONG> (Thumb, 1602 bytes, Stack size 88 bytes, ssp_lpc17xx.o(.text.SSPx_Control))
+<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = SSPx_Control &rArr; PIN_Configure
+</UL>
+<BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSSPClockFreq
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelDisable
+<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinWrite
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetDir
+<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
+</UL>
+<BR>[Called By]<UL><LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSP1_Control
+</UL>
+
+<P><STRONG><a name="[39]"></a>SSP1_GetStatus</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, ssp_lpc17xx.o(.text.SSP1_GetStatus))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = SSP1_GetStatus &rArr; SSPx_GetStatus
+</UL>
+<BR>[Calls]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_GetStatus
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> ssp_lpc17xx.o(.rodata.Driver_SPI1)
+</UL>
+<P><STRONG><a name="[84]"></a>SSPx_GetStatus</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, ssp_lpc17xx.o(.text.SSPx_GetStatus))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = SSPx_GetStatus
+</UL>
+<BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSP1_GetStatus
+</UL>
+
+<P><STRONG><a name="[8f]"></a>__NVIC_DisableIRQ</STRONG> (Thumb, 56 bytes, Stack size 4 bytes, ssp_lpc17xx.o(.text.__NVIC_DisableIRQ))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_DisableIRQ
 </UL>
-<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_Uninitialize
+<BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_PowerControl
 </UL>
 
-<P><STRONG><a name="[53]"></a>Set_Channel_active_flag</STRONG> (Thumb, 92 bytes, Stack size 12 bytes, gpdma_lpc17xx.o(.text.Set_Channel_active_flag))
+<P><STRONG><a name="[90]"></a>__NVIC_ClearPendingIRQ</STRONG> (Thumb, 48 bytes, Stack size 4 bytes, ssp_lpc17xx.o(.text.__NVIC_ClearPendingIRQ))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_ClearPendingIRQ
+</UL>
+<BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_PowerControl
+</UL>
+
+<P><STRONG><a name="[91]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 48 bytes, Stack size 4 bytes, ssp_lpc17xx.o(.text.__NVIC_EnableIRQ))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_EnableIRQ
+</UL>
+<BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_PowerControl
+</UL>
+
+<P><STRONG><a name="[8c]"></a>GetSSPClockFreq</STRONG> (Thumb, 90 bytes, Stack size 20 bytes, ssp_lpc17xx.o(.text.GetSSPClockFreq))
+<BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = GetSSPClockFreq
+</UL>
+<BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPx_Control
+</UL>
+
+<P><STRONG><a name="[78]"></a>__NVIC_ClearPendingIRQ</STRONG> (Thumb, 48 bytes, Stack size 4 bytes, gpdma_lpc17xx.o(.text.__NVIC_ClearPendingIRQ))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_ClearPendingIRQ
+</UL>
+<BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_Uninitialize
+<LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_Initialize
+</UL>
+
+<P><STRONG><a name="[79]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 48 bytes, Stack size 4 bytes, gpdma_lpc17xx.o(.text.__NVIC_EnableIRQ))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_EnableIRQ
+</UL>
+<BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_Initialize
+</UL>
+
+<P><STRONG><a name="[7b]"></a>__NVIC_DisableIRQ</STRONG> (Thumb, 56 bytes, Stack size 4 bytes, gpdma_lpc17xx.o(.text.__NVIC_DisableIRQ))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_DisableIRQ
+</UL>
+<BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_Uninitialize
+</UL>
+
+<P><STRONG><a name="[75]"></a>Set_Channel_active_flag</STRONG> (Thumb, 92 bytes, Stack size 12 bytes, gpdma_lpc17xx.o(.text.Set_Channel_active_flag))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = Set_Channel_active_flag
 </UL>
-<BR>[Called By]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelConfigure
+<BR>[Called By]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelConfigure
 </UL>
 
-<P><STRONG><a name="[51]"></a>Clear_Channel_active_flag</STRONG> (Thumb, 46 bytes, Stack size 4 bytes, gpdma_lpc17xx.o(.text.Clear_Channel_active_flag))
+<P><STRONG><a name="[64]"></a>Clear_Channel_active_flag</STRONG> (Thumb, 46 bytes, Stack size 4 bytes, gpdma_lpc17xx.o(.text.Clear_Channel_active_flag))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = Clear_Channel_active_flag
 </UL>
 <BR>[Called By]<UL><LI><a href="#[24]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_IRQHandler
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelConfigure
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelDisable
+<LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelConfigure
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPDMA_ChannelDisable
 </UL>
 <P>
 <H3>
