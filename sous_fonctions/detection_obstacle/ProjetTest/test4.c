@@ -1,17 +1,17 @@
 #include "Driver_I2C.h"                 // ::CMSIS Driver:I2C
 #include "stm32f4xx_hal.h"              // Keil::Device:STM32Cube HAL:Common
 #include "stm32f4xx.h"                  // Device header
-#include "stm32f4xx_hal_conf.h"         // Keil::Device:STM32Cube Framework:Classic
+//#include "stm32f4xx_hal_conf.h"         // Keil::Device:STM32Cube Framework:Classic
 
 
 
 
-#define CAPTAvD 0xE0 //0x70
-#define CAPTAvG 0xE1 //0x71
+#define CAPTAvD 0x70 //0xE0
+#define CAPTAvG 0x71 //0xE2
 
 extern ARM_DRIVER_I2C Driver_I2C1;
 
-uint8_t DeviceAddr;
+//uint8_t DeviceAddr;
 //uint16_t dist1;
 //uint16_t dist2;
 
@@ -30,7 +30,7 @@ void Init_I2C(void){
 }
 
 void write1byte(uint8_t capt_addr, uint8_t reg, uint8_t val) {
-    uint8_t tab[2] = {0x00, 0x51}; // 
+    uint8_t tab[2]; // 
 		
 		tab[0]= reg;
 		tab[1]= val;
@@ -53,22 +53,23 @@ uint8_t read1byte(uint8_t capt_addr, uint8_t reg) {
 
 
 // --- Fonction spécifique au SRF10 (Mesure + Attente ) ---
-unsigned short get_distance(uint8_t capt_addr) {
-    char high, low;
+uint16_t get_distance(uint8_t capt_addr) {
+    uint8_t high, low;
     
     // 1. Lancer la mesure en cm (Commande 0x51 dans registre 0) 
     write1byte(capt_addr, 0x00, 0x51);
 
     // 2. Attente : le capteur renvoie 0xFF tant qu'il mesure 
-    while (read1byte(capt_addr, 0) == 0xFF); 
+//    while (read1byte(capt_addr, 0) == 0xFF); 
+		HAL_Delay(70);
 
     // 3. Lire les registres de distance 2 et 3 
     high = read1byte(capt_addr, 0x02);
     low  = read1byte(capt_addr, 0x03);
     
-    return (uint16_t)(high << 8 | low); // Reconstruction 16-bits 
+    return (uint16_t)((high << 8) | low); // Reconstruction 16-bits 
 }
-//kljbgn, ;; GIT GIT
+
 
 int main(void)
 {
