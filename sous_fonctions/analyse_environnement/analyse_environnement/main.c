@@ -35,6 +35,9 @@ extern GLCD_FONT GLCD_Font_6x8;
 #define ANGLE_315 	315.0
 #define ANGLE_360 	360.0
 
+#define DETECTER     1
+#define TOUR_COMPLET 1
+
 /*-------------- Prototypes des fonctions --------------*/
 
 void Init_UART_Lidar(void);
@@ -59,14 +62,10 @@ char detect_obst_0_45 = 0, detect_obst_45_90 = 0, detect_obst_90_135 = 0, detect
 int main()
 {
 	GLCD_Initialize();
-	GLCD_SetFont(&GLCD_Font_6x8); 											// & car pointeurs => adresse
-	GLCD_SetBackgroundColor(GLCD_COLOR_BLUE);
-	GLCD_SetForegroundColor(GLCD_COLOR_YELLOW); 
-	GLCD_ClearScreen();
 	Init_UART_Lidar();
 	Init_LED();
 	
-	LPC_GPIO2->FIODIR0 |= 0x20; // Configuration de la broche P2.5 en sortie pour le moteur du Lidar (à 100%)
+	Init_Moteur_Lidar();
 	
 	SCAN();
 	
@@ -77,6 +76,8 @@ int main()
  * Fonction : void Init_UART_Lidar(void)
  *
  * Initialisation de l'UART0 pour le lidar (P0.2 (RX)/ P0.3 (TX))
+ *
+ * Fonctionne avec 8 bits de donnée, 1 bit de stop, pas de parité et travaille avec 115 200 bps
  *-------------------------------------------------------*/
 
 void Init_UART_Lidar(void)
@@ -100,6 +101,11 @@ void Init_UART_Lidar(void)
  * Response descriptor (7 octets): 0xA5, 0x5A, 0x05, 0x00, 0x00, 0x40, 0x81
  * Data response length : 5 octets 
  * Response mode : Multiple
+ * 
+ * Envoie des commandes et reception des données du Lidar dont l'angle et la distance (et autres),
+ * Ajout de fonction Analyse_environnement pour tester et afficher avec des LEDS
+ *
+ * Pour plus de détails sur le fonctionnement -> Protocole SLAMTEC page 16
  *-------------------------------------------------------*/
 
 void SCAN(void)
@@ -116,10 +122,10 @@ void SCAN(void)
 	
 	float angle_degree, distance_mm;
 	
-	cmd[0] = 0xA5;
+	cmd[0] = 0xA5;	 															// Deux octets à envoyer pour que le Lidar comprenne que c'est bien la commande SCAN -> Protocole p.16 pour détails
 	cmd[1] = 0x20;
 	
-	LPC_GPIO2->FIOPIN0 |= 0x20;										// Allume le moteur Lidar
+	Allumer_Moteur_Lidar(); 
 	
 	for(i = 0; i < 2000000; i++); 								// Delais pour laisser au moteur de tourner 
 	
@@ -140,16 +146,14 @@ void SCAN(void)
 		LSB_distance = reception[3];
 		MSB_distance = reception[4];
 		
-		angle_q6 = (MSB_angle << 7) | (LSB_angle >> 1);  					// angle_q6 et distance_q2 => données brutes, << et >> décalage des bits
+		angle_q6 = (MSB_angle << 7) | (LSB_angle >> 1);  					// angle_q6 et distance_q2 => données brutes, << et >> décalage des bits -> Protocole pour précision
 		distance_q2 =  (MSB_distance << 8) | LSB_distance ;	
 
-		flag = octet_0 & 0x01;	// masquage pour isoler le premier bit, qui correspond au flag (pour chaque tour = 1)
+		flag = octet_0 & 0x01;																		// Masquage pour isoler le premier bit, qui correspond au flag (pour chaque tour = 1)
 		angle_degree = angle_q6 / 64.0;
 		distance_mm = distance_q2 / 4.0;
 		
-		Analyse_environnement_8_secteurs(distance_mm, angle_degree, flag);
-		
-	
+		Analyse_environnement_4_secteurs(distance_mm, angle_degree, flag);
 	}
 }
 
@@ -161,7 +165,7 @@ void SCAN(void)
 
 void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, char flag)
 	{
-		if(flag == 1) 		// 1 tour effectué
+		if(flag == TOUR_COMPLET) 		// 1 tour effectué
 			{
 				if(detect_obst_0_90) 			Allumer_LED(LED_P2_2) ; 	else Eteindre_LED(LED_P2_2);
 				if(detect_obst_90_180) 		Allumer_LED(LED_P1_31); 	else Eteindre_LED(LED_P1_31);
@@ -231,7 +235,7 @@ void Analyse_environnement_8_secteurs(float distance_mm, float angle_degree, cha
  * Initialisation du moteur du lidar
  *--------------------------------------------------------*/
 
-void Init_Moteur_Lidar(void){ LPC_GPIO2->FIOPIN0 |= 0x20; }	
+void Init_Moteur_Lidar(void){ LPC_GPIO2->FIODIR0 |= 0x20; }	
 
 /* --------------------------------------------------------
  * Fonction : void Allumer_Moteur_Lidar(void)
@@ -242,7 +246,7 @@ void Init_Moteur_Lidar(void){ LPC_GPIO2->FIOPIN0 |= 0x20; }
 void Allumer_Moteur_Lidar(void){ LPC_GPIO2->FIOPIN0 |= 0x20;  }				
 	
 /*--------------------------------------------------------
- * Fonction : void Allumer_Moteur_Lidar(void)
+ * Fonction : void Init_LED(void)
  *
  * Configuration des LEDS de la carte
  *--------------------------------------------------------*/
