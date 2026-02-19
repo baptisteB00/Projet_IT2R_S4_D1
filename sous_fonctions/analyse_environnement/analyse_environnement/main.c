@@ -44,6 +44,8 @@ void Analyse_environnement_8_secteurs(float distance_mm, float angle_degree, cha
 void Init_LED(void);
 void Allumer_LED(char Num_LED);
 void Eteindre_LED(char Num_LED);
+void Init_Moteur_Lidar(void);
+void Allumer_Moteur_Lidar(void);
 
 /*-------------- Variables globales --------------*/
 
@@ -132,8 +134,6 @@ void SCAN(void)
 		Driver_USART0.Receive(reception, 5); 				// On receptionne les paquets RECEPTION
 		while(Driver_USART0.GetRxCount() < 5); 
 		
-		/* Reception des octets du SCAN */ 
-		
 	  octet_0 = reception[0];				
 		LSB_angle = reception[1];
 		MSB_angle = reception[2];             
@@ -157,7 +157,6 @@ void SCAN(void)
  * Fonction : void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, char flag)
  *
  * Analyse l'environnement sur 4 secteurs, affiche sur 4 LEDS.
- *
  *-------------------------*/
 
 void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, char flag)
@@ -188,7 +187,6 @@ void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, cha
  * Fonction : void Analyse_environnement_8_secteurs(float distance_mm, float angle_degree, char flag)
  *
  * Analyse l'environnement sur 8 secteurs, affiche sur 7 LEDS (car un des GPIO est relié au moteur du lidar).
- *
  *--------------------------------------------------------*/
 
 void Analyse_environnement_8_secteurs(float distance_mm, float angle_degree, char flag)
@@ -213,6 +211,7 @@ void Analyse_environnement_8_secteurs(float distance_mm, float angle_degree, cha
 				detect_obst_270_315 = 0;
 				detect_obst_315_360 = 0;
 			}
+			
 		if(distance_mm > 100.0 && distance_mm < 300.0) // 100.0 car peut avoir des erreurs donc dist = 0 -> protocole 
 			{
 				if(angle_degree > 0.0 && angle_degree < 45.0) 		detect_obst_0_45 = 1;
@@ -224,17 +223,29 @@ void Analyse_environnement_8_secteurs(float distance_mm, float angle_degree, cha
 				if(angle_degree > 270.0 && angle_degree < 315.0) 	detect_obst_270_315 = 1;
 				if(angle_degree > 315.0 && angle_degree < 360.0) 	detect_obst_315_360 = 1;
 			}	
-		
-		
-		
 	}		
+	
+/* --------------------------------------------------------
+ * Fonction : void Init_Moteur_Lidar(void)
+ *
+ * Initialisation du moteur du lidar
+ *--------------------------------------------------------*/
+
+void Init_Moteur_Lidar(void){ LPC_GPIO2->FIOPIN0 |= 0x20; }	
+
+/* --------------------------------------------------------
+ * Fonction : void Allumer_Moteur_Lidar(void)
+ *
+ * Allume le moteur du lidar
+ *--------------------------------------------------------*/
+
+void Allumer_Moteur_Lidar(void){ LPC_GPIO2->FIOPIN0 |= 0x20;  }				
+	
 /*--------------------------------------------------------
-
-Fonction : void Init_LED(void)
-
-Configuration des LEDS de la carte
-
----------------------------------------------------------*/
+ * Fonction : void Allumer_Moteur_Lidar(void)
+ *
+ * Configuration des LEDS de la carte
+ *--------------------------------------------------------*/
 
 void Init_LED(void)
 	{
@@ -243,12 +254,10 @@ void Init_LED(void)
 	}
 
 /*--------------------------------------------------------
-
-Fonction : void Allumer_LED(char Num_LED)
-
-Allume la LED choisi en paramètre -> Utiliser les constantes définit au début du code ou numéro des cases..
-	
----------------------------------------------------------*/
+ * Fonction : void Allumer_LED(char Num_LED)
+ * 
+ * Allume la LED choisi en paramètre -> Utiliser les constantes définit au début du code ou numéro des cases.. 	
+ *--------------------------------------------------------*/
 
 void Allumer_LED(char Num_LED)
 	{
@@ -265,12 +274,10 @@ void Allumer_LED(char Num_LED)
 	}
 
 /*--------------------------------------------------------
-	
-Fonction : void Eteindre(char Num_LED)
-
-Eteint la LED choisi en paramètre -> Utiliser les constantes définit au début du code ou numéro des cases..
-	
----------------------------------------------------------*/
+ * Fonction : void Eteindre(char Num_LED)
+ *
+ * Eteint la LED choisi en paramètre -> Utiliser les constantes définit au début du code ou numéro des cases..	
+ *---------------------------------------------------------*/
 	
 void Eteindre_LED(char Num_LED)
 	{
