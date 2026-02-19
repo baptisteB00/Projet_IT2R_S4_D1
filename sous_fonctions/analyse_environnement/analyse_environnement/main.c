@@ -25,12 +25,22 @@ extern GLCD_FONT GLCD_Font_6x8;
 #define LED_P2_4 		5
 #define LED_P2_6 		6
 
+#define ANGLE_0 		0.0
+#define ANGLE_45 		45.0
+#define ANGLE_90 		90.0
+#define ANGLE_135 	135.0
+#define ANGLE_180 	180.0
+#define ANGLE_225 	225.0 
+#define ANGLE_270 	270.0
+#define ANGLE_315 	315.0
+#define ANGLE_360 	360.0
+
 /*-------------- Prototypes des fonctions --------------*/
 
 void Init_UART_Lidar(void);
 void SCAN(void);
 void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, char flag);
-void Secteur_angle_8_parts(char dist_max);
+void Analyse_environnement_8_secteurs(float distance_mm, float angle_degree, char flag);
 void Init_LED(void);
 void Allumer_LED(char Num_LED);
 void Eteindre_LED(char Num_LED);
@@ -137,7 +147,7 @@ void SCAN(void)
 		angle_degree = angle_q6 / 64.0;
 		distance_mm = distance_q2 / 4.0;
 		
-		Analyse_environnement_4_secteurs(distance_mm, angle_degree, flag);
+		Analyse_environnement_8_secteurs(distance_mm, angle_degree, flag);
 		
 	
 	}
@@ -154,10 +164,10 @@ void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, cha
 	{
 		if(flag == 1) 		// 1 tour effectué
 			{
-				if(detect_obst_0_90) 		Allumer_LED(LED_P2_2) ; else Eteindre_LED(LED_P2_2);
-				if(detect_obst_90_180) 	Allumer_LED(LED_P1_31); else Eteindre_LED(LED_P1_31);
-				if(detect_obst_180_270) Allumer_LED(LED_P1_29); else Eteindre_LED(LED_P1_29);
-				if(detect_obst_270_360) Allumer_LED(LED_P1_28); else Eteindre_LED(LED_P1_28);
+				if(detect_obst_0_90) 			Allumer_LED(LED_P2_2) ; 	else Eteindre_LED(LED_P2_2);
+				if(detect_obst_90_180) 		Allumer_LED(LED_P1_31); 	else Eteindre_LED(LED_P1_31);
+				if(detect_obst_180_270) 	Allumer_LED(LED_P1_29); 	else Eteindre_LED(LED_P1_29);
+				if(detect_obst_270_360) 	Allumer_LED(LED_P1_28); 	else Eteindre_LED(LED_P1_28);
 			
 				detect_obst_0_90 = 0; // on reset tout à 0 a chaque tour
 				detect_obst_90_180 = 0;
@@ -167,14 +177,57 @@ void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, cha
 			
 		if(distance_mm > 100.0 && distance_mm < 300.0) // 100.0 car peut avoir des erreurs donc dist = 0 -> protocole 
 			{
-				if(angle_degree > 0.0 && angle_degree < 90.0) detect_obst_0_90 = 1;
-				if(angle_degree > 90.0 && angle_degree < 180.0) detect_obst_90_180 = 1;
-				if(angle_degree > 180.0 && angle_degree < 270.0) detect_obst_180_270 = 1;
-				if(angle_degree > 270.0 && angle_degree < 360.0) detect_obst_270_360 = 1;
+				if(angle_degree > 0.0 && angle_degree < 90.0) 		detect_obst_0_90 = 1;
+				if(angle_degree > 90.0 && angle_degree < 180.0) 	detect_obst_90_180 = 1;
+				if(angle_degree > 180.0 && angle_degree < 270.0) 	detect_obst_180_270 = 1;
+				if(angle_degree > 270.0 && angle_degree < 360.0)	detect_obst_270_360 = 1;
 			}	
+	}
+	
+/* --------------------------------------------------------
+ * Fonction : void Analyse_environnement_8_secteurs(float distance_mm, float angle_degree, char flag)
+ *
+ * Analyse l'environnement sur 8 secteurs, affiche sur 7 LEDS (car un des GPIO est relié au moteur du lidar).
+ *
+ *--------------------------------------------------------*/
 
-}
-
+void Analyse_environnement_8_secteurs(float distance_mm, float angle_degree, char flag)
+	{
+		if(flag == 1) 								// 1 tour effectué
+			{
+				if(detect_obst_0_45) 			Allumer_LED(LED_P2_2) ; 	else Eteindre_LED(LED_P2_2);
+				if(detect_obst_45_90) 		Allumer_LED(LED_P1_31); 	else Eteindre_LED(LED_P1_31);
+				if(detect_obst_90_135)  	Allumer_LED(LED_P1_29); 	else Eteindre_LED(LED_P1_29);
+				if(detect_obst_135_180) 	Allumer_LED(LED_P1_28); 	else Eteindre_LED(LED_P1_28);
+				if(detect_obst_180_225) 	Allumer_LED(LED_P2_3) ; 	else Eteindre_LED(LED_P2_3);
+				if(detect_obst_225_270) 	Allumer_LED(LED_P2_4); 		else Eteindre_LED(LED_P2_4);
+				if(detect_obst_270_315) 	Allumer_LED(LED_P2_6); 		else Eteindre_LED(LED_P2_6);
+				if(detect_obst_315_360) 	Allumer_LED(LED_P1_31); 	else Eteindre_LED(LED_P1_31); // Meme led qu'une autre car pas assez de LED..
+			
+				detect_obst_0_45 = 0; 		// on reset tout à 0 a chaque tour
+				detect_obst_45_90 = 0;
+				detect_obst_90_135 = 0;
+				detect_obst_135_180 = 0;
+				detect_obst_180_225 = 0; 
+				detect_obst_225_270 = 0;
+				detect_obst_270_315 = 0;
+				detect_obst_315_360 = 0;
+			}
+		if(distance_mm > 100.0 && distance_mm < 300.0) // 100.0 car peut avoir des erreurs donc dist = 0 -> protocole 
+			{
+				if(angle_degree > 0.0 && angle_degree < 45.0) 		detect_obst_0_45 = 1;
+				if(angle_degree > 45.0 && angle_degree < 90.0) 		detect_obst_45_90 = 1;
+				if(angle_degree > 90.0 && angle_degree < 135.0) 	detect_obst_90_135 = 1;
+				if(angle_degree > 135.0 && angle_degree < 180.0) 	detect_obst_135_180 = 1;
+				if(angle_degree > 180 && angle_degree < 225.0) 		detect_obst_180_225 = 1;
+				if(angle_degree > 225.0 && angle_degree < 270.0) 	detect_obst_225_270 = 1;
+				if(angle_degree > 270.0 && angle_degree < 315.0) 	detect_obst_270_315 = 1;
+				if(angle_degree > 315.0 && angle_degree < 360.0) 	detect_obst_315_360 = 1;
+			}	
+		
+		
+		
+	}		
 /*--------------------------------------------------------
 
 Fonction : void Init_LED(void)
