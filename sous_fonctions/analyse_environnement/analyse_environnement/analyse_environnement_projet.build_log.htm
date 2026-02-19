@@ -5,7 +5,7 @@
 <h2>Tool Versions:</h2>
 IDE-Version: µVision V5.43.1.0
 Copyright (C) 2025 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: iut cachan iut cachan Flex license: MDK Professional 5.43 (Flex) (mdk_pro) Operation stops: 11 Apr 2027
+License Information: IUT Cachan IUT Cachan IUT Cachan Flex license: MDK Professional 5.43 (Flex) (mdk_pro) Operation stops: 11 Apr 2027
  
 Tool Versions:
 Toolchain:       MDK Professional 5.43 (Flex)  Version: 5.43.0.0
@@ -22,17 +22,22 @@ Dialog DLL:      TARMP1.DLL V1.27.1.0
  
 <h2>Project:</h2>
 C:\Etudiants\Git\Projet_IT2R_S4_D1\sous_fonctions\analyse_environnement\analyse_environnement\analyse_environnement_projet.uvprojx
-Project File Date:  02/18/2026
+Project File Date:  02/19/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.24', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Target_1'
+compiling system_LPC17xx.c...
+compiling GPIO_LPC17xx.c...
+compiling PIN_LPC17xx.c...
 main.c(90): warning: while loop has empty body [-Wempty-body]
    90 |                 while(Driver_USART0.GetRxCount() < 5); 
       |                                                      ^
 main.c(90): note: put the semicolon on a separate line to silence this warning
 1 warning generated.
 compiling main.c...
+compiling GPDMA_LPC17xx.c...
+compiling UART_LPC17xx.c...
 linking...
 Program Size: Code=13562 RO-data=718 RW-data=4 ZI-data=836  
 ".\analyse_environnement_projet.axf" - 0 Error(s), 1 Warning(s).
@@ -40,10 +45,10 @@ Program Size: Code=13562 RO-data=718 RW-data=4 ZI-data=836
 <h2>Software Packages used:</h2>
 
 Package Vendor: ARM
-                https://www.keil.com/pack/ARM.CMSIS.6.2.0.pack
-                ARM::CMSIS@6.2.0
+                https://www.keil.com/pack/ARM.CMSIS.6.3.0.pack
+                ARM::CMSIS@6.3.0
                 CMSIS (Common Microcontroller Software Interface Standard)
-   * Component: CORE Version: 6.1.1
+   * Component: CORE Version: 6.2.0
    * Component: USART Version: 2.4.0
 
 Package Vendor: Keil
@@ -59,14 +64,14 @@ Package Vendor: Keil
 <h2>Collection of Component include folders:</h2>
   ./RTE/Device/LPC1768
   ./RTE/_Target_1
-  C:/Keil_v5/ARM/Pack/ARM/CMSIS/6.2.0/CMSIS/Core/Include
-  C:/Keil_v5/ARM/Pack/ARM/CMSIS/6.2.0/CMSIS/Driver/Include
-  C:/Keil_v5/ARM/Pack/Keil/LPC1700_DFP/3.0.0/Device/Include
-  C:/Keil_v5/ARM/Pack/Keil/LPC1700_DFP/3.0.0/RTE_Driver
+  C:/Keil_v5/ARM/PACK/ARM/CMSIS/6.3.0/CMSIS/Core/Include
+  C:/Keil_v5/ARM/PACK/ARM/CMSIS/6.3.0/CMSIS/Driver/Include
+  C:/Keil_v5/ARM/PACK/Keil/LPC1700_DFP/3.0.0/Device/Include
+  C:/Keil_v5/ARM/PACK/Keil/LPC1700_DFP/3.0.0/RTE_Driver
 
 <h2>Collection of Component Files used:</h2>
 
-   * Component: ARM::CMSIS:CORE@6.1.1
+   * Component: ARM::CMSIS:CORE@6.2.0
 
    * Component: CMSIS Driver:USART(API)@2.4.0
       Include file:  CMSIS/Driver/Include/Driver_USART.h
@@ -75,23 +80,23 @@ Package Vendor: Keil
       Source file:   RTE_Driver/UART_LPC17xx.c
 
    * Component: Keil::Device:GPDMA@1.4.0
-      Include file:  RTE_Driver/GPDMA_LPC17xx.h
       Source file:   RTE_Driver/GPDMA_LPC17xx.c
+      Include file:  RTE_Driver/GPDMA_LPC17xx.h
 
    * Component: Keil::Device:GPIO@1.1.0
-      Include file:  RTE_Driver/GPIO_LPC17xx.h
       Source file:   RTE_Driver/GPIO_LPC17xx.c
+      Include file:  RTE_Driver/GPIO_LPC17xx.h
 
    * Component: Keil::Device:PIN@1.0.0
-      Include file:  RTE_Driver/PIN_LPC17xx.h
       Source file:   RTE_Driver/PIN_LPC17xx.c
+      Include file:  RTE_Driver/PIN_LPC17xx.h
 
    * Component: Keil::Device:Startup@1.0.0
-      Include file:  Device/Include/LPC17xx.h
       Source file:   Device/Source/ARM/startup_LPC17xx.s
-      Include file:  RTE_Driver/Config/RTE_Device.h
       Source file:   Device/Source/system_LPC17xx.c
-Build Time Elapsed:  00:00:00
+      Include file:  RTE_Driver/Config/RTE_Device.h
+      Include file:  Device/Include/LPC17xx.h
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
