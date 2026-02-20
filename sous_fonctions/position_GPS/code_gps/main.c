@@ -1,6 +1,12 @@
-
-
-
+/* --------------------------------------------------------------------------
+ * Projet BUT2 Semestre 4 : L'embarqué pour véhicule intelligent et communicant 
+ * Auteurs : Groupe IT2R1
+ * 
+ * Objectif de ce code : Position GPS
+ * 
+ * Utilisation d'un PmodGPS -> Voir doc sur GitHub
+ * Programmé sur carte STM32F4
+ * -------------------------------------------------------------------------- */
 
 #include "stm32f4xx.h"                  // Device header
 #include "Driver_USART.h"               // CMSIS Driver:USART
@@ -12,8 +18,7 @@ void Init_UART_GPS(void);
 int main()
 {
 	char message[100];
-	
-	
+
 	Init_UART_GPS();
 	
 	while(1)
@@ -22,8 +27,6 @@ int main()
 		while(Driver_USART3.GetRxCount() < 100);
 		
 	}
-	
-	
 	return 0;
 }
 
