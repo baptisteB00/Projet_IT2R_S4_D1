@@ -1,7 +1,16 @@
 #include "stm32f4xx.h"                  // Device header
-#include "stm32f4xx_hal.h"              // Device:STM32Cube HAL:Common
 #include "Driver_USART.h"
 #include "RTE_Components.h"
+
+#define led_verte 12
+#define led_orange 13
+#define led_rouge 14
+#define led_bleue 15
+
+#define ATTENTE -1
+#define AUTORISE 1
+#define REFUSE 0
+
 
 // Déclarations Externes
 extern ARM_DRIVER_USART Driver_USART1;
@@ -15,6 +24,9 @@ uint8_t buffer_rfid[14];
 void My_USART_Callback(unsigned int event);
 void Init_Systeme(void);
 int Identification(unsigned char badge_maitre[], uint8_t recu[]);
+void allumer_led(int n);
+void eteindre_led(int n);
+
 
 // Fonction de callback (évite l'écriture d'une fonction d'interruption en utilisant une configurée pralablement dans le driver UART)
 void My_USART_Callback(unsigned int event) {
@@ -33,59 +45,65 @@ void Init_Systeme(void) {
                           ARM_USART_STOP_BITS_1       |
                           ARM_USART_PARITY_NONE, 9600);
     Driver_USART1.Control(ARM_USART_CONTROL_RX, 1); // Activer la réception
+		Driver_USART1.Control(ARM_USART_CONTROL_TX, 1); // Activer la réception
 }
 
 int main(void) {
     unsigned char badge_maitre[12] = {0x33,0x43,0x30,0x30,0x34,0x44,0x39,0x35,0x44,0x32,0x33,0x36};
-    int ouverture = 0, i;
+    int etat = ATTENTE;
+		uint32_t i;
 		
 		RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN; // Enable the clock of port D of the GPIO
 		GPIOD->MODER |= GPIO_MODER_MODER12_0; // Green LED, set pin 12 as output
 		GPIOD->MODER |= GPIO_MODER_MODER13_0; // Orange LED, set pin 13 as output
 		GPIOD->MODER |= GPIO_MODER_MODER14_0; // Red LED, set pin 14 as output
 		GPIOD->MODER |= GPIO_MODER_MODER15_0; // Blue LED, set pin 15 as output
+		GPIOD->BSRR = 0;
 		
     Init_Systeme();
 		
 		Driver_USART1.Receive(buffer_rfid, 14);
-
+		
     while (1) {
-			 GPIOD->BSRR = 1<<13; // Set the BSRR bit X to 1 to turn respective LED on
+			 allumer_led(led_orange);
+			 eteindre_led(led_bleue);
        if (badge_complet) {
+				  allumer_led(led_bleue);
            // On traite le badge reçu
-           ouverture = Identification(badge_maitre, buffer_rfid);
+           etat = Identification(badge_maitre, buffer_rfid);
 				 
-					if (ouverture == 1){
-						GPIOD->BSRR = 1<<12; // Set the BSRR bit X to 1 to turn respective LED on
-						GPIOD->BSRR = 1<<(14+16); // Set the BSRR bit X + 16 to 1 to turn respective LED off
-						GPIOD->BSRR = 1<<(13+16); // Set the BSRR bit X + 16 to 1 to turn respective LED off
-						for(i=0;i<3000000;i++);
-						GPIOD->BSRR = 1<<(12+16); // Set the BSRR bit X + 16 to 1 to turn respective LED off
+					if (etat == AUTORISE){
+						Driver_USART1.Send("1", 1);
+						eteindre_led(led_orange);
+						eteindre_led(led_rouge);
+						allumer_led(led_verte);
+						for(i=0;i<1000000;i++);
+						eteindre_led(led_verte);
 					}
 					
-					else if (ouverture == 0){
-						GPIOD->BSRR = 1<<14; // Set the BSRR bit X to 1 to turn respective LED on
-						GPIOD->BSRR = 1<<(12+16); // Set the BSRR bit X + 16 to 1 to turn respective LED off
-						GPIOD->BSRR = 1<<(13+16); // Set the BSRR bit X + 16 to 1 to turn respective LED off
-						for(i=0;i<500000;i++);
-						GPIOD->BSRR = 1<<(14+16); // Set the BSRR bit X + 16 to 1 to turn respective LED off
-						for(i=0;i<500000;i++);
-						GPIOD->BSRR = 1<<14; // Set the BSRR bit X to 1 to turn respective LED on
-						for(i=0;i<500000;i++);
-						GPIOD->BSRR = 1<<(14+16); // Set the BSRR bit X + 16 to 1 to turn respective LED off
-						for(i=0;i<500000;i++);
-						GPIOD->BSRR = 1<<14; // Set the BSRR bit X to 1 to turn respective LED on
-						for(i=0;i<500000;i++);
-						GPIOD->BSRR = 1<<(14+16); // Set the BSRR bit X + 16 to 1 to turn respective LED off
-						for(i=0;i<500000;i++);
+					else if (etat == REFUSE){
+						Driver_USART1.Send("0", 1);
+						eteindre_led(led_orange);
+						eteindre_led(led_verte);
+						allumer_led(led_rouge);
+						for(i=0;i<100000;i++);
+						eteindre_led(led_rouge);
+						for(i=0;i<100000;i++);
+						allumer_led(led_rouge);
+						for(i=0;i<100000;i++);
+						eteindre_led(led_rouge);
+						for(i=0;i<100000;i++);
+						allumer_led(led_rouge);
+						for(i=0;i<100000;i++);
+						eteindre_led(led_rouge);
 					}
-            
+ 
            badge_complet = false;
-            
            Driver_USART1.Receive(buffer_rfid, 14);
        }
    }
 }
+
 
 int Identification(unsigned char tab[], uint8_t recu[]) {
     int i, b = 0;
@@ -95,9 +113,15 @@ int Identification(unsigned char tab[], uint8_t recu[]) {
     }
 
     if (b == 12) {
-        return 1;
+        return AUTORISE;
     } else {
-        return 0;
+        return REFUSE;
     }
 }
 
+void allumer_led(int n){
+		GPIOD->BSRR |= (1<<n);
+}
+void eteindre_led(int n){
+		GPIOD->BSRR |= (1<<(n+16));
+}
