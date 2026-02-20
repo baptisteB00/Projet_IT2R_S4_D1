@@ -1,8 +1,11 @@
 #include "LPC17xx.h"
 #include "Driver_USART.h"
+#include "GLCD_Config.h"                // Board Support:Graphic LCD
+#include "GLCD_Fonts.h"                 // Board Support:Graphic LCD
+#include "stdio.h"                    // Device header
 
 extern ARM_DRIVER_USART Driver_USART1;
-
+extern int32_t GLCD_Initialize (void);
 
 void delay_ms(uint32_t ms) {
   // Boucle de délai  
@@ -55,19 +58,22 @@ void Init_UART(void) {
 int main(void) {
 		//Initialise_GPIO ();
     Init_UART();
-	
-		int tab[1];
+		GLCD_Initialize();
+		GLCD_ClearScreen();
+		GLCD_SetFont(&GLCD_Font_16x24);
+		char tab[1];
+		
 	 // 1.Reset le module	(0x0C, param: 0x0000)
-		sendDFCommand(0x0C, 0x00, 0x00);
+//		sendDFCommand(0x0C, 0x00, 0x00);
     delay_ms(1000); // Attendre la stabilisation du module au démarrage 
 
    // 2. Spécifier la source de lecture : Carte TF (0x09, param: 0x02) 
-		sendDFCommand(0x09, 0x00, 0x01);
+		//sendDFCommand(0x09, 0x00, 0x01);
     delay_ms(200); // Délai nécessaire après sélection de la source 
 		//Allumer_1LED(1);
     
 	// 3. Régler le volume à 15 (0x06, param: 0x0F) 
-    sendDFCommand(0x06, 0x00, 0x05);
+    sendDFCommand(0x06, 0x00, 0x09);
     delay_ms(100);
 		//Allumer_1LED(2);
     
@@ -75,8 +81,22 @@ int main(void) {
     sendDFCommand(0x03, 0x00, 0x02);
 	delay_ms(100);
 	 sendDFCommand(0x0D, 0x00, 0x00);
+	
     while (1) {
 			Driver_USART1.Receive(tab,1);
+			while(Driver_USART1.GetRxCount()<1);
+			if (tab[0]==0x30)
+			{
+				sendDFCommand(0x03, 0x00, 0x03);
+				delay_ms(100);
+				sendDFCommand(0x0D, 0x00, 0x00);
+			}
+			if (tab[0]==0x31)
+			{
+				sendDFCommand(0x03, 0x00, 0x04);
+				delay_ms(100);
+				sendDFCommand(0x0D, 0x00, 0x00);
+			}
         // Le programme boucle ici pendant que le son joue
     }
 }
