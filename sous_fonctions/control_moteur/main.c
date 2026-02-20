@@ -2,13 +2,13 @@
 
 
 /*................PIN....................
-P0.23 => moteur de motricite
-P2.25 => moteur de direction
+P0.23 => moteur de la voiture
+P2.25 => servo moteur de direction
 .......................................*/
 
 uint32_t VAL_PWM_SERVO = 50000;
 
-enum sens {AVANT = 1 , ARRIERE = -1 , STOP = 0};
+enum sens {AVANT, ARRIERE, STOP_HIGH,STOP_LOW};
 enum return_vit{vitOK,vitERROR};
 
 void init_moteur_motricite(void);
@@ -19,7 +19,7 @@ void direction_roue(int16_t angle);
 
 
 int main(void){
-	int i=0;
+	
   init_moteur_motricite();
 	
 	init_servo_moteur();
@@ -28,45 +28,45 @@ int main(void){
 	
 	direction_roue(90);
 	while (1){
-		if(LPC_GPIO0->FIOPIN2){
+		/*if(LPC_GPIO0->FIOPIN2){
 		direction_roue(i);
 		}
 		i++;
-		if(i>90)i=-90;
+		if(i>90)i=-90;*/
 	}
 }
 
 void init_servo_moteur()
 {
-		LPC_GPIO3->FIODIR3|=(1<<2);
+		LPC_GPIO3->FIODIR3|=(1<<2); // active la sortie utiliser par l'interuption du timer
 		// Validation des 4 TIMERS   
 		LPC_SC->PCONP = LPC_SC->PCONP | 0x00C00006;   
 	
 		LPC_TIM0->PR = 0;  // le registre PR prend la valeur du prescaler
-		LPC_TIM0->MR0 = 499999;    // le registre MR0 prend la valeur maximum du compteur
+		LPC_TIM0->MR0 = 499999;    // debut le timer a 50hz
 		LPC_TIM0->MCR=LPC_TIM0->MCR | 0x00000003; // active le reset on mr0 et les interuptions
 	
-		LPC_TIM0->TCR = 1;  
+		LPC_TIM0->TCR = 1;  // active le timer
 		
-		NVIC_SetPriority(TIMER0_IRQn,0);
-		NVIC_EnableIRQ(TIMER0_IRQn);
+		NVIC_SetPriority(TIMER0_IRQn,0);//active l'interuption sur MR0
+		NVIC_EnableIRQ(TIMER0_IRQn);// met la priorite maximal sur l'interruption de MR0
 }
 
-
+//interruption gerant la PWM du servo moteur
 void TIMER0_IRQHandler(void){
-	volatile static char stat = 0 ; 
+	volatile static char stat = 0 ; // variable servant a savoir si l'ont est a l'etat haut ou bas
 	LPC_TIM0->IR = 1; // baissse le flag
 
 	if (stat == 1 ){
-	 LPC_TIM0->MR0 = 500000 - VAL_PWM_SERVO;
+	 LPC_TIM0->MR0 = 500000 - VAL_PWM_SERVO;// temps a l'etat bas
 	}
 	else
 	{
-		LPC_TIM0->MR0 = VAL_PWM_SERVO; 
+		LPC_TIM0->MR0 = VAL_PWM_SERVO; //temps a l'etat haut
 	}
 	
-	stat ^=1;
-	LPC_GPIO3->FIOPIN3 ^= (1<<2);
+	stat ^=1;// change de l'etat haut vers bas ou vis versa
+	LPC_GPIO3->FIOPIN3 ^= (1<<2); // change la valeur de P3.26 pour realiser la PWM
 	
 }
 
@@ -85,8 +85,7 @@ LPC_PWM1->MR2=0; // desactive la vitesse au debut
 
 }
 
-
-
+// valeur possible AVANT, ARRIERE, STOP_HIGH, STOP_LOW
 void direction_moteur(enum sens direction ){
 
 	switch (direction){
@@ -101,12 +100,15 @@ void direction_moteur(enum sens direction ){
 				LPC_GPIO0->FIOPIN2 |=(1<<0);
 			break;
 		default:
-		case STOP:
-			LPC_GPIO0->FIOPIN2 &=~(1<<3);
-			LPC_GPIO0->FIOPIN2 &=~(1<<0);
+		case STOP_LOW:
+				LPC_GPIO0->FIOPIN2 &=~(1<<3);
+				LPC_GPIO0->FIOPIN2 &=~(1<<0);
+			break;
+		case STOP_HIGH:
+				LPC_GPIO0->FIOPIN2 |=(1<<3);
+				LPC_GPIO0->FIOPIN2 |=(1<<0);
 			break;
 		}
-	
 }  
 
 
@@ -115,7 +117,7 @@ enum return_vit control_vitesse(uint8_t val_vitesse){
 	
 	if(val_vitesse<=100 && val_vitesse>=0){
 	
-	LPC_PWM1->MR2 = (uint16_t)(val_vitesse * 24.99); //*6 car valeur entre 0;100 => 0;600
+	LPC_PWM1->MR2 = (uint16_t)(val_vitesse * 24.99); //*24.99 car MR0 entre 0 et 24999
 		return vitOK;
 	}else {
 		LPC_PWM1->MR2 =0;

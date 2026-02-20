@@ -392,6 +392,9 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>::Board Support</GroupName>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
         <Group>
@@ -402,10 +405,29 @@
   </Targets>
 
   <RTE>
-    <apis/>
+    <apis>
+      <api Capiversion="1.0.0" Cclass="Board Support" Cgroup="A/D Converter" exclusive="0">
+        <package name="MDK-Middleware" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="7.17.0"/>
+        <targetInfos>
+          <targetInfo name="Target_1"/>
+        </targetInfos>
+      </api>
+    </apis>
     <components>
       <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="6.2.0" condition="ARMv6_7_8-M Device" ymlID="CMSIS:CORE">
         <package name="CMSIS" schemaVersion="1.7.53" url="https://www.keil.com/pack/" vendor="ARM" version="6.3.0"/>
+        <targetInfos>
+          <targetInfo name="Target_1"/>
+        </targetInfos>
+      </component>
+      <component Capiversion="1.0.0" Cbundle="MCB1700" Cclass="Board Support" Cgroup="A/D Converter" Cvendor="Keil" Cversion="1.0.0" condition="LPC1700 CMSIS PIN" ymlID="Board Support&amp;MCB1700:A/D Converter">
+        <package name="LPC1700_DFP" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="3.0.0"/>
+        <targetInfos>
+          <targetInfo name="Target_1"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="PIN" Cvendor="Keil" Cversion="1.0.0" condition="LPC1700 CMSIS Device" ymlID="Device:PIN">
+        <package name="LPC1700_DFP" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="3.0.0"/>
         <targetInfos>
           <targetInfo name="Target_1"/>
         </targetInfos>
