@@ -3,34 +3,42 @@
 
 extern ARM_DRIVER_USART Driver_USART1;
 
+
+void delay_ms(uint32_t ms) {
+  // Boucle de délai  
+	int i=0;
+	for (i; i < ms * 12000; i++);
+}
+
 // Fonction pour envoyer une trame de commande au DFPlayer
 void sendDFCommand(uint8_t cmd, uint8_t para1, uint8_t para2) {
-    uint8_t packet[10];
-    uint16_t checksum;
+    char packet[10];
+    short checksum;
+		int i;
 
-    packet[0] = 0x7E;          // Start byte [cite: 474]
-    packet[1] = 0xFF;          // Version [cite: 474]
-    packet[2] = 0x06;          // Data length [cite: 474]
-    packet[3] = cmd;           // Command ID [cite: 474]
+    packet[0] = 0x7E;          // Start byte 
+    packet[1] = 0xFF;          // Version 
+    packet[2] = 0x06;          // Data length 
+    packet[3] = cmd;           // Command ID 
     packet[4] = 0x00;          // Feedback (0x00 = No, 0x01 = Yes) 
     packet[5] = para1;         // Parameter high byte 
     packet[6] = para2;         // Parameter low byte 
     
     // Calcul du Checksum : 0xFFFF - (VER + Len + CMD + Feedback + Para1 + Para2) + 1
-    checksum = 0 - (packet[1] + packet[2] + packet[3] + packet[4] + packet[5] + packet[6]);
+    checksum = 0xffff - (packet[1] + packet[2] + packet[3] + packet[4] + packet[5] + packet[6])+1;
     
-    packet[7] = (uint8_t)(checksum >> 8); // Checksum high byte [cite: 519]
-    packet[8] = (uint8_t)(checksum & 0xFF); // Checksum low byte [cite: 519]
-    packet[9] = 0xEF;          // End byte [cite: 474]
+    packet[7] = (uint8_t)(checksum >> 8); // Checksum high byte 
+    packet[8] = (uint8_t)(checksum & 0xFF); // Checksum low byte
+    packet[9] = 0xEF;          // End byte 
 
-    Driver_USART1.Send(packet, 10);
+	for (i=0;i<10;i++)
+	{
+    Driver_USART1.Send(&packet[i], 1);
     while (Driver_USART1.GetStatus().tx_busy);
+		delay_ms(2);
+	}
 }
 
-void delay_ms(uint32_t ms) {
-    // Boucle de délai simplifiée (à ajuster selon la fréquence de votre CPU)git status
-    for (volatile uint32_t i = 0; i < ms * 12000; i++);
-}
 
 void Init_UART(void) {
     Driver_USART1.Initialize(NULL);
@@ -45,23 +53,30 @@ void Init_UART(void) {
 }
 
 int main(void) {
-		Initialise_GPIO ();
+		//Initialise_GPIO ();
     Init_UART();
 	
-    delay_ms(1000); // Attendre la stabilisation du module au démarrage [cite: 484]
+		int tab[1];
+	 // 1.Reset le module	(0x0C, param: 0x0000)
+		sendDFCommand(0x0C, 0x00, 0x00);
+    delay_ms(1000); // Attendre la stabilisation du module au démarrage 
 
-    // 1. Spécifier la source de lecture : Carte TF (0x09, param: 0x02) [cite: 529]
-    sendDFCommand(0x09, 0x00, 0x02);
-    delay_ms(200); // Délai nécessaire après sélection de la source [cite: 529]
-		Allumer_1LED(1);
-    // 2. Régler le volume à 15 (0x06, param: 0x0F) [cite: 525]
-    sendDFCommand(0x06, 0x00, 0x1E);
+   // 2. Spécifier la source de lecture : Carte TF (0x09, param: 0x02) 
+		sendDFCommand(0x09, 0x00, 0x01);
+    delay_ms(200); // Délai nécessaire après sélection de la source 
+		//Allumer_1LED(1);
+    
+	// 3. Régler le volume à 15 (0x06, param: 0x0F) 
+    sendDFCommand(0x06, 0x00, 0x05);
     delay_ms(100);
-		Allumer_1LED(2);
-    // 3. Jouer le premier morceau (0x03, param: 0x0001) [cite: 519]
-    sendDFCommand(0x08, 0x00, 0x04);
-		Allumer_1LED(3);
+		//Allumer_1LED(2);
+    
+	// 4. Jouer le premier morceau (0x03, param: 0x0001) 
+    sendDFCommand(0x03, 0x00, 0x02);
+	delay_ms(100);
+	 sendDFCommand(0x0D, 0x00, 0x00);
     while (1) {
+			Driver_USART1.Receive(tab,1);
         // Le programme boucle ici pendant que le son joue
     }
 }
