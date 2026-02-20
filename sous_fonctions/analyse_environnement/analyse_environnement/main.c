@@ -66,7 +66,7 @@ char detect_obst_0_45 = 0, detect_obst_45_90 = 0, detect_obst_90_135 = 0, detect
 int main()
 {
 	Init_UART_Lidar();
-	Init_Bluetooth();
+	//Init_Bluetooth();
 	Init_LED();
 	
 	Init_Moteur_Lidar();
@@ -142,11 +142,11 @@ void SCAN(void)
 	while(1)
 	{
 		
-			do {
-            Driver_USART0.Receive(&reception[0], 1);
-            while(Driver_USART0.GetRxCount() < 1);
-        } while ( (reception[0] & 0x04) == 0 );
-		
+//			do {
+//            Driver_USART0.Receive(&reception[0], 1);
+//            while(Driver_USART0.GetRxCount() < 1);
+//        } while ( (reception[0] & 0x04) == 0 );
+//		
 			Driver_USART0.Receive(reception, 5); 				// On receptionne les paquets RECEPTION
 			while(Driver_USART0.GetRxCount() < 5); 
 			
@@ -166,7 +166,7 @@ void SCAN(void)
 			Analyse_environnement_4_secteurs(distance_mm, angle_degree, flag);
 			
 		
-			Bluetooth_C_Pyt(angle_q6, distance_q2);
+			//Bluetooth_C_Pyt(angle_q6, distance_q2);
 	}
 }
 
