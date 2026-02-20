@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\position_gps.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\position_gps.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6240002: Last Updated: Fri Feb 20 11:55:01 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6240002: Last Updated: Fri Feb 20 12:22:52 2026
 <BR><P>
 <H3>Maximum Stack Usage =        208 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -264,7 +264,7 @@ Global Symbols
 <P><STRONG><a name="[c0]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[76]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 128 + Unknown Stack Size
 <LI>Call Chain = __rt_entry_main &rArr; main &rArr; Init_UART_GPS
 </UL>
 <BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
@@ -721,7 +721,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.USART3_Resources)
 </UL>
-<P><STRONG><a name="[9e]"></a>Init_UART_GPS</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, main.o(.text.Init_UART_GPS))
+<P><STRONG><a name="[9e]"></a>Init_UART_GPS</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, main.o(.text.Init_UART_GPS))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = Init_UART_GPS
 </UL>
 <BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -743,8 +743,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
 </UL>
 
-<P><STRONG><a name="[77]"></a>main</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, main.o(.text.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = main &rArr; Init_UART_GPS
+<P><STRONG><a name="[77]"></a>main</STRONG> (Thumb, 54 bytes, Stack size 112 bytes, main.o(.text.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = main &rArr; Init_UART_GPS
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_UART_GPS
 </UL>
