@@ -1,5 +1,5 @@
 --cpu=Cortex-M4.fp.sp
-".\objects\main.o"
+".\objects\rfidv1.o"
 ".\objects\usart_stm32f4xx.o"
 ".\objects\stm32f4xx_hal.o"
 ".\objects\stm32f4xx_hal_cortex.o"

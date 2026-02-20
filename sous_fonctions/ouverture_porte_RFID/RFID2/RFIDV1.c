@@ -12,11 +12,11 @@
 #define REFUSE 0
 
 
-// DÃ©clarations Externes
+// Déclarations Externes
 extern ARM_DRIVER_USART Driver_USART1;
 
-// Variables partagÃ©es entre la fonction d'interruption interne au driver et le main
-// volatile car badge_complet est modifiÃ© dans le Callback (=>nÃ©cessitÃ© de stockage dans la ram)
+// Variables partagées entre la fonction d'interruption interne au driver et le main
+// volatile car badge_complet est modifié dans le Callback (=>nécessité de stockage dans la ram)
 volatile bool badge_complet = false; 
 uint8_t buffer_rfid[14]; 
 
@@ -28,10 +28,10 @@ void allumer_led(int n);
 void eteindre_led(int n);
 
 
-// Fonction de callback (Ã©vite l'Ã©criture d'une fonction d'interruption en utilisant une configurÃ©e pralablement dans le driver UART)
+// Fonction de callback (évite l'écriture d'une fonction d'interruption en utilisant une configurée pralablement dans le driver UART)
 void My_USART_Callback(unsigned int event) {
     if (event & ARM_USART_EVENT_RECEIVE_COMPLETE) {
-        badge_complet = true; // PrÃ©viens qu'une trame prÃªte Ã  Ãªtre lue
+        badge_complet = true; // Préviens qu'une trame prête à être lue
     }
 }
 
@@ -44,8 +44,8 @@ void Init_Systeme(void) {
                           ARM_USART_DATA_BITS_8       |
                           ARM_USART_STOP_BITS_1       |
                           ARM_USART_PARITY_NONE, 9600);
-    Driver_USART1.Control(ARM_USART_CONTROL_RX, 1); // Activer la rÃ©ception
-		Driver_USART1.Control(ARM_USART_CONTROL_TX, 1); // Activer la rÃ©ception
+    Driver_USART1.Control(ARM_USART_CONTROL_RX, 1); // Activer la réception
+		Driver_USART1.Control(ARM_USART_CONTROL_TX, 1); // Activer la réception
 }
 
 int main(void) {
@@ -69,7 +69,7 @@ int main(void) {
 			 eteindre_led(led_bleue);
        if (badge_complet) {
 				  allumer_led(led_bleue);
-           // On traite le badge reÃ§u
+           // On traite le badge reçu
            etat = Identification(badge_maitre, buffer_rfid);
 				 
 					if (etat == AUTORISE){
