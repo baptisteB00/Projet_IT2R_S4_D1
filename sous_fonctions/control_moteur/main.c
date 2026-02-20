@@ -6,9 +6,9 @@ P0.23 => moteur de la voiture
 P2.25 => servo moteur de direction
 .......................................*/
 
-uint32_t VAL_PWM_SERVO = 50000;
+volatile uint32_t VAL_PWM_SERVO = 37500;
 
-enum sens {AVANT, ARRIERE, STOP_HIGH,STOP_LOW};
+enum sens {AVANT, ARRIERE, STOP_HAUT,STOP_BAS,DESACTIVE};
 enum return_vit{vitOK,vitERROR};
 
 void init_moteur_motricite(void);
@@ -16,7 +16,7 @@ void init_servo_moteur();
 
 enum return_vit control_vitesse(uint8_t val_vitesse);
 void direction_roue(int16_t angle);
-
+void control_hacheur(enum sens direction );
 
 int main(void){
 	
@@ -86,27 +86,44 @@ LPC_PWM1->MR2=0; // desactive la vitesse au debut
 }
 
 // valeur possible AVANT, ARRIERE, STOP_HIGH, STOP_LOW
-void direction_moteur(enum sens direction ){
+/* pinout
+EN A : P0.19
+EN B : P0.18 
+
+IN A : P0.16
+IN B : P0.17
+*/
+
+void control_hacheur(enum sens direction ){
 
 	switch (direction){
 	
 		case AVANT :
-				LPC_GPIO0->FIOPIN2 |=(1<<3);
-				LPC_GPIO0->FIOPIN2 &=~(1<<0);
+				LPC_GPIO0->FIOPIN2 |= (1<<3)|(1<<2); //active les 4 quadrants
+		
+				LPC_GPIO0->FIOPIN2 |=(1<<0);	// IN A : HAUT
+				LPC_GPIO0->FIOPIN2 &=~(1<<1);	// IN B : BAS
 			break;
 		
 		case ARRIERE:
-				LPC_GPIO0->FIOPIN2 &=~(1<<3);
-				LPC_GPIO0->FIOPIN2 |=(1<<0);
+				LPC_GPIO0->FIOPIN2 |= (1<<3)|(1<<2); //active les 4 quadrants
+		
+				LPC_GPIO0->FIOPIN2 &=~(1<<0);	// IN A : BAS
+				LPC_GPIO0->FIOPIN2 |=(1<<1);	// IN B : HAUT
 			break;
+		
 		default:
-		case STOP_LOW:
-				LPC_GPIO0->FIOPIN2 &=~(1<<3);
-				LPC_GPIO0->FIOPIN2 &=~(1<<0);
+		case STOP_BAS:
+				LPC_GPIO0->FIOPIN2 &=~((1<<1)|(1<<0)); //IN A et IN B BAS
+				
 			break;
-		case STOP_HIGH:
-				LPC_GPIO0->FIOPIN2 |=(1<<3);
-				LPC_GPIO0->FIOPIN2 |=(1<<0);
+	
+		case STOP_HAUT:
+				LPC_GPIO0->FIOPIN2 |=((1<<1)|(1<<0)); //IN A et IN B HAUT
+			break;
+		
+		case DESACTIVE:
+			LPC_GPIO0->FIOPIN2 &= ~((1<<3)|(1<<2)); //desactive les 4 quadrants
 			break;
 		}
 }  
@@ -117,7 +134,7 @@ enum return_vit control_vitesse(uint8_t val_vitesse){
 	
 	if(val_vitesse<=100 && val_vitesse>=0){
 	
-	LPC_PWM1->MR2 = (uint16_t)(val_vitesse * 24.99); //*24.99 car MR0 entre 0 et 24999
+	LPC_PWM1->MR2 = (uint16_t)(val_vitesse * 2499)/100; //*24.99 car MR0 entre 0 et 24999
 		return vitOK;
 	}else {
 		LPC_PWM1->MR2 =0;
@@ -132,7 +149,7 @@ void direction_roue(int16_t angle){
 	if ( angle <= 90 && angle >= -90){
 	
 		angle += 90; // value between 0 and 180 
-		VAL_PWM_SERVO = ((angle) * 25000.0/180.0)+25000.0; // value between 25 000 (1ms) and 50 000 (2ms)
+		VAL_PWM_SERVO = ((angle) * 25000/180)+25000; // value between 25 000 (1ms) and 50 000 (2ms)
 	}
 }
 
