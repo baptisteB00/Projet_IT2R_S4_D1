@@ -15,6 +15,10 @@
  */
 #define CMSIS_device_header "LPC17xx.h"
 
+/* ARM::CMSIS:RTOS2:Keil RTX5&Source@5.9.0 */
+#define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
+#define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
+#define RTE_CMSIS_RTOS2_RTX5_SOURCE     /* CMSIS-RTOS2 Keil RTX5 Source */
 /* Keil::CMSIS Driver:USART@2.13.0 */
 #define RTE_Drivers_USART0              /* Driver USART0 */
 #define RTE_Drivers_USART1              /* Driver USART1 */
