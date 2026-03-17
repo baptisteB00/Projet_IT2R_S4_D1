@@ -23,14 +23,14 @@
 # define JAUNE 0xFF00FFF0
 
 # define Eteint 0x000000E0
-# define NbLEDs 0
+# define NbLEDs 60
 
-// DÈclarations Externes
+// D√©clarations Externes
 extern ARM_DRIVER_USART Driver_USART1;
 extern ARM_DRIVER_SPI Driver_SPI1;
 
-// Variables partagÈes entre la fonction d'interruption interne au driver et le main
-// volatile car badge_complet est modifiÈ dans le Callback (=>nÈcessitÈ de stockage dans la ram)
+// Variables partag√©es entre la fonction d'interruption interne au driver et le main
+// volatile car badge_complet est modifi√© dans le Callback (=>n√©cessit√© de stockage dans la ram)
 uint8_t buffer_rfid[14]; 
 uint32_t tab[62];
 
@@ -42,14 +42,14 @@ void Identification(unsigned char badge_maitre[], uint8_t recu[]);
 void allumer_led(int n);
 void eteindre_led(int n);
 void sendDFCommand(uint8_t cmd, uint8_t para1, uint8_t para2);
-void Clignoter (void);                             // thread function
 void Init_LEDs(void);
-void Allumer1(void);
+void Clignotants1(void);
+void PharesAvant(void);
 void allumer1LED(uint8_t numLED,uint32_t COLOR);
 void eteindre1LED(uint8_t numLED);
 
-//T‚ches
-osThreadId_t tid_mySPI_Thread, ID_Allumer1, ID_TRFID;
+//T√¢ches
+osThreadId_t tid_mySPI_Thread, ID_Allumer1, ID_TRFID, ID_PharesAvant,ID_Clignotants1;
 osThreadAttr_t configTRFID = {.priority = osPriorityHigh}, configTSPI = {.priority = osPriorityNormal};
 
 void tacheRFID(void *arg){
@@ -62,55 +62,48 @@ void tacheRFID(void *arg){
 		allumer_led(led_bleue);
 		Driver_USART1.Receive(buffer_rfid, 14);
 		osThreadFlagsWait((1<<0), osFlagsWaitAll, osWaitForever);
-		// On traite le badge reÁu
+		// On traite le badge re√ßu
 		Identification(badge_maitre, buffer_rfid);
+		osThreadFlagsSet((osThreadId_t)ID_Clignotants1, (1<<0));
 	}
 }
-
-void Allumer1(void){
-	
-	Init_LEDs();
-	
+void PharesAvant(void){
   while (1) {
+		allumer1LED(25,BLANC_Fort);
+		allumer1LED(24,BLANC_Fort);
+		allumer1LED(23,BLANC_Fort);
 
-		allumer1LED(10,VERT);
-		allumer1LED(15,BLEU);
-		allumer1LED(20,ROUGE);
-		allumer1LED(25,VERT);
-		allumer1LED(60,BLANC_Fort);
-		Driver_SPI1.Send(tab,62*4);
-		osDelay(2000);
-			
+		allumer1LED(35,BLANC_Fort);
+		allumer1LED(36,BLANC_Fort);
+		allumer1LED(37,BLANC_Fort);
+
+		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
   }
 }
 
-// Fonction de callback (Èvite l'Ècriture d'une fonction d'interruption en utilisant une configurÈe prÈalablement dans le driver UART)
+void Clignotants1(void){
+  while (1) {
+		osThreadFlagsWait ((1<<0),osFlagsWaitAll,osWaitForever);
+		
+		allumer1LED(15,BLEU);
+		allumer1LED(45,BLEU);
+		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
+		osDelay(500);
+		
+		eteindre1LED(15);
+		eteindre1LED(45);
+		
+		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
+		osDelay(500);
+		//osThreadFlagsSet((osThreadId_t)ID_PharesAvant,0x10);
+  }
+}
+
+// Fonction de callback (√©vite l'√©criture d'une fonction d'interruption en utilisant une configur√©e pr√©alablement dans le driver UART)
 void My_USART_Callback(unsigned int event) {
     if (event & ARM_USART_EVENT_RECEIVE_COMPLETE) {
-				osThreadFlagsSet(ID_TRFID, (1<<0));
+				osThreadFlagsSet((osThreadId_t)ID_TRFID, (1<<0));
     }
-}
-
-void mySPI_callback(uint32_t event){
-	switch (event) {
-		
-		
-		case ARM_SPI_EVENT_TRANSFER_COMPLETE  : 	 osThreadFlagsSet(tid_mySPI_Thread, 0x01);
-																							break;
-		
-		default : break;
-	}
-}
-
-void Allumer1_callback(uint32_t event){
-	switch (event) {
-		
-		
-		case ARM_SPI_EVENT_TRANSFER_COMPLETE  : 	 osThreadFlagsSet(ID_Allumer1, 0x01);
-																							break;
-		
-		default : break;
-	}
 }
 
 //Main
@@ -121,13 +114,15 @@ int main(void) {
 		GPIOD->MODER |= GPIO_MODER_MODER14_0; // Red LED, set pin 14 as output
 		GPIOD->MODER |= GPIO_MODER_MODER15_0; // Blue LED, set pin 15 as output
 		GPIOD->BSRR = 0;
-		
+		Init_LEDs();
     Init_UART();
 		Init_SPI();
 	
 		osKernelInitialize();
-	  ID_TRFID = osThreadNew(tacheRFID, NULL, &configTRFID);
-		ID_Allumer1 = osThreadNew ((osThreadId_t)Allumer1,NULL,&configTRFID);
+	  ID_TRFID = osThreadNew(tacheRFID, NULL, NULL);
+		ID_PharesAvant = osThreadNew ((osThreadId_t)PharesAvant,NULL,NULL);
+		ID_Clignotants1 = osThreadNew((osThreadId_t)Clignotants1,NULL,NULL);
+	
 		osKernelStart();
 }
 
@@ -140,12 +135,12 @@ void Init_UART(void) {
                           ARM_USART_DATA_BITS_8       |
                           ARM_USART_STOP_BITS_1       |
                           ARM_USART_PARITY_NONE, 9600);
-    Driver_USART1.Control(ARM_USART_CONTROL_RX, 1); // Activer la rÈception
-		Driver_USART1.Control(ARM_USART_CONTROL_TX, 1); // Activer la rÈception
+    Driver_USART1.Control(ARM_USART_CONTROL_RX, 1); // Activer la r√©ception
+		Driver_USART1.Control(ARM_USART_CONTROL_TX, 1); // Activer la r√©ception
 }
 
 void Init_SPI(void){
-	Driver_SPI1.Initialize(Allumer1_callback);
+	Driver_SPI1.Initialize(NULL);
 	Driver_SPI1.PowerControl(ARM_POWER_FULL);
 	Driver_SPI1.Control(ARM_SPI_MODE_MASTER | 
 											//ARM_SPI_CPOLXX_CPHAXX |   // Choisir en fonction datasheet
@@ -201,11 +196,15 @@ void allumer1LED(uint8_t numLED, uint32_t COLOR){
 	tab[numLED]=COLOR;
 }
 
+void eteindre1LED(uint8_t numLED){
+	tab[numLED]=Eteint;
+}
+
 void Init_LEDs(void){
 	int i;
 	tab[0]=0;
-	tab[62]=0xFFFFFFFF;
-	for(i=0;i<62;i++){
+	tab[61]=0xFFFFFFFF;
+	for(i=0;i<60;i++){
 	tab[i] = Eteint;
 	}
 }
