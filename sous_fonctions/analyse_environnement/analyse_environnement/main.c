@@ -72,20 +72,35 @@ char detect_obst_0_45 = 0, detect_obst_45_90 = 0, detect_obst_90_135 = 0, detect
 
 unsigned short angle[ MAX_POINTS ], dist[ MAX_POINTS ]; 
 
-osThreadId_t ID_TacheLidar ; 
 
-void tache_lidar (void *argument) {
+/*-------------- Création des identifiants des tâches --------------*/
+
+osThreadId_t ID_TacheLidar, ID_Envoie_et_Reception, ID_Traitement, ID_LED; 
+
+osMessageQueueId_t ID_BAL1, ID_BAL2;
+
+typedef struct
+{
+	char reception[5];
+} Data_recept;
+
+
+typedef struct
+{
+	char flag;
+	float distance_mm, angle_degree;
+} Data_Lidar;
+
+
+/*-------------- Création des tâches  --------------*/
+
+void thread_envoie_et_reception (void *argument) {
   (void)argument;
+	
+	Data_recept DataRecept;
 	
 	char cmd[2];
 	char descriptor[7];
-	char reception[5];
-	char LSB_angle, MSB_angle, LSB_distance, MSB_distance;
-	char flag, octet_0;
-	
-	unsigned short angle_q6, distance_q2; 
-	
-	float angle_degree, distance_mm;
 	
 	cmd[0] = 0xA5;	 															// Deux octets à envoyer pour que le Lidar comprenne que c'est bien la commande SCAN -> Protocole p.16 pour détails
 	cmd[1] = 0x20;
@@ -99,30 +114,119 @@ void tache_lidar (void *argument) {
 	
 	Driver_USART0.Receive(descriptor, 7); 				// On receptionne les paquets DESCRIPTOR
 	
-  while(1)
+	while(1)
 	{
+			Driver_USART0.Receive(DataRecept.reception, 5); 				// On receptionne les paquets RECEPTION
+			while(Driver_USART0.GetRxCount() < 5);
+
+			osMessageQueuePut(ID_BAL1, &DataRecept, NULL, osWaitForever);
 		
-			Driver_USART0.Receive(reception, 5); 				// On receptionne les paquets RECEPTION
-			while(Driver_USART0.GetRxCount()				< 5); 
+	}
+}
+	
+void thread_traitement (void *argument) {
+  (void)argument;
+	
+	Data_Lidar DataEnvoi;
+	Data_recept DataRecept;
+	
+	char LSB_angle, MSB_angle, LSB_distance, MSB_distance;
+	char octet_0;
+	
+	unsigned short angle_q6, distance_q2; 
+	
+	
+	while(1)
+	{
+		osMessageQueueGet(ID_BAL1, &DataRecept, NULL, osWaitForever);
+		
+		octet_0 = DataRecept.reception[0];				
+		LSB_angle = DataRecept.reception[1];
+		MSB_angle = DataRecept.reception[2];             
+		LSB_distance = DataRecept.reception[3];
+		MSB_distance = DataRecept.reception[4];
 			
-			octet_0 = reception[0];				
-			LSB_angle = reception[1];
-			MSB_angle = reception[2];             
-			LSB_distance = reception[3];
-			MSB_distance = reception[4];
+		angle_q6 = (MSB_angle << 7) | (LSB_angle >> 1);  					// angle_q6 et distance_q2 => données brutes, << et >> décalage des bits -> Protocole pour précision
+		distance_q2 =  (MSB_distance << 8) | LSB_distance ;	
 			
-			angle_q6 = (MSB_angle << 7) | (LSB_angle >> 1);  					// angle_q6 et distance_q2 => données brutes, << et >> décalage des bits -> Protocole pour précision
-			distance_q2 =  (MSB_distance << 8) | LSB_distance ;	
-			
-			flag = octet_0 & 0x01;																		// Masquage pour isoler le premier bit, qui correspond au flag (pour chaque tour = 1)
-			angle_degree = angle_q6 / 64.0;
-			distance_mm = distance_q2 / 4.0;
-			
-			Analyse_environnement_4_secteurs(distance_mm, angle_degree, flag);
+		DataEnvoi.flag = octet_0 & 0x01;																		// Masquage pour isoler le premier bit, qui correspond au flag (pour chaque tour = 1)
+		DataEnvoi.angle_degree = angle_q6 / 64.0;
+		DataEnvoi.distance_mm = distance_q2 / 4.0;
+		
+		osMessageQueuePut(ID_BAL2, &DataEnvoi, NULL, osWaitForever);
 	}
 }
 
-osThreadAttr_t config_Tache_Lidar = { .priority = osPriorityNormal };
+void thread_allume_led(void *argument){ 
+	(void)argument;
+	
+	Data_Lidar DataRecept;
+	
+	while(1)
+	{
+		osMessageQueueGet(ID_BAL2, &DataRecept, NULL, osWaitForever);
+		
+		Analyse_environnement_4_secteurs(DataRecept.distance_mm,DataRecept.angle_degree, DataRecept.flag);
+
+	}
+	
+	
+}
+
+
+//void tache_lidar (void *argument) {
+//  (void)argument;
+//	
+//	char cmd[2];
+//	char descriptor[7];
+//	char reception[5];
+//	char LSB_angle, MSB_angle, LSB_distance, MSB_distance;
+//	char flag, octet_0;
+//	
+//	unsigned short angle_q6, distance_q2; 
+//	
+//	float angle_degree, distance_mm;
+//	
+//	cmd[0] = 0xA5;	 															// Deux octets à envoyer pour que le Lidar comprenne que c'est bien la commande SCAN -> Protocole p.16 pour détails
+//	cmd[1] = 0x20;
+//	
+//	Allumer_Moteur_Lidar(); 
+//	
+//	osDelay(500);
+//	
+//	Driver_USART0.Send(cmd, 2);										// Envoie des commandes CMD pour activer le SCAN
+//	while(Driver_USART0.GetTxCount() < 2);
+//	
+//	Driver_USART0.Receive(descriptor, 7); 				// On receptionne les paquets DESCRIPTOR
+//	
+//  while(1)
+//	{
+//		
+//			Driver_USART0.Receive(reception, 5); 				// On receptionne les paquets RECEPTION
+//			while(Driver_USART0.GetRxCount()				< 5); 
+//			
+//			octet_0 = reception[0];				
+//			LSB_angle = reception[1];
+//			MSB_angle = reception[2];             
+//			LSB_distance = reception[3];
+//			MSB_distance = reception[4];
+//			
+//			angle_q6 = (MSB_angle << 7) | (LSB_angle >> 1);  					// angle_q6 et distance_q2 => données brutes, << et >> décalage des bits -> Protocole pour précision
+//			distance_q2 =  (MSB_distance << 8) | LSB_distance ;	
+//			
+//			flag = octet_0 & 0x01;																		// Masquage pour isoler le premier bit, qui correspond au flag (pour chaque tour = 1)
+//			angle_degree = angle_q6 / 64.0;
+//			distance_mm = distance_q2 / 4.0;
+//			
+//			Analyse_environnement_4_secteurs(distance_mm, angle_degree, flag);
+//	}
+//}
+
+//osThreadAttr_t config_Tache_Lidar = { .priority = osPriorityNormal };
+osThreadAttr_t config_Envoie_Recept = { .priority = osPriorityNormal };
+osThreadAttr_t config_Traitement = { .priority = osPriorityNormal };
+osThreadAttr_t config_LED = { .priority = osPriorityBelowNormal };
+
 
 /*-------------- Programme principal --------------*/
 
@@ -138,10 +242,17 @@ int main()
 	
 	//SCAN();
 	
-	
+	ID_BAL1 = osMessageQueueNew(10, sizeof(Data_recept), NULL);
+	ID_BAL2 = osMessageQueueNew(10, sizeof(Data_Lidar), NULL);
 
 	
-	ID_TacheLidar = osThreadNew ( (osThreadFunc_t) tache_lidar , NULL , &config_Tache_Lidar) ;
+	//ID_TacheLidar = osThreadNew ( (osThreadFunc_t) tache_lidar , NULL , &config_Tache_Lidar);
+	ID_Envoie_et_Reception = osThreadNew ( (osThreadFunc_t) thread_envoie_et_reception , NULL , &config_Envoie_Recept) ;
+	ID_Traitement = osThreadNew ( (osThreadFunc_t) thread_traitement , NULL , &config_Traitement) ;
+	ID_LED = osThreadNew ( (osThreadFunc_t) thread_allume_led , NULL , &config_LED) ;
+	
+	
+
 	
 	osKernelStart();                      // Start thread execution
 	return 0; 
