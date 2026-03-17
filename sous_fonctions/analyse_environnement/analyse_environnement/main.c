@@ -39,6 +39,8 @@ extern GLCD_FONT GLCD_Font_6x8;
 #define DETECTER     1
 #define TOUR_COMPLET 1
 
+#define MAX_POINTS 350
+
 
 /*-------------- Prototypes des fonctions --------------*/
 
@@ -61,14 +63,15 @@ char detect_obst_0_90 = 0, detect_obst_90_180 = 0, detect_obst_180_270 = 0, dete
 char detect_obst_0_45 = 0, detect_obst_45_90 = 0, detect_obst_90_135 = 0, detect_obst_135_180 = 0, 				// 360 / 8
 		 detect_obst_180_225 = 0, detect_obst_225_270 = 0, detect_obst_270_315 = 0, detect_obst_315_360 = 0; 
 
+unsigned short angle[ MAX_POINTS ], dist[ MAX_POINTS ]; 
+
 /*-------------- Programme principal --------------*/
 
 int main()
 {
 	Init_UART_Lidar();
-	//Init_Bluetooth();
+	Init_Bluetooth();
 	Init_LED();
-	
 	Init_Moteur_Lidar();
 	
 	SCAN();
@@ -140,15 +143,11 @@ void SCAN(void)
 	while(Driver_USART0.GetRxCount() < 7);
 	
 	while(1)
-	{
-		
-//			do {
-//            Driver_USART0.Receive(&reception[0], 1);
-//            while(Driver_USART0.GetRxCount() < 1);
-//        } while ( (reception[0] & 0x04) == 0 );
-//		
+	{		
+		for(i=0; i< MAX_POINTS; i++)
+		{
 			Driver_USART0.Receive(reception, 5); 				// On receptionne les paquets RECEPTION
-			while(Driver_USART0.GetRxCount() < 5); 
+			while(Driver_USART0.GetRxCount()				< 5); 
 			
 			octet_0 = reception[0];				
 			LSB_angle = reception[1];
@@ -159,14 +158,25 @@ void SCAN(void)
 			angle_q6 = (MSB_angle << 7) | (LSB_angle >> 1);  					// angle_q6 et distance_q2 => données brutes, << et >> décalage des bits -> Protocole pour précision
 			distance_q2 =  (MSB_distance << 8) | LSB_distance ;	
 			
+			angle[i] = angle_q6;
+			dist[i] = distance_q2;
+		
 			flag = octet_0 & 0x01;																		// Masquage pour isoler le premier bit, qui correspond au flag (pour chaque tour = 1)
 			angle_degree = angle_q6 / 64.0;
 			distance_mm = distance_q2 / 4.0;
 			
-			Analyse_environnement_4_secteurs(distance_mm, angle_degree, flag);
+			//Analyse_environnement_4_secteurs(distance_mm, angle_degree, flag);
+			
+		}
+		
+		
 			
 		
-			//Bluetooth_C_Pyt(angle_q6, distance_q2);
+		for(i=0; i< MAX_POINTS; i++)
+		{
+			Bluetooth_C_Pyt(angle[i], dist[i]);
+		}
+			
 	}
 }
 

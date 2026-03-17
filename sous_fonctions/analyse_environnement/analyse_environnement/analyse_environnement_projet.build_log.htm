@@ -27,10 +27,20 @@ Project File Date:  02/20/2026
 <h2>Output:</h2>
 *** Using Compiler 'V6.24', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Target_1'
+main.c(124): warning: variable 'flag' set but not used [-Wunused-but-set-variable]
+  124 |         char flag, octet_0;
+      |              ^
+main.c(130): warning: variable 'angle_degree' set but not used [-Wunused-but-set-variable]
+  130 |         float angle_degree, distance_mm;
+      |               ^
+main.c(130): warning: variable 'distance_mm' set but not used [-Wunused-but-set-variable]
+  130 |         float angle_degree, distance_mm;
+      |                             ^
+3 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=14566 RO-data=918 RW-data=4 ZI-data=932  
-".\analyse_environnement_projet.axf" - 0 Error(s), 0 Warning(s).
+Program Size: Code=13670 RO-data=974 RW-data=4 ZI-data=2332  
+".\analyse_environnement_projet.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -84,9 +94,9 @@ Package Vendor: Keil
       Include file:  CMSIS/Driver/Include/Driver_USART.h
 
    * Component: Keil::Board Support&MCB1700:Graphic LCD@1.0.0
+      Include file:  Boards/Keil/MCB1700/Common/GLCD_Config.h
       Source file:   Boards/Keil/MCB1700/Common/GLCD_Fonts.c
       Include file:  Boards/Keil/MCB1700/Common/GLCD_Fonts.h
-      Include file:  Boards/Keil/MCB1700/Common/GLCD_Config.h
       Source file:   Boards/Keil/MCB1700/Common/GLCD_MCB1700.c
 
    * Component: Keil::CMSIS Driver:SPI:SSP@2.10.0
@@ -110,9 +120,9 @@ Package Vendor: Keil
    * Component: Keil::Device:Startup@1.0.0
       Source file:   Device/Source/ARM/startup_LPC17xx.s
       Source file:   Device/Source/system_LPC17xx.c
-      Include file:  Device/Include/LPC17xx.h
       Include file:  RTE_Driver/Config/RTE_Device.h
-Build Time Elapsed:  00:00:00
+      Include file:  Device/Include/LPC17xx.h
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
