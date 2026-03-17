@@ -12,6 +12,10 @@
 #include "Driver_USART.h"               // CMSIS Driver:USART
 #include "Board_GLCD.h"                 // Board Support:Graphic LCD
 #include "GLCD_Config.h"                // Board Support:Graphic LCD
+ 
+#include "RTE_Components.h"
+#include  CMSIS_device_header
+#include "cmsis_os2.h"
 
 extern ARM_DRIVER_USART Driver_USART0;
 extern ARM_DRIVER_USART Driver_USART1;
@@ -56,6 +60,9 @@ void Eteindre_LED(char Num_LED);
 void Init_Moteur_Lidar(void);
 void Allumer_Moteur_Lidar(void);
 
+
+void tache_lidar (void *argument);
+
 /*-------------- Variables globales --------------*/
 
 char detect_obst_0_90 = 0, detect_obst_90_180 = 0, detect_obst_180_270 = 0, detect_obst_270_360 = 0; 			// 360 / 4
@@ -65,17 +72,78 @@ char detect_obst_0_45 = 0, detect_obst_45_90 = 0, detect_obst_90_135 = 0, detect
 
 unsigned short angle[ MAX_POINTS ], dist[ MAX_POINTS ]; 
 
+osThreadId_t ID_TacheLidar ; 
+
+void tache_lidar (void *argument) {
+  (void)argument;
+	
+	char cmd[2];
+	char descriptor[7];
+	char reception[5];
+	char LSB_angle, MSB_angle, LSB_distance, MSB_distance;
+	char flag, octet_0;
+	
+	unsigned short angle_q6, distance_q2; 
+	
+	float angle_degree, distance_mm;
+	
+	cmd[0] = 0xA5;	 															// Deux octets à envoyer pour que le Lidar comprenne que c'est bien la commande SCAN -> Protocole p.16 pour détails
+	cmd[1] = 0x20;
+	
+	Allumer_Moteur_Lidar(); 
+	
+	osDelay(500);
+	
+	Driver_USART0.Send(cmd, 2);										// Envoie des commandes CMD pour activer le SCAN
+	while(Driver_USART0.GetTxCount() < 2);
+	
+	Driver_USART0.Receive(descriptor, 7); 				// On receptionne les paquets DESCRIPTOR
+	
+  while(1)
+	{
+		
+			Driver_USART0.Receive(reception, 5); 				// On receptionne les paquets RECEPTION
+			while(Driver_USART0.GetRxCount()				< 5); 
+			
+			octet_0 = reception[0];				
+			LSB_angle = reception[1];
+			MSB_angle = reception[2];             
+			LSB_distance = reception[3];
+			MSB_distance = reception[4];
+			
+			angle_q6 = (MSB_angle << 7) | (LSB_angle >> 1);  					// angle_q6 et distance_q2 => données brutes, << et >> décalage des bits -> Protocole pour précision
+			distance_q2 =  (MSB_distance << 8) | LSB_distance ;	
+			
+			flag = octet_0 & 0x01;																		// Masquage pour isoler le premier bit, qui correspond au flag (pour chaque tour = 1)
+			angle_degree = angle_q6 / 64.0;
+			distance_mm = distance_q2 / 4.0;
+			
+			Analyse_environnement_4_secteurs(distance_mm, angle_degree, flag);
+	}
+}
+
+osThreadAttr_t config_Tache_Lidar = { .priority = osPriorityNormal };
+
 /*-------------- Programme principal --------------*/
 
 int main()
 {
+	SystemCoreClockUpdate();
+	osKernelInitialize();                 // Initialize CMSIS-RTOS
+	
 	Init_UART_Lidar();
 	Init_Bluetooth();
 	Init_LED();
 	Init_Moteur_Lidar();
 	
-	SCAN();
+	//SCAN();
 	
+	
+
+	
+	ID_TacheLidar = osThreadNew ( (osThreadFunc_t) tache_lidar , NULL , &config_Tache_Lidar) ;
+	
+	osKernelStart();                      // Start thread execution
 	return 0; 
 }
 
