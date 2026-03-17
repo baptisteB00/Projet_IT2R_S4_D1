@@ -43,9 +43,6 @@ extern GLCD_FONT GLCD_Font_6x8;
 #define DETECTER     1
 #define TOUR_COMPLET 1
 
-#define MAX_POINTS 350
-
-
 /*-------------- Prototypes des fonctions --------------*/
 
 void Init_UART_Lidar(void);
@@ -70,14 +67,13 @@ char detect_obst_0_90 = 0, detect_obst_90_180 = 0, detect_obst_180_270 = 0, dete
 char detect_obst_0_45 = 0, detect_obst_45_90 = 0, detect_obst_90_135 = 0, detect_obst_135_180 = 0, 				// 360 / 8
 		 detect_obst_180_225 = 0, detect_obst_225_270 = 0, detect_obst_270_315 = 0, detect_obst_315_360 = 0; 
 
-unsigned short angle[ MAX_POINTS ], dist[ MAX_POINTS ]; 
-
-
 /*-------------- Création des identifiants des tâches --------------*/
 
 osThreadId_t ID_TacheLidar, ID_Envoie_et_Reception, ID_Traitement, ID_LED; 
 
 osMessageQueueId_t ID_BAL1, ID_BAL2;
+
+/*------------------- Structure -------------------*/
 
 typedef struct
 {
@@ -120,7 +116,6 @@ void thread_envoie_et_reception (void *argument) {
 			while(Driver_USART0.GetRxCount() < 5);
 
 			osMessageQueuePut(ID_BAL1, &DataRecept, NULL, osWaitForever);
-		
 	}
 }
 	
@@ -157,6 +152,14 @@ void thread_traitement (void *argument) {
 	}
 }
 
+/* --------------------------------------------------------
+ * Thread : thread_allume_led(void *argument)
+ *
+ * 
+ *
+ * 
+ *-------------------------------------------------------*/
+
 void thread_allume_led(void *argument){ 
 	(void)argument;
 	
@@ -167,62 +170,9 @@ void thread_allume_led(void *argument){
 		osMessageQueueGet(ID_BAL2, &DataRecept, NULL, osWaitForever);
 		
 		Analyse_environnement_4_secteurs(DataRecept.distance_mm,DataRecept.angle_degree, DataRecept.flag);
-
 	}
-	
-	
 }
 
-
-//void tache_lidar (void *argument) {
-//  (void)argument;
-//	
-//	char cmd[2];
-//	char descriptor[7];
-//	char reception[5];
-//	char LSB_angle, MSB_angle, LSB_distance, MSB_distance;
-//	char flag, octet_0;
-//	
-//	unsigned short angle_q6, distance_q2; 
-//	
-//	float angle_degree, distance_mm;
-//	
-//	cmd[0] = 0xA5;	 															// Deux octets à envoyer pour que le Lidar comprenne que c'est bien la commande SCAN -> Protocole p.16 pour détails
-//	cmd[1] = 0x20;
-//	
-//	Allumer_Moteur_Lidar(); 
-//	
-//	osDelay(500);
-//	
-//	Driver_USART0.Send(cmd, 2);										// Envoie des commandes CMD pour activer le SCAN
-//	while(Driver_USART0.GetTxCount() < 2);
-//	
-//	Driver_USART0.Receive(descriptor, 7); 				// On receptionne les paquets DESCRIPTOR
-//	
-//  while(1)
-//	{
-//		
-//			Driver_USART0.Receive(reception, 5); 				// On receptionne les paquets RECEPTION
-//			while(Driver_USART0.GetRxCount()				< 5); 
-//			
-//			octet_0 = reception[0];				
-//			LSB_angle = reception[1];
-//			MSB_angle = reception[2];             
-//			LSB_distance = reception[3];
-//			MSB_distance = reception[4];
-//			
-//			angle_q6 = (MSB_angle << 7) | (LSB_angle >> 1);  					// angle_q6 et distance_q2 => données brutes, << et >> décalage des bits -> Protocole pour précision
-//			distance_q2 =  (MSB_distance << 8) | LSB_distance ;	
-//			
-//			flag = octet_0 & 0x01;																		// Masquage pour isoler le premier bit, qui correspond au flag (pour chaque tour = 1)
-//			angle_degree = angle_q6 / 64.0;
-//			distance_mm = distance_q2 / 4.0;
-//			
-//			Analyse_environnement_4_secteurs(distance_mm, angle_degree, flag);
-//	}
-//}
-
-//osThreadAttr_t config_Tache_Lidar = { .priority = osPriorityNormal };
 osThreadAttr_t config_Envoie_Recept = { .priority = osPriorityNormal };
 osThreadAttr_t config_Traitement = { .priority = osPriorityNormal };
 osThreadAttr_t config_LED = { .priority = osPriorityBelowNormal };
@@ -240,13 +190,9 @@ int main()
 	Init_LED();
 	Init_Moteur_Lidar();
 	
-	//SCAN();
-	
 	ID_BAL1 = osMessageQueueNew(10, sizeof(Data_recept), NULL);
 	ID_BAL2 = osMessageQueueNew(10, sizeof(Data_Lidar), NULL);
 
-	
-	//ID_TacheLidar = osThreadNew ( (osThreadFunc_t) tache_lidar , NULL , &config_Tache_Lidar);
 	ID_Envoie_et_Reception = osThreadNew ( (osThreadFunc_t) thread_envoie_et_reception , NULL , &config_Envoie_Recept) ;
 	ID_Traitement = osThreadNew ( (osThreadFunc_t) thread_traitement , NULL , &config_Traitement) ;
 	ID_LED = osThreadNew ( (osThreadFunc_t) thread_allume_led , NULL , &config_LED) ;
@@ -334,9 +280,6 @@ void SCAN(void)
 			
 			angle_q6 = (MSB_angle << 7) | (LSB_angle >> 1);  					// angle_q6 et distance_q2 => données brutes, << et >> décalage des bits -> Protocole pour précision
 			distance_q2 =  (MSB_distance << 8) | LSB_distance ;	
-			
-			angle[i] = angle_q6;
-			dist[i] = distance_q2;
 		
 			flag = octet_0 & 0x01;																		// Masquage pour isoler le premier bit, qui correspond au flag (pour chaque tour = 1)
 			angle_degree = angle_q6 / 64.0;
