@@ -34,8 +34,8 @@
 #endif
 
 
-//#define CAPTAvD 0xE0 //0x70
-//#define CAPTAvG 0xE2 //0x71
+#define CAPTAvD 0x70 //0xE0
+#define CAPTAvG 0x71 //0xE2 
 
 extern ARM_DRIVER_I2C Driver_I2C1;
 
@@ -97,6 +97,50 @@ void SysTick_Handler(void)
 
 /* Private functions ---------------------------------------------------------*/
 
+void write1byte(unsigned char capt_addr, unsigned char reg, unsigned char val) {
+    uint8_t tab[2];
+		
+		tab[0]= reg;
+		tab[1]= val;
+    Driver_I2C1.MasterTransmit(capt_addr, tab, 2, false); // Envoi START + ADDR_Slave+W + REG + DATA + STOP 
+    while (Driver_I2C1.GetStatus().busy == 1); // Attente fin de transmission physique 
+}
+
+
+uint8_t read1byte(uint8_t capt_addr, uint8_t reg) {
+    uint8_t valeur;
+    // Envoi de la sous-adresse avec RESTART (true) 
+    Driver_I2C1.MasterTransmit(capt_addr, &reg, 1, true); 
+    while (Driver_I2C1.GetStatus().busy == 1);
+	
+    
+    // Réception de l'octet 
+    Driver_I2C1.MasterReceive(capt_addr, &valeur, 1, false);
+    while (Driver_I2C1.GetStatus().busy == 1);
+    
+    return valeur; 
+}
+
+uint16_t get_distance(uint8_t capt_addr) {
+    uint8_t high, low; 
+    
+    // Lancer la mesure en cm (Commande 0x51 dans registre 0) 
+    write1byte(capt_addr, 0x00, 0x51);
+
+    /* *ATTENTE DE CONVERSION : 
+     * Le capteur ne répond pas pendant qu'il mesure (environ 65ms). 
+     */
+    HAL_Delay(65); 
+
+    // 3. Lire les registres de distance 2 et 3 
+    high = read1byte(capt_addr, 0x02);
+    low  = read1byte(capt_addr, 0x03);
+    
+    return (uint16_t)((high << 8) | low); // Reconstruction 16-bits 
+}
+
+
+
 /**
   * @brief  Main program
   * @param  None
@@ -138,25 +182,35 @@ int main(void)
 
   /* Infinite loop */
 	
-		uint8_t tab[2]; // 
+	uint16_t dist1 = 0 ;
+	uint16_t dist2 = 0;
+	uint8_t tab[2],high1,low1,high2,low2; // 
 	
 	Driver_I2C1.Initialize(NULL);
 	Driver_I2C1.PowerControl(ARM_POWER_FULL);
 	Driver_I2C1.Control(	ARM_I2C_BUS_SPEED,				// 2nd argument = debit
 							ARM_I2C_BUS_SPEED_STANDARD  );	// 100 kHz
-	//Driver_I2C1.Control(	ARM_I2C_BUS_CLEAR,
-		//					0 );
-	
-	
+	Driver_I2C1.Control(	ARM_I2C_BUS_CLEAR,
+							0 );
 		
-		tab[0]= 0xAA;
-		tab[1]= 0xBB;
-    Driver_I2C1.MasterTransmit(0xE0, tab, 2, false); // Envoi START + ADDR_Slave+W + REG + DATA + STOP 
-    while (Driver_I2C1.GetStatus().busy == 1); // Attente fin de transmission physique
 	
   while (1)
   {
+		write1byte(CAPTAvD, 0x00, 0x51);
+		write1byte(CAPTAvG, 0x00, 0x51);
+		HAL_Delay(70);
+		  
+			// 3. Lire les registres de distance 2 et 3 
+			high1 = read1byte(CAPTAvG, 0x02);
+			low1  = read1byte(CAPTAvG, 0x03);
+			high2 = read1byte(CAPTAvD, 0x02);
+			low2  = read1byte(CAPTAvD, 0x03);
+		
+			dist1 = (uint16_t)((high1 << 8) | low1);// Capteur gauche
+			dist2 = (uint16_t)((high2 << 8) | low2);// Capteur droite	
+                  
   }
+	return 0;
 }
 
 /**
