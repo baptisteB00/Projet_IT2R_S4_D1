@@ -144,8 +144,6 @@ void SCAN(void)
 	
 	while(1)
 	{		
-		for(i=0; i< MAX_POINTS; i++)
-		{
 			Driver_USART0.Receive(reception, 5); 				// On receptionne les paquets RECEPTION
 			while(Driver_USART0.GetRxCount()				< 5); 
 			
@@ -165,17 +163,8 @@ void SCAN(void)
 			angle_degree = angle_q6 / 64.0;
 			distance_mm = distance_q2 / 4.0;
 			
-			//Analyse_environnement_4_secteurs(distance_mm, angle_degree, flag);
+			Analyse_environnement_4_secteurs(distance_mm, angle_degree, flag);
 			
-		}
-		
-		
-			
-		
-		for(i=0; i< MAX_POINTS; i++)
-		{
-			Bluetooth_C_Pyt(angle[i], dist[i]);
-		}
 			
 	}
 }
