@@ -42,6 +42,7 @@ extern GLCD_FONT GLCD_Font_6x8;
 
 #define DETECTER     1
 #define TOUR_COMPLET 1
+#define MAX_POINTS 		350
 
 /*-------------- Prototypes des fonctions --------------*/
 
@@ -69,11 +70,20 @@ char detect_obst_0_45 = 0, detect_obst_45_90 = 0, detect_obst_90_135 = 0, detect
 
 /*-------------- Création des identifiants des tâches --------------*/
 
-osThreadId_t ID_TacheLidar, ID_Envoie_et_Reception, ID_Traitement, ID_LED; 
+osThreadId_t ID_TacheLidar, ID_Envoie_et_Reception, ID_Traitement, ID_LED, ID_Bluetooth; 
 
-osMessageQueueId_t ID_BAL1, ID_BAL2;
+/*-------------- Créations des identifiants des boîte aux lettres --------------*/
+
+osMessageQueueId_t ID_BAL_DATA_UART, ID_BAL_DATA, ID_BAL_BLUETOOTH;
 
 /*------------------- Structure -------------------*/
+
+typedef struct
+{
+	unsigned short angle_q6;
+	unsigned short distance_q2;
+} DataBrut;
+
 
 typedef struct
 {
@@ -90,7 +100,7 @@ typedef struct
 
 /*-------------- Création des tâches  --------------*/
 
-void thread_envoie_et_reception (void *argument) {
+void thread_EnvoiRecept (void *argument) {
   (void)argument;
 	
 	Data_recept DataRecept;
@@ -103,7 +113,7 @@ void thread_envoie_et_reception (void *argument) {
 	
 	Allumer_Moteur_Lidar(); 
 	
-	osDelay(500);
+	osDelay(500); 																// Le temps que le moteur s'allume
 	
 	Driver_USART0.Send(cmd, 2);										// Envoie des commandes CMD pour activer le SCAN
 	while(Driver_USART0.GetTxCount() < 2);
@@ -115,7 +125,7 @@ void thread_envoie_et_reception (void *argument) {
 			Driver_USART0.Receive(DataRecept.reception, 5); 				// On receptionne les paquets RECEPTION
 			while(Driver_USART0.GetRxCount() < 5);
 
-			osMessageQueuePut(ID_BAL1, &DataRecept, NULL, osWaitForever);
+			osMessageQueuePut(ID_BAL_DATA_UART, &DataRecept, NULL, osWaitForever);
 	}
 }
 	
@@ -124,6 +134,7 @@ void thread_traitement (void *argument) {
 	
 	Data_Lidar DataEnvoi;
 	Data_recept DataRecept;
+	DataBrut DataBrut;
 	
 	char LSB_angle, MSB_angle, LSB_distance, MSB_distance;
 	char octet_0;
@@ -133,7 +144,7 @@ void thread_traitement (void *argument) {
 	
 	while(1)
 	{
-		osMessageQueueGet(ID_BAL1, &DataRecept, NULL, osWaitForever);
+		osMessageQueueGet(ID_BAL_DATA_UART, &DataRecept, NULL, osWaitForever);
 		
 		octet_0 = DataRecept.reception[0];				
 		LSB_angle = DataRecept.reception[1];
@@ -144,13 +155,52 @@ void thread_traitement (void *argument) {
 		angle_q6 = (MSB_angle << 7) | (LSB_angle >> 1);  					// angle_q6 et distance_q2 => données brutes, << et >> décalage des bits -> Protocole pour précision
 		distance_q2 =  (MSB_distance << 8) | LSB_distance ;	
 			
+		DataBrut.angle_q6 = angle_q6;															// Pour envoyer au bluetooth
+		DataBrut.distance_q2 = distance_q2; 
+		
 		DataEnvoi.flag = octet_0 & 0x01;																		// Masquage pour isoler le premier bit, qui correspond au flag (pour chaque tour = 1)
 		DataEnvoi.angle_degree = angle_q6 / 64.0;
 		DataEnvoi.distance_mm = distance_q2 / 4.0;
 		
-		osMessageQueuePut(ID_BAL2, &DataEnvoi, NULL, osWaitForever);
+		osMessageQueuePut(ID_BAL_DATA, &DataEnvoi, NULL, osWaitForever);
+		osMessageQueuePut(ID_BAL_BLUETOOTH, &DataBrut, NULL, osWaitForever);
 	}
 }
+
+void thread_Bluetooth(void *argument) {
+	
+	(void)argument;
+    DataBrut DataBluetooth;
+    static int i = 0;
+    static int etat = 0;  
+    
+	while(1)
+		{
+			osMessageQueueGet(ID_BAL_BLUETOOTH, &DataBluetooth, NULL, osWaitForever);
+			
+			if(etat == 1) // Pour envoyer un tour sur 2 pour laisser au temps au bluetooth
+				{
+					if(i < MAX_POINTS) 
+						{
+							Bluetooth_C_Pyt(DataBluetooth.angle_q6, DataBluetooth.distance_q2);
+							i++;
+						} else {
+							i = 0;
+							etat = 0;
+            }
+				} 
+				else {
+            
+            if(i < MAX_POINTS) i++;
+            else { i = 0; etat = 1; }
+        }
+    }
+}
+
+
+
+
+
 
 /* --------------------------------------------------------
  * Thread : thread_allume_led(void *argument)
@@ -167,16 +217,16 @@ void thread_allume_led(void *argument){
 	
 	while(1)
 	{
-		osMessageQueueGet(ID_BAL2, &DataRecept, NULL, osWaitForever);
+		osMessageQueueGet(ID_BAL_DATA, &DataRecept, NULL, osWaitForever);
 		
 		Analyse_environnement_4_secteurs(DataRecept.distance_mm,DataRecept.angle_degree, DataRecept.flag);
 	}
 }
 
 osThreadAttr_t config_Envoie_Recept = { .priority = osPriorityNormal };
-osThreadAttr_t config_Traitement = { .priority = osPriorityNormal };
-osThreadAttr_t config_LED = { .priority = osPriorityBelowNormal };
-
+osThreadAttr_t config_Traitement	  = { .priority = osPriorityNormal };
+osThreadAttr_t config_LED					  = { .priority = osPriorityBelowNormal4 };
+osThreadAttr_t configBluetooth 			= { .priority = osPriorityBelowNormal };
 
 /*-------------- Programme principal --------------*/
 
@@ -190,15 +240,14 @@ int main()
 	Init_LED();
 	Init_Moteur_Lidar();
 	
-	ID_BAL1 = osMessageQueueNew(10, sizeof(Data_recept), NULL);
-	ID_BAL2 = osMessageQueueNew(10, sizeof(Data_Lidar), NULL);
+	ID_BAL_DATA_UART = osMessageQueueNew(10, sizeof(Data_recept), NULL);
+	ID_BAL_DATA 		 = osMessageQueueNew(10, sizeof(Data_Lidar), NULL);
+	ID_BAL_BLUETOOTH = osMessageQueueNew(10, sizeof(DataBrut), NULL);
 
-	ID_Envoie_et_Reception = osThreadNew ( (osThreadFunc_t) thread_envoie_et_reception , NULL , &config_Envoie_Recept) ;
-	ID_Traitement = osThreadNew ( (osThreadFunc_t) thread_traitement , NULL , &config_Traitement) ;
-	ID_LED = osThreadNew ( (osThreadFunc_t) thread_allume_led , NULL , &config_LED) ;
-	
-	
-
+	ID_Envoie_et_Reception = osThreadNew ( (osThreadFunc_t) thread_EnvoiRecept , NULL , &config_Envoie_Recept) ;
+	ID_Traitement 				 = osThreadNew ( (osThreadFunc_t) thread_traitement , NULL , &config_Traitement) ;
+	ID_LED 								 = osThreadNew ( (osThreadFunc_t) thread_allume_led , NULL , &config_LED) ;
+	ID_Bluetooth 					 = osThreadNew ( (osThreadFunc_t) thread_Bluetooth , NULL , &configBluetooth) ;
 	
 	osKernelStart();                      // Start thread execution
 	return 0; 
