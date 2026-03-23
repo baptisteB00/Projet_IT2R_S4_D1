@@ -57,9 +57,9 @@ void Allumer_LED(char Num_LED);
 void Eteindre_LED(char Num_LED);
 void Init_Moteur_Lidar(void);
 void Allumer_Moteur_Lidar(void);
+void UART_Callback_Lidar(unsigned int event);
+void UART_Callback_Bluetooth(unsigned int event);
 
-
-void tache_lidar (void *argument);
 
 /*-------------- Variables globales --------------*/
 
@@ -68,11 +68,11 @@ char detect_obst_0_90 = 0, detect_obst_90_180 = 0, detect_obst_180_270 = 0, dete
 char detect_obst_0_45 = 0, detect_obst_45_90 = 0, detect_obst_90_135 = 0, detect_obst_135_180 = 0, 				// 360 / 8
 		 detect_obst_180_225 = 0, detect_obst_225_270 = 0, detect_obst_270_315 = 0, detect_obst_315_360 = 0; 
 
-/*-------------- Création des identifiants des tâches --------------*/
+/*-------------- Création des identifiants des tâches (ID) --------------*/
 
 osThreadId_t ID_TacheLidar, ID_Envoie_et_Reception, ID_Traitement, ID_LED, ID_Bluetooth; 
 
-/*-------------- Créations des identifiants des boîte aux lettres --------------*/
+/*-------------- Créations des identifiants des boîte aux lettres (BAL) --------------*/
 
 osMessageQueueId_t ID_BAL_DATA_UART, ID_BAL_DATA, ID_BAL_BLUETOOTH;
 
@@ -84,29 +84,37 @@ typedef struct
 	unsigned short distance_q2;
 } DataBrut;
 
-
 typedef struct
 {
 	char reception[5];
-} Data_recept;
+} DataRecept;
 
 
 typedef struct
 {
 	char flag;
 	float distance_mm, angle_degree;
-} Data_Lidar;
+} DataLidar;
 
 
-/*-------------- Création des tâches  --------------*/
+/*-------------- Création dees threads  --------------*/
+
+/* --------------------------------------------------------
+ * Thread : thread_EnvoiRecept(void *argument)
+ * Priorité : osPriorityHigh
+ * 
+ * Envoie de la commande SCAN au Lidar, et reception des données
+ * 
+ *-------------------------------------------------------*/
 
 void thread_EnvoiRecept (void *argument) {
   (void)argument;
 	
-	Data_recept DataRecept;
+	DataRecept DataRecept;
 	
 	char cmd[2];
 	char descriptor[7];
+	unsigned int flag;
 	
 	cmd[0] = 0xA5;	 															// Deux octets à envoyer pour que le Lidar comprenne que c'est bien la commande SCAN -> Protocole p.16 pour détails
 	cmd[1] = 0x20;
@@ -122,18 +130,30 @@ void thread_EnvoiRecept (void *argument) {
 	
 	while(1)
 	{
+		flag = osThreadFlagsWait(0x0001, osFlagsWaitAll, osWaitForever);	
+		
+		if (flag == 0x0001)
+		{
 			Driver_USART0.Receive(DataRecept.reception, 5); 				// On receptionne les paquets RECEPTION
-			while(Driver_USART0.GetRxCount() < 5);
-
+		}
+		
 			osMessageQueuePut(ID_BAL_DATA_UART, &DataRecept, NULL, osWaitForever);
 	}
 }
+
+/* --------------------------------------------------------
+ * Thread : thread_traitement(void *argument)
+ * Priorité : osPriorityHigh
+ * 
+ * Traite les données du Lidar
+ * avec la distance (mm), l'angle (°) et le flag (1 tour complet)
+ *-------------------------------------------------------*/
 	
 void thread_traitement (void *argument) {
   (void)argument;
 	
-	Data_Lidar DataEnvoi;
-	Data_recept DataRecept;
+	DataLidar DataEnvoi;
+	DataRecept DataRecept;
 	DataBrut DataBrut;
 	
 	char LSB_angle, MSB_angle, LSB_distance, MSB_distance;
@@ -167,13 +187,26 @@ void thread_traitement (void *argument) {
 	}
 }
 
+/* --------------------------------------------------------
+ * Thread : thread_Bluetooth(void *argument)
+ * Priorité : osPriorityBelowNormal
+ * 
+ * Envoie 1 tour sur 2 les données 
+ * du Lidar par bluetooth pour afficher sur écran PC (via code Python)
+ * 
+ *-------------------------------------------------------*/
+
 void thread_Bluetooth(void *argument) {
-	
 	(void)argument;
-    DataBrut DataBluetooth;
-    static int i = 0;
-    static int etat = 0;  
+	
+	DataBrut DataBluetooth;
+		
+	unsigned char data[4]; // a voir
+	char LSB_angle_q6, MSB_angle_q6, LSB_distance_q2, MSB_distance_q2;  // Les données sont brutes ! 
     
+	static int i = 0;
+	static int etat = 0;  
+		
 	while(1)
 		{
 			osMessageQueueGet(ID_BAL_BLUETOOTH, &DataBluetooth, NULL, osWaitForever);
@@ -182,8 +215,20 @@ void thread_Bluetooth(void *argument) {
 				{
 					if(i < MAX_POINTS) 
 						{
-							Bluetooth_C_Pyt(DataBluetooth.angle_q6, DataBluetooth.distance_q2);
+							LSB_angle_q6 = DataBluetooth.angle_q6 & 0xFF;																			// & pour faire une lecture de angle (8 bits => LSB)
+							MSB_angle_q6 = (DataBluetooth.angle_q6 >> 8) & 0xFF;															// Pour le MSB on decale jusqu'au bit 8 pour avoir les 8 bits les plus à gauche (MSB)
+							LSB_distance_q2 = DataBluetooth.distance_q2 & 0xFF;
+							MSB_distance_q2 = (DataBluetooth.distance_q2 >> 8) & 0xFF;
+							
+							data[0] = LSB_angle_q6;
+							data[1] = MSB_angle_q6;
+							data[2] = LSB_distance_q2;
+							data[3] = MSB_distance_q2; 
+							
+							Driver_USART1.Send(data, 4);
+							osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);
 							i++;
+							
 						} else {
 							i = 0;
 							etat = 0;
@@ -197,23 +242,18 @@ void thread_Bluetooth(void *argument) {
     }
 }
 
-
-
-
-
-
 /* --------------------------------------------------------
  * Thread : thread_allume_led(void *argument)
- *
+ * Priorité : osPriorityLow
  * 
- *
+ * Consiste à allumer les LEDS en fonction de la détection (4 secteurs)
  * 
  *-------------------------------------------------------*/
 
 void thread_allume_led(void *argument){ 
 	(void)argument;
 	
-	Data_Lidar DataRecept;
+	DataLidar DataRecept;
 	
 	while(1)
 	{
@@ -223,9 +263,11 @@ void thread_allume_led(void *argument){
 	}
 }
 
-osThreadAttr_t config_Envoie_Recept = { .priority = osPriorityNormal };
-osThreadAttr_t config_Traitement	  = { .priority = osPriorityNormal };
-osThreadAttr_t config_LED					  = { .priority = osPriorityBelowNormal4 };
+/*-------------- Priorité des threads --------------*/
+
+osThreadAttr_t config_Envoie_Recept = { .priority = osPriorityHigh };
+osThreadAttr_t config_Traitement	  = { .priority = osPriorityHigh };
+osThreadAttr_t config_LED					  = { .priority = osPriorityLow }; 
 osThreadAttr_t configBluetooth 			= { .priority = osPriorityBelowNormal };
 
 /*-------------- Programme principal --------------*/
@@ -240,8 +282,8 @@ int main()
 	Init_LED();
 	Init_Moteur_Lidar();
 	
-	ID_BAL_DATA_UART = osMessageQueueNew(10, sizeof(Data_recept), NULL);
-	ID_BAL_DATA 		 = osMessageQueueNew(10, sizeof(Data_Lidar), NULL);
+	ID_BAL_DATA_UART = osMessageQueueNew(10, sizeof(DataRecept), NULL);
+	ID_BAL_DATA 		 = osMessageQueueNew(10, sizeof(DataLidar), NULL);
 	ID_BAL_BLUETOOTH = osMessageQueueNew(10, sizeof(DataBrut), NULL);
 
 	ID_Envoie_et_Reception = osThreadNew ( (osThreadFunc_t) thread_EnvoiRecept , NULL , &config_Envoie_Recept) ;
@@ -263,7 +305,7 @@ int main()
 
 void Init_UART_Lidar(void)
 {
-	Driver_USART0.Initialize(NULL);			
+	Driver_USART0.Initialize(UART_Callback_Lidar);			
 	Driver_USART0.PowerControl(ARM_POWER_FULL);
 	Driver_USART0.Control(ARM_USART_MODE_ASYNCHRONOUS | 
 												ARM_USART_DATA_BITS_8 | 
@@ -274,6 +316,33 @@ void Init_UART_Lidar(void)
 	Driver_USART0.Control(ARM_USART_CONTROL_RX, 1);			// réception
 	Driver_USART0.Control(ARM_USART_CONTROL_TX, 1);			// transmission
 }
+
+/* --------------------------------------------------------
+ * Fonction : void Init_UART_Lidar(void)
+ *
+ * Initialisation de l'UART0 pour le lidar (P0.2 (RX)/ P0.3 (TX))
+ *
+ * Fonctionne avec 8 bits de donnée, 1 bit de stop, pas de parité et travaille avec 115 200 bps
+ *-------------------------------------------------------*/
+
+void UART_Callback_Lidar(unsigned int event)
+{
+	if(event & ARM_USART_EVENT_RECEIVE_COMPLETE) osThreadFlagsSet(ID_Envoie_et_Reception, 0x0001);
+}
+
+/* --------------------------------------------------------
+ * Fonction : void Init_UART_Lidar(void)
+ *
+ * Initialisation de l'UART0 pour le lidar (P0.2 (RX)/ P0.3 (TX))
+ *
+ * Fonctionne avec 8 bits de donnée, 1 bit de stop, pas de parité et travaille avec 115 200 bps
+ *-------------------------------------------------------*/
+
+void UART_Callback_Bluetooth(unsigned int event)
+{
+	if(event & ARM_USART_EVENT_SEND_COMPLETE) osThreadFlagsSet(ID_Bluetooth, 0x0002);
+}
+
 
 /* --------------------------------------------------------
  * Fonction : void SCAN(void)
@@ -350,7 +419,7 @@ void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, cha
 	{
 		if(flag == TOUR_COMPLET) 		// 1 tour effectué
 			{
-				if(detect_obst_0_90) 			Allumer_LED(LED_P2_2) ; 	else Eteindre_LED(LED_P2_2);
+				if(detect_obst_0_90) 			Allumer_LED(LED_P2_6) ; 	else Eteindre_LED(LED_P2_6);
 				if(detect_obst_90_180) 		Allumer_LED(LED_P1_31); 	else Eteindre_LED(LED_P1_31);
 				if(detect_obst_180_270) 	Allumer_LED(LED_P1_29); 	else Eteindre_LED(LED_P1_29);
 				if(detect_obst_270_360) 	Allumer_LED(LED_P1_28); 	else Eteindre_LED(LED_P1_28);
@@ -415,10 +484,14 @@ void Analyse_environnement_8_secteurs(float distance_mm, float angle_degree, cha
 
 void Init_Bluetooth(void)
 	{
-		Driver_USART1.Initialize(NULL);			
+		Driver_USART1.Initialize(UART_Callback_Bluetooth);			
 		Driver_USART1.PowerControl(ARM_POWER_FULL);
 		
-		Driver_USART1.Control(ARM_USART_MODE_ASYNCHRONOUS | ARM_USART_DATA_BITS_8 | ARM_USART_STOP_BITS_1 | ARM_USART_PARITY_NONE | ARM_USART_FLOW_CONTROL_NONE , 115200);
+		Driver_USART1.Control(ARM_USART_MODE_ASYNCHRONOUS | 
+													ARM_USART_DATA_BITS_8 | 
+													ARM_USART_STOP_BITS_1 | 
+													ARM_USART_PARITY_NONE | 
+													ARM_USART_FLOW_CONTROL_NONE , 115200);
 		Driver_USART1.Control(ARM_USART_CONTROL_RX, 1);			// réception
 		Driver_USART1.Control(ARM_USART_CONTROL_TX, 1);			// transmission
 	}
@@ -428,7 +501,7 @@ void Bluetooth_C_Pyt(unsigned short angle_q6, unsigned short distance_q2)
 	{
 		unsigned char data[4]; // a voir
 		char LSB_angle_q6, MSB_angle_q6, LSB_distance_q2, MSB_distance_q2;  // Les données sont brutes ! 
-	
+		
 		LSB_angle_q6 = angle_q6 & 0xFF;																			// & pour faire une lecture de angle (8 bits => LSB)
 		MSB_angle_q6 = (angle_q6 >> 8) & 0xFF;															// Pour le MSB on decale jusqu'au bit 8 pour avoir les 8 bits les plus à gauche (MSB)
 		LSB_distance_q2 = distance_q2 & 0xFF;
@@ -439,8 +512,10 @@ void Bluetooth_C_Pyt(unsigned short angle_q6, unsigned short distance_q2)
 		data[2] = LSB_distance_q2;
 		data[3] = MSB_distance_q2; 
 		
-		Driver_USART1.Send(data, 4);																				// On envoie les paquets
-		while(Driver_USART1.GetTxCount() < 4);
+		Driver_USART1.Send(data, 4);	
+		osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);	
+		
+																					// On envoie les paquets
 	}
 	
 /* --------------------------------------------------------
