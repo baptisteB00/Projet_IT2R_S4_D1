@@ -1,4 +1,5 @@
 #include "LPC17xx.h"                    // Device header
+#include "Board_ADC.h"                  // Board Support:A/D Converter
 
 
 /*................PIN....................
@@ -20,20 +21,31 @@ void control_hacheur(enum sens direction );
 
 int main(void){
 	
-  init_moteur_motricite();
+	while(1){
+	LPC_GPIO0->FIOPIN |= (1<<17);
+	LPC_GPIO0->FIOPIN &= ~(1<<17);
+	}
+  /*init_moteur_motricite();
 	
 	init_servo_moteur();
 
+	ADC_Initialize();
+	
 	LPC_PWM1->MR2 =500;
 	
 	direction_roue(90);
+	//control_hacheur(AVANT);
+	LPC_GPIO0->FIODIR |= (1<<17); 
+	LPC_GPIO0->FIOPIN = ~(1<<17);
 	while (1){
-		/*if(LPC_GPIO0->FIOPIN2){
-		direction_roue(i);
-		}
-		i++;
-		if(i>90)i=-90;*/
-	}
+		ADC_StartConversion();
+		while(ADC_ConversionDone()!=0);
+		float valeur = ADC_GetValue();
+		valeur/=4096.0f;
+		direction_roue((valeur * 180.0f)-90);
+		control_vitesse(valeur*100);
+		
+	}*/
 }
 
 void init_servo_moteur()
@@ -99,10 +111,10 @@ void control_hacheur(enum sens direction ){
 	switch (direction){
 	
 		case AVANT :
-				LPC_GPIO0->FIOPIN2 |= (1<<3)|(1<<2); //active les 4 quadrants
+				LPC_GPIO0->FIOPIN		|= ((1<<19)|(1<<18)); //active les 4 quadrants
 		
-				LPC_GPIO0->FIOPIN2 |=(1<<0);	// IN A : HAUT
-				LPC_GPIO0->FIOPIN2 &=~(1<<1);	// IN B : BAS
+				LPC_GPIO0->FIOPIN |=(1<<16);	// IN A : HAUT
+				LPC_GPIO0->FIOPIN &=~(1<<17);	// IN B : BAS
 			break;
 		
 		case ARRIERE:
@@ -134,7 +146,7 @@ enum return_vit control_vitesse(uint8_t val_vitesse){
 	
 	if(val_vitesse<=100 && val_vitesse>=0){
 	
-	LPC_PWM1->MR2 = (uint16_t)(val_vitesse * 2499)/100; //*24.99 car MR0 entre 0 et 24999
+	LPC_PWM1->MR2 = (uint16_t)(val_vitesse * 2499.0)/100.0; //*24.99 car MR0 entre 0 et 2499
 		return vitOK;
 	}else {
 		LPC_PWM1->MR2 =0;

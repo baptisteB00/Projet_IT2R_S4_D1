@@ -22,22 +22,23 @@ Dialog DLL:      TARMP1.DLL V1.27.1.0
  
 <h2>Project:</h2>
 C:\Etudiants\git\V2\Projet_IT2R_S4_D1\sous_fonctions\control_moteur\control_moteur.uvprojx
-Project File Date:  02/20/2026
+Project File Date:  03/17/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.24', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Rebuild target 'Target_1'
-compiling PIN_LPC17xx.c...
-compiling main.c...
+compiling GPIO_LPC17xx.c...
 C:/Keil_v5/ARM/PACK/Keil/LPC1700_DFP/3.0.0/Boards/Keil/MCB1700/Common/ADC_MCB1700.c(155): warning: variable 'adstat' set but not used [-Wunused-but-set-variable]
   155 |   volatile uint32_t adstat;
       |                     ^
 1 warning generated.
 compiling ADC_MCB1700.c...
+compiling PIN_LPC17xx.c...
 compiling system_LPC17xx.c...
+compiling main.c...
 assembling startup_LPC17xx.s...
 linking...
-Program Size: Code=3620 RO-data=252 RW-data=4 ZI-data=620  
+Program Size: Code=988 RO-data=252 RW-data=4 ZI-data=620  
 ".\Objects\control_moteur.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -53,6 +54,7 @@ Package Vendor: Keil
                 Keil::LPC1700_DFP@3.0.0
                 NXP LPC1700 Series Device Support, Drivers and Examples for MCB1700 and LPC1788-32
    * Component: A/D Converter Version: 1.0.0
+   * Component: GPIO Version: 1.1.0
    * Component: PIN Version: 1.0.0
    * Component: Startup Version: 1.0.0
 
@@ -80,9 +82,13 @@ Package Vendor: Keil
    * Component: Keil::Board Support&MCB1700:A/D Converter@1.0.0
       Source file:   Boards/Keil/MCB1700/Common/ADC_MCB1700.c
 
+   * Component: Keil::Device:GPIO@1.1.0
+      Source file:   RTE_Driver/GPIO_LPC17xx.c
+      Include file:  RTE_Driver/GPIO_LPC17xx.h
+
    * Component: Keil::Device:PIN@1.0.0
-      Include file:  RTE_Driver/PIN_LPC17xx.h
       Source file:   RTE_Driver/PIN_LPC17xx.c
+      Include file:  RTE_Driver/PIN_LPC17xx.h
 
    * Component: Keil::Device:Startup@1.0.0
       Include file:  Device/Include/LPC17xx.h

@@ -260,17 +260,17 @@
                 <Size>0x0</Size>
               </XRAM>
               <OCR_RVCT1>
-                <Type>0</Type>
+                <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
                 <Size>0x0</Size>
               </OCR_RVCT1>
               <OCR_RVCT2>
-                <Type>0</Type>
+                <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
                 <Size>0x0</Size>
               </OCR_RVCT2>
               <OCR_RVCT3>
-                <Type>0</Type>
+                <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
                 <Size>0x0</Size>
               </OCR_RVCT3>
@@ -280,7 +280,7 @@
                 <Size>0x80000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
-                <Type>0</Type>
+                <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
                 <Size>0x0</Size>
               </OCR_RVCT5>
@@ -421,6 +421,12 @@
         </targetInfos>
       </component>
       <component Capiversion="1.0.0" Cbundle="MCB1700" Cclass="Board Support" Cgroup="A/D Converter" Cvendor="Keil" Cversion="1.0.0" condition="LPC1700 CMSIS PIN" ymlID="Board Support&amp;MCB1700:A/D Converter">
+        <package name="LPC1700_DFP" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="3.0.0"/>
+        <targetInfos>
+          <targetInfo name="Target_1"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="GPIO" Cvendor="Keil" Cversion="1.1.0" condition="LPC1700 CMSIS Device" ymlID="Device:GPIO">
         <package name="LPC1700_DFP" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="3.0.0"/>
         <targetInfos>
           <targetInfo name="Target_1"/>
