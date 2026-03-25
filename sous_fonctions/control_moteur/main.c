@@ -21,11 +21,7 @@ void control_hacheur(enum sens direction );
 
 int main(void){
 	
-	while(1){
-	LPC_GPIO0->FIOPIN |= (1<<17);
-	LPC_GPIO0->FIOPIN &= ~(1<<17);
-	}
-  /*init_moteur_motricite();
+  init_moteur_motricite();
 	
 	init_servo_moteur();
 
@@ -34,9 +30,8 @@ int main(void){
 	LPC_PWM1->MR2 =500;
 	
 	direction_roue(90);
-	//control_hacheur(AVANT);
-	LPC_GPIO0->FIODIR |= (1<<17); 
-	LPC_GPIO0->FIOPIN = ~(1<<17);
+	control_hacheur(AVANT);
+
 	while (1){
 		ADC_StartConversion();
 		while(ADC_ConversionDone()!=0);
@@ -45,7 +40,7 @@ int main(void){
 		direction_roue((valeur * 180.0f)-90);
 		control_vitesse(valeur*100);
 		
-	}*/
+	}
 }
 
 void init_servo_moteur()
@@ -94,7 +89,9 @@ LPC_PWM1->LER |= 0x0000000F; // Autorise Modification PWM en cours de fonctionne
 LPC_PWM1->PCR |= 0x00000E00; // Autorise les sorties PWM1/2/3
 LPC_PWM1->TCR |= 0x00000001; // Démarrage Timer
 LPC_PWM1->MR2=0; // desactive la vitesse au debut 
-
+	
+LPC_GPIO0->FIODIR |= (1<<19)|(1<<18)|(1<<17)|(1<<16);
+	
 }
 
 // valeur possible AVANT, ARRIERE, STOP_HIGH, STOP_LOW
@@ -106,39 +103,43 @@ IN A : P0.16
 IN B : P0.17
 */
 
-void control_hacheur(enum sens direction ){
+void control_hacheur(enum sens direction) {
 
-	switch (direction){
-	
-		case AVANT :
-				LPC_GPIO0->FIOPIN		|= ((1<<19)|(1<<18)); //active les 4 quadrants
-		
-				LPC_GPIO0->FIOPIN |=(1<<16);	// IN A : HAUT
-				LPC_GPIO0->FIOPIN &=~(1<<17);	// IN B : BAS
-			break;
-		
-		case ARRIERE:
-				LPC_GPIO0->FIOPIN2 |= (1<<3)|(1<<2); //active les 4 quadrants
-		
-				LPC_GPIO0->FIOPIN2 &=~(1<<0);	// IN A : BAS
-				LPC_GPIO0->FIOPIN2 |=(1<<1);	// IN B : HAUT
-			break;
-		
-		default:
-		case STOP_BAS:
-				LPC_GPIO0->FIOPIN2 &=~((1<<1)|(1<<0)); //IN A et IN B BAS
-				
-			break;
-	
-		case STOP_HAUT:
-				LPC_GPIO0->FIOPIN2 |=((1<<1)|(1<<0)); //IN A et IN B HAUT
-			break;
-		
-		case DESACTIVE:
-			LPC_GPIO0->FIOPIN2 &= ~((1<<3)|(1<<2)); //desactive les 4 quadrants
-			break;
-		}
-}  
+    switch (direction) {
+    
+        case AVANT:
+            // Active les 4 quadrants (pins 18 et 19) et IN A : HAUT (pin 16)
+            LPC_GPIO0->FIOSET = (1<<19) | (1<<18) | (1<<16);
+            
+            // IN B : BAS (pin 17)
+            LPC_GPIO0->FIOCLR = (1<<17);
+            break;
+        
+        case ARRIERE:
+            // Active les 4 quadrants (pins 18 et 19) et IN B : HAUT (pin 17)
+            LPC_GPIO0->FIOSET = (1<<19) | (1<<18) | (1<<17);
+            
+            // IN A : BAS (pin 16)
+            LPC_GPIO0->FIOCLR = (1<<16);
+            break;
+        
+        default:
+        case STOP_BAS:
+            // IN A et IN B BAS (pins 16 et 17)
+            LPC_GPIO0->FIOCLR = (1<<17) | (1<<16);
+            break;
+    
+        case STOP_HAUT:
+            // IN A et IN B HAUT (pins 16 et 17)
+            LPC_GPIO0->FIOSET = (1<<17) | (1<<16);
+            break;
+        
+        case DESACTIVE:
+            // Désactive les 4 quadrants (pins 18 et 19)
+            LPC_GPIO0->FIOCLR = (1<<19) | (1<<18);
+            break;
+    }
+} 
 
 
 //valeur entre 0 et 100
