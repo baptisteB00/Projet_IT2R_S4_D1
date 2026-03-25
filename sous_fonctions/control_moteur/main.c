@@ -40,6 +40,12 @@ int main(void){
 		direction_roue((valeur * 180.0f)-90);
 		control_vitesse(valeur*100);
 		
+		if((LPC_GPIO1->FIOPIN & (1<<23))==1<<23){
+			control_hacheur(ARRIERE);
+		}else if ((LPC_GPIO1->FIOPIN & (1<<25))==1<<25){
+			control_hacheur(AVANT);
+		}
+		
 	}
 }
 
@@ -162,7 +168,7 @@ void direction_roue(int16_t angle){
 	if ( angle <= 90 && angle >= -90){
 	
 		angle += 90; // value between 0 and 180 
-		VAL_PWM_SERVO = ((angle) * 25000/180)+25000; // value between 25 000 (1ms) and 50 000 (2ms)
+		VAL_PWM_SERVO = ((angle) * 25000/180)+25000; // valeur entre 25 000 (1ms) and 50 000 (2ms)
 	}
 }
 
