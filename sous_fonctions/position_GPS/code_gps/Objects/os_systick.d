@@ -1,11 +1,14 @@
-./objects/main.o: main.c RTE\_Target_1\Pre_Include_Global.h \
+./objects/os_systick.o: \
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\RTOS2\Source\os_systick.c \
+  RTE\_Target_1\Pre_Include_Global.h \
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\RTOS2\Include\os_tick.h \
+  RTE\_Target_1\RTE_Components.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h \
   C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Core\Include\core_cm4.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   RTE\Device\STM32F407VGTx\stm32f4xx_hal_conf.h \
-  RTE\_Target_1\RTE_Components.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_def.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
@@ -20,11 +23,4 @@
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ramfunc.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr_ex.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_usart.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Driver\Include\Driver_USART.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Driver\Include\Driver_Common.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\RTOS2\Include\cmsis_os2.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\RTOS2\Include\os_tick.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Include\rtx_os.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Include\rtx_def.h \
-  RTE\CMSIS\RTX_Config.h
+  C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_usart.h
