@@ -201,12 +201,12 @@ void thread_Bluetooth(void *argument) {
 		{
 			osMessageQueueGet(ID_BAL_BLUETOOTH, &DataBluetooth, NULL, osWaitForever);
 			
-			if(etat == 1) // Pour envoyer un tour sur 2 pour laisser au temps au bluetooth
+			if(etat == 1)			// Pour envoyer un tour sur 2 pour laisser au temps au bluetooth
 				{
 					if(i < MAX_POINTS) 
 						{
-							LSB_angle_q6 = DataBluetooth.angle_q6 & 0xFF;																			// & pour faire une lecture de angle (8 bits => LSB)
-							MSB_angle_q6 = (DataBluetooth.angle_q6 >> 8) & 0xFF;															// Pour le MSB on decale jusqu'au bit 8 pour avoir les 8 bits les plus à gauche (MSB)
+							LSB_angle_q6 = DataBluetooth.angle_q6 & 0xFF;									// & pour faire une lecture de angle (8 bits => LSB)
+							MSB_angle_q6 = (DataBluetooth.angle_q6 >> 8) & 0xFF;					// Pour le MSB on decale jusqu'au bit 8 pour avoir les 8 bits les plus à gauche (MSB)
 							LSB_distance_q2 = DataBluetooth.distance_q2 & 0xFF;
 							MSB_distance_q2 = (DataBluetooth.distance_q2 >> 8) & 0xFF;
 							
@@ -308,7 +308,7 @@ void Init_UART_Lidar(void)
 }
 
 /* --------------------------------------------------------
- * Fonction : void Init_UART_Lidar(void)
+ * Fonction : void UART_Callback_Lidar(unsigned int event)
  *
  * Initialisation de l'UART0 pour le lidar (P0.2 (RX)/ P0.3 (TX))
  *
@@ -321,7 +321,7 @@ void UART_Callback_Lidar(unsigned int event)
 }
 
 /* --------------------------------------------------------
- * Fonction : void Init_UART_Lidar(void)
+ * Fonction : void UART_Callback_Bluetooth(unsigned int event)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
  *
  * Initialisation de l'UART0 pour le lidar (P0.2 (RX)/ P0.3 (TX))
  *
@@ -346,11 +346,14 @@ void UART_Callback_Bluetooth(unsigned int event)
  * Ajout de fonction Analyse_environnement pour tester et afficher avec des LEDS
  *
  * Pour plus de détails sur le fonctionnement -> Protocole SLAMTEC page 16
+ *
+ * PS : Cette fonction a été créee avant la mise en place du RTOS ! (donc inutile mais à aider pour adapté)
+ *
  *-------------------------------------------------------*/
 
 void SCAN(void)
 {
-	char cmd[2];
+	char cmd[2];					
 	char descriptor[7];
 	char reception[5];
 	char LSB_angle, MSB_angle, LSB_distance, MSB_distance;
@@ -505,7 +508,7 @@ void Bluetooth_C_Pyt(unsigned short angle_q6, unsigned short distance_q2)
 		Driver_USART1.Send(data, 4);	
 		osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);	
 		
-																					// On envoie les paquets
+																					
 	}
 	
 /* --------------------------------------------------------
