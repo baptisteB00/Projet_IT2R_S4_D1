@@ -30,16 +30,6 @@ extern GLCD_FONT GLCD_Font_6x8;
 #define LED_P2_4 		5
 #define LED_P2_6 		6
 
-#define ANGLE_0 		0.0
-#define ANGLE_45 		45.0
-#define ANGLE_90 		90.0
-#define ANGLE_135 	135.0
-#define ANGLE_180 	180.0
-#define ANGLE_225 	225.0 
-#define ANGLE_270 	270.0
-#define ANGLE_315 	315.0
-#define ANGLE_360 	360.0
-
 #define DETECTER     1
 #define TOUR_COMPLET 1
 #define MAX_POINTS 		350
