@@ -58,7 +58,7 @@ char detect_obst_0_45 = 0, detect_obst_45_90 = 0, detect_obst_90_135 = 0, detect
 
 /*-------------- Création des identifiants des tâches (ID) --------------*/
 
-osThreadId_t ID_TacheLidar, ID_Envoie_et_Reception, ID_Traitement, ID_LED, ID_Bluetooth, ID_DataStock; 
+osThreadId_t ID_TacheLidar, ID_Envoie_et_Reception, ID_Traitement, ID_LED, ID_Bluetooth, ID_DataStock, ID_LCD; 
 
 /*-------------- Créations des identifiants des boîte aux lettres (BAL) --------------*/
 
@@ -92,7 +92,6 @@ typedef struct
  * Priorité : osPriorityHigh
  * 
  * Envoie de la commande SCAN au Lidar, et reception des données
- * 
  *-------------------------------------------------------*/
 
 void thread_EnvoiRecept (void *argument) {
@@ -120,10 +119,7 @@ void thread_EnvoiRecept (void *argument) {
 	{
 		flag = osThreadFlagsWait(0x0001, osFlagsWaitAll, osWaitForever);	
 		
-		if (flag == 0x0001)
-		{
-			Driver_USART0.Receive(DataRecept.reception, 5); 				// On receptionne les paquets RECEPTION
-		}
+		if (flag == 0x0001) Driver_USART0.Receive(DataRecept.reception, 5); 	// On receptionne les paquets RECEPTION
 		
 			osMessageQueuePut(ID_BAL_DATA_UART, &DataRecept, NULL, osWaitForever);
 	}
@@ -160,23 +156,23 @@ void thread_traitement (void *argument) {
 		LSB_distance = DataRecept.reception[3];		// Octet contenant la partie LSB de la distance
 		MSB_distance = DataRecept.reception[4];		// Octet contenant la partie MSB de la distance
 			
-		angle_q6 = (MSB_angle << 7) | (LSB_angle >> 1);  					// angle_q6 et distance_q2 => données brutes, << et >> décalage des bits -> Protocole pour précision
-		distance_q2 =  (MSB_distance << 8) | LSB_distance ;	
+		angle_q6 = (MSB_angle << 7) | (LSB_angle >> 1);  		// angle_q6 et distance_q2 => données brutes, << et >> décalage des bits -> Protocole pour précision
+		distance_q2 =  (MSB_distance << 8) | LSB_distance ;	// On décale le MSB de 8 et on effectue un OU pour que les deux OCTETS deviennent un SHORT 
 			
 		DataBrut.angle_q6 = angle_q6;					// Pour envoyer l'angle brut (sans division) au thread Bluetooth
 		DataBrut.distance_q2 = distance_q2; 	// Pour envoyer la distance brut (sans division) au thread Bluetooth
 		
 		DataEnvoi.flag = octet_0 & 0x01;					// Masquage pour isoler le premier bit, qui correspond au flag (pour chaque tour = 1)
 		DataEnvoi.angle_degree = angle_q6 / 64;		// Divisé par 64 car la doc le précise
-		DataEnvoi.distance_mm = distance_q2 / 4;	// Divisé par 4 car la doc le précise			
-		
+		DataEnvoi.distance_mm = distance_q2 / 4;	// Divisé par 4 car la doc le précise	
+
 		osMessageQueuePut(ID_BAL_DATA, &DataEnvoi, NULL, osWaitForever);			// BAL pour le thread LED
 		osMessageQueuePut(ID_BAL_STOCK, &DataEnvoi, NULL, osWaitForever);			// BAL pour le thread DataStock
 		osMessageQueuePut(ID_BAL_BLUETOOTH, &DataBrut, NULL, osWaitForever);	// BAL pour le thread Bluetooth
 	}
 }
 
-void thread_DataStock(void *argument)
+void thread_DataStock(void *argument) // Tache pour Baptiste 
 {
 	(void)argument;
 	
@@ -206,7 +202,6 @@ void thread_DataStock(void *argument)
  * 
  * Envoie 1 tour sur 2 les données 
  * du Lidar par bluetooth pour afficher sur écran PC (via code Python)
- * 
  *-------------------------------------------------------*/
 
 void thread_Bluetooth(void *argument) {
@@ -257,7 +252,6 @@ void thread_Bluetooth(void *argument) {
  * Priorité : osPriorityLow
  * 
  * Consiste à allumer les LEDS en fonction de la détection (4 secteurs)
- * 
  *-------------------------------------------------------*/
 
 void thread_allume_led(void *argument){ 
@@ -291,7 +285,7 @@ int main()
 	Init_UART_Lidar();		// On initialise l'UART0 pour le Lidar
 	Init_Bluetooth();			// On initialise l'UART1 pour le bluetooth
 	Init_LED();						// On onitialise en sortie les LEDS
-	Init_Moteur_Lidar();	// On initialise en sortie le moteur du Lidar
+	Init_Moteur_Lidar();	// On initialise en sortie le moteur du Lidar 
 	
 	ID_BAL_DATA_UART = osMessageQueueNew(10, sizeof(DataRecept),NULL);
 	ID_BAL_DATA 		 = osMessageQueueNew(10, sizeof(DataLidar), NULL);
@@ -305,6 +299,7 @@ int main()
 	ID_DataStock					 = osThreadNew ( (osThreadFunc_t) thread_DataStock 	 , NULL	, &configDataStock);
 	
 	osKernelStart();                      // Start thread execution
+	
 	return 0; 
 }
 
@@ -334,7 +329,6 @@ void Init_UART_Lidar(void)
  * Fonction : void UART_Callback_Lidar(unsigned int event)
  *
  * Callback pour l'init de l'UART du Lidar
- *
  *-------------------------------------------------------*/
 
 void UART_Callback_Lidar(unsigned int event)
@@ -346,14 +340,12 @@ void UART_Callback_Lidar(unsigned int event)
  * Fonction : void UART_Callback_Bluetooth(unsigned int event)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
  *
  *  Callback pour l'init de l'UART du Lidar
- *
  *-------------------------------------------------------*/
 
 void UART_Callback_Bluetooth(unsigned int event)
 {
 	if(event & ARM_USART_EVENT_SEND_COMPLETE) osThreadFlagsSet(ID_Bluetooth, 0x0002);
 }
-
 
 /* --------------------------------------------------------
  * Fonction : void SCAN(void)
@@ -425,9 +417,8 @@ void SCAN(void)
 
 /* --------------------------------------------------------
  * Fonction : void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, char flag)
- *
  * Analyse l'environnement sur 4 secteurs, affiche sur 4 LEDS.
- *-------------------------*/
+ * --------------------------------------------------------*/
 
 void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, char flag)
 	{
@@ -438,7 +429,7 @@ void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, cha
 				if(detect_obst_180_270) 	Allumer_LED(LED_P1_29); 	else Eteindre_LED(LED_P1_29);
 				if(detect_obst_270_360) 	Allumer_LED(LED_P1_28); 	else Eteindre_LED(LED_P1_28);
 			
-				detect_obst_0_90 = 0; // on reset tout à 0 a chaque tour
+				detect_obst_0_90 = 0; 	// On met toutes les variables globales à 0 pour le prochain tour
 				detect_obst_90_180 = 0;
 				detect_obst_180_270 =0;
 				detect_obst_270_360 = 0;
@@ -446,7 +437,7 @@ void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, cha
 			
 		if(distance_mm > 100.0 && distance_mm < 300.0) // 100.0 car peut avoir des erreurs donc dist = 0 -> protocole 
 			{
-				if(angle_degree > 0.0 && angle_degree < 90.0) 		detect_obst_0_90 = 1;
+				if(angle_degree > 0.0 && angle_degree < 90.0) 		detect_obst_0_90 = 1;		// On met la variale à 1 PENDANT le tour
 				if(angle_degree > 90.0 && angle_degree < 180.0) 	detect_obst_90_180 = 1;
 				if(angle_degree > 180.0 && angle_degree < 270.0) 	detect_obst_180_270 = 1;
 				if(angle_degree > 270.0 && angle_degree < 360.0)	detect_obst_270_360 = 1;
@@ -455,7 +446,6 @@ void Analyse_environnement_4_secteurs(float distance_mm, float angle_degree, cha
 	
 /* --------------------------------------------------------
  * Fonction : void Analyse_environnement_8_secteurs(float distance_mm, float angle_degree, char flag)
- *
  * Analyse l'environnement sur 8 secteurs, affiche sur 7 LEDS (car un des GPIO est relié au moteur du lidar).
  *--------------------------------------------------------*/
 
@@ -493,8 +483,15 @@ void Analyse_environnement_8_secteurs(float distance_mm, float angle_degree, cha
 				if(angle_degree > 270.0 && angle_degree < 315.0) 	detect_obst_270_315 = 1;
 				if(angle_degree > 315.0 && angle_degree < 360.0) 	detect_obst_315_360 = 1;
 			}	
-	}	
-
+	}
+	
+/* --------------------------------------------------------
+ * Fonction : void Init_Bluetooth(void)
+	
+ * Initialisation de l'UART1 pour le lidar (P2.1 (RX)/ P2.0 (TX))
+ *
+ * Fonctionne avec 8 bits de donnée, 1 bit de stop, pas de parité et travaille avec 115 200 bps
+ *--------------------------------------------------------*/
 
 void Init_Bluetooth(void)
 	{
@@ -509,7 +506,12 @@ void Init_Bluetooth(void)
 		Driver_USART1.Control(ARM_USART_CONTROL_RX, 1);			// réception
 		Driver_USART1.Control(ARM_USART_CONTROL_TX, 1);			// transmission
 	}
-
+	
+/* --------------------------------------------------------
+ * Fonction : void Bluetooth_C_Pyt(unsigned short angle_q6, unsigned short distance_q2)
+ *
+ * Receptionne en argument l'angle et la distance (bruts), divise en octet (car short de base) par bluetooth
+ *--------------------------------------------------------*/
 	
 void Bluetooth_C_Pyt(unsigned short angle_q6, unsigned short distance_q2)
 	{
