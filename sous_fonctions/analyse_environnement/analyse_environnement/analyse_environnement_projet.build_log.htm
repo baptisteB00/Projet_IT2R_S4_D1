@@ -5,7 +5,7 @@
 <h2>Tool Versions:</h2>
 IDE-Version: µVision V5.43.1.0
 Copyright (C) 2025 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: iut cachan iut cachan Flex license: MDK Professional 5.43 (Flex) (mdk_pro) Operation stops: 11 Apr 2027
+License Information: IUT Cachan IUT Cachan IUT Cachan Flex license: MDK Professional 5.43 (Flex) (mdk_pro) Operation stops: 11 Apr 2027
  
 Tool Versions:
 Toolchain:       MDK Professional 5.43 (Flex)  Version: 5.43.0.0
@@ -22,12 +22,36 @@ Dialog DLL:      TARMP1.DLL V1.27.1.0
  
 <h2>Project:</h2>
 C:\Etudiants\Git\Projet_IT2R_S4_D1\sous_fonctions\analyse_environnement\analyse_environnement\analyse_environnement_projet.uvprojx
-Project File Date:  03/23/2026
+Project File Date:  03/26/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.24', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Target_1'
 compiling main.c...
+compiling rtx_evr.c...
+compiling rtx_delay.c...
+compiling rtx_evflags.c...
+compiling rtx_semaphore.c...
+compiling GLCD_Fonts.c...
+compiling RTX_Config.c...
+compiling rtx_memory.c...
+compiling os_systick.c...
+compiling rtx_lib.c...
+compiling rtx_system.c...
+assembling irq_armv7m.S...
+compiling rtx_mutex.c...
+compiling rtx_timer.c...
+compiling GLCD_MCB1700.c...
+compiling rtx_mempool.c...
+compiling rtx_kernel.c...
+compiling rtx_msgqueue.c...
+compiling GPIO_LPC17xx.c...
+compiling rtx_thread.c...
+compiling PIN_LPC17xx.c...
+compiling GPDMA_LPC17xx.c...
+compiling system_LPC17xx.c...
+compiling SSP_LPC17xx.c...
+compiling UART_LPC17xx.c...
 linking...
 Program Size: Code=32736 RO-data=1252 RW-data=312 ZI-data=22856  
 ".\analyse_environnement_projet.axf" - 0 Error(s), 0 Warning(s).
@@ -90,32 +114,32 @@ Package Vendor: Keil
       Source file:   CMSIS/RTOS2/Source/os_systick.c
 
    * Component: ARM::CMSIS:RTOS2:Keil RTX5&Source@5.9.0
-      Include file:  Include/rtx_os.h
-      Source file:   Config/RTX_Config.c
-      Source file:   Template/Thread.c
-      Source file:   Template/main.c
-      Source file:   Template/Events.c
-      Source file:   Template/Mutex.c
-      Source file:   Template/MsgQueue.c
-      Source file:   Template/Semaphore.c
       Include file:  Config/RTX_Config.h
+      Source file:   Config/RTX_Config.c
+      Source file:   Template/Events.c
       Source file:   Template/MemPool.c
-      Source file:   Template/svc_user.c
+      Source file:   Template/main.c
+      Include file:  Include/rtx_os.h
+      Source file:   Template/Thread.c
       Source file:   Source/rtx_mutex.c
       Source file:   Source/rtx_memory.c
-      Source file:   Source/rtx_delay.c
-      Source file:   Source/rtx_thread.c
-      Source file:   Source/rtx_msgqueue.c
-      Source file:   Source/rtx_evr.c
-      Source file:   Source/rtx_evflags.c
-      Source file:   Source/rtx_timer.c
       Source file:   Source/rtx_mempool.c
-      Source file:   Source/rtx_system.c
+      Source file:   Source/rtx_evr.c
+      Source file:   Template/Mutex.c
       Source file:   Template/Timer.c
-      Source file:   Source/rtx_semaphore.c
       Source file:   Source/GCC/irq_armv7m.S
-      Source file:   Source/rtx_kernel.c
+      Source file:   Source/rtx_system.c
       Source file:   Source/rtx_lib.c
+      Source file:   Source/rtx_timer.c
+      Source file:   Source/rtx_kernel.c
+      Source file:   Source/rtx_thread.c
+      Source file:   Source/rtx_semaphore.c
+      Source file:   Source/rtx_delay.c
+      Source file:   Template/Semaphore.c
+      Source file:   Template/MsgQueue.c
+      Source file:   Source/rtx_msgqueue.c
+      Source file:   Source/rtx_evflags.c
+      Source file:   Template/svc_user.c
 
    * Component: Board Support:Graphic LCD(API)@1.0.0
       Include file:  Board/Board_GLCD.h
@@ -133,10 +157,10 @@ Package Vendor: Keil
       Include file:  CMSIS/RTOS2/Include/cmsis_os2.h
 
    * Component: Keil::Board Support&MCB1700:Graphic LCD@1.0.0
-      Source file:   Boards/Keil/MCB1700/Common/GLCD_Fonts.c
       Include file:  Boards/Keil/MCB1700/Common/GLCD_Config.h
-      Include file:  Boards/Keil/MCB1700/Common/GLCD_Fonts.h
+      Source file:   Boards/Keil/MCB1700/Common/GLCD_Fonts.c
       Source file:   Boards/Keil/MCB1700/Common/GLCD_MCB1700.c
+      Include file:  Boards/Keil/MCB1700/Common/GLCD_Fonts.h
 
    * Component: Keil::CMSIS Driver:SPI:SSP@2.10.0
       Source file:   RTE_Driver/SSP_LPC17xx.c
@@ -157,10 +181,10 @@ Package Vendor: Keil
       Source file:   RTE_Driver/PIN_LPC17xx.c
 
    * Component: Keil::Device:Startup@1.0.0
-      Include file:  RTE_Driver/Config/RTE_Device.h
-      Source file:   Device/Source/ARM/startup_LPC17xx.s
-      Source file:   Device/Source/system_LPC17xx.c
       Include file:  Device/Include/LPC17xx.h
+      Source file:   Device/Source/system_LPC17xx.c
+      Source file:   Device/Source/ARM/startup_LPC17xx.s
+      Include file:  RTE_Driver/Config/RTE_Device.h
 Build Time Elapsed:  00:00:00
 </pre>
 </body>
