@@ -12,9 +12,7 @@
 #include "Driver_USART.h"               // CMSIS Driver:USART
 #include "Board_GLCD.h"                 // Board Support:Graphic LCD
 #include "GLCD_Config.h"                // Board Support:Graphic LCD
- 
 #include "RTE_Components.h"
-#include  CMSIS_device_header
 #include "cmsis_os2.h"
 
 extern ARM_DRIVER_USART Driver_USART0;
@@ -32,7 +30,7 @@ extern GLCD_FONT GLCD_Font_6x8;
 
 #define DETECTER     1
 #define TOUR_COMPLET 1
-#define MAX_POINTS 		350
+#define MAX_POINTS 	350
 
 /*-------------- Prototypes des fonctions --------------*/
 
@@ -60,11 +58,11 @@ char detect_obst_0_45 = 0, detect_obst_45_90 = 0, detect_obst_90_135 = 0, detect
 
 /*-------------- Création des identifiants des tâches (ID) --------------*/
 
-osThreadId_t ID_TacheLidar, ID_Envoie_et_Reception, ID_Traitement, ID_LED, ID_Bluetooth; 
+osThreadId_t ID_TacheLidar, ID_Envoie_et_Reception, ID_Traitement, ID_LED, ID_Bluetooth, ID_DataStock; 
 
 /*-------------- Créations des identifiants des boîte aux lettres (BAL) --------------*/
 
-osMessageQueueId_t ID_BAL_DATA_UART, ID_BAL_DATA, ID_BAL_BLUETOOTH;
+osMessageQueueId_t ID_BAL_DATA_UART, ID_BAL_DATA, ID_BAL_BLUETOOTH, ID_BAL_STOCK;
 
 /*------------------- Structure -------------------*/
 
@@ -83,7 +81,7 @@ typedef struct
 typedef struct
 {
 	char flag;
-	float distance_mm, angle_degree;
+	unsigned short distance_mm, angle_degree;
 } DataLidar;
 
 
@@ -154,26 +152,51 @@ void thread_traitement (void *argument) {
 	
 	while(1)
 	{
-		osMessageQueueGet(ID_BAL_DATA_UART, &DataRecept, NULL, osWaitForever);
+		osMessageQueueGet(ID_BAL_DATA_UART, &DataRecept, NULL, osWaitForever);	// On reçoit le BAL du thread EnvoiRecept 
 		
-		octet_0 = DataRecept.reception[0];				
-		LSB_angle = DataRecept.reception[1];
-		MSB_angle = DataRecept.reception[2];             
-		LSB_distance = DataRecept.reception[3];
-		MSB_distance = DataRecept.reception[4];
+		octet_0 = DataRecept.reception[0];				// Octet contenant le drapeau 
+		LSB_angle = DataRecept.reception[1];			// Octet contenant la partie LSB de l'angle	
+		MSB_angle = DataRecept.reception[2];      // Octet contenant la partie MSB de l'angle     
+		LSB_distance = DataRecept.reception[3];		// Octet contenant la partie LSB de la distance
+		MSB_distance = DataRecept.reception[4];		// Octet contenant la partie MSB de la distance
 			
 		angle_q6 = (MSB_angle << 7) | (LSB_angle >> 1);  					// angle_q6 et distance_q2 => données brutes, << et >> décalage des bits -> Protocole pour précision
 		distance_q2 =  (MSB_distance << 8) | LSB_distance ;	
 			
-		DataBrut.angle_q6 = angle_q6;															// Pour envoyer au bluetooth
-		DataBrut.distance_q2 = distance_q2; 
+		DataBrut.angle_q6 = angle_q6;					// Pour envoyer l'angle brut (sans division) au thread Bluetooth
+		DataBrut.distance_q2 = distance_q2; 	// Pour envoyer la distance brut (sans division) au thread Bluetooth
 		
-		DataEnvoi.flag = octet_0 & 0x01;																		// Masquage pour isoler le premier bit, qui correspond au flag (pour chaque tour = 1)
-		DataEnvoi.angle_degree = angle_q6 / 64.0;
-		DataEnvoi.distance_mm = distance_q2 / 4.0;
+		DataEnvoi.flag = octet_0 & 0x01;					// Masquage pour isoler le premier bit, qui correspond au flag (pour chaque tour = 1)
+		DataEnvoi.angle_degree = angle_q6 / 64;		// Divisé par 64 car la doc le précise
+		DataEnvoi.distance_mm = distance_q2 / 4;	// Divisé par 4 car la doc le précise			
 		
-		osMessageQueuePut(ID_BAL_DATA, &DataEnvoi, NULL, osWaitForever);
-		osMessageQueuePut(ID_BAL_BLUETOOTH, &DataBrut, NULL, osWaitForever);
+		osMessageQueuePut(ID_BAL_DATA, &DataEnvoi, NULL, osWaitForever);			// BAL pour le thread LED
+		osMessageQueuePut(ID_BAL_STOCK, &DataEnvoi, NULL, osWaitForever);			// BAL pour le thread DataStock
+		osMessageQueuePut(ID_BAL_BLUETOOTH, &DataBrut, NULL, osWaitForever);	// BAL pour le thread Bluetooth
+	}
+}
+
+void thread_DataStock(void *argument)
+{
+	(void)argument;
+	
+	DataLidar DataStock;
+	
+	unsigned short angle[ MAX_POINTS ];
+	unsigned short distance[ MAX_POINTS ];
+	static int i = 0;
+	
+	while(1)
+	{
+		osMessageQueueGet(ID_BAL_STOCK, &DataStock, NULL, osWaitForever); // Reception du BAL du thread traitement
+		
+		if(i < MAX_POINTS)
+		{
+			angle[i] = DataStock.angle_degree;
+			distance[i] = DataStock.distance_mm;
+			i++;
+		}
+		else { i = 0; }
 	}
 }
 
@@ -191,7 +214,7 @@ void thread_Bluetooth(void *argument) {
 	
 	DataBrut DataBluetooth;
 		
-	unsigned char data[4]; // a voir
+	unsigned char data[4]; 
 	char LSB_angle_q6, MSB_angle_q6, LSB_distance_q2, MSB_distance_q2;  // Les données sont brutes ! 
     
 	static int i = 0;
@@ -199,14 +222,14 @@ void thread_Bluetooth(void *argument) {
 		
 	while(1)
 		{
-			osMessageQueueGet(ID_BAL_BLUETOOTH, &DataBluetooth, NULL, osWaitForever);
+			osMessageQueueGet(ID_BAL_BLUETOOTH, &DataBluetooth, NULL, osWaitForever);		// Reception du BAL du thread traitement
 			
-			if(etat == 1)			// Pour envoyer un tour sur 2 pour laisser au temps au bluetooth
+			if(etat == 1)			// Pour envoyer 1 fois sur 2 pour laisser au temps au PC bluetooth (sinon l'affichage plante..)
 				{
 					if(i < MAX_POINTS) 
 						{
-							LSB_angle_q6 = DataBluetooth.angle_q6 & 0xFF;									// & pour faire une lecture de angle (8 bits => LSB)
-							MSB_angle_q6 = (DataBluetooth.angle_q6 >> 8) & 0xFF;					// Pour le MSB on decale jusqu'au bit 8 pour avoir les 8 bits les plus à gauche (MSB)
+							LSB_angle_q6 = DataBluetooth.angle_q6 & 0xFF;								// & pour faire une lecture de angle (8 bits => LSB)
+							MSB_angle_q6 = (DataBluetooth.angle_q6 >> 8) & 0xFF;				// Pour le MSB on decale jusqu'au bit 8 pour avoir les 8 bits les plus à gauche (MSB)
 							LSB_distance_q2 = DataBluetooth.distance_q2 & 0xFF;
 							MSB_distance_q2 = (DataBluetooth.distance_q2 >> 8) & 0xFF;
 							
@@ -219,16 +242,13 @@ void thread_Bluetooth(void *argument) {
 							osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);
 							i++;
 							
-						} else {
-							i = 0;
-							etat = 0;
-            }
+						} else { i = 0; etat = 0; }
 				} 
-				else {
-            
+				else 
+					{
             if(i < MAX_POINTS) i++;
             else { i = 0; etat = 1; }
-        }
+					}
     }
 }
 
@@ -259,6 +279,7 @@ osThreadAttr_t config_Envoie_Recept = { .priority = osPriorityHigh };
 osThreadAttr_t config_Traitement	  = { .priority = osPriorityHigh };
 osThreadAttr_t config_LED					  = { .priority = osPriorityLow }; 
 osThreadAttr_t configBluetooth 			= { .priority = osPriorityBelowNormal };
+osThreadAttr_t configDataStock 			= { .priority = osPriorityAboveNormal };
 
 /*-------------- Programme principal --------------*/
 
@@ -267,19 +288,21 @@ int main()
 	SystemCoreClockUpdate();
 	osKernelInitialize();                 // Initialize CMSIS-RTOS
 	
-	Init_UART_Lidar();
-	Init_Bluetooth();
-	Init_LED();
-	Init_Moteur_Lidar();
+	Init_UART_Lidar();		// On initialise l'UART0 pour le Lidar
+	Init_Bluetooth();			// On initialise l'UART1 pour le bluetooth
+	Init_LED();						// On onitialise en sortie les LEDS
+	Init_Moteur_Lidar();	// On initialise en sortie le moteur du Lidar
 	
-	ID_BAL_DATA_UART = osMessageQueueNew(10, sizeof(DataRecept), NULL);
+	ID_BAL_DATA_UART = osMessageQueueNew(10, sizeof(DataRecept),NULL);
 	ID_BAL_DATA 		 = osMessageQueueNew(10, sizeof(DataLidar), NULL);
-	ID_BAL_BLUETOOTH = osMessageQueueNew(10, sizeof(DataBrut), NULL);
+	ID_BAL_BLUETOOTH = osMessageQueueNew(10, sizeof(DataBrut), 	NULL);
+	ID_BAL_STOCK 		 = osMessageQueueNew(10, sizeof(DataLidar), NULL);
 
 	ID_Envoie_et_Reception = osThreadNew ( (osThreadFunc_t) thread_EnvoiRecept , NULL , &config_Envoie_Recept) ;
-	ID_Traitement 				 = osThreadNew ( (osThreadFunc_t) thread_traitement , NULL , &config_Traitement) ;
-	ID_LED 								 = osThreadNew ( (osThreadFunc_t) thread_allume_led , NULL , &config_LED) ;
-	ID_Bluetooth 					 = osThreadNew ( (osThreadFunc_t) thread_Bluetooth , NULL , &configBluetooth) ;
+	ID_Traitement 				 = osThreadNew ( (osThreadFunc_t) thread_traitement  , NULL , &config_Traitement) ;
+	ID_LED 								 = osThreadNew ( (osThreadFunc_t) thread_allume_led  , NULL , &config_LED) ;
+	ID_Bluetooth 					 = osThreadNew ( (osThreadFunc_t) thread_Bluetooth 	 , NULL , &configBluetooth) ;
+	ID_DataStock					 = osThreadNew ( (osThreadFunc_t) thread_DataStock 	 , NULL	, &configDataStock);
 	
 	osKernelStart();                      // Start thread execution
 	return 0; 
@@ -310,9 +333,8 @@ void Init_UART_Lidar(void)
 /* --------------------------------------------------------
  * Fonction : void UART_Callback_Lidar(unsigned int event)
  *
- * Initialisation de l'UART0 pour le lidar (P0.2 (RX)/ P0.3 (TX))
+ * Callback pour l'init de l'UART du Lidar
  *
- * Fonctionne avec 8 bits de donnée, 1 bit de stop, pas de parité et travaille avec 115 200 bps
  *-------------------------------------------------------*/
 
 void UART_Callback_Lidar(unsigned int event)
@@ -323,9 +345,8 @@ void UART_Callback_Lidar(unsigned int event)
 /* --------------------------------------------------------
  * Fonction : void UART_Callback_Bluetooth(unsigned int event)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
  *
- * Initialisation de l'UART0 pour le lidar (P0.2 (RX)/ P0.3 (TX))
+ *  Callback pour l'init de l'UART du Lidar
  *
- * Fonctionne avec 8 bits de donnée, 1 bit de stop, pas de parité et travaille avec 115 200 bps
  *-------------------------------------------------------*/
 
 void UART_Callback_Bluetooth(unsigned int event)
