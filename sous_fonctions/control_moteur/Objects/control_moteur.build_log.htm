@@ -21,13 +21,24 @@ Target DLL:      UL2CM3.DLL V1.164.16.0
 Dialog DLL:      TARMP1.DLL V1.27.1.0
  
 <h2>Project:</h2>
-C:\Users\TEMP.GEII2.006\Documents\git\Projet_IT2R_S4_D1\sous_fonctions\control_moteur\control_moteur.uvprojx
-Project File Date:  03/17/2026
+C:\Etudiants\git\Projet_IT2R_S4_D1\sous_fonctions\control_moteur\control_moteur.uvprojx
+Project File Date:  03/26/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.24', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Target_1'
-".\Objects\control_moteur.axf" - 0 Error(s), 0 Warning(s).
+compiling GPIO_LPC17xx.c...
+compiling PIN_LPC17xx.c...
+compiling system_LPC17xx.c...
+C:/Keil_v5/ARM/PACK/Keil/LPC1700_DFP/3.0.0/Boards/Keil/MCB1700/Common/ADC_MCB1700.c(155): warning: variable 'adstat' set but not used [-Wunused-but-set-variable]
+  155 |   volatile uint32_t adstat;
+      |                     ^
+1 warning generated.
+compiling ADC_MCB1700.c...
+compiling main.c...
+linking...
+Program Size: Code=4796 RO-data=252 RW-data=4 ZI-data=620  
+".\Objects\control_moteur.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -75,14 +86,14 @@ Package Vendor: Keil
       Source file:   RTE_Driver/GPIO_LPC17xx.c
 
    * Component: Keil::Device:PIN@1.0.0
-      Source file:   RTE_Driver/PIN_LPC17xx.c
       Include file:  RTE_Driver/PIN_LPC17xx.h
+      Source file:   RTE_Driver/PIN_LPC17xx.c
 
    * Component: Keil::Device:Startup@1.0.0
-      Source file:   Device/Source/system_LPC17xx.c
       Source file:   Device/Source/ARM/startup_LPC17xx.s
-      Include file:  Device/Include/LPC17xx.h
       Include file:  RTE_Driver/Config/RTE_Device.h
+      Include file:  Device/Include/LPC17xx.h
+      Source file:   Device/Source/system_LPC17xx.c
 Build Time Elapsed:  00:00:00
 </pre>
 </body>
