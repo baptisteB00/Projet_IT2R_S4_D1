@@ -51,6 +51,10 @@ Purpose     : Generated file do NOT edit!
 static APPW_ROOT_INFO * _apRootList[] = {
   &ID_SCREEN_ACCUEIL_RootInfo,
   &ID_SCREEN_FEUX_RootInfo,
+  &ID_SCREEN_PORTE_RootInfo,
+  &ID_SCREEN_VITESSE_RootInfo,
+  &ID_SCREEN_SON_RootInfo,
+  &ID_SCREEN_PANNEAU_RootInfo,
 };
 
 /*********************************************************************
@@ -73,6 +77,29 @@ static U8 _MultibufEnable = 1;
 
 /*********************************************************************
 *
+*       _ShowMissingCharacters
+*/
+static U8 _ShowMissingCharacters = 1;
+
+/*********************************************************************
+*
+*       _apLang
+*/
+static GUI_CONST_STORAGE char * _apLang[] = {
+  (GUI_CONST_STORAGE char *)acAPPW_Language_0,
+};
+
+/*********************************************************************
+*
+*       _TextInit
+*/
+static GUI_CONST_STORAGE APPW_TEXT_INIT _TextInit = {
+  _apLang,
+  GUI_COUNTOF(_apLang),
+};
+
+/*********************************************************************
+*
 *       Static code
 *
 **********************************************************************
@@ -82,9 +109,7 @@ static U8 _MultibufEnable = 1;
 *       _InitText
 */
 static void _InitText(void) {
-  //
-  // Empty, because application does not contain any text
-  //
+  APPW_TextInitMem(&_TextInit);
 }
 
 /*********************************************************************
@@ -103,6 +128,7 @@ void APPW_X_Setup(void) {
   APPW_MULTIBUF_Enable(_MultibufEnable);
   APPW_SetData(_apRootList, _NumScreens, _aVarList, _NumVars, _aScrollerList, _NumScrollers, (APPW_DRAWING_ITEM **)_appDrawing, _NumDrawings);
   APPW_SetSupportScroller(0);
+  GUI_ShowMissingCharacters(_ShowMissingCharacters);
 }
 
 /*********************************************************************

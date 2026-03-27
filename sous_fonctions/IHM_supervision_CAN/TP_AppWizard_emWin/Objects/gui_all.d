@@ -80,9 +80,31 @@
   AppWizzard\Source\Generated\ID_SCREEN_ACCUEIL.h \
   AppWizzard\Source\Generated\ID_SCREEN_FEUX.c \
   AppWizzard\Source\Generated\ID_SCREEN_FEUX.h \
+  AppWizzard\Source\Generated\ID_SCREEN_PORTE.c \
+  AppWizzard\Source\Generated\ID_SCREEN_PORTE.h \
+  AppWizzard\Source\Generated\ID_SCREEN_VITESSE.c \
+  AppWizzard\Source\Generated\ID_SCREEN_VITESSE.h \
+  AppWizzard\Source\Generated\ID_SCREEN_SON.c \
+  AppWizzard\Source\Generated\ID_SCREEN_SON.h \
+  AppWizzard\Source\Generated\ID_SCREEN_PANNEAU.c \
+  AppWizzard\Source\Generated\ID_SCREEN_PANNEAU.h \
   AppWizzard\Source\CustomCode\ID_SCREEN_ACCUEIL_Slots.c \
   AppWizzard\Source\CustomCode\Application.h \
   AppWizzard\Source\CustomCode\..\Generated\Resource.h \
   AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_ACCUEIL.h \
   AppWizzard\Source\CustomCode\ID_SCREEN_FEUX_Slots.c \
-  AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_FEUX.h
+  AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_FEUX.h \
+  AppWizzard\Source\CustomCode\ID_SCREEN_PORTE_Slots.c \
+  AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_PORTE.h \
+  AppWizzard\Source\CustomCode\ID_SCREEN_VITESSE_Slots.c \
+  AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_VITESSE.h \
+  AppWizzard\Source\CustomCode\ID_SCREEN_SON_Slots.c \
+  AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_SON.h \
+  AppWizzard\Source\CustomCode\ID_SCREEN_PANNEAU_Slots.c \
+  AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_PANNEAU.h \
+  AppWizzard\Resource\Image\DARK_Button_Up_100x30.c \
+  AppWizzard\Resource\Image\DARK_Button_Down_100x30.c \
+  AppWizzard\Resource\Image\ANALOG_Button_Up_50px50.c \
+  AppWizzard\Resource\Image\ANALOG_Button_Down_50px50.c \
+  AppWizzard\Resource\Font\Roboto_32_Normal_EXT_AA4.c \
+  AppWizzard\Resource\Text\APPW_Language_0.c

@@ -50,14 +50,25 @@ static APPW_CREATE_ITEM _aCreate[] = {
     },
     { 0, 0 }
   },
-  { WM_OBJECT_LISTBOX_Create,
-    ID_LISTBOX_00, ID_SCREEN_ACCUEIL,
-    { { { DISPOSE_MODE_REL_PARENT, 76, 0, 0 },
-        { DISPOSE_MODE_REL_PARENT, 36, 0, 0 },
+  { WM_OBJECT_TEXT_Create,
+    ID_TEXT_00, ID_SCREEN_ACCUEIL,
+    { { { DISPOSE_MODE_REL_PARENT, 148, 0, 0 },
+        { DISPOSE_MODE_REL_PARENT, 0, 0, 0 },
         { DISPOSE_MODE_NULL, 0, 0, 0 },
         { DISPOSE_MODE_NULL, 0, 0, 0 },
       },
-      150, 200, 0, 0, 0, 0
+      184, 32, 0, 0, 0, 0
+    },
+    { 0, 0 }
+  },
+  { WM_OBJECT_BUTTON_Create,
+    ID_BUTTON_00, ID_SCREEN_ACCUEIL,
+    { { { DISPOSE_MODE_REL_PARENT, 199, 0, 0 },
+        { DISPOSE_MODE_REL_PARENT, 106, 0, 0 },
+        { DISPOSE_MODE_NULL, 0, 0, 0 },
+        { DISPOSE_MODE_NULL, 0, 0, 0 },
+      },
+      100, 30, 0, 0, 0, 0
     },
     { 0, 0 }
   },
@@ -68,15 +79,33 @@ static APPW_CREATE_ITEM _aCreate[] = {
 *       _aSetup
 */
 static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
-  { ID_BOX_00,         APPW_SET_PROP_COLOR,        { ARG_V(GUI_DARKGRAY) } },
-  { ID_LISTBOX_00,     APPW_SET_PROP_BKCOLORS,     { ARG_V(GUI_WHITE),
-                                                     ARG_V(0xff2777b3),
-                                                     ARG_V(0xff2777b3) } },
-  { ID_LISTBOX_00,     APPW_SET_PROP_COLORS,       { ARG_V(0xff2c2c30),
-                                                     ARG_V(GUI_WHITE),
-                                                     ARG_V(GUI_WHITE) } },
-  { ID_LISTBOX_00,     APPW_SET_PROP_FRAME,        { ARG_V(2) } },
-  { ID_LISTBOX_00,     APPW_SET_PROP_COLOR,        { ARG_V(0xff2c2c30) } },
+  { ID_BOX_00,         APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
+  { ID_TEXT_00,        APPW_SET_PROP_COLOR,        { ARG_V(GUI_BLACK) } },
+  { ID_TEXT_00,        APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
+                                                     ARG_V(0),
+                                                     ARG_V(0) } },
+  { ID_TEXT_00,        APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_32_Normal_EXT_AA4) } },
+  { ID_TEXT_00,        APPW_SET_PROP_TEXTID,       { ARG_V(ID_RTEXT_1) } },
+  { ID_BUTTON_00,      APPW_SET_PROP_SBITMAPS,     { ARG_VP(0, acDARK_Button_Up_100x30),
+                                                     ARG_VP(0, acDARK_Button_Down_100x30), } },
+  { ID_BUTTON_00,      APPW_SET_PROP_COLORS,       { ARG_V(0xffc0c0c0),
+                                                     ARG_V(0xffc0c0c0),
+                                                     ARG_V(GUI_INVALID_COLOR) } },
+};
+
+/*********************************************************************
+*
+*       _aAction
+*/
+static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
+  { ID_BUTTON_00,      WM_NOTIFICATION_CLICKED,          0,                 APPW_JOB_SHIFTSCREEN,    ID_SCREEN_ACCUEIL__ID_BUTTON_00__WM_NOTIFICATION_CLICKED,
+    { ARG_V(ID_SCREEN_FEUX),
+      ARG_V(APPW_EDGE_LEFT),
+      ARG_F((void (*)(void))ANIM_LINEAR),
+      ARG_V(500),
+      ARG_V(0),
+    }, 0, NULL
+  },
 };
 
 /*********************************************************************
@@ -93,7 +122,7 @@ APPW_ROOT_INFO ID_SCREEN_ACCUEIL_RootInfo = {
   ID_SCREEN_ACCUEIL,
   _aCreate, GUI_COUNTOF(_aCreate),
   _aSetup,  GUI_COUNTOF(_aSetup),
-  NULL,  0,
+  _aAction, GUI_COUNTOF(_aAction),
   cbID_SCREEN_ACCUEIL,
   0
 };

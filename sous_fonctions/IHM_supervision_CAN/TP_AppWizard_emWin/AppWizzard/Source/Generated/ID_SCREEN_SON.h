@@ -9,41 +9,40 @@
 *                                                                    *
 **********************************************************************
 ----------------------------------------------------------------------
-File        : ID_SCREEN_ACCUEIL_Slots.c
-Purpose     : AppWizard managed file, function content could be changed
+File        : ID_SCREEN_SON.h
+Purpose     : Generated file do NOT edit!
 ---------------------------END-OF-HEADER------------------------------
 */
 
-#include "Application.h"
-#include "../Generated/Resource.h"
-#include "../Generated/ID_SCREEN_ACCUEIL.h"
+#ifndef ID_SCREEN_SON_H
+#define ID_SCREEN_SON_H
 
-/*** Begin of user code area ***/
-/*** End of user code area ***/
+#include "AppWizard.h"
 
 /*********************************************************************
 *
-*       Public code
-*
-**********************************************************************
+*       Objects
 */
-/*********************************************************************
-*
-*       cbID_SCREEN_ACCUEIL
-*/
-void cbID_SCREEN_ACCUEIL(WM_MESSAGE * pMsg) {
-  GUI_USE_PARA(pMsg);
-}
+#define ID_BOX_04          (GUI_ID_USER + 1)
+#define ID_TEXT_00         (GUI_ID_USER + 2)
+#define ID_BUTTON_NEXT     (GUI_ID_USER + 3)
+#define ID_BUTTON_ACCUEIL  (GUI_ID_USER + 4)
+#define ID_BUTTON_PREVIOUS (GUI_ID_USER + 5)
 
 /*********************************************************************
 *
-*       ID_SCREEN_ACCUEIL__ID_BUTTON_00__WM_NOTIFICATION_CLICKED
+*       Slots
 */
-void ID_SCREEN_ACCUEIL__ID_BUTTON_00__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
-  GUI_USE_PARA(pAction);
-  GUI_USE_PARA(hScreen);
-  GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
-}
+void ID_SCREEN_SON__ID_BUTTON_ACCUEIL__WM_NOTIFICATION_CLICKED (APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
+void ID_SCREEN_SON__ID_BUTTON_NEXT__WM_NOTIFICATION_CLICKED    (APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
+void ID_SCREEN_SON__ID_BUTTON_PREVIOUS__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
+
+/*********************************************************************
+*
+*       Callback
+*/
+void cbID_SCREEN_SON(WM_MESSAGE * pMsg);
+
+#endif  // ID_SCREEN_SON_H
 
 /*************************** End of file ****************************/

@@ -9,36 +9,17 @@
 *                                                                    *
 **********************************************************************
 ----------------------------------------------------------------------
-File        : ID_SCREEN_ACCUEIL.h
-Purpose     : Generated file do NOT edit!
+File        : APPW_Language_0.c
+Purpose     : Conversion into c-array.
+              Generated file do NOT edit!
 ---------------------------END-OF-HEADER------------------------------
 */
 
-#ifndef ID_SCREEN_ACCUEIL_H
-#define ID_SCREEN_ACCUEIL_H
-
 #include "AppWizard.h"
 
-/*********************************************************************
-*
-*       Objects
-*/
-#define ID_BOX_00    (GUI_ID_USER + 1)
-#define ID_TEXT_00   (GUI_ID_USER + 2)
-#define ID_BUTTON_00 (GUI_ID_USER + 3)
-
-/*********************************************************************
-*
-*       Slots
-*/
-void ID_SCREEN_ACCUEIL__ID_BUTTON_00__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
-
-/*********************************************************************
-*
-*       Callback
-*/
-void cbID_SCREEN_ACCUEIL(WM_MESSAGE * pMsg);
-
-#endif  // ID_SCREEN_ACCUEIL_H
+GUI_CONST_STORAGE unsigned char acAPPW_Language_0[72UL + 1] = {
+  0x50, 0x41, 0x47, 0x45, 0x20, 0x53, 0x4F, 0x4E, 0x0A, 0x50, 0x41, 0x47, 0x45, 0x20, 0x41, 0x43, 0x43, 0x55, 0x45, 0x49, 0x4C, 0x0A, 0x50, 0x41, 0x47, 0x45, 0x20, 0x46, 0x45, 0x55, 0x58, 0x0A, 0x50, 0x41, 0x47, 0x45, 0x20, 0x56, 0x49, 0x54, 
+  0x45, 0x53, 0x53, 0x45, 0x0A, 0x50, 0x41, 0x47, 0x45, 0x20, 0x50, 0x41, 0x4E, 0x4E, 0x45, 0x41, 0x55, 0x0A, 0x50, 0x41, 0x47, 0x45, 0x20, 0x50, 0x4F, 0x52, 0x54, 0x45, 0x0A, 
+};
 
 /*************************** End of file ****************************/

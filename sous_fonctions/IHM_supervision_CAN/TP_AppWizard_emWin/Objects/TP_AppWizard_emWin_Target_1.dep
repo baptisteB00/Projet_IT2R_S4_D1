@@ -216,10 +216,10 @@ I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\In
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_uart.h)(0x6971E676)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_uart_ex.h)(0x6971E676)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\RTOS2\Include\cmsis_os2.h)(0x6971E531)
-F (.\AppWizzard\GUI_All.c)(0x69C66D89)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__RTX -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/CMSIS-I./RTE/Device/STM32F746NGHx-I./RTE/_Target_1-IC:/Keil_v5/ARM/PACK/ARM/CMSIS-RTX/5.9.0/Include-IC:/Keil_v5/ARM/PACK/ARM/CMSIS/6.3.0/CMSIS/Core/Include-IC:/Keil_v5/ARM/PACK/ARM/CMSIS/6.3.0/CMSIS/RTOS2/Include-IC:/Keil_v5/ARM/PACK/Keil/MDK-Middleware/7.17.0/Board-IC:/Keil_v5/ARM/PACK/Keil/MDK-Middleware_Graphics/1.3.1/emWin/Include-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/BSP/STM32746G-Discovery-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F7xx/Include-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/STM32F7xx_HAL_Driver/Inc-D__UVISION_VERSION="543" -DSTM32F746xx -D_RTE_  -include "Pre_Include_Global.h"-o ./objects/gui_all.o -MMD)
+F (.\AppWizzard\GUI_All.c)(0x69C6B7DA)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__RTX -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/CMSIS-I./RTE/Device/STM32F746NGHx-I./RTE/_Target_1-IC:/Keil_v5/ARM/PACK/ARM/CMSIS-RTX/5.9.0/Include-IC:/Keil_v5/ARM/PACK/ARM/CMSIS/6.3.0/CMSIS/Core/Include-IC:/Keil_v5/ARM/PACK/ARM/CMSIS/6.3.0/CMSIS/RTOS2/Include-IC:/Keil_v5/ARM/PACK/Keil/MDK-Middleware/7.17.0/Board-IC:/Keil_v5/ARM/PACK/Keil/MDK-Middleware_Graphics/1.3.1/emWin/Include-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/BSP/STM32746G-Discovery-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F7xx/Include-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/STM32F7xx_HAL_Driver/Inc-D__UVISION_VERSION="543" -DSTM32F746xx -D_RTE_  -include "Pre_Include_Global.h"-o ./objects/gui_all.o -MMD)
 I (RTE\_Target_1\Pre_Include_Global.h)(0x69B87A35)
-I (AppWizzard\Source\APPW_MainTask.c)(0x69C66CF5)
-I (AppWizzard\Source\Generated\Resource.h)(0x69C66CF5)
+I (AppWizzard\Source\APPW_MainTask.c)(0x69C6B74C)
+I (AppWizzard\Source\Generated\Resource.h)(0x69C6B74C)
 I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\AppWizard.h)(0x6971E64D)
 I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\DIALOG.h)(0x6971E64D)
 I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\WM.h)(0x6971E64D)
@@ -293,18 +293,40 @@ I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\LISTVIEW
 I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\LISTBOX_Private.h)(0x6971E64D)
 I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\WHEEL_Private.h)(0x6971E64D)
 I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\MOVIE_Private.h)(0x6971E64D)
-I (AppWizzard\Source\Generated\Resource.c)(0x69C66CF5)
-I (AppWizzard\Source\Generated\APPWConf.c)(0x69C66CF5)
-I (AppWizzard\Source\Generated\ID_SCREEN_ACCUEIL.c)(0x69C66D89)
-I (AppWizzard\Source\Generated\ID_SCREEN_ACCUEIL.h)(0x69C66CF5)
-I (AppWizzard\Source\Generated\ID_SCREEN_FEUX.c)(0x69C66CF5)
-I (AppWizzard\Source\Generated\ID_SCREEN_FEUX.h)(0x69C66CF5)
-I (AppWizzard\Source\CustomCode\ID_SCREEN_ACCUEIL_Slots.c)(0x69C66CF5)
-I (AppWizzard\Source\CustomCode\Application.h)(0x69C66BFB)
-I (AppWizzard\Source\CustomCode\..\Generated\Resource.h)(0x69C66CF5)
-I (AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_ACCUEIL.h)(0x69C66CF5)
-I (AppWizzard\Source\CustomCode\ID_SCREEN_FEUX_Slots.c)(0x69C66CF5)
-I (AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_FEUX.h)(0x69C66CF5)
+I (AppWizzard\Source\Generated\Resource.c)(0x69C6B74C)
+I (AppWizzard\Source\Generated\APPWConf.c)(0x69C6B74C)
+I (AppWizzard\Source\Generated\ID_SCREEN_ACCUEIL.c)(0x69C6B772)
+I (AppWizzard\Source\Generated\ID_SCREEN_ACCUEIL.h)(0x69C6B74C)
+I (AppWizzard\Source\Generated\ID_SCREEN_FEUX.c)(0x69C6B798)
+I (AppWizzard\Source\Generated\ID_SCREEN_FEUX.h)(0x69C6B74C)
+I (AppWizzard\Source\Generated\ID_SCREEN_PORTE.c)(0x69C6B7B1)
+I (AppWizzard\Source\Generated\ID_SCREEN_PORTE.h)(0x69C6B74C)
+I (AppWizzard\Source\Generated\ID_SCREEN_VITESSE.c)(0x69C6B7C6)
+I (AppWizzard\Source\Generated\ID_SCREEN_VITESSE.h)(0x69C6B74C)
+I (AppWizzard\Source\Generated\ID_SCREEN_SON.c)(0x69C6B7DA)
+I (AppWizzard\Source\Generated\ID_SCREEN_SON.h)(0x69C6B74C)
+I (AppWizzard\Source\Generated\ID_SCREEN_PANNEAU.c)(0x69C6B74C)
+I (AppWizzard\Source\Generated\ID_SCREEN_PANNEAU.h)(0x69C6B74C)
+I (AppWizzard\Source\CustomCode\ID_SCREEN_ACCUEIL_Slots.c)(0x69C6B74C)
+I (AppWizzard\Source\CustomCode\Application.h)(0x69C66E32)
+I (AppWizzard\Source\CustomCode\..\Generated\Resource.h)(0x69C6B74C)
+I (AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_ACCUEIL.h)(0x69C6B74C)
+I (AppWizzard\Source\CustomCode\ID_SCREEN_FEUX_Slots.c)(0x69C6B74C)
+I (AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_FEUX.h)(0x69C6B74C)
+I (AppWizzard\Source\CustomCode\ID_SCREEN_PORTE_Slots.c)(0x69C6B74C)
+I (AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_PORTE.h)(0x69C6B74C)
+I (AppWizzard\Source\CustomCode\ID_SCREEN_VITESSE_Slots.c)(0x69C6B74C)
+I (AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_VITESSE.h)(0x69C6B74C)
+I (AppWizzard\Source\CustomCode\ID_SCREEN_SON_Slots.c)(0x69C6B74C)
+I (AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_SON.h)(0x69C6B74C)
+I (AppWizzard\Source\CustomCode\ID_SCREEN_PANNEAU_Slots.c)(0x69C6B74C)
+I (AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_PANNEAU.h)(0x69C6B74C)
+I (AppWizzard\Resource\Image\DARK_Button_Up_100x30.c)(0x69C6B74C)
+I (AppWizzard\Resource\Image\DARK_Button_Down_100x30.c)(0x69C6B74C)
+I (AppWizzard\Resource\Image\ANALOG_Button_Up_50px50.c)(0x69C6B74C)
+I (AppWizzard\Resource\Image\ANALOG_Button_Down_50px50.c)(0x69C6B74C)
+I (AppWizzard\Resource\Font\Roboto_32_Normal_EXT_AA4.c)(0x69C6B74C)
+I (AppWizzard\Resource\Text\APPW_Language_0.c)(0x69C6B74C)
 F (C:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/BSP/Components/ft5336/ft5336.c)(0x6971E676)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__RTX -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/CMSIS-I./RTE/Device/STM32F746NGHx-I./RTE/_Target_1-IC:/Keil_v5/ARM/PACK/ARM/CMSIS-RTX/5.9.0/Include-IC:/Keil_v5/ARM/PACK/ARM/CMSIS/6.3.0/CMSIS/Core/Include-IC:/Keil_v5/ARM/PACK/ARM/CMSIS/6.3.0/CMSIS/RTOS2/Include-IC:/Keil_v5/ARM/PACK/Keil/MDK-Middleware/7.17.0/Board-IC:/Keil_v5/ARM/PACK/Keil/MDK-Middleware_Graphics/1.3.1/emWin/Include-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/BSP/STM32746G-Discovery-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F7xx/Include-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/STM32F7xx_HAL_Driver/Inc-D__UVISION_VERSION="543" -DSTM32F746xx -D_RTE_  -include "Pre_Include_Global.h"-o ./objects/ft5336.o -MMD)
 I (RTE\_Target_1\Pre_Include_Global.h)(0x69B87A35)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\BSP\Components\ft5336\ft5336.h)(0x6971E676)
@@ -1637,7 +1659,7 @@ I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\GUI_Type
 I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\LCD.h)(0x6971E64D)
 I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\Global.h)(0x6971E64D)
 I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\GUI_Version.h)(0x6971E64D)
-F (RTE/Graphics_Display/STM32F746NGHx/LCDConf.c)(0x69BBE782)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__RTX -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-macro-redefined-I./RTE/CMSIS-I./RTE/Device/STM32F746NGHx-I./RTE/_Target_1-IC:/Keil_v5/ARM/PACK/ARM/CMSIS-RTX/5.9.0/Include-IC:/Keil_v5/ARM/PACK/ARM/CMSIS/6.3.0/CMSIS/Core/Include-IC:/Keil_v5/ARM/PACK/ARM/CMSIS/6.3.0/CMSIS/RTOS2/Include-IC:/Keil_v5/ARM/PACK/Keil/MDK-Middleware/7.17.0/Board-IC:/Keil_v5/ARM/PACK/Keil/MDK-Middleware_Graphics/1.3.1/emWin/Include-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/BSP/STM32746G-Discovery-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F7xx/Include-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/STM32F7xx_HAL_Driver/Inc-D__UVISION_VERSION="543" -DSTM32F746xx -D_RTE_  -include "Pre_Include_Global.h"-o ./objects/lcdconf.o -MMD)
+F (RTE/Graphics_Display/STM32F746NGHx/LCDConf.c)(0x69C66E32)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__RTX -gdwarf-4 -O0 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -Wno-macro-redefined-I./RTE/CMSIS-I./RTE/Device/STM32F746NGHx-I./RTE/_Target_1-IC:/Keil_v5/ARM/PACK/ARM/CMSIS-RTX/5.9.0/Include-IC:/Keil_v5/ARM/PACK/ARM/CMSIS/6.3.0/CMSIS/Core/Include-IC:/Keil_v5/ARM/PACK/ARM/CMSIS/6.3.0/CMSIS/RTOS2/Include-IC:/Keil_v5/ARM/PACK/Keil/MDK-Middleware/7.17.0/Board-IC:/Keil_v5/ARM/PACK/Keil/MDK-Middleware_Graphics/1.3.1/emWin/Include-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/BSP/STM32746G-Discovery-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F7xx/Include-IC:/Keil_v5/ARM/PACK/Keil/STM32F7xx_DFP/2.16.0/Drivers/STM32F7xx_HAL_Driver/Inc-D__UVISION_VERSION="543" -DSTM32F746xx -D_RTE_  -include "Pre_Include_Global.h"-o ./objects/lcdconf.o -MMD)
 I (RTE\_Target_1\Pre_Include_Global.h)(0x69B87A35)
 I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\GUI.h)(0x6971E64D)
 I (C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\GUI_ConfDefaults.h)(0x6971E64D)
