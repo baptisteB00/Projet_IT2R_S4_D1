@@ -15,6 +15,7 @@
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dma.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dma_ex.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_cortex.h \
+  C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_can.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ex.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ramfunc.h \
@@ -27,4 +28,5 @@
   C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\RTOS2\Include\os_tick.h \
   C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Include\rtx_os.h \
   C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Include\rtx_def.h \
-  RTE\CMSIS\RTX_Config.h
+  RTE\CMSIS\RTX_Config.h \
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Driver\Include\Driver_CAN.h

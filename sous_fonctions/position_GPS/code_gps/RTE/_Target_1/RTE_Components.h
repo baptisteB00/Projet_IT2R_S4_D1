@@ -19,10 +19,6 @@
 #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
 #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
 #define RTE_CMSIS_RTOS2_RTX5_SOURCE     /* CMSIS-RTOS2 Keil RTX5 Source */
-/* Keil::CMSIS Driver:CAN@1.17 */
-#define RTE_Drivers_CAN1                /* Driver CAN1 */
-#define RTE_Drivers_CAN2                /* Driver CAN2 */
-#define RTE_Drivers_CAN3                /* Driver CAN3 */
 /* Keil::CMSIS Driver:USART@2.16 */
 #define RTE_Drivers_USART1              /* Driver USART1 */
 #define RTE_Drivers_USART2              /* Driver USART2 */
@@ -36,6 +32,8 @@
 #define RTE_Drivers_USART10             /* Driver USART10 */
 /* Keil::Device:STM32Cube Framework:Classic@1.8.1 */
 #define RTE_DEVICE_FRAMEWORK_CLASSIC
+/* Keil::Device:STM32Cube HAL:CAN@1.8.1 */
+#define RTE_DEVICE_HAL_CAN
 /* Keil::Device:STM32Cube HAL:Common@1.8.1 */
 #define RTE_DEVICE_HAL_COMMON
 /* Keil::Device:STM32Cube HAL:Cortex@1.8.1 */
