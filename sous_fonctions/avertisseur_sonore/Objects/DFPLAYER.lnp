@@ -1,6 +1,5 @@
 --cpu Cortex-M3
 ".\objects\main.o"
-".\objects\gpio.o"
 ".\objects\irq_armv7m.o"
 ".\objects\rtx_delay.o"
 ".\objects\rtx_evflags.o"
@@ -20,8 +19,9 @@
 ".\objects\uart_lpc17xx.o"
 ".\objects\gpdma_lpc17xx.o"
 ".\objects\pin_lpc17xx.o"
-".\objects\startup_lpc17xx.o"
-".\objects\system_lpc17xx.o"
+".\objects\startup_lpc17xx_1.o"
+".\objects\system_lpc17xx_1.o"
+".\objects\gpio_lpc17xx.o"
 --strict --scatter ".\Objects\DFPLAYER.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

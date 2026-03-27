@@ -22,43 +22,46 @@ Dialog DLL:      TARMP1.DLL V1.27.1.0
  
 <h2>Project:</h2>
 C:\Etudiants\Nouveau dossier\Projet_IT2R_S4_D1\sous_fonctions\avertisseur_sonore\DFPLAYER.uvprojx
-Project File Date:  03/17/2026
+Project File Date:  03/27/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.24', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Rebuild target 'Target_1'
+Note: source file 'RTE/Device/LPC1768/startup_LPC17xx.s' - object file renamed from '.\Objects\startup_LPC17xx.o' to '.\Objects\startup_lpc17xx_1.o'.
+Note: source file 'RTE/Device/LPC1768/startup_LPC17xx.s' - object file renamed from '.\Objects\startup_LPC17xx.o' to '.\Objects\startup_lpc17xx_1.o'.
+Note: source file 'RTE/Device/LPC1768/system_LPC17xx.c' - object file renamed from '.\Objects\system_LPC17xx.o' to '.\Objects\system_lpc17xx_1.o'.
+compiling RTX_Config.c...
 compiling rtx_delay.c...
-main.c(94): warning: expression result unused [-Wunused-value]
-   94 |                 SystemCoreClockUpdate;
+compiling os_systick.c...
+compiling rtx_memory.c...
+main.c(151): warning: expression result unused [-Wunused-value]
+  151 |                 SystemCoreClockUpdate;
       |                 ^~~~~~~~~~~~~~~~~~~~~
-main.c(101): warning: expression result unused [-Wunused-value]
-  101 |                 osKernelStart;
+main.c(158): warning: expression result unused [-Wunused-value]
+  158 |                 osKernelStart;
       |                 ^~~~~~~~~~~~~
 2 warnings generated.
 compiling main.c...
-compiling RTX_Config.c...
-compiling os_systick.c...
+compiling rtx_lib.c...
+compiling rtx_system.c...
 assembling irq_armv7m.S...
 compiling rtx_mutex.c...
-compiling rtx_semaphore.c...
-compiling rtx_evr.c...
-compiling GPIO.c...
-compiling rtx_lib.c...
-compiling rtx_memory.c...
-compiling rtx_system.c...
-compiling rtx_evflags.c...
-compiling UART_LPC17xx.c...
-compiling rtx_mempool.c...
 compiling rtx_timer.c...
-compiling PIN_LPC17xx.c...
-compiling rtx_kernel.c...
+compiling rtx_evr.c...
 compiling GPDMA_LPC17xx.c...
-compiling system_LPC17xx.c...
-assembling startup_LPC17xx.s...
+compiling rtx_semaphore.c...
+compiling rtx_evflags.c...
+compiling rtx_mempool.c...
+compiling rtx_kernel.c...
 compiling rtx_msgqueue.c...
+compiling PIN_LPC17xx.c...
+compiling GPIO_LPC17xx.c...
+compiling system_LPC17xx.c...
+compiling UART_LPC17xx.c...
+assembling startup_LPC17xx.s...
 compiling rtx_thread.c...
 linking...
-Program Size: Code=13852 RO-data=996 RW-data=204 ZI-data=22724  
+Program Size: Code=13964 RO-data=996 RW-data=204 ZI-data=22724  
 ".\Objects\DFPLAYER.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -85,6 +88,7 @@ Package Vendor: Keil
                 NXP LPC1700 Series Device Support, Drivers and Examples for MCB1700 and LPC1788-32
    * Component: USART Version: 2.13.0
    * Component: GPDMA Version: 1.4.0
+   * Component: GPIO Version: 1.1.0
    * Component: PIN Version: 1.0.0
    * Component: Startup Version: 1.0.0
 
@@ -107,32 +111,32 @@ Package Vendor: Keil
       Source file:   CMSIS/RTOS2/Source/os_systick.c
 
    * Component: ARM::CMSIS:RTOS2:Keil RTX5&Source@5.9.0
-      Source file:   Config/RTX_Config.c
-      Source file:   Template/Semaphore.c
-      Include file:  Config/RTX_Config.h
-      Source file:   Template/Thread.c
-      Source file:   Template/Timer.c
-      Source file:   Template/main.c
-      Source file:   Template/MsgQueue.c
-      Source file:   Template/Events.c
-      Include file:  Include/rtx_os.h
       Source file:   Template/MemPool.c
+      Source file:   Template/Timer.c
+      Source file:   Template/MsgQueue.c
+      Source file:   Template/Thread.c
+      Source file:   Config/RTX_Config.c
+      Include file:  Config/RTX_Config.h
+      Source file:   Template/Events.c
       Source file:   Template/Mutex.c
-      Source file:   Source/rtx_delay.c
-      Source file:   Source/rtx_mutex.c
-      Source file:   Source/rtx_system.c
+      Source file:   Template/main.c
+      Include file:  Include/rtx_os.h
+      Source file:   Template/Semaphore.c
       Source file:   Source/rtx_kernel.c
-      Source file:   Template/svc_user.c
-      Source file:   Source/rtx_semaphore.c
-      Source file:   Source/rtx_memory.c
-      Source file:   Source/rtx_lib.c
-      Source file:   Source/GCC/irq_armv7m.S
-      Source file:   Source/rtx_thread.c
-      Source file:   Source/rtx_evr.c
-      Source file:   Source/rtx_evflags.c
-      Source file:   Source/rtx_timer.c
       Source file:   Source/rtx_mempool.c
+      Source file:   Source/rtx_evr.c
+      Source file:   Source/GCC/irq_armv7m.S
+      Source file:   Source/rtx_mutex.c
+      Source file:   Source/rtx_evflags.c
+      Source file:   Source/rtx_delay.c
+      Source file:   Template/svc_user.c
+      Source file:   Source/rtx_timer.c
+      Source file:   Source/rtx_lib.c
       Source file:   Source/rtx_msgqueue.c
+      Source file:   Source/rtx_memory.c
+      Source file:   Source/rtx_system.c
+      Source file:   Source/rtx_semaphore.c
+      Source file:   Source/rtx_thread.c
 
    * Component: CMSIS Driver:USART(API)@2.4.0
       Include file:  CMSIS/Driver/Include/Driver_USART.h
@@ -150,16 +154,20 @@ Package Vendor: Keil
       Include file:  RTE_Driver/GPDMA_LPC17xx.h
       Source file:   RTE_Driver/GPDMA_LPC17xx.c
 
+   * Component: Keil::Device:GPIO@1.1.0
+      Source file:   RTE_Driver/GPIO_LPC17xx.c
+      Include file:  RTE_Driver/GPIO_LPC17xx.h
+
    * Component: Keil::Device:PIN@1.0.0
-      Include file:  RTE_Driver/PIN_LPC17xx.h
       Source file:   RTE_Driver/PIN_LPC17xx.c
+      Include file:  RTE_Driver/PIN_LPC17xx.h
 
    * Component: Keil::Device:Startup@1.0.0
       Include file:  RTE_Driver/Config/RTE_Device.h
       Source file:   Device/Source/system_LPC17xx.c
       Source file:   Device/Source/ARM/startup_LPC17xx.s
       Include file:  Device/Include/LPC17xx.h
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

@@ -7,6 +7,7 @@
 #include "cmsis_os2.h"
 
 
+
 extern ARM_DRIVER_USART Driver_USART1;
 extern int32_t GLCD_Initialize (void);
 
@@ -17,6 +18,7 @@ osThreadAttr_t configT1 = {.priority = osPriorityNormal} ;
 osThreadAttr_t configT2 = {.priority = osPriorityNormal} ;
 osThreadAttr_t configT3 = {.priority = osPriorityNormal} ;
 osMutexId_t mut_son;
+
 
 
 // Fonction pour envoyer une trame de commande au DFPlayer
@@ -49,7 +51,12 @@ void sendDFCommand(uint8_t cmd, uint8_t para1, uint8_t para2) {
 	osMutexRelease(mut_son);
 	osDelay(500);
 }
-
+static void Init_JS(void) {
+    // Entrees Joystick Carte Keil
+	LPC_GPIO1->FIODIR3 = LPC_GPIO1->FIODIR3 & 0xF8;	// FIO1DIR3 pour JS en entree
+	LPC_GPIO1->FIODIR2 = LPC_GPIO1->FIODIR2 & 0x6F;	// FIO1DIR2 pour JS en entree
+	LPC_GPIO2->FIODIR0 = LPC_GPIO2->FIODIR0 | 0x7C;	// FIO2DIR0 pour 5 LEDs LED0 = P2.6 ... LED4 = P2.2  en sortie
+}
 
 static void Init_UART(void) {
     Driver_USART1.Initialize(NULL);
@@ -85,12 +92,62 @@ void trame_uart(void)
 	osMutexRelease(mut_son);
 }
 
+char Valeur_Joystick_droit(void)
+{
+	char inter, sortie;
+	inter = LPC_GPIO1->FIOPIN3 & 0x01;
+	if (inter == 0x00)	// BP enfonce
+		sortie = 1;
+	else
+		sortie = 0;
+	return sortie;
+}
 
+// Lecture Joystick gauche carte principale
+// Argument sortie : 1 si Joystick gauche enfoncé, 0 sinon
+// -------------------------------------------------------
+char Valeur_Joystick_gauche(void)
+{
+	char inter, sortie;
+	inter = LPC_GPIO1->FIOPIN3 & 0x04;
+	if (inter == 0x00)	// BP enfonce
+		sortie = 1;
+	else
+		sortie = 0;
+	return sortie;
+}
+// Lecture Joystick haut carte principale
+// Argument sortie : 1 si Joystick haut enfoncé, 0 sinon
+// -----------------------------------------------------
+char Valeur_Joystick_haut(void)
+{
+	char inter, sortie;
+	inter = LPC_GPIO1->FIOPIN2 & 0x80;
+	if (inter == 0x00)	// BP enfonce
+		sortie = 1;
+	else
+		sortie = 0;
+	return sortie;
+}
+
+// Lecture Joystick bas carte principale
+// Argument sortie : 1 si Joystick bas enfoncé, 0 sinon
+// ----------------------------------------------------
+char Valeur_Joystick_bas(void)
+{
+	char inter, sortie;
+	inter = LPC_GPIO1->FIOPIN3 & 0x02;
+	if (inter == 0x00)	// BP enfonce
+		sortie = 1;
+	else
+		sortie = 0;
+	return sortie;
+}
 int main(void) {
-		
+		Init_JS();
     Init_UART();
-		
-	
+		LPC_GPIO1->FIODIR3 = 0x00;
+		char jsd,jsg,jsh,jsb;
 		SystemCoreClockUpdate;
 		osKernelInitialize();
 		ID_sendDFCommand = osThreadNew((osThreadFunc_t)sendDFCommand, NULL, &configT1);
@@ -106,7 +163,7 @@ int main(void) {
     osDelay(1000);
 
    // 2. Spécifier la source de lecture : Carte SD (0x09, param: 0x01) 
-		sendDFCommand(0x09, 0x00, 0x01);
+		sendDFCommand(0x09, 0x00, 0x15);
     osDelay(200); // Délai nécessaire après sélection de la source 
 		
     
@@ -117,11 +174,58 @@ int main(void) {
 
     
 	// 4. Jouer le premier morceau (0x03, param: 0x0001) 
-    sendDFCommand(0x03, 0x00, 0x01);
-		osDelay(100);
-		sendDFCommand(0x0D, 0x00, 0x00);
-	
-    while (1) {
-			trame_uart();      
-    }
-}
+    
+		
+		while (1)
+		{
+		jsd=Valeur_Joystick_droit();
+		jsg=Valeur_Joystick_gauche();
+		jsh=Valeur_Joystick_haut();
+		jsb=Valeur_Joystick_bas();
+		if (jsd==1)
+		{
+			LPC_GPIO2->FIOPIN0 = LPC_GPIO2->FIOPIN0 & 0x00;
+			osDelay(200);
+			LPC_GPIO2->FIOPIN0 = LPC_GPIO2->FIOPIN0 | 0x40;
+			sendDFCommand(0x03, 0x00, 0x01);
+			osDelay(100);
+			sendDFCommand(0x0D, 0x00, 0x00);
+		}
+		if (jsh==1)
+		{
+			LPC_GPIO2->FIOPIN0 = LPC_GPIO2->FIOPIN0 & 0x00;
+			osDelay(200);
+			LPC_GPIO2->FIOPIN0 = LPC_GPIO2->FIOPIN0 | 0x20;
+			sendDFCommand(0x03, 0x00, 0x05);
+			osDelay(100);
+			sendDFCommand(0x0D, 0x00, 0x00);
+		}
+		if (jsg==1)
+		{
+			LPC_GPIO2->FIOPIN0 = LPC_GPIO2->FIOPIN0 & 0x00;
+			osDelay(200);
+			LPC_GPIO2->FIOPIN0 = LPC_GPIO2->FIOPIN0 | 0x10;
+			sendDFCommand(0x03, 0x00, 0x03);
+			osDelay(100);
+			sendDFCommand(0x0D, 0x00, 0x00);
+		}
+		if (jsb==1)
+		{
+			osDelay(200);
+			LPC_GPIO2->FIOPIN0 = LPC_GPIO2->FIOPIN0 & 0x00;
+			osDelay(200);
+			LPC_GPIO2->FIOPIN0 = LPC_GPIO2->FIOPIN0 | 0x08;
+			sendDFCommand(0x03, 0x00, 0x04);
+			osDelay(100);
+			sendDFCommand(0x0D, 0x00, 0x00);
+		}
+		
+		
+		
+		}
+	}
+//    while (1) {
+//			trame_uart();      
+//    }
+
+		
