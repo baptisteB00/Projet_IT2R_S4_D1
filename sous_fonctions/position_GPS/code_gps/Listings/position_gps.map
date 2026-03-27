@@ -6,13 +6,19 @@ Section Cross References
 
     main.o(.text.thread_ReceptUART) refers to usart_stm32f4xx.o(.rodata.Driver_USART3) for Driver_USART3
     main.o(.text.thread_ReceptUART) refers to rtx_thread.o(.text.osThreadFlagsWait) for osThreadFlagsWait
+    main.o(.text.thread_ReceptUART) refers to main.o(.bss.ID_BAL_MESSAGE_GPS_UART) for ID_BAL_MESSAGE_GPS_UART
+    main.o(.text.thread_ReceptUART) refers to rtx_msgqueue.o(.text.osMessageQueuePut) for osMessageQueuePut
     main.o(.text.thread_ReceptUART) refers to rtx_delay.o(.text.osDelay) for osDelay
     main.o(.ARM.exidx.text.thread_ReceptUART) refers to main.o(.text.thread_ReceptUART) for [Anonymous Symbol]
+    main.o(.text.thread_EmissionCAN) refers to main.o(.bss.ID_BAL_MESSAGE_GPS_UART) for ID_BAL_MESSAGE_GPS_UART
+    main.o(.text.thread_EmissionCAN) refers to rtx_msgqueue.o(.text.osMessageQueueGet) for osMessageQueueGet
     main.o(.ARM.exidx.text.thread_EmissionCAN) refers to main.o(.text.thread_EmissionCAN) for [Anonymous Symbol]
     main.o(.text.main) refers to system_stm32f4xx.o(.text.SystemCoreClockUpdate) for SystemCoreClockUpdate
     main.o(.text.main) refers to rtx_kernel.o(.text.osKernelInitialize) for osKernelInitialize
     main.o(.text.main) refers to main.o(.text.Init_UART_GPS) for Init_UART_GPS
     main.o(.text.main) refers to main.o(.text.Init_CAN_Emission) for Init_CAN_Emission
+    main.o(.text.main) refers to rtx_msgqueue.o(.text.osMessageQueueNew) for osMessageQueueNew
+    main.o(.text.main) refers to main.o(.bss.ID_BAL_MESSAGE_GPS_UART) for ID_BAL_MESSAGE_GPS_UART
     main.o(.text.main) refers to main.o(.text.thread_ReceptUART) for thread_ReceptUART
     main.o(.text.main) refers to main.o(.data.configReceptUART) for configReceptUART
     main.o(.text.main) refers to rtx_thread.o(.text.osThreadNew) for osThreadNew
@@ -25,6 +31,7 @@ Section Cross References
     main.o(.text.Init_UART_GPS) refers to usart_stm32f4xx.o(.rodata.Driver_USART3) for Driver_USART3
     main.o(.text.Init_UART_GPS) refers to main.o(.text.UART_Callback_GPS) for UART_Callback_GPS
     main.o(.ARM.exidx.text.Init_UART_GPS) refers to main.o(.text.Init_UART_GPS) for [Anonymous Symbol]
+    main.o(.text.Init_CAN_Emission) refers to main.o(.text.myCAN2_callback) for myCAN2_callback
     main.o(.ARM.exidx.text.Init_CAN_Emission) refers to main.o(.text.Init_CAN_Emission) for [Anonymous Symbol]
     main.o(.text.UART_Callback_GPS) refers to main.o(.bss.ID_ReceptUART) for ID_ReceptUART
     main.o(.text.UART_Callback_GPS) refers to rtx_thread.o(.text.osThreadFlagsSet) for osThreadFlagsSet
@@ -2449,7 +2456,6 @@ Removing Unused input sections from the image.
     Removing main.o(.ARM.exidx.text.Init_UART_GPS), (8 bytes).
     Removing main.o(.ARM.exidx.text.Init_CAN_Emission), (8 bytes).
     Removing main.o(.ARM.exidx.text.UART_Callback_GPS), (8 bytes).
-    Removing main.o(.text.myCAN2_callback), (40 bytes).
     Removing main.o(.ARM.exidx.text.myCAN2_callback), (8 bytes).
     Removing main.o(.ARM.use_no_argv), (4 bytes).
     Removing irq_armv7m.o(.rodata), (2 bytes).
@@ -2803,7 +2809,6 @@ Removing Unused input sections from the image.
     Removing rtx_evr.o(.text.EvrRtxMemoryPoolDestroyed), (8 bytes).
     Removing rtx_evr.o(.ARM.exidx.text.EvrRtxMemoryPoolDestroyed), (8 bytes).
     Removing rtx_evr.o(.ARM.exidx.text.EvrRtxMessageQueueError), (8 bytes).
-    Removing rtx_evr.o(.text.EvrRtxMessageQueueNew), (12 bytes).
     Removing rtx_evr.o(.ARM.exidx.text.EvrRtxMessageQueueNew), (8 bytes).
     Removing rtx_evr.o(.ARM.exidx.text.EvrRtxMessageQueueCreated), (8 bytes).
     Removing rtx_evr.o(.text.EvrRtxMessageQueueGetName), (10 bytes).
@@ -3005,7 +3010,6 @@ Removing Unused input sections from the image.
     Removing rtx_msgqueue.o(.ARM.exidx.text.osRtxMessageQueueTimerSetup), (8 bytes).
     Removing rtx_msgqueue.o(.ARM.exidx.text.osRtxMessageQueueId), (8 bytes).
     Removing rtx_msgqueue.o(.ARM.exidx.text.svcRtxMessageQueueNew), (8 bytes).
-    Removing rtx_msgqueue.o(.text.osMessageQueueNew), (114 bytes).
     Removing rtx_msgqueue.o(.ARM.exidx.text.osMessageQueueNew), (8 bytes).
     Removing rtx_msgqueue.o(.ARM.exidx.text.IsException), (8 bytes).
     Removing rtx_msgqueue.o(.ARM.exidx.text.IsIrqMasked), (8 bytes).
@@ -3849,4 +3853,4 @@ Removing Unused input sections from the image.
     Removing stm32f4xx_hal_can.o(.text.HAL_CAN_ResetError), (74 bytes).
     Removing stm32f4xx_hal_can.o(.ARM.exidx.text.HAL_CAN_ResetError), (8 bytes).
 
-1406 unused section(s) (total 57559 bytes) removed from the image.
+1403 unused section(s) (total 57393 bytes) removed from the image.

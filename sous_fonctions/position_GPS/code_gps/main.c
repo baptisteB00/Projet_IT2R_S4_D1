@@ -28,6 +28,10 @@ void myCAN2_callback(uint32_t obj_idx, uint32_t event);
 osThreadId_t ID_ReceptUART;
 osThreadId_t ID_EmissionCAN;
 
+/*-------------- Créations des identifiants des boîte aux lettres (BAL) --------------*/
+
+osMessageQueueId_t ID_BAL_MESSAGE_GPS_UART;
+
 typedef struct
 {
 	uint8_t data[100];
@@ -41,8 +45,10 @@ void thread_ReceptUART(void *argument)
 	
 	while(1)
 	{
-		Driver_USART3.Receive(Message.data, 100);
+		Driver_USART3.Receive(Message.data, 100);		// Reception des data du GPS
 		osThreadFlagsWait(0x0001, osFlagsWaitAll, osWaitForever);			// En attente, avec la callback
+		
+		osMessageQueuePut(ID_BAL_MESSAGE_GPS_UART, &Message, NULL, osWaitForever);		// BAL pour le thread d'émission CAN
 		osDelay(100);
 	}
 }
@@ -51,8 +57,11 @@ void thread_EmissionCAN(void *argument)
 {
 	(void)argument;
 	
+	DataRecept ReceptMessage;
+	
 	while(1)
 	{
+		osMessageQueueGet(ID_BAL_MESSAGE_GPS_UART, &ReceptMessage, NULL, osWaitForever);		// Reception du BAL du thread ReceptUART
 	}
 	
 	
@@ -72,7 +81,10 @@ int main()
 	Init_UART_GPS();					// Initialisation de l'UART3 pour le GPS
 	Init_CAN_Emission();			// Initialisation du CAN2 pour l'émission
 
-	ID_ReceptUART = osThreadNew( (osThreadFunc_t) thread_ReceptUART , NULL , &configReceptUART) ;
+	
+	ID_BAL_MESSAGE_GPS_UART = osMessageQueueNew(10, sizeof(DataRecept), NULL);
+	
+	ID_ReceptUART  = osThreadNew( (osThreadFunc_t) thread_ReceptUART , NULL , &configReceptUART) ;
 	ID_EmissionCAN = osThreadNew( (osThreadFunc_t) thread_EmissionCAN , NULL , &configEmissionCAN) ;
 	
 	osKernelStart();                      // Start thread execution
@@ -117,7 +129,7 @@ void UART_Callback_GPS(uint32_t event)
 
 void Init_CAN_Emission(void)
 {
-	Driver_CAN2.Initialize(NULL, NULL);
+	Driver_CAN2.Initialize(NULL, myCAN2_callback);
 	Driver_CAN2.PowerControl(ARM_POWER_FULL);
 	Driver_CAN2.SetMode(ARM_CAN_MODE_INITIALIZATION);
 	Driver_CAN2.SetBitrate(ARM_CAN_BITRATE_NOMINAL, 125000,
