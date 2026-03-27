@@ -14,51 +14,18 @@
 
 extern ARM_DRIVER_SPI Driver_SPI1;
 
-void mySPI_Thread (void);                             // thread function
 void Clignoter (void);                             // thread function
 void Init_LEDs(void);
-void PharesAvant(void);
-void Clignotants1(void);
+void T_PharesAvant(void);
+void T_Clignotants1(void);
+void T_PharesArriere(void);
 
 void allumer1LED(uint8_t numLED,uint32_t COLOR);
 void eteindre1LED(uint8_t numLED);
 
-osThreadId_t tid_mySPI_Thread, ID_PharesAvant,ID_Clignotants1;
+osThreadId_t ID_T_PharesAvant,ID_T_Clignotants1,ID_T_PharesArriere;
 
 uint32_t tab[62];
-
-//fonction de CB lancee si Event T ou R
-void mySPI_callback(uint32_t event){
-	switch (event) {
-		
-		
-		case ARM_SPI_EVENT_TRANSFER_COMPLETE  : 	 osThreadFlagsSet(tid_mySPI_Thread, 0x01);
-																							break;
-		
-		default : break;
-	}
-}
-
-void Allumer1_callback(uint32_t event){
-	switch (event) {
-		
-		
-		case ARM_SPI_EVENT_TRANSFER_COMPLETE  : 	 osThreadFlagsSet(ID_PharesAvant, 0x02);
-																							break;
-		
-		default : break;
-	}
-}
-void Clignotants1_callback(uint32_t event){
-	switch (event) {
-		
-		
-		case ARM_SPI_EVENT_TRANSFER_COMPLETE  : 	 osThreadFlagsSet(ID_Clignotants1, 0x04);
-																							break;
-		
-		default : break;
-	}
-}
 
 void Init_SPI(void){
 	Driver_SPI1.Initialize(NULL);
@@ -81,11 +48,9 @@ int main (void){
 	Init_LEDs();
 	NVIC_SetPriority(SPI1_IRQn,2);
 	
-	//tid_mySPI_Thread = osThreadNew ((osThreadId_t)mySPI_Thread, NULL, NULL); // Create application main thread
-	ID_PharesAvant = osThreadNew ((osThreadId_t)PharesAvant,NULL,NULL);
-	ID_Clignotants1 = osThreadNew((osThreadId_t)Clignotants1,NULL,NULL);
-	
-	osThreadFlagsSet((osThreadId_t)ID_PharesAvant,0x10);
+	ID_T_PharesAvant = osThreadNew ((osThreadId_t)T_PharesAvant,NULL,NULL);
+	ID_T_Clignotants1 = osThreadNew((osThreadId_t)T_Clignotants1,NULL,NULL);
+	ID_T_PharesArriere = osThreadNew ((osThreadId_t)T_PharesArriere,NULL,NULL);
 	
 	osKernelStart ();                         // start thread execution 
 	
@@ -93,13 +58,11 @@ int main (void){
 	
 }
 
-void mySPI_Thread (void) {
 
-}
-
-void PharesAvant(void){
+void T_PharesAvant(void){
+	
   while (1) {
-		osThreadFlagsWait(0x10, osFlagsWaitAll,osWaitForever);
+
 		allumer1LED(25,BLANC_Fort);
 		allumer1LED(24,BLANC_Fort);
 		allumer1LED(23,BLANC_Fort);
@@ -109,15 +72,16 @@ void PharesAvant(void){
 		allumer1LED(37,BLANC_Fort);
 
 		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
-		osThreadFlagsSet((osThreadId_t)ID_Clignotants1,0x08);
+		osThreadFlagsSet((osThreadId_t)ID_T_Clignotants1,0x08);
   }
 }
-void Clignotants1(void){
+
+void T_Clignotants1(void){
   while (1) {
 		osThreadFlagsWait (0x08,osFlagsWaitAll,osWaitForever);
 		
-		allumer1LED(15,ORANGE);
-		allumer1LED(45,ORANGE);
+		allumer1LED(15,VERT);
+		allumer1LED(45,VERT); 
 		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
 		osDelay(500);
 		
@@ -126,9 +90,25 @@ void Clignotants1(void){
 		
 		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
 		osDelay(500);
-		osThreadFlagsSet((osThreadId_t)ID_PharesAvant,0x10);
   }
 }
+
+void T_PharesArriere(void){
+	
+  while (1) {
+
+		allumer1LED(1,ROUGE);
+		allumer1LED(2,ROUGE);
+
+
+		allumer1LED(59,ROUGE);
+		allumer1LED(60,ROUGE);
+
+
+		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
+  }
+}
+
 void allumer1LED(uint8_t numLED, uint32_t COLOR){
 	tab[numLED]=COLOR;
 }
@@ -143,6 +123,5 @@ void Init_LEDs(void){
 	tab[i] = Eteint;
 	}
 }
-
 
 
