@@ -168,7 +168,7 @@ void direction_roue(int16_t angle){
 	if ( angle <= 90 && angle >= -90){
 	
 		angle += 90; // value between 0 and 180 
-		VAL_PWM_SERVO = ((angle) * 25000/180)+25000; // valeur entre 25 000 (1ms) and 50 000 (2ms)
+		VAL_PWM_SERVO = ((angle) * 25000.0/180)+25000; // valeur entre 25 000 (1ms) and 50 000 (2ms)
 	}
 }
 
