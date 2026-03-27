@@ -1,0 +1,23 @@
+
+
+
+page :
+=> bouton accueil
+=> bouton suivante
+=> bouton precedante
+
+
+pages:
+
+lumiere / phare / activation phare
+porte / obstacle
+vitesse / nunchuk / liquide
+son / activation du son
+panneau reconnu
+accueil
+
+accueil:
+	bouton => chaque page
+
+lumiere / phare / activation phare:
+	bouton =>

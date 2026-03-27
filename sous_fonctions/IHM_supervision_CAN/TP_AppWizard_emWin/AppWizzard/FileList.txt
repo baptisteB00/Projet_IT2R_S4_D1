@@ -1,0 +1,10 @@
+C:/Etudiants/git/Projet_IT2R_S4_D1/sous_fonctions/IHM_supervision_CAN/TP_AppWizard_emWin/AppWizzard/Source/APPW_MainTask.c
+C:/Etudiants/git/Projet_IT2R_S4_D1/sous_fonctions/IHM_supervision_CAN/TP_AppWizard_emWin/AppWizzard/Source/Generated/Resource.h
+C:/Etudiants/git/Projet_IT2R_S4_D1/sous_fonctions/IHM_supervision_CAN/TP_AppWizard_emWin/AppWizzard/Source/Generated/Resource.c
+C:/Etudiants/git/Projet_IT2R_S4_D1/sous_fonctions/IHM_supervision_CAN/TP_AppWizard_emWin/AppWizzard/Source/Generated/APPWConf.c
+C:/Etudiants/git/Projet_IT2R_S4_D1/sous_fonctions/IHM_supervision_CAN/TP_AppWizard_emWin/AppWizzard/Source/Generated/ID_SCREEN_ACCUEIL.h
+C:/Etudiants/git/Projet_IT2R_S4_D1/sous_fonctions/IHM_supervision_CAN/TP_AppWizard_emWin/AppWizzard/Source/Generated/ID_SCREEN_FEUX.h
+C:/Etudiants/git/Projet_IT2R_S4_D1/sous_fonctions/IHM_supervision_CAN/TP_AppWizard_emWin/AppWizzard/Source/Generated/ID_SCREEN_ACCUEIL.c
+C:/Etudiants/git/Projet_IT2R_S4_D1/sous_fonctions/IHM_supervision_CAN/TP_AppWizard_emWin/AppWizzard/Source/Generated/ID_SCREEN_FEUX.c
+C:/Etudiants/git/Projet_IT2R_S4_D1/sous_fonctions/IHM_supervision_CAN/TP_AppWizard_emWin/AppWizzard/Source/CustomCode/ID_SCREEN_ACCUEIL_Slots.c
+C:/Etudiants/git/Projet_IT2R_S4_D1/sous_fonctions/IHM_supervision_CAN/TP_AppWizard_emWin/AppWizzard/Source/CustomCode/ID_SCREEN_FEUX_Slots.c
