@@ -13,8 +13,10 @@
 #include "cmsis_os2.h"                  // CMSIS:RTOS2
 #include "os_tick.h"                    // CMSIS:OS Tick
 #include "rtx_os.h"                     // CMSIS:RTOS2:Keil RTX5&&Source
+#include "Driver_CAN.h"                 // CMSIS Driver:CAN
 
 extern ARM_DRIVER_USART Driver_USART3; 
+extern ARM_DRIVER_CAN Driver_CAN_GPS;
 
 void Init_UART_GPS(void);
 void UART_Callback_GPS(uint32_t event);
@@ -22,6 +24,7 @@ void UART_Callback_GPS(uint32_t event);
 /*-------------- Création des identifiants des tâches (ID) --------------*/
 
 osThreadId_t ID_ReceptUART;
+osThreadId_t ID_EmissionCAN;
 
 typedef struct
 {
@@ -40,6 +43,17 @@ void thread_ReceptUART(void *argument)
 		osThreadFlagsWait(0x0001, osFlagsWaitAll, osWaitForever);
 		osDelay(100);
 	}
+}
+
+void thread_EmissionCAN(void *argument)
+{
+	(void)argument;
+	
+	while(1)
+	{
+	}
+	
+	
 }
 
 
@@ -75,7 +89,7 @@ void Init_UART_GPS(void)
 												 ARM_USART_DATA_BITS_8			 |
 												 ARM_USART_STOP_BITS_1			 |
 												 ARM_USART_PARITY_NONE			 |
-												 ARM_USART_FLOW_CONTROL_NONE, 115200);
+												 ARM_USART_FLOW_CONTROL_NONE, 9600);
 	Driver_USART3.Control(ARM_USART_CONTROL_RX, 1);			// réception
 }
 
