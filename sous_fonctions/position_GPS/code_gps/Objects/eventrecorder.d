@@ -1,10 +1,6 @@
-./objects/rtx_mutex.o: \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Source\rtx_mutex.c \
-  RTE\_Target_1\Pre_Include_Global.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Source\rtx_lib.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Include\rtx_def.h \
-  RTE\_Target_1\RTE_Components.h RTE\CMSIS\RTX_Config.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Source\rtx_core_c.h \
+./objects/eventrecorder.o: \
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS-View\1.2.0\EventRecorder\Source\EventRecorder.c \
+  RTE\_Target_1\Pre_Include_Global.h RTE\_Target_1\RTE_Components.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h \
   C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Core\Include\core_cm4.h \
@@ -27,10 +23,5 @@
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr_ex.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_usart.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Source\rtx_core_cm.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\RTOS2\Include\os_tick.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\RTOS2\Include\cmsis_os2.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Include\rtx_os.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Include\rtx_evr.h \
   C:\Keil_v5\ARM\PACK\ARM\CMSIS-View\1.2.0\EventRecorder\Include\EventRecorder.h \
   RTE\CMSIS-View\EventRecorderConf.h

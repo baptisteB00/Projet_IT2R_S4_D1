@@ -17,7 +17,10 @@
 ".\objects\os_systick.o"
 ".\objects\rtx_config.o"
 ".\objects\usart_stm32f4xx.o"
+".\objects\can_stm32f4xx.o"
+".\objects\eventrecorder.o"
 ".\objects\stm32f4xx_hal.o"
+".\objects\stm32f4xx_hal_can.o"
 ".\objects\stm32f4xx_hal_cortex.o"
 ".\objects\stm32f4xx_hal_dma.o"
 ".\objects\stm32f4xx_hal_dma_ex.o"
@@ -29,7 +32,6 @@
 ".\objects\stm32f4xx_hal_usart.o"
 ".\objects\startup_stm32f407xx.o"
 ".\objects\system_stm32f4xx.o"
-".\objects\stm32f4xx_hal_can.o"
 --strict --scatter ".\Objects\position_gps.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

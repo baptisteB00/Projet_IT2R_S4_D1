@@ -14,6 +14,10 @@
 #include "os_tick.h"                    // CMSIS:OS Tick
 #include "rtx_os.h"                     // CMSIS:RTOS2:Keil RTX5&&Source
 #include "Driver_CAN.h"                 // CMSIS Driver:CAN
+#include "EventRecorderConf.h"          // CMSIS-View:Event Recorder&&DAP
+#include "EventRecorder.h"              // CMSIS-View:Event Recorder&&DAP
+#include "string.h"
+
 
 extern ARM_DRIVER_USART Driver_USART3; 
 extern ARM_DRIVER_CAN Driver_CAN2;
@@ -27,15 +31,19 @@ void myCAN2_callback(uint32_t obj_idx, uint32_t event);
 
 osThreadId_t ID_ReceptUART;
 osThreadId_t ID_EmissionCAN;
+osThreadId_t ID_Decode;
 
 /*-------------- Créations des identifiants des boîte aux lettres (BAL) --------------*/
 
-osMessageQueueId_t ID_BAL_MESSAGE_GPS_UART;
+osMessageQueueId_t ID_BAL_UART_CAN;
+osMessageQueueId_t ID_BAL_DECODE;
 
 typedef struct
 {
-	uint8_t data[100];
+	uint8_t data[150];
 } DataRecept;
+
+uint8_t idx=0;
 
 
 void thread_ReceptUART(void *argument)
@@ -43,13 +51,57 @@ void thread_ReceptUART(void *argument)
 	(void)argument;
 	DataRecept Message;
 	
+	uint8_t *ptra, *ptrb;
+	uint32_t caracta = '$';
+	uint32_t caractb = '\n';
+	
+	uint8_t chaine [150];
+	
 	while(1)
 	{
-		Driver_USART3.Receive(Message.data, 100);		// Reception des data du GPS
-		osThreadFlagsWait(0x0001, osFlagsWaitAll, osWaitForever);			// En attente, avec la callback
+		idx = 0;
+		Driver_USART3.Receive(&Message.data[idx], 1);		// Reception des data du GPS
 		
-		osMessageQueuePut(ID_BAL_MESSAGE_GPS_UART, &Message, NULL, osWaitForever);		// BAL pour le thread d'émission CAN
+//		ptra = strchr(Message.data, caracta);
+//		
+//		
+//		if(ptra != NULL)
+//		{
+//			ptrb = strrchr(Message.data, caractb);
+//			if (ptrb != NULL)
+//			{
+//				osThreadFlagsWait(0x0001, osFlagsWaitAll, osWaitForever);			// En attente, avec la callback
+//		
+//				osMessageQueuePut(ID_BAL_DECODE, &Message, NULL, osWaitForever);		// BAL pour le thread de decodage
+//			}
+////			chaine = strcpy (chaine, Message.data);
+//		
+//		}
+		
 		osDelay(100);
+	}
+}
+
+void thread_Decode(void *argument)
+{
+	(void)argument;
+	DataRecept Message;
+	char data[100];
+	char i=0;
+	
+	while(1)
+	{
+		osMessageQueueGet(ID_BAL_DECODE, &Message, NULL, osWaitForever); // On attend recevoir la mailbox du thread Recept UART
+		
+		
+		
+		if (strstr(Message.data, "$GPRMC")!= 0) // Message $GPRMC présent dans la chaîne de caractère
+			{
+		
+		i++;
+	
+			}
+		
 	}
 }
 
@@ -57,11 +109,12 @@ void thread_EmissionCAN(void *argument)
 {
 	(void)argument;
 	
+	
 	DataRecept ReceptMessage;
 	
 	while(1)
 	{
-		osMessageQueueGet(ID_BAL_MESSAGE_GPS_UART, &ReceptMessage, NULL, osWaitForever);		// Reception du BAL du thread ReceptUART
+		osMessageQueueGet(ID_BAL_UART_CAN, &ReceptMessage, NULL, osWaitForever);		// Reception du BAL du thread ReceptUART
 	}
 	
 	
@@ -71,21 +124,25 @@ void thread_EmissionCAN(void *argument)
 /*-------------- Priorité des threads --------------*/
 
 osThreadAttr_t configReceptUART  = { .priority = osPriorityHigh };
-osThreadAttr_t configEmissionCAN = { .priority = osPriorityHigh };
+osThreadAttr_t configEmissionCAN = { .priority = osPriorityBelowNormal };
+osThreadAttr_t configDecode      = { .priority = osPriorityNormal };
 
 int main()
 {
+	
 	SystemCoreClockUpdate();
+	EventRecorderInitialize(EventRecordAll, 1);
 	osKernelInitialize();     // Initialize CMSIS-RTOS
 	
 	Init_UART_GPS();					// Initialisation de l'UART3 pour le GPS
 	Init_CAN_Emission();			// Initialisation du CAN2 pour l'émission
-
 	
-	ID_BAL_MESSAGE_GPS_UART = osMessageQueueNew(10, sizeof(DataRecept), NULL);
+	ID_BAL_DECODE		= osMessageQueueNew(10, sizeof(DataRecept), NULL);
+	ID_BAL_UART_CAN = osMessageQueueNew(10, sizeof(DataRecept), NULL);
 	
 	ID_ReceptUART  = osThreadNew( (osThreadFunc_t) thread_ReceptUART , NULL , &configReceptUART) ;
 	ID_EmissionCAN = osThreadNew( (osThreadFunc_t) thread_EmissionCAN , NULL , &configEmissionCAN) ;
+	ID_Decode			 = osThreadNew( (osThreadFunc_t) thread_Decode , NULL , &configDecode) ;
 	
 	osKernelStart();                      // Start thread execution
 	return 0;
@@ -118,7 +175,22 @@ void Init_UART_GPS(void)
 	
 void UART_Callback_GPS(uint32_t event)
 {
-	if(event & ARM_USART_EVENT_RECEIVE_COMPLETE) osThreadFlagsSet(ID_ReceptUART, 0x0001);
+	DataRecept caract;
+	
+	if(event & ARM_USART_EVENT_RECEIVE_COMPLETE)
+	{
+		if (caract.data != '\n') 
+		{
+			idx++;
+			Driver_USART3.Receive(&caract.data[idx], 1);
+		}
+		else
+		{
+			osThreadFlagsSet(ID_ReceptUART, 0x0001);
+		}
+		
+	}
+		
 }
 
 /* --------------------------------------------------------

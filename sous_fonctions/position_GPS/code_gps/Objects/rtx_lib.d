@@ -27,4 +27,6 @@
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr_ex.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_usart.h \
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS-View\1.2.0\EventRecorder\Include\EventRecorder.h \
+  RTE\CMSIS-View\EventRecorderConf.h \
   C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Include\rtx_evr.h

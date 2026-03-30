@@ -15,10 +15,17 @@
  */
 #define CMSIS_device_header "stm32f4xx.h"
 
+/* ARM::CMSIS-View:Event Recorder&DAP@1.6.0 */
+#define RTE_CMSIS_View_EventRecorder
+#define RTE_CMSIS_View_EventRecorder_DAP
 /* ARM::CMSIS:RTOS2:Keil RTX5&Source@5.9.0 */
 #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
 #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
 #define RTE_CMSIS_RTOS2_RTX5_SOURCE     /* CMSIS-RTOS2 Keil RTX5 Source */
+/* Keil::CMSIS Driver:CAN@1.17 */
+#define RTE_Drivers_CAN1                /* Driver CAN1 */
+#define RTE_Drivers_CAN2                /* Driver CAN2 */
+#define RTE_Drivers_CAN3                /* Driver CAN3 */
 /* Keil::CMSIS Driver:USART@2.16 */
 #define RTE_Drivers_USART1              /* Driver USART1 */
 #define RTE_Drivers_USART2              /* Driver USART2 */
