@@ -28,6 +28,10 @@ Purpose     : Generated file do NOT edit!
 #define ID_BUTTON_NEXT     (GUI_ID_USER + 3)
 #define ID_BUTTON_ACCUEIL  (GUI_ID_USER + 4)
 #define ID_BUTTON_PREVIOUS (GUI_ID_USER + 5)
+#define ID_BATTERIE_JAUGE  (GUI_ID_USER + 7)
+#define ID_HUILE_JAUGE     (GUI_ID_USER + 10)
+#define ID_IMAGE_00        (GUI_ID_USER + 8)
+#define ID_IMAGE_01        (GUI_ID_USER + 11)
 
 /*********************************************************************
 *

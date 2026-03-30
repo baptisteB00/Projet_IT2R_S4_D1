@@ -24,10 +24,24 @@ Purpose     : Generated file do NOT edit!
 *       Objects
 */
 #define ID_BOX_02          (GUI_ID_USER + 1)
+#define ID_IMAGE_00        (GUI_ID_USER + 6)
 #define ID_TEXT_00         (GUI_ID_USER + 2)
 #define ID_BUTTON_NEXT     (GUI_ID_USER + 3)
 #define ID_BUTTON_ACCUEIL  (GUI_ID_USER + 4)
 #define ID_BUTTON_PREVIOUS (GUI_ID_USER + 5)
+#define ID_GAUGE_1AD       (GUI_ID_USER + 9)
+#define ID_GAUGE_2AD       (GUI_ID_USER + 10)
+#define ID_GAUGE_3AD       (GUI_ID_USER + 12)
+#define ID_GAUGE_1AG       (GUI_ID_USER + 8)
+#define ID_GAUGE_2AG       (GUI_ID_USER + 11)
+#define ID_GAUGE_3AG       (GUI_ID_USER + 13)
+#define ID_GAUGE_1DD       (GUI_ID_USER + 14)
+#define ID_GAUGE_2DD       (GUI_ID_USER + 15)
+#define ID_GAUGE_3DD       (GUI_ID_USER + 16)
+#define ID_GAUGE_1DG       (GUI_ID_USER + 17)
+#define ID_GAUGE_2DG       (GUI_ID_USER + 18)
+#define ID_GAUGE_3DG       (GUI_ID_USER + 19)
+#define ID_BUTTON_00       (GUI_ID_USER + 20)
 
 /*********************************************************************
 *

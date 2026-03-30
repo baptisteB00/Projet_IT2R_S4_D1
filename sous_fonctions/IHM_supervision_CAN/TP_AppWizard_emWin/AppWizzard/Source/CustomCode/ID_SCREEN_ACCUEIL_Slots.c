@@ -46,4 +46,48 @@ void ID_SCREEN_ACCUEIL__ID_BUTTON_00__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM *
   GUI_USE_PARA(pResult);
 }
 
+/*********************************************************************
+*
+*       ID_SCREEN_ACCUEIL__ID_BUTTON_00_Copy1__WM_NOTIFICATION_CLICKED
+*/
+void ID_SCREEN_ACCUEIL__ID_BUTTON_00_Copy1__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
+  GUI_USE_PARA(pAction);
+  GUI_USE_PARA(hScreen);
+  GUI_USE_PARA(pMsg);
+  GUI_USE_PARA(pResult);
+}
+
+/*********************************************************************
+*
+*       ID_SCREEN_ACCUEIL__ID_BUTTON_00_Copy2__WM_NOTIFICATION_CLICKED
+*/
+void ID_SCREEN_ACCUEIL__ID_BUTTON_00_Copy2__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
+  GUI_USE_PARA(pAction);
+  GUI_USE_PARA(hScreen);
+  GUI_USE_PARA(pMsg);
+  GUI_USE_PARA(pResult);
+}
+
+/*********************************************************************
+*
+*       ID_SCREEN_ACCUEIL__ID_BUTTON_00_Copy3__WM_NOTIFICATION_CLICKED
+*/
+void ID_SCREEN_ACCUEIL__ID_BUTTON_00_Copy3__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
+  GUI_USE_PARA(pAction);
+  GUI_USE_PARA(hScreen);
+  GUI_USE_PARA(pMsg);
+  GUI_USE_PARA(pResult);
+}
+
+/*********************************************************************
+*
+*       ID_SCREEN_ACCUEIL__ID_BUTTON_VITESS__WM_NOTIFICATION_CLICKED
+*/
+void ID_SCREEN_ACCUEIL__ID_BUTTON_VITESS__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
+  GUI_USE_PARA(pAction);
+  GUI_USE_PARA(hScreen);
+  GUI_USE_PARA(pMsg);
+  GUI_USE_PARA(pResult);
+}
+
 /*************************** End of file ****************************/

@@ -45,9 +45,34 @@ extern GUI_CONST_STORAGE unsigned char acRoboto_32_Normal_EXT_AA4[];
 */
 extern GUI_CONST_STORAGE unsigned char acDARK_Button_Up_100x30[];
 extern GUI_CONST_STORAGE unsigned char acDARK_Button_Down_100x30[];
+extern GUI_CONST_STORAGE unsigned char acUNPRESS_right[];
+extern GUI_CONST_STORAGE unsigned char acPRESS_right[];
+extern GUI_CONST_STORAGE unsigned char acUNPRESS_home[];
+extern GUI_CONST_STORAGE unsigned char acPRESS_home[];
+extern GUI_CONST_STORAGE unsigned char acUNPRESS_left[];
+extern GUI_CONST_STORAGE unsigned char acPRESS_left[];
+extern GUI_CONST_STORAGE unsigned char acDARK_Switch_Body_H_On_55x20[];
+extern GUI_CONST_STORAGE unsigned char acDARK_Switch_Body_H_Off_55x20[];
+extern GUI_CONST_STORAGE unsigned char acDARK_Switch_Thumb_26x26[];
+extern GUI_CONST_STORAGE unsigned char acsoleil[];
+extern GUI_CONST_STORAGE unsigned char acPHARE[];
 extern GUI_CONST_STORAGE unsigned char acANALOG_Button_Up_50px50[];
 extern GUI_CONST_STORAGE unsigned char acANALOG_Button_Down_50px50[];
-extern GUI_CONST_STORAGE unsigned char acDARK_Angle_Arrow_Down_Gray_24x14[];
+extern GUI_CONST_STORAGE unsigned char acVoiture_Dessus[];
+extern GUI_CONST_STORAGE unsigned char acCadenas_FERME[];
+extern GUI_CONST_STORAGE unsigned char acCadenas_ouvert[];
+extern GUI_CONST_STORAGE unsigned char acDARK_Progbar_Tile_V_Blue_16x1[];
+extern GUI_CONST_STORAGE unsigned char acDARK_Progbar_Tile_V_Gray_16x1[];
+extern GUI_CONST_STORAGE unsigned char acICONE_BATTERIE[];
+extern GUI_CONST_STORAGE unsigned char acICONE_HUILE[];
+extern GUI_CONST_STORAGE unsigned char aclune[];
+
+/*********************************************************************
+*
+*       Movies
+*/
+extern GUI_CONST_STORAGE unsigned char acCligno_DROIT_60x60[];
+extern GUI_CONST_STORAGE unsigned char acCligno_GAUCHE_60x60[];
 
 /*********************************************************************
 *
