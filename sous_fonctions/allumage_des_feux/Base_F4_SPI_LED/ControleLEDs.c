@@ -1,6 +1,7 @@
 #include "Driver_SPI.h"                 // CMSIS Driver:SPI
 #include "rtx_os.h"                     // CMSIS:RTOS2:Keil RTX5&&Source
 #include "stm32f4xx.h"                  // Device header
+#include "adc_F4.h"
 
 # define VERT 0x00FF00F0						
 # define ROUGE 0xFF0000F0						

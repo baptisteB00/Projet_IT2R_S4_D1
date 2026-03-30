@@ -385,9 +385,14 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
+              <FileName>detectLum.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\main.c</FilePath>
+              <FilePath>.\detectLum.c</FilePath>
+            </File>
+            <File>
+              <FileName>adc_F4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\adc_F4.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -457,6 +462,12 @@
         </targetInfos>
       </component>
       <component Capiversion="1.0.0" Cclass="Device" Cgroup="STM32Cube Framework" Csub="Classic" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 Framework Classic" ymlID="Device:STM32Cube Framework:Classic">
+        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
+        <targetInfos>
+          <targetInfo name="Target_1"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="ADC" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 HAL DMA" ymlID="Device:STM32Cube HAL:ADC">
         <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
         <targetInfos>
           <targetInfo name="Target_1"/>
