@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Objects\pilotageNunchuck.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\pilotageNunchuck.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6240002: Last Updated: Mon Mar 30 12:27:44 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6240002: Last Updated: Tue Mar 31 17:25:39 2026
 <BR><P>
-<H3>Maximum Stack Usage =        420 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        404 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 __rt_entry_main &rArr; main &rArr; GLCD_Initialize &rArr; rd_id_man &rArr; spi_tran_man &rArr; GPIO_PinWrite
 <P>
@@ -46,21 +46,21 @@ Function Pointers
  <LI><a href="#[1f]">EINT3_IRQHandler</a> from startup_lpc17xx_1.o(.text) referenced from startup_lpc17xx_1.o(RESET)
  <LI><a href="#[26]">ENET_IRQHandler</a> from startup_lpc17xx_1.o(.text) referenced from startup_lpc17xx_1.o(RESET)
  <LI><a href="#[2]">HardFault_Handler</a> from startup_lpc17xx_1.o(.text) referenced from startup_lpc17xx_1.o(RESET)
- <LI><a href="#[3c]">I2C0_Control</a> from i2c_lpc17xx.o(.text.I2C0_Control) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C0)
- <LI><a href="#[3b]">I2C0_GetDataCount</a> from i2c_lpc17xx.o(.text.I2C0_GetDataCount) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C0)
- <LI><a href="#[3d]">I2C0_GetStatus</a> from i2c_lpc17xx.o(.text.I2C0_GetStatus) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C0)
- <LI><a href="#[14]">I2C0_IRQHandler</a> from i2c_lpc17xx.o(.text.I2C0_IRQHandler) referenced from startup_lpc17xx_1.o(RESET)
- <LI><a href="#[34]">I2C0_Initialize</a> from i2c_lpc17xx.o(.text.I2C0_Initialize) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C0)
- <LI><a href="#[38]">I2C0_MasterReceive</a> from i2c_lpc17xx.o(.text.I2C0_MasterReceive) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C0)
- <LI><a href="#[37]">I2C0_MasterTransmit</a> from i2c_lpc17xx.o(.text.I2C0_MasterTransmit) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C0)
- <LI><a href="#[36]">I2C0_PowerControl</a> from i2c_lpc17xx.o(.text.I2C0_PowerControl) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C0)
- <LI><a href="#[3a]">I2C0_SlaveReceive</a> from i2c_lpc17xx.o(.text.I2C0_SlaveReceive) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C0)
- <LI><a href="#[39]">I2C0_SlaveTransmit</a> from i2c_lpc17xx.o(.text.I2C0_SlaveTransmit) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C0)
- <LI><a href="#[35]">I2C0_Uninitialize</a> from i2c_lpc17xx.o(.text.I2C0_Uninitialize) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C0)
+ <LI><a href="#[14]">I2C0_IRQHandler</a> from startup_lpc17xx_1.o(.text) referenced from startup_lpc17xx_1.o(RESET)
  <LI><a href="#[15]">I2C1_IRQHandler</a> from startup_lpc17xx_1.o(.text) referenced from startup_lpc17xx_1.o(RESET)
- <LI><a href="#[16]">I2C2_IRQHandler</a> from startup_lpc17xx_1.o(.text) referenced from startup_lpc17xx_1.o(RESET)
- <LI><a href="#[33]">I2C_GetCapabilities</a> from i2c_lpc17xx.o(.text.I2C_GetCapabilities) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C0)
- <LI><a href="#[32]">I2C_GetVersion</a> from i2c_lpc17xx.o(.text.I2C_GetVersion) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C0)
+ <LI><a href="#[3c]">I2C2_Control</a> from i2c_lpc17xx.o(.text.I2C2_Control) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C2)
+ <LI><a href="#[3b]">I2C2_GetDataCount</a> from i2c_lpc17xx.o(.text.I2C2_GetDataCount) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C2)
+ <LI><a href="#[3d]">I2C2_GetStatus</a> from i2c_lpc17xx.o(.text.I2C2_GetStatus) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C2)
+ <LI><a href="#[16]">I2C2_IRQHandler</a> from i2c_lpc17xx.o(.text.I2C2_IRQHandler) referenced from startup_lpc17xx_1.o(RESET)
+ <LI><a href="#[34]">I2C2_Initialize</a> from i2c_lpc17xx.o(.text.I2C2_Initialize) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C2)
+ <LI><a href="#[38]">I2C2_MasterReceive</a> from i2c_lpc17xx.o(.text.I2C2_MasterReceive) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C2)
+ <LI><a href="#[37]">I2C2_MasterTransmit</a> from i2c_lpc17xx.o(.text.I2C2_MasterTransmit) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C2)
+ <LI><a href="#[36]">I2C2_PowerControl</a> from i2c_lpc17xx.o(.text.I2C2_PowerControl) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C2)
+ <LI><a href="#[3a]">I2C2_SlaveReceive</a> from i2c_lpc17xx.o(.text.I2C2_SlaveReceive) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C2)
+ <LI><a href="#[39]">I2C2_SlaveTransmit</a> from i2c_lpc17xx.o(.text.I2C2_SlaveTransmit) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C2)
+ <LI><a href="#[35]">I2C2_Uninitialize</a> from i2c_lpc17xx.o(.text.I2C2_Uninitialize) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C2)
+ <LI><a href="#[33]">I2C_GetCapabilities</a> from i2c_lpc17xx.o(.text.I2C_GetCapabilities) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C2)
+ <LI><a href="#[32]">I2C_GetVersion</a> from i2c_lpc17xx.o(.text.I2C_GetVersion) referenced from i2c_lpc17xx.o(.rodata.Driver_I2C2)
  <LI><a href="#[25]">I2S_IRQHandler</a> from startup_lpc17xx_1.o(.text) referenced from startup_lpc17xx_1.o(RESET)
  <LI><a href="#[28]">MCPWM_IRQHandler</a> from startup_lpc17xx_1.o(.text) referenced from startup_lpc17xx_1.o(RESET)
  <LI><a href="#[3]">MemManage_Handler</a> from startup_lpc17xx_1.o(.text) referenced from startup_lpc17xx_1.o(RESET)
@@ -395,7 +395,7 @@ Global Symbols
 <P><STRONG><a name="[118]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[7c]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 420 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 404 + Unknown Stack Size
 <LI>Call Chain = __rt_entry_main &rArr; main &rArr; GLCD_Initialize &rArr; rd_id_man &rArr; spi_tran_man &rArr; GPIO_PinWrite
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -515,10 +515,10 @@ Global Symbols
 <P><STRONG><a name="[26]"></a>ENET_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_lpc17xx_1.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx_1.o(RESET)
 </UL>
-<P><STRONG><a name="[15]"></a>I2C1_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_lpc17xx_1.o(.text))
+<P><STRONG><a name="[14]"></a>I2C0_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_lpc17xx_1.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx_1.o(RESET)
 </UL>
-<P><STRONG><a name="[16]"></a>I2C2_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_lpc17xx_1.o(.text))
+<P><STRONG><a name="[15]"></a>I2C1_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_lpc17xx_1.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx_1.o(RESET)
 </UL>
 <P><STRONG><a name="[25]"></a>I2S_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_lpc17xx_1.o(.text))
@@ -1004,7 +1004,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[e7]"></a>GLCD_SetFont</STRONG> (Thumb, 22 bytes, Stack size 4 bytes, glcd_mcb1700.o(.text.GLCD_SetFont))
+<P><STRONG><a name="[e6]"></a>GLCD_SetFont</STRONG> (Thumb, 22 bytes, Stack size 4 bytes, glcd_mcb1700.o(.text.GLCD_SetFont))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = GLCD_SetFont
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1090,15 +1090,21 @@ Global Symbols
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_Initialize
 </UL>
 
-<P><STRONG><a name="[14]"></a>I2C0_IRQHandler</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, i2c_lpc17xx.o(.text.I2C0_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = I2C0_IRQHandler &rArr; I2Cx_IRQHandler &rArr; I2Cx_SlaveHandler &rArr; __NVIC_DisableIRQ
+<P><STRONG><a name="[16]"></a>I2C2_IRQHandler</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, i2c_lpc17xx.o(.text.I2C2_IRQHandler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = I2C2_IRQHandler &rArr; I2Cx_IRQHandler &rArr; I2Cx_SlaveHandler &rArr; __NVIC_DisableIRQ
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx_1.o(RESET)
 </UL>
-<P><STRONG><a name="[e6]"></a>Init_I2C</STRONG> (Thumb, 56 bytes, Stack size 24 bytes, main.o(.text.Init_I2C))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = Init_I2C
+<P><STRONG><a name="[e7]"></a>Nunchuck_Init</STRONG> (Thumb, 212 bytes, Stack size 40 bytes, main.o(.text.Nunchuck_Init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Nunchuck_Init
+</UL>
+<BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[e8]"></a>Nunchuck_Read</STRONG> (Thumb, 148 bytes, Stack size 32 bytes, main.o(.text.Nunchuck_Read))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = Nunchuck_Read
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1178,25 +1184,19 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> uart_lpc17xx.o(.rodata.USART1_DMA_Tx)
 </UL>
-<P><STRONG><a name="[7d]"></a>main</STRONG> (Thumb, 392 bytes, Stack size 152 bytes, main.o(.text.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 420 + Unknown Stack Size
+<P><STRONG><a name="[7d]"></a>main</STRONG> (Thumb, 166 bytes, Stack size 136 bytes, main.o(.text.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 404 + Unknown Stack Size
 <LI>Call Chain = main &rArr; GLCD_Initialize &rArr; rd_id_man &rArr; spi_tran_man &rArr; GPIO_PinWrite
 </UL>
 <BR>[Calls]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sprintf
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_DrawString
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;write1byte
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_SetFont
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Nunchuck_Read
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Nunchuck_Init
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_SetFont
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_ClearScreen
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLCD_Initialize
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_I2C
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
-</UL>
-
-<P><STRONG><a name="[e8]"></a>write1byte</STRONG> (Thumb, 90 bytes, Stack size 24 bytes, main.o(.text.write1byte))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = write1byte
-</UL>
-<BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[95]"></a>_btod_d2e</STRONG> (Thumb, 62 bytes, Stack size 0 bytes, btod.o(CL$$btod_d2e))
@@ -1407,7 +1407,7 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_SlaveHandler
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_MasterHandler
 </UL>
-<BR>[Called By]<UL><LI><a href="#[14]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C0_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[16]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C2_IRQHandler
 </UL>
 
 <P><STRONG><a name="[cd]"></a>I2Cx_MasterHandler</STRONG> (Thumb, 720 bytes, Stack size 32 bytes, i2c_lpc17xx.o(.text.I2Cx_MasterHandler))
@@ -1429,20 +1429,20 @@ Local Symbols
 <P><STRONG><a name="[32]"></a>I2C_GetVersion</STRONG> (Thumb, 18 bytes, Stack size 4 bytes, i2c_lpc17xx.o(.text.I2C_GetVersion))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = I2C_GetVersion
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C0)
+<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C2)
 </UL>
 <P><STRONG><a name="[33]"></a>I2C_GetCapabilities</STRONG> (Thumb, 12 bytes, Stack size 4 bytes, i2c_lpc17xx.o(.text.I2C_GetCapabilities))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = I2C_GetCapabilities
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C0)
+<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C2)
 </UL>
-<P><STRONG><a name="[34]"></a>I2C0_Initialize</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, i2c_lpc17xx.o(.text.I2C0_Initialize))
+<P><STRONG><a name="[34]"></a>I2C2_Initialize</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, i2c_lpc17xx.o(.text.I2C2_Initialize))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72 + Unknown Stack Size
-<LI>Call Chain = I2C0_Initialize &rArr; I2Cx_Initialize &rArr; PIN_Configure
+<LI>Call Chain = I2C2_Initialize &rArr; I2Cx_Initialize &rArr; PIN_Configure
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_Initialize
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C0)
+<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C2)
 </UL>
 <P><STRONG><a name="[c1]"></a>I2Cx_Initialize</STRONG> (Thumb, 118 bytes, Stack size 32 bytes, i2c_lpc17xx.o(.text.I2Cx_Initialize))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56 + Unknown Stack Size
@@ -1451,30 +1451,30 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
 </UL>
-<BR>[Called By]<UL><LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C0_Initialize
+<BR>[Called By]<UL><LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C2_Initialize
 </UL>
 
-<P><STRONG><a name="[35]"></a>I2C0_Uninitialize</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, i2c_lpc17xx.o(.text.I2C0_Uninitialize))
-<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = I2C0_Uninitialize &rArr; I2Cx_Uninitialize &rArr; PIN_Configure
+<P><STRONG><a name="[35]"></a>I2C2_Uninitialize</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, i2c_lpc17xx.o(.text.I2C2_Uninitialize))
+<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = I2C2_Uninitialize &rArr; I2Cx_Uninitialize &rArr; PIN_Configure
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_Uninitialize
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C0)
+<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C2)
 </UL>
 <P><STRONG><a name="[c7]"></a>I2Cx_Uninitialize</STRONG> (Thumb, 64 bytes, Stack size 24 bytes, i2c_lpc17xx.o(.text.I2Cx_Uninitialize))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = I2Cx_Uninitialize &rArr; PIN_Configure
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIN_Configure
 </UL>
-<BR>[Called By]<UL><LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C0_Uninitialize
+<BR>[Called By]<UL><LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C2_Uninitialize
 </UL>
 
-<P><STRONG><a name="[36]"></a>I2C0_PowerControl</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, i2c_lpc17xx.o(.text.I2C0_PowerControl))
-<BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = I2C0_PowerControl &rArr; I2Cx_PowerControl &rArr; __NVIC_EnableIRQ
+<P><STRONG><a name="[36]"></a>I2C2_PowerControl</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, i2c_lpc17xx.o(.text.I2C2_PowerControl))
+<BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = I2C2_PowerControl &rArr; I2Cx_PowerControl &rArr; __NVIC_EnableIRQ
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_PowerControl
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C0)
+<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C2)
 </UL>
 <P><STRONG><a name="[c4]"></a>I2Cx_PowerControl</STRONG> (Thumb, 436 bytes, Stack size 32 bytes, i2c_lpc17xx.o(.text.I2Cx_PowerControl))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = I2Cx_PowerControl &rArr; __NVIC_EnableIRQ
@@ -1483,15 +1483,15 @@ Local Symbols
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_DisableIRQ
 </UL>
-<BR>[Called By]<UL><LI><a href="#[36]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C0_PowerControl
+<BR>[Called By]<UL><LI><a href="#[36]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C2_PowerControl
 </UL>
 
-<P><STRONG><a name="[37]"></a>I2C0_MasterTransmit</STRONG> (Thumb, 50 bytes, Stack size 32 bytes, i2c_lpc17xx.o(.text.I2C0_MasterTransmit))
-<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = I2C0_MasterTransmit &rArr; I2Cx_MasterTransmit &rArr; __NVIC_EnableIRQ
+<P><STRONG><a name="[37]"></a>I2C2_MasterTransmit</STRONG> (Thumb, 50 bytes, Stack size 32 bytes, i2c_lpc17xx.o(.text.I2C2_MasterTransmit))
+<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = I2C2_MasterTransmit &rArr; I2Cx_MasterTransmit &rArr; __NVIC_EnableIRQ
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_MasterTransmit
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C0)
+<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C2)
 </UL>
 <P><STRONG><a name="[c3]"></a>I2Cx_MasterTransmit</STRONG> (Thumb, 270 bytes, Stack size 32 bytes, i2c_lpc17xx.o(.text.I2Cx_MasterTransmit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = I2Cx_MasterTransmit &rArr; __NVIC_EnableIRQ
@@ -1499,15 +1499,15 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_DisableIRQ
 </UL>
-<BR>[Called By]<UL><LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C0_MasterTransmit
+<BR>[Called By]<UL><LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C2_MasterTransmit
 </UL>
 
-<P><STRONG><a name="[38]"></a>I2C0_MasterReceive</STRONG> (Thumb, 50 bytes, Stack size 32 bytes, i2c_lpc17xx.o(.text.I2C0_MasterReceive))
-<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = I2C0_MasterReceive &rArr; I2Cx_MasterReceive &rArr; __NVIC_EnableIRQ
+<P><STRONG><a name="[38]"></a>I2C2_MasterReceive</STRONG> (Thumb, 50 bytes, Stack size 32 bytes, i2c_lpc17xx.o(.text.I2C2_MasterReceive))
+<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = I2C2_MasterReceive &rArr; I2Cx_MasterReceive &rArr; __NVIC_EnableIRQ
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_MasterReceive
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C0)
+<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C2)
 </UL>
 <P><STRONG><a name="[c2]"></a>I2Cx_MasterReceive</STRONG> (Thumb, 272 bytes, Stack size 32 bytes, i2c_lpc17xx.o(.text.I2Cx_MasterReceive))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = I2Cx_MasterReceive &rArr; __NVIC_EnableIRQ
@@ -1515,15 +1515,15 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_DisableIRQ
 </UL>
-<BR>[Called By]<UL><LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C0_MasterReceive
+<BR>[Called By]<UL><LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C2_MasterReceive
 </UL>
 
-<P><STRONG><a name="[39]"></a>I2C0_SlaveTransmit</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, i2c_lpc17xx.o(.text.I2C0_SlaveTransmit))
-<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = I2C0_SlaveTransmit &rArr; I2Cx_SlaveTransmit &rArr; __NVIC_EnableIRQ
+<P><STRONG><a name="[39]"></a>I2C2_SlaveTransmit</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, i2c_lpc17xx.o(.text.I2C2_SlaveTransmit))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = I2C2_SlaveTransmit &rArr; I2Cx_SlaveTransmit &rArr; __NVIC_EnableIRQ
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_SlaveTransmit
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C0)
+<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C2)
 </UL>
 <P><STRONG><a name="[c6]"></a>I2Cx_SlaveTransmit</STRONG> (Thumb, 158 bytes, Stack size 24 bytes, i2c_lpc17xx.o(.text.I2Cx_SlaveTransmit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = I2Cx_SlaveTransmit &rArr; __NVIC_EnableIRQ
@@ -1531,15 +1531,15 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_DisableIRQ
 </UL>
-<BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C0_SlaveTransmit
+<BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C2_SlaveTransmit
 </UL>
 
-<P><STRONG><a name="[3a]"></a>I2C0_SlaveReceive</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, i2c_lpc17xx.o(.text.I2C0_SlaveReceive))
-<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = I2C0_SlaveReceive &rArr; I2Cx_SlaveReceive &rArr; __NVIC_EnableIRQ
+<P><STRONG><a name="[3a]"></a>I2C2_SlaveReceive</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, i2c_lpc17xx.o(.text.I2C2_SlaveReceive))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = I2C2_SlaveReceive &rArr; I2Cx_SlaveReceive &rArr; __NVIC_EnableIRQ
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_SlaveReceive
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C0)
+<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C2)
 </UL>
 <P><STRONG><a name="[c5]"></a>I2Cx_SlaveReceive</STRONG> (Thumb, 156 bytes, Stack size 24 bytes, i2c_lpc17xx.o(.text.I2Cx_SlaveReceive))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = I2Cx_SlaveReceive &rArr; __NVIC_EnableIRQ
@@ -1547,28 +1547,28 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_DisableIRQ
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C0_SlaveReceive
+<BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C2_SlaveReceive
 </UL>
 
-<P><STRONG><a name="[3b]"></a>I2C0_GetDataCount</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, i2c_lpc17xx.o(.text.I2C0_GetDataCount))
-<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = I2C0_GetDataCount &rArr; I2Cx_GetDataCount
+<P><STRONG><a name="[3b]"></a>I2C2_GetDataCount</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, i2c_lpc17xx.o(.text.I2C2_GetDataCount))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = I2C2_GetDataCount &rArr; I2Cx_GetDataCount
 </UL>
 <BR>[Calls]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_GetDataCount
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C0)
+<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C2)
 </UL>
 <P><STRONG><a name="[be]"></a>I2Cx_GetDataCount</STRONG> (Thumb, 14 bytes, Stack size 4 bytes, i2c_lpc17xx.o(.text.I2Cx_GetDataCount))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = I2Cx_GetDataCount
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C0_GetDataCount
+<BR>[Called By]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C2_GetDataCount
 </UL>
 
-<P><STRONG><a name="[3c]"></a>I2C0_Control</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, i2c_lpc17xx.o(.text.I2C0_Control))
-<BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = I2C0_Control &rArr; I2Cx_Control &rArr; GetI2CClockFreq
+<P><STRONG><a name="[3c]"></a>I2C2_Control</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, i2c_lpc17xx.o(.text.I2C2_Control))
+<BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = I2C2_Control &rArr; I2Cx_Control &rArr; GetI2CClockFreq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_Control
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C0)
+<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C2)
 </UL>
 <P><STRONG><a name="[bd]"></a>I2Cx_Control</STRONG> (Thumb, 576 bytes, Stack size 48 bytes, i2c_lpc17xx.o(.text.I2Cx_Control))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = I2Cx_Control &rArr; GetI2CClockFreq
@@ -1579,20 +1579,20 @@ Local Symbols
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_DisableIRQ
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C0_Control
+<BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C2_Control
 </UL>
 
-<P><STRONG><a name="[3d]"></a>I2C0_GetStatus</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, i2c_lpc17xx.o(.text.I2C0_GetStatus))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = I2C0_GetStatus &rArr; I2Cx_GetStatus
+<P><STRONG><a name="[3d]"></a>I2C2_GetStatus</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, i2c_lpc17xx.o(.text.I2C2_GetStatus))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = I2C2_GetStatus &rArr; I2Cx_GetStatus
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2Cx_GetStatus
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C0)
+<BR>[Address Reference Count : 1]<UL><LI> i2c_lpc17xx.o(.rodata.Driver_I2C2)
 </UL>
 <P><STRONG><a name="[bf]"></a>I2Cx_GetStatus</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, i2c_lpc17xx.o(.text.I2Cx_GetStatus))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = I2Cx_GetStatus
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C0_GetStatus
+<BR>[Called By]<UL><LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C2_GetStatus
 </UL>
 
 <P><STRONG><a name="[ca]"></a>__NVIC_DisableIRQ</STRONG> (Thumb, 56 bytes, Stack size 4 bytes, i2c_lpc17xx.o(.text.__NVIC_DisableIRQ))
