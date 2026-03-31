@@ -17,7 +17,12 @@
 #include "EventRecorderConf.h"          // CMSIS-View:Event Recorder&&DAP
 #include "EventRecorder.h"              // CMSIS-View:Event Recorder&&DAP
 #include "string.h"
+#include "stdio.h"
 
+#define $GPGGA 0
+#define $GPGSA 0
+#define $GPGSV 0
+#define $GPRMC 0
 
 extern ARM_DRIVER_USART Driver_USART3; 
 extern ARM_DRIVER_CAN Driver_CAN2;
@@ -40,27 +45,35 @@ osMessageQueueId_t ID_BAL_DECODE;
 
 typedef struct
 {
-	uint8_t data[150];
+	uint8_t data[100];
 } DataRecept;
 
-uint8_t idx=0;
+typedef struct
+{
+	uint8_t heure[8];
+	uint8_t minute[8];
+	uint8_t latitude[8];
+	uint8_t longitude[8];
+} DataCoordonnee;
 
+uint8_t idx=0;
+DataRecept Message;
 
 void thread_ReceptUART(void *argument)
 {
-	(void)argument;
-	DataRecept Message;
-	
-	uint8_t *ptra, *ptrb;
-	uint32_t caracta = '$';
-	uint32_t caractb = '\n';
-	
-	uint8_t chaine [150];
+	(void)argument;	
 	
 	while(1)
 	{
+		// J lance réception du tout premier caractère
+		Driver_USART3.Receive(&Message.data[0], 1);
+		 // On attend le drapeau (Flag) mis par la callback lors du '\n'
+    osThreadFlagsWait(0x0001, osFlagsWaitAll, osWaitForever);
+		
+		// On envoie la trame complète au thread de décodage
+    osMessageQueuePut(ID_BAL_DECODE,&Message.data , NULL, osWaitForever);
 		idx = 0;
-		Driver_USART3.Receive(&Message.data[idx], 1);		// Reception des data du GPS
+		//Driver_USART3.Receive(&Message.data[idx], 1);		// On lance la Reception de la trame suivante
 		
 //		ptra = strchr(Message.data, caracta);
 //		
@@ -85,23 +98,79 @@ void thread_ReceptUART(void *argument)
 void thread_Decode(void *argument)
 {
 	(void)argument;
-	DataRecept Message;
-	char data[100];
-	char i=0;
 	
+	DataRecept MessageRecu;
+	DataCoordonnee Coordonnee;
+	int i=0;
+	
+	char val_GPRMC[10];
+	char val_GPGGA[10];
+	char val_GPGSA[10];
+	char val_GPGSV[10];
+	char val[6],*ptr;
+	
+	int32_t retour_val_GPRMC;
+	int32_t retour_val_GPGGA;
+	int32_t retour_val_GPGSA;
+	int32_t retour_val_GPGSV;
+	
+
 	while(1)
 	{
-		osMessageQueueGet(ID_BAL_DECODE, &Message, NULL, osWaitForever); // On attend recevoir la mailbox du thread Recept UART
+		osMessageQueueGet(ID_BAL_DECODE, &MessageRecu, NULL, osWaitForever); // On attend recevoir la mailbox du thread Recept UART
+		
+		sprintf(val, "%06s", MessageRecu.data);
 		
 		
+		retour_val_GPRMC = strncmp(val, "$GPRMC",6);
+		retour_val_GPGGA = strncmp(val, "$GPGGA",6);
+		retour_val_GPGSA = strncmp(val, "$GPGSA",6);
+		retour_val_GPGSV = strncmp(val, "$GPGSV",6);
 		
-		if (strstr(Message.data, "$GPRMC")!= 0) // Message $GPRMC présent dans la chaîne de caractère
-			{
 		
-		i++;
-	
+		if (retour_val_GPRMC == NULL)
+		{
+			ptr = strchr(&MessageRecu, ',');
+			if (ptr == NULL)
+				{
+					ptr++;
+//					strcpy(Coordonnee.heure,ptr,6);
 			}
+			sscanf((char*) MessageRecu.data, "$GHJHGFD,%06s", Coordonnee.heure);
+	
+		}
 		
+		if (retour_val_GPGGA == NULL)
+		{
+			sscanf((char*) MessageRecu.data, "$GHJHGFD,%06s", Coordonnee.heure);
+	
+		}
+		
+		if (retour_val_GPGSA == NULL)
+		{
+			sscanf((char*) MessageRecu.data, "$GHJHGFD,%06s", Coordonnee.heure);
+	
+		}
+		
+		if (retour_val_GPGSV == NULL)
+		{
+			sscanf((char*) MessageRecu.data, "$GHJHGFD,%06s", Coordonnee.heure);
+	
+		}
+		i=0;
+		
+		
+		
+		
+/*		
+		if (strstr(MessageRecu.data, "$GPRMC")!= NULL) // Message $GPRMC présent dans la chaîne de caractère
+			{
+				
+				
+				// Ici on va ajouter la logique pour envoyer vers le CAN
+            // osMessageQueuePut(ID_BAL_UART_CAN, &MessageRecu, NULL, 0);
+			}
+		*/
 	}
 }
 
@@ -172,26 +241,72 @@ void Init_UART_GPS(void)
  *
  * Callback pour l'init de l'UART GPS
  *-------------------------------------------------------*/
+
 	
 void UART_Callback_GPS(uint32_t event)
 {
-	DataRecept caract;
+	
+//	if(event & ARM_USART_EVENT_RECEIVE_COMPLETE)
+//	{
+//		 // On vérifie si on vient de recevoir le caractère de fin de trame
+//		if (Message.data[idx] == '\n') 
+//		{
+//			//Message.data[idx + 1] = '\0'; // Fin de chaîne 
+////			idx=0;
+//			
+//			osThreadFlagsSet(ID_ReceptUART, 0x0001); // reveille la reception
+//		}
+//		else
+//		{
+//			if (idx < 100)
+//			{
+//				idx++;
+//				Driver_USART3.Receive(&Message.data[idx], 1);
+//			}
+//		}
+//	}
+	
 	
 	if(event & ARM_USART_EVENT_RECEIVE_COMPLETE)
 	{
-		if (caract.data != '\n') 
+	
+		if ( (Message.data[idx] != '\n') && (idx < 100) )
 		{
 			idx++;
-			Driver_USART3.Receive(&caract.data[idx], 1);
+			Driver_USART3.Receive(&Message.data[idx], 1);
 		}
-		else
+		else 
 		{
-			osThreadFlagsSet(ID_ReceptUART, 0x0001);
+			osThreadFlagsSet(ID_ReceptUART, 0x0001); // reveille la reception
 		}
 		
 	}
+	
+//	
+//	if(event & ARM_USART_EVENT_RECEIVE_COMPLETE)
+//	{
+//		if (Message.data[idx] == '$')
+//		{
+//			if (Message.data[idx] != '\n')
+//			{
+//				idx++;
+//				Driver_USART3.Receive(&Message.data[idx], 1);
+//			}
+//			
+//		}
+//	else 
+//	{
+//		idx = 0;
+//		osThreadFlagsSet(ID_ReceptUART, 0x0001); // reveille la reception
+//	}
+//		
 		
-}
+	}
+	
+	
+	
+	
+
 
 /* --------------------------------------------------------
  * Fonction : void Init_CAN(void)
