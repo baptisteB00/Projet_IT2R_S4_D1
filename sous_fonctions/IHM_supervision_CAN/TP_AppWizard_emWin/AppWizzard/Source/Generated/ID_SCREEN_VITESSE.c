@@ -138,6 +138,39 @@ static APPW_CREATE_ITEM _aCreate[] = {
     },
     { 0, 0 }
   },
+  { WM_OBJECT_IMAGE_Create,
+    ID_IMAGE_02, ID_SCREEN_VITESSE,
+    { { { DISPOSE_MODE_REL_PARENT, 190, 0, 0 },
+        { DISPOSE_MODE_REL_PARENT, 50, 0, 0 },
+        { DISPOSE_MODE_REL_PARENT, 130, 0, 0 },
+        { DISPOSE_MODE_REL_PARENT, 62, 0, 0 },
+      },
+      0, 0, 0, 0, 0, 0
+    },
+    { 0, 0 }
+  },
+  { WM_OBJECT_IMAGE_Create,
+    ID_IMAGE_03, ID_SCREEN_VITESSE,
+    { { { DISPOSE_MODE_REL_PARENT, 257, 0, 0 },
+        { DISPOSE_MODE_REL_PARENT, 117, 0, 0 },
+        { DISPOSE_MODE_NULL, 0, 0, 0 },
+        { DISPOSE_MODE_NULL, 0, 0, 0 },
+      },
+      26, 26, 0, 0, 0, 0
+    },
+    { 0, 0 }
+  },
+  { WM_OBJECT_GAUGE_Create,
+    ID_GAUGE_00, ID_SCREEN_VITESSE,
+    { { { DISPOSE_MODE_REL_PARENT, 0, 0, 0 },
+        { DISPOSE_MODE_REL_PARENT, 80, 0, 0 },
+        { DISPOSE_MODE_NULL, 0, 0, 0 },
+        { DISPOSE_MODE_NULL, 0, 0, 0 },
+      },
+      200, 100, 0, 0, 0, 0
+    },
+    { 0, 0 }
+  },
 };
 
 /*********************************************************************
@@ -192,6 +225,29 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
                                                       ARG_V(932), } },
   { ID_IMAGE_01,        APPW_SET_PROP_SBITMAP,      { ARG_VP(0, acICONE_HUILE),
                                                       ARG_V(1568), } },
+  { ID_IMAGE_02,        APPW_SET_PROP_SBITMAP,      { ARG_VP(0, acviseur_nunchuk),
+                                                      ARG_V(6039), } },
+  { ID_IMAGE_02,        APPW_SET_PROP_TILE,         { ARG_V(0) } },
+  { ID_IMAGE_02,        APPW_SET_PROP_OPAQUE,       { ARG_V(0) } },
+  { ID_IMAGE_03,        APPW_SET_PROP_TILE,         { ARG_V(0) } },
+  { ID_IMAGE_03,        APPW_SET_PROP_SBITMAP,      { ARG_VP(0, acDARK_Switch_Thumb_26x26),
+                                                      ARG_V(1172), } },
+  { ID_GAUGE_00,        APPW_SET_PROP_ALIGNBITMAP,  { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_BOTTOM),
+                                                      ARG_V(0),
+                                                      ARG_V(4294967286) } },
+  { ID_GAUGE_00,        APPW_SET_PROP_RANGE,        { ARG_V(0),
+                                                      ARG_V(1800) } },
+  { ID_GAUGE_00,        APPW_SET_PROP_SPAN,         { ARG_V(0),
+                                                      ARG_V(999) } },
+  { ID_GAUGE_00,        APPW_SET_PROP_RADIUS,       { ARG_V(80) } },
+  { ID_GAUGE_00,        APPW_SET_PROP_COLORS,       { ARG_V(0xff2c2c30),
+                                                      ARG_V(0xff2777b3),
+                                                      ARG_V(GUI_INVALID_COLOR) } },
+  { ID_GAUGE_00,        APPW_SET_PROP_VALUES,       { ARG_V(19),
+                                                      ARG_V(13) } },
+  { ID_GAUGE_00,        APPW_SET_PROP_ROUNDEDVAL,   { ARG_V(0) } },
+  { ID_GAUGE_00,        APPW_SET_PROP_ROUNDEDEND,   { ARG_V(0) } },
+  { ID_GAUGE_00,        APPW_SET_PROP_VALUE,        { ARG_V(250) } },
 };
 
 /*********************************************************************
@@ -222,6 +278,14 @@ static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
       ARG_V(500),
       ARG_V(0),
     }, 0, NULL
+  },
+  { ID_PositionViseurX, WM_NOTIFICATION_VALUE_CHANGED,    ID_IMAGE_03,        APPW_JOB_SETX0,          ID_SCREEN_VITESSE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_03__APPW_JOB_SETX0,
+    { ARG_V(4096),
+    }, 65537, NULL
+  },
+  { ID_PositionViseurY, WM_NOTIFICATION_VALUE_CHANGED,    ID_IMAGE_03,        APPW_JOB_SETY0,          ID_SCREEN_VITESSE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_03__APPW_JOB_SETY0,
+    { ARG_V(4097),
+    }, 65537, NULL
   },
 };
 

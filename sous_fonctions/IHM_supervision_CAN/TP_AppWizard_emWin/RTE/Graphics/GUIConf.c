@@ -40,7 +40,7 @@ File        : GUIConf.c
 Purpose     : Display controller initialization
 ---------------------------END-OF-HEADER------------------------------
 */
-
+#define GUI_CONST_STORAGE  const __attribute__((aligned(4)))
 #include "GUI.h"
 
 /*********************************************************************

@@ -24,7 +24,7 @@ Purpose     : Generated file do NOT edit!
 *       Objects
 */
 #define ID_BOX_02          (GUI_ID_USER + 1)
-#define ID_IMAGE_00        (GUI_ID_USER + 6)
+#define ID_IMAGE_Voiture   (GUI_ID_USER + 6)
 #define ID_TEXT_00         (GUI_ID_USER + 2)
 #define ID_BUTTON_NEXT     (GUI_ID_USER + 3)
 #define ID_BUTTON_ACCUEIL  (GUI_ID_USER + 4)
@@ -47,9 +47,11 @@ Purpose     : Generated file do NOT edit!
 *
 *       Slots
 */
-void ID_SCREEN_PORTE__ID_BUTTON_ACCUEIL__WM_NOTIFICATION_CLICKED (APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
-void ID_SCREEN_PORTE__ID_BUTTON_NEXT__WM_NOTIFICATION_CLICKED    (APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
-void ID_SCREEN_PORTE__ID_BUTTON_PREVIOUS__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
+void ID_SCREEN_PORTE__ID_BUTTON_ACCUEIL__WM_NOTIFICATION_CLICKED                      (APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
+void ID_SCREEN_PORTE__ID_BUTTON_NEXT__WM_NOTIFICATION_CLICKED                         (APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
+void ID_SCREEN_PORTE__ID_BUTTON_PREVIOUS__WM_NOTIFICATION_CLICKED                     (APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
+void ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_00__APPW_JOB_SETBITMAP  (APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
+void ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_00__APPW_JOB_SETBITMAP_0(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
 
 /*********************************************************************
 *

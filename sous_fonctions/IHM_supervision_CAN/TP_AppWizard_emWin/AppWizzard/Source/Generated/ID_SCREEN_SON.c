@@ -107,7 +107,7 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
                                                       ARG_V(0),
                                                       ARG_V(0) } },
   { ID_TEXT_00,         APPW_SET_PROP_FONT,         { ARG_VP(0, acRoboto_32_Normal_EXT_AA4) } },
-  { ID_TEXT_00,         APPW_SET_PROP_TEXTID,       { ARG_V(ID_RTEXT_5) } },
+  { ID_TEXT_00,         APPW_SET_PROP_TEXTID,       { ARG_V(ID_RTEXT_0) } },
   { ID_TEXT_00,         APPW_SET_PROP_UNTOUCHABLE,  { ARG_V(0) } },
   { ID_BUTTON_NEXT,     APPW_SET_PROP_SBITMAPS,     { ARG_VP(0, acUNPRESS_right),
                                                       ARG_VP(0, acPRESS_right), } },

@@ -32,9 +32,6 @@ Purpose     : Generated file do NOT edit!
 #define COLOR_CONVERSION GUICC_M8888I
 #define DISPLAY_DRIVER   GUIDRV_WIN32R
 #define NUM_BUFFERS      2
-#define _aVarList        NULL
-#define _appDrawing      NULL
-#define _NumDrawings     0
 #define _aScrollerList   NULL
 #define _NumScrollers    0
 
@@ -50,11 +47,11 @@ Purpose     : Generated file do NOT edit!
 */
 static APPW_ROOT_INFO * _apRootList[] = {
   &ID_SCREEN_ACCUEIL_RootInfo,
+  &ID_SCREEN_PANNEAU_RootInfo,
   &ID_SCREEN_FEUX_RootInfo,
   &ID_SCREEN_PORTE_RootInfo,
   &ID_SCREEN_VITESSE_RootInfo,
   &ID_SCREEN_SON_RootInfo,
-  &ID_SCREEN_PANNEAU_RootInfo,
 };
 
 /*********************************************************************
@@ -65,9 +62,50 @@ static unsigned _NumScreens = GUI_COUNTOF(_apRootList);
 
 /*********************************************************************
 *
+*       _aVarList
+*/
+static APPW_VAR_OBJECT _aVarList[] = {
+  { ID_PositionViseurX, 0, 270, NULL },
+  { ID_PositionViseurY, 0, 130, NULL },
+  { ID_Var_ClignoG, 0, 0, NULL },
+  { ID_Var_ClignoD, 0, 0, NULL },
+  { ID_VAR_MODE_LUMIERE, 0, 0, NULL },
+  { ID_VAR_Cadena, 0, 0, NULL },
+  { ID_VAR_Phare, 0, 0, NULL },
+};
+
+/*********************************************************************
+*
 *       _NumVars
 */
-static unsigned _NumVars = 0;
+static unsigned _NumVars = GUI_COUNTOF(_aVarList);
+
+/*********************************************************************
+*
+*       ID_PointViseur
+*/
+APPW_DRAWING_ITEM_DEF_X(_aID_PointViseur_Item_0, 3) {
+  APPW_ID_DRAW_CIRCLE,
+  (GUI_CONST_STORAGE APPW_DRAWING_ITEM *)NULL,
+  { { 0x00001000, 0, ATOM_VARIABLE, 0 },
+    { 0x00001001, 0, ATOM_VARIABLE, 0 },
+    { 0x00000014, 0, ATOM_CONSTANT, 0 }
+  }
+};
+
+/*********************************************************************
+*
+*       _appDrawing
+*/
+static GUI_CONST_STORAGE APPW_DRAWING_ITEM * _appDrawing[] = {
+  (GUI_CONST_STORAGE APPW_DRAWING_ITEM *)&_aID_PointViseur_Item_0
+};
+
+/*********************************************************************
+*
+*       _NumDrawings
+*/
+static unsigned _NumDrawings = GUI_COUNTOF(_appDrawing);
 
 /*********************************************************************
 *

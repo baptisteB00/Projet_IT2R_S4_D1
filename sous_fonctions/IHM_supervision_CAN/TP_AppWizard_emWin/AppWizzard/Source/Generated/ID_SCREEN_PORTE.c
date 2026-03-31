@@ -51,13 +51,13 @@ static APPW_CREATE_ITEM _aCreate[] = {
     { 0, 0 }
   },
   { WM_OBJECT_IMAGE_Create,
-    ID_IMAGE_00, ID_SCREEN_PORTE,
+    ID_IMAGE_Voiture, ID_SCREEN_PORTE,
     { { { DISPOSE_MODE_REL_PARENT, 107, 0, 0 },
-        { DISPOSE_MODE_REL_PARENT, 87, 0, 0 },
+        { DISPOSE_MODE_REL_PARENT, 97, 0, 0 },
         { DISPOSE_MODE_NULL, 0, 0, 0 },
         { DISPOSE_MODE_NULL, 0, 0, 0 },
       },
-      238, 119, 0, 0, 0, 0
+      238, 101, 0, 0, 0, 0
     },
     { 0, 0 }
   },
@@ -256,10 +256,9 @@ static APPW_CREATE_ITEM _aCreate[] = {
 */
 static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BOX_02,          APPW_SET_PROP_COLOR,        { ARG_V(GUI_WHITE) } },
-  { ID_IMAGE_00,        APPW_SET_PROP_SBITMAP,      { ARG_VP(0, acVoiture_Dessus),
-                                                      ARG_V(233851), } },
-  { ID_IMAGE_00,        APPW_SET_PROP_SCALE,        { ARG_V(200) } },
-  { ID_IMAGE_00,        APPW_SET_PROP_ALIGNBITMAP,  { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
+  { ID_IMAGE_Voiture,   APPW_SET_PROP_SBITMAP,      { ARG_VP(0, acVoiture_Dessus),
+                                                      ARG_V(7805), } },
+  { ID_IMAGE_Voiture,   APPW_SET_PROP_ALIGNBITMAP,  { ARG_V(GUI_ALIGN_HCENTER | GUI_ALIGN_VCENTER),
                                                       ARG_V(0),
                                                       ARG_V(0) } },
   { ID_TEXT_00,         APPW_SET_PROP_COLOR,        { ARG_V(GUI_BLACK) } },
@@ -461,6 +460,25 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
 
 /*********************************************************************
 *
+*       Comparison(s)
+*/
+static APPW_COND_COMP _aComparison_03[] = {
+  { { { 0x00001005, 0, ATOM_VARIABLE, 0 }, { 0x00000000, 0, ATOM_CONSTANT, 0 } }, APPW__CompareIsEqual },
+};
+
+static APPW_COND_COMP _aComparison_04[] = {
+  { { { 0x00001005, 0, ATOM_VARIABLE, 0 }, { 0x00000001, 0, ATOM_CONSTANT, 0 } }, APPW__CompareIsEqual },
+};
+
+/*********************************************************************
+*
+*       Condition(s)
+*/
+static GUI_CONST_STORAGE APPW_COND _Condition_03 = { "A", _aComparison_03, GUI_COUNTOF(_aComparison_03) };
+static GUI_CONST_STORAGE APPW_COND _Condition_04 = { "A", _aComparison_04, GUI_COUNTOF(_aComparison_04) };
+
+/*********************************************************************
+*
 *       _aAction
 */
 static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
@@ -487,6 +505,18 @@ static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
       ARG_V(500),
       ARG_V(0),
     }, 0, NULL
+  },
+  { ID_VAR_Cadena,      WM_NOTIFICATION_VALUE_CHANGED,    ID_IMAGE_Voiture,   APPW_JOB_SETBITMAP,      ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_00__APPW_JOB_SETBITMAP,
+    { ARG_V(0),
+      ARG_VP(0, acCadenas_FERME),
+      ARG_V(1096),
+    }, 0, &_Condition_03
+  },
+  { ID_VAR_Cadena,      WM_NOTIFICATION_VALUE_CHANGED,    ID_IMAGE_Voiture,   APPW_JOB_SETBITMAP,      ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_00__APPW_JOB_SETBITMAP_0,
+    { ARG_V(0),
+      ARG_VP(0, acCadenas_ouvert),
+      ARG_V(920),
+    }, 0, &_Condition_04
   },
 };
 

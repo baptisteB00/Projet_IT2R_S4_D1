@@ -139,7 +139,7 @@ are getting adapted.
 // Orientation of layer 0. Should be one of the above defined display orientations.
 //
 //#define ORIENTATION_0 ROTATION_0
-#define ORIENTATION_0 ROTATION_180
+#define ORIENTATION_0 ROTATION_0
 
 /*********************************************************************
 *
@@ -1040,7 +1040,7 @@ static const int _aOrientation[] = {
 //
 // DMA2D transfer is ready flag
 //
-static volatile int _WaitForDMA2D;
+static volatile int _WaitForDMA2D __attribute__((section(".dtcm")));
 
 /*********************************************************************
 *
@@ -1638,24 +1638,10 @@ static void _DMA2D_ITConfig(U32 DMA2D_IT, int NewState) {
 *       _DMA_ExecOperation
 */
 static void _DMA_ExecOperation(void) {
-  //
-  // Invalidate and clean the data cache before executing the DMA2D operation.
-  // Otherwise we would have artifacts on the LCD.
-  //
   SCB_CleanInvalidateDCache();
-  //
-  // Set Flag which gets cleared when DMA2D transfer is completed
-  //
   _WaitForDMA2D = 1;
-  //
-  // Execute operation
-  //
-  DMA2D->CR     |= 1 | (1 << 8);                               // Control Register (Start operation)
-  //
-  // Wait until transfer is done
-  //
-  while (_WaitForDMA2D) {
-  }
+  DMA2D->CR |= 1 | (1 << 8) | (1 << 13);  // START + TCIE + CEIE
+  while (_WaitForDMA2D) { }
 }
 
 /*********************************************************************
@@ -2897,17 +2883,15 @@ static LCD_PIXELINDEX * _LCD_GetpPalConvTable(const LCD_LOGPALETTE GUI_UNI_PTR *
 * Purpose:
 *   Transfer-complete-interrupt of DMA2D
 */
+static volatile int _DMA2D_ErrorCount = 0;
+
 void DMA2D_IRQHandler(void);
 void DMA2D_IRQHandler(void) {
-  if (DMA2D->ISR & DMA2D_ISR_TCIF) {
-    _WaitForDMA2D = 0;
-    DMA2D->IFCR |= (U32)DMA2D_IFSR_CTCIF;
-  } else {
-    _WaitForDMA2D = 0;
+  if (DMA2D->ISR & 0x20) {  // CEIF
+    _DMA2D_ErrorCount++;
   }
-  if (DMA2D->ISR & DMA2D_ISR_TEIF) {
-    volatile int Temp = 0;
-  }
+  DMA2D->IFCR = DMA2D->ISR;
+  _WaitForDMA2D = 0;
 }
 
 /*********************************************************************

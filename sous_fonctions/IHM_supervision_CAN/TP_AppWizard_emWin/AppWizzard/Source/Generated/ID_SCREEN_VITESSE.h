@@ -32,14 +32,19 @@ Purpose     : Generated file do NOT edit!
 #define ID_HUILE_JAUGE     (GUI_ID_USER + 10)
 #define ID_IMAGE_00        (GUI_ID_USER + 8)
 #define ID_IMAGE_01        (GUI_ID_USER + 11)
+#define ID_IMAGE_02        (GUI_ID_USER + 6)
+#define ID_IMAGE_03        (GUI_ID_USER + 9)
+#define ID_GAUGE_00        (GUI_ID_USER + 12)
 
 /*********************************************************************
 *
 *       Slots
 */
-void ID_SCREEN_VITESSE__ID_BUTTON_ACCUEIL__WM_NOTIFICATION_CLICKED (APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
-void ID_SCREEN_VITESSE__ID_BUTTON_NEXT__WM_NOTIFICATION_CLICKED    (APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
-void ID_SCREEN_VITESSE__ID_BUTTON_PREVIOUS__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
+void ID_SCREEN_VITESSE__ID_BUTTON_ACCUEIL__WM_NOTIFICATION_CLICKED                (APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
+void ID_SCREEN_VITESSE__ID_BUTTON_NEXT__WM_NOTIFICATION_CLICKED                   (APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
+void ID_SCREEN_VITESSE__ID_BUTTON_PREVIOUS__WM_NOTIFICATION_CLICKED               (APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
+void ID_SCREEN_VITESSE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_03__APPW_JOB_SETX0(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
+void ID_SCREEN_VITESSE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_03__APPW_JOB_SETY0(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult);
 
 /*********************************************************************
 *

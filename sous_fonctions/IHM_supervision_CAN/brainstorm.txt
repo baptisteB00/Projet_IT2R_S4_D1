@@ -20,4 +20,23 @@ accueil:
 	bouton => chaque page
 
 lumiere / phare / activation phare:
-	bouton =>
+	bouton => clignotant droit
+	bouton => clignotant gauche
+	bouton => phare avant 
+	bouton => phare arriere
+	affichage : jour nuit
+
+porte : 
+	image : voiture vue du dessus avec radar de recul avant et arriere et les portes
+
+vitesse : 
+	jauge : vitesse
+	jaude : liquide
+	image + point : position nunchunk
+
+son / activation du son :
+	liste : son activable
+
+panneau reconnu : 
+	image : le panneau 
+	chiffre : % de prediction
