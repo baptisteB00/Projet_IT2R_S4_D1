@@ -19,11 +19,6 @@
 #include "string.h"
 #include "stdio.h"
 
-#define $GPGGA 0
-#define $GPGSA 0
-#define $GPGSV 0
-#define $GPRMC 0
-
 extern ARM_DRIVER_USART Driver_USART3; 
 extern ARM_DRIVER_CAN Driver_CAN2;
 
@@ -40,8 +35,8 @@ osThreadId_t ID_Decode;
 
 /*-------------- Créations des identifiants des boîte aux lettres (BAL) --------------*/
 
-osMessageQueueId_t ID_BAL_UART_CAN;
 osMessageQueueId_t ID_BAL_DECODE;
+osMessageQueueId_t ID_BAL_EMET_CAN;
 
 typedef struct
 {
@@ -50,13 +45,16 @@ typedef struct
 
 typedef struct
 {
-	uint8_t heure[8];
-	uint8_t minute[8];
-	uint8_t latitude[8];
-	uint8_t longitude[8];
+	char *temps;				//  RMC / GGA
+	char *latitude;			//  RMC / GGA
+	char *nord_sud;			//  RMC / GGA
+	char *est_ouest;		//  RMC / GGA
+	char *longitude;		//  RMC / GGA
+	char *alerte;				//  RMC
 } DataCoordonnee;
 
 uint8_t idx=0;
+
 DataRecept Message;
 
 void thread_ReceptUART(void *argument)
@@ -73,24 +71,7 @@ void thread_ReceptUART(void *argument)
 		// On envoie la trame complète au thread de décodage
     osMessageQueuePut(ID_BAL_DECODE,&Message.data , NULL, osWaitForever);
 		idx = 0;
-		//Driver_USART3.Receive(&Message.data[idx], 1);		// On lance la Reception de la trame suivante
-		
-//		ptra = strchr(Message.data, caracta);
-//		
-//		
-//		if(ptra != NULL)
-//		{
-//			ptrb = strrchr(Message.data, caractb);
-//			if (ptrb != NULL)
-//			{
-//				osThreadFlagsWait(0x0001, osFlagsWaitAll, osWaitForever);			// En attente, avec la callback
-//		
-//				osMessageQueuePut(ID_BAL_DECODE, &Message, NULL, osWaitForever);		// BAL pour le thread de decodage
-//			}
-////			chaine = strcpy (chaine, Message.data);
-//		
-//		}
-		
+
 		osDelay(100);
 	}
 }
@@ -105,72 +86,52 @@ void thread_Decode(void *argument)
 	
 	char val_GPRMC[10];
 	char val_GPGGA[10];
-	char val_GPGSA[10];
-	char val_GPGSV[10];
-	char val[6],*ptr;
-	
+	char val[6];
+	const char *separateur = ",";
+
 	int32_t retour_val_GPRMC;
 	int32_t retour_val_GPGGA;
-	int32_t retour_val_GPGSA;
-	int32_t retour_val_GPGSV;
 	
-
 	while(1)
 	{
 		osMessageQueueGet(ID_BAL_DECODE, &MessageRecu, NULL, osWaitForever); // On attend recevoir la mailbox du thread Recept UART
 		
-		sprintf(val, "%06s", MessageRecu.data);
+		sprintf(val, "%06s", MessageRecu.data);		// On prend les 6 premiers caractère (à partir du $)
 		
 		
-		retour_val_GPRMC = strncmp(val, "$GPRMC",6);
+		retour_val_GPRMC = strncmp(val, "$GPRMC",6);	// strncmp renvoie 0 correspond à la chaîne de carcactère
 		retour_val_GPGGA = strncmp(val, "$GPGGA",6);
-		retour_val_GPGSA = strncmp(val, "$GPGSA",6);
-		retour_val_GPGSV = strncmp(val, "$GPGSV",6);
+
 		
-		
-		if (retour_val_GPRMC == NULL)
+		if (retour_val_GPRMC == NULL)		// En fonction de ce qu'on reçoit au début de la trame, notre code va dans une de ses conditions pour décoder la bonne trame
 		{
-			ptr = strchr(&MessageRecu, ',');
-			if (ptr == NULL)
+			Coordonnee.temps = strtok(MessageRecu.data, separateur);
+			
+			if (Coordonnee.temps != NULL)
 				{
-					ptr++;
-//					strcpy(Coordonnee.heure,ptr,6);
-			}
-			sscanf((char*) MessageRecu.data, "$GHJHGFD,%06s", Coordonnee.heure);
-	
+					Coordonnee.temps 		 = strtok (NULL, separateur); 
+					Coordonnee.alerte 	 = strtok (NULL, separateur); 
+					Coordonnee.latitude  = strtok (NULL, separateur);
+				  Coordonnee.nord_sud  = strtok (NULL, separateur);
+				  Coordonnee.longitude = strtok (NULL, separateur);
+				  Coordonnee.est_ouest = strtok (NULL, separateur);
+				}		
 		}
 		
-		if (retour_val_GPGGA == NULL)
+		if (retour_val_GPGGA == NULL)	// Renvo
 		{
-			sscanf((char*) MessageRecu.data, "$GHJHGFD,%06s", Coordonnee.heure);
-	
+			Coordonnee.temps = strtok(MessageRecu.data, separateur);
+			 
+			if (Coordonnee.temps != NULL)
+				{
+					Coordonnee.temps 		 = strtok (NULL, separateur); 
+					Coordonnee.latitude  = strtok (NULL, separateur);
+				  Coordonnee.nord_sud  = strtok (NULL, separateur);
+				  Coordonnee.longitude = strtok (NULL, separateur);
+				  Coordonnee.est_ouest = strtok (NULL, separateur);
+				}				 
 		}
-		
-		if (retour_val_GPGSA == NULL)
-		{
-			sscanf((char*) MessageRecu.data, "$GHJHGFD,%06s", Coordonnee.heure);
-	
-		}
-		
-		if (retour_val_GPGSV == NULL)
-		{
-			sscanf((char*) MessageRecu.data, "$GHJHGFD,%06s", Coordonnee.heure);
-	
-		}
-		i=0;
-		
-		
-		
-		
-/*		
-		if (strstr(MessageRecu.data, "$GPRMC")!= NULL) // Message $GPRMC présent dans la chaîne de caractère
-			{
-				
-				
-				// Ici on va ajouter la logique pour envoyer vers le CAN
-            // osMessageQueuePut(ID_BAL_UART_CAN, &MessageRecu, NULL, 0);
-			}
-		*/
+		osMessageQueuePut(ID_BAL_EMET_CAN,&Coordonnee , NULL, osWaitForever);
 	}
 }
 
@@ -183,7 +144,7 @@ void thread_EmissionCAN(void *argument)
 	
 	while(1)
 	{
-		osMessageQueueGet(ID_BAL_UART_CAN, &ReceptMessage, NULL, osWaitForever);		// Reception du BAL du thread ReceptUART
+		osMessageQueueGet(ID_BAL_EMET_CAN, &ReceptMessage, NULL, osWaitForever);		// Reception du BAL du thread decode
 	}
 	
 	
@@ -207,7 +168,7 @@ int main()
 	Init_CAN_Emission();			// Initialisation du CAN2 pour l'émission
 	
 	ID_BAL_DECODE		= osMessageQueueNew(10, sizeof(DataRecept), NULL);
-	ID_BAL_UART_CAN = osMessageQueueNew(10, sizeof(DataRecept), NULL);
+	ID_BAL_EMET_CAN = osMessageQueueNew(10, sizeof(DataCoordonnee), NULL);
 	
 	ID_ReceptUART  = osThreadNew( (osThreadFunc_t) thread_ReceptUART , NULL , &configReceptUART) ;
 	ID_EmissionCAN = osThreadNew( (osThreadFunc_t) thread_EmissionCAN , NULL , &configEmissionCAN) ;
