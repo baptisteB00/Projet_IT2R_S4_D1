@@ -139,12 +139,28 @@ void thread_EmissionCAN(void *argument)
 {
 	(void)argument;
 	
-	
-	DataRecept ReceptMessage;
+	DataCoordonnee Coordonnee;
+	ARM_CAN_MSG_INFO tx_msg_info;
+	char *ptr;
+	uint8_t data_buff[8];
 	
 	while(1)
 	{
-		osMessageQueueGet(ID_BAL_EMET_CAN, &ReceptMessage, NULL, osWaitForever);		// Reception du BAL du thread decode
+		osMessageQueueGet(ID_BAL_EMET_CAN, &Coordonnee, NULL, osWaitForever);		// Reception du BAL du thread decode
+		
+		tx_msg_info.id = ARM_CAN_STANDARD_ID(0x0F6);
+		tx_msg_info.rtr = 0;
+			
+		data_buff[0] = *Coordonnee.temps;
+//		ptr = &Coordonnee.temps;
+//		data_buff[0] = *ptr;
+//		data_buff[1] = *Coordonnee.latitude;
+//		data_buff[2] = *Coordonnee.longitude;
+		
+		Driver_CAN2.MessageSend(1, &tx_msg_info, data_buff, 5); 
+		
+		osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);
+		osDelay(100);
 	}
 	
 	
@@ -263,11 +279,6 @@ void UART_Callback_GPS(uint32_t event)
 //		
 		
 	}
-	
-	
-	
-	
-
 
 /* --------------------------------------------------------
  * Fonction : void Init_CAN(void)
@@ -281,7 +292,7 @@ void Init_CAN_Emission(void)
 	Driver_CAN2.PowerControl(ARM_POWER_FULL);
 	Driver_CAN2.SetMode(ARM_CAN_MODE_INITIALIZATION);
 	Driver_CAN2.SetBitrate(ARM_CAN_BITRATE_NOMINAL, 125000,
-														ARM_CAN_BIT_PROP_SEG(5U) |
+														ARM_CAN_BIT_PROP_SEG(5U) 	 |
 														ARM_CAN_BIT_PHASE_SEG1(1U) |
 														ARM_CAN_BIT_PHASE_SEG2(1U) |
 														ARM_CAN_BIT_SJW(1U));

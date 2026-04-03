@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\position_gps.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\position_gps.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6240002: Last Updated: Fri Apr  3 11:08:34 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6240002: Last Updated: Fri Apr  3 12:42:57 2026
 <BR><P>
 <H3>Maximum Stack Usage =        492 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2165,7 +2165,8 @@ Global Symbols
 <LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsIrqMasked
 <LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsException
 </UL>
-<BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;thread_ReceptUART
+<BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;thread_EmissionCAN
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;thread_ReceptUART
 </UL>
 
 <P><STRONG><a name="[1b8]"></a>osKernelGetState</STRONG> (Thumb, 66 bytes, Stack size 24 bytes, rtx_kernel.o(.text.osKernelGetState), UNUSED, KEPT)
@@ -2714,7 +2715,8 @@ Global Symbols
 <LI><a href="#[1ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsIrqMasked
 <LI><a href="#[1fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsException
 </UL>
-<BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;thread_ReceptUART
+<BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;thread_EmissionCAN
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;thread_ReceptUART
 </UL>
 
 <P><STRONG><a name="[1b3]"></a>osThreadNew</STRONG> (Thumb, 114 bytes, Stack size 56 bytes, rtx_thread.o(.text.osThreadNew))
@@ -2740,10 +2742,12 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
-<P><STRONG><a name="[63]"></a>thread_EmissionCAN</STRONG> (Thumb, 32 bytes, Stack size 112 bytes, main.o(.text.thread_EmissionCAN))
-<BR><BR>[Stack]<UL><LI>Max Depth = 404<LI>Call Chain = thread_EmissionCAN &rArr; osMessageQueueGet &rArr; isrRtxMessageQueueGet &rArr; osRtxPostProcess &rArr; osRtxKernelErrorNotify &rArr; EvrRtxKernelErrorNotify &rArr; EventRecord2 &rArr; EventRecordItem &rArr; IncrementRecordsDumped &rArr; atomic_inc_32
+<P><STRONG><a name="[63]"></a>thread_EmissionCAN</STRONG> (Thumb, 98 bytes, Stack size 64 bytes, main.o(.text.thread_EmissionCAN))
+<BR><BR>[Stack]<UL><LI>Max Depth = 356<LI>Call Chain = thread_EmissionCAN &rArr; osMessageQueueGet &rArr; isrRtxMessageQueueGet &rArr; osRtxPostProcess &rArr; osRtxKernelErrorNotify &rArr; EvrRtxKernelErrorNotify &rArr; EventRecord2 &rArr; EventRecordItem &rArr; IncrementRecordsDumped &rArr; atomic_inc_32
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessageQueueGet
+<LI><a href="#[1b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
+<LI><a href="#[200]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadFlagsWait
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
