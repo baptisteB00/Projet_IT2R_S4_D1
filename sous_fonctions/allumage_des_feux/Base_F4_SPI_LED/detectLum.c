@@ -10,7 +10,7 @@
 # define BLANC_Fort 0xFFFFFFFE			
 # define JAUNE 0xFFFF00F0						
 # define Eteint 0x000000E0
-# define NbLEDs 12
+# define NbLEDs 16
 
 extern ARM_DRIVER_SPI Driver_SPI1;
 
@@ -18,36 +18,42 @@ void Init_LEDs(void);
 void Init_SPI(void);
 void allumer1LED(uint8_t numLED,uint32_t COLOR);
 
-uint32_t tab[12];
+uint32_t tab[18];
 
 ADC_HandleTypeDef ADC1_Hand;
 
 int main(void){
-	int valeur;
+
 	
 	ADC_Initialize(&ADC1_Hand,1);
 	Init_SPI();
 	Init_LEDs();
 	
 	while(1){
-		HAL_ADC_Start(&ADC1_Hand);
-		while(HAL_ADC_PollForConversion(&ADC1_Hand, 1000) != HAL_OK);
-		valeur = HAL_ADC_GetValue(&ADC1_Hand);
-		if(valeur<4095){
-			allumer1LED(2,BLANC_Fort);
-			allumer1LED(4,BLANC_Fort);
-			allumer1LED(6,BLANC_Fort);
-			allumer1LED(8,BLANC_Fort);
-			Driver_SPI1.Send(tab,(NbLEDs+2)*4);
-		}
-		else{
-			allumer1LED(2,Eteint);
-			allumer1LED(4,Eteint);
-			allumer1LED(6,Eteint);
-			allumer1LED(8,Eteint);
-			Driver_SPI1.Send(tab,(NbLEDs+2)*4);
-		}
+			
+		allumer1LED(2,BLANC_Fort);
+		allumer1LED(3,Eteint);
+		allumer1LED(4,Eteint);
+		allumer1LED(5,Eteint);
+		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
 		
+		allumer1LED(2,Eteint);
+		allumer1LED(3,BLANC_Fort);
+		allumer1LED(4,Eteint);
+		allumer1LED(5,Eteint);
+		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
+		
+		allumer1LED(2,Eteint);
+		allumer1LED(3,Eteint);
+		allumer1LED(4,Eteint);
+		allumer1LED(5,BLANC_Fort);
+		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
+		
+		allumer1LED(2,Eteint);
+		allumer1LED(3,Eteint);
+		allumer1LED(4,BLANC_Fort);
+		allumer1LED(5,Eteint);
+		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
 	}
 	
 }
@@ -70,8 +76,8 @@ void allumer1LED(uint8_t numLED, uint32_t COLOR){
 void Init_LEDs(void){
 	int i;
 	tab[0]=0;
-	tab[11]=0xFFFFFFFF;
-	for(i=1;i<11;i++){
+	tab[17]=0xFFFFFFFF;
+	for(i=1;i<16;i++){
 	tab[i] = Eteint;
 	}
 }

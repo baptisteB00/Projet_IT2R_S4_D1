@@ -385,14 +385,14 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>detectLum.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\detectLum.c</FilePath>
-            </File>
-            <File>
               <FileName>adc_F4.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\adc_F4.c</FilePath>
+            </File>
+            <File>
+              <FileName>ControleLEDs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ControleLEDs.c</FilePath>
             </File>
           </Files>
         </Group>

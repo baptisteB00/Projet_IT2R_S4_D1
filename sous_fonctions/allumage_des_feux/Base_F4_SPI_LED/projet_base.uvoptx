@@ -234,8 +234,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\detectLum.c</PathWithFileName>
-      <FilenameWithoutPath>detectLum.c</FilenameWithoutPath>
+      <PathWithFileName>.\adc_F4.c</PathWithFileName>
+      <FilenameWithoutPath>adc_F4.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -246,8 +246,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\adc_F4.c</PathWithFileName>
-      <FilenameWithoutPath>adc_F4.c</FilenameWithoutPath>
+      <PathWithFileName>.\ControleLEDs.c</PathWithFileName>
+      <FilenameWithoutPath>ControleLEDs.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

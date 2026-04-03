@@ -28,7 +28,7 @@ void eteindre1LED(uint8_t numLED);
 osThreadId_t ID_T_PharesAvant, ID_T_Clignotants1, ID_T_PharesArriere, ID_T_Test;
 osMutexId_t ID_EnvoiSPI;
 
-uint32_t tab[62];
+uint32_t tab[18];
 
 void Init_SPI(void){
 	Driver_SPI1.Initialize(NULL);
@@ -67,7 +67,7 @@ int main (void){
 void T_PharesAvant(void){
 	
   while (1) {
-
+		/*
 		allumer1LED(25,BLANC_Fort);
 		allumer1LED(24,BLANC_Fort);
 		allumer1LED(23,BLANC_Fort);
@@ -79,22 +79,74 @@ void T_PharesAvant(void){
 		osMutexAcquire(ID_EnvoiSPI,osWaitForever);
 		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
 		osMutexRelease(ID_EnvoiSPI);
+		*/
+		osMutexAcquire(ID_EnvoiSPI,osWaitForever);
+		allumer1LED(1,BLANC_Fort);
+		allumer1LED(2,Eteint);
+		allumer1LED(3,Eteint);
+		allumer1LED(4,Eteint);
+		allumer1LED(5,BLANC_Fort);
+		allumer1LED(6,Eteint);
+		allumer1LED(7,Eteint);
+		allumer1LED(8,Eteint);
+		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
+		osMutexRelease(ID_EnvoiSPI);
+		osDelay(100);
 		
-		osThreadFlagsSet((osThreadId_t)ID_T_Clignotants1,0x08);
+		osMutexAcquire(ID_EnvoiSPI,osWaitForever);
+		allumer1LED(1,Eteint);
+		allumer1LED(2,BLANC_Fort);
+		allumer1LED(3,Eteint);
+		allumer1LED(4,Eteint);
+		allumer1LED(5,Eteint);
+		allumer1LED(6,BLANC_Fort);
+		allumer1LED(7,Eteint);
+		allumer1LED(8,Eteint);
+		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
+		osMutexRelease(ID_EnvoiSPI);
+		osDelay(100);
+		
+		osMutexAcquire(ID_EnvoiSPI,osWaitForever);
+		allumer1LED(1,Eteint);
+		allumer1LED(2,Eteint);
+		allumer1LED(3,BLANC_Fort);
+		allumer1LED(4,Eteint);
+		allumer1LED(5,Eteint);
+		allumer1LED(6,Eteint);
+		allumer1LED(7,BLANC_Fort);
+		allumer1LED(8,Eteint);
+		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
+		osMutexRelease(ID_EnvoiSPI);
+		osDelay(100);
+		
+		osMutexAcquire(ID_EnvoiSPI,osWaitForever);
+		allumer1LED(1,Eteint);
+		allumer1LED(2,Eteint);
+		allumer1LED(3,Eteint);
+		allumer1LED(4,BLANC_Fort);
+		allumer1LED(5,Eteint);
+		allumer1LED(6,Eteint);
+		allumer1LED(7,Eteint);
+		allumer1LED(8,BLANC_Fort);
+		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
+		osMutexRelease(ID_EnvoiSPI);
+		osDelay(100);
+		
+		//osThreadFlagsSet((osThreadId_t)ID_T_Clignotants1,0x08);
   }
 }
 
 void T_Clignotants1(void){
   while (1) {
-		osThreadFlagsWait (0x08,osFlagsWaitAll,osWaitForever);
+		//osThreadFlagsWait (0x08,osFlagsWaitAll,osWaitForever);
 		
-		allumer1LED(15,VERT);
-		allumer1LED(45,VERT); 
+		allumer1LED(0,VERT);
+		allumer1LED(9,VERT); 
 		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
 		osDelay(500);
 		
-		eteindre1LED(15);
-		eteindre1LED(45);
+		eteindre1LED(0);
+		eteindre1LED(9);
 		
 		osMutexAcquire(ID_EnvoiSPI,osWaitForever);
 		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
@@ -108,12 +160,8 @@ void T_PharesArriere(void){
 	
   while (1) {
 
-		allumer1LED(1,ROUGE);
-		allumer1LED(2,ROUGE);
-
-
-		allumer1LED(59,ROUGE);
-		allumer1LED(60,ROUGE);
+		allumer1LED(13,ROUGE);
+		allumer1LED(14,ROUGE);
 
 
 		osMutexAcquire(ID_EnvoiSPI,osWaitForever);
@@ -130,9 +178,9 @@ void eteindre1LED(uint8_t numLED){
 }
 void Init_LEDs(void){
 	int i;
-	tab[0]=0;
-	tab[61]=0xFFFFFFFF;
-	for(i=1;i<60;i++){
+	//tab[0]=0;
+	tab[17]=0xFFFFFFFF;
+	for(i=0;i<17;i++){
 	tab[i] = Eteint;
 	}
 }
