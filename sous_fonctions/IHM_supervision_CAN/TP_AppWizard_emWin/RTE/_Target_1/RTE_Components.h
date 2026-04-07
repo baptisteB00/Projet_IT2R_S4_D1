@@ -25,6 +25,8 @@
 #define RTE_Drivers_CAN3                /* Driver CAN3 */
 /* Keil::Device:STM32Cube Framework:Classic@1.3.0 */
 #define RTE_DEVICE_FRAMEWORK_CLASSIC
+/* Keil::Device:STM32Cube HAL:CAN@1.3.0 */
+#define RTE_DEVICE_HAL_CAN
 /* Keil::Device:STM32Cube HAL:Common@1.3.0 */
 #define RTE_DEVICE_HAL_COMMON
 /* Keil::Device:STM32Cube HAL:Cortex@1.3.0 */

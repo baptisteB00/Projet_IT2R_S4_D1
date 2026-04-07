@@ -1,7 +1,6 @@
-./objects/stm32746g_discovery_sdram.o: \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\BSP\STM32746G-Discovery\stm32746g_discovery_sdram.c \
+./objects/stm32f7xx_hal_can.o: \
+  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_can.c \
   RTE\_Target_1\Pre_Include_Global.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\BSP\STM32746G-Discovery\stm32746g_discovery_sdram.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal.h \
   RTE\Device\STM32F746NGHx\stm32f7xx_hal_conf.h \
   RTE\_Target_1\RTE_Components.h \

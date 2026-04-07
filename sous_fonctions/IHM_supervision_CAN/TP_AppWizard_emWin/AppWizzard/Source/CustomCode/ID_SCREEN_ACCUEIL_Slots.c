@@ -44,6 +44,7 @@ void ID_SCREEN_ACCUEIL__ID_BUTTON_00__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM *
   GUI_USE_PARA(hScreen);
   GUI_USE_PARA(pMsg);
   GUI_USE_PARA(pResult);
+	
 }
 
 /*********************************************************************
@@ -65,7 +66,9 @@ void ID_SCREEN_ACCUEIL__ID_BUTTON_00_Copy2__WM_NOTIFICATION_CLICKED(APPW_ACTION_
   GUI_USE_PARA(pAction);
   GUI_USE_PARA(hScreen);
   GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
+ 	GUI_USE_PARA(pResult);
+	
+		
 }
 
 /*********************************************************************

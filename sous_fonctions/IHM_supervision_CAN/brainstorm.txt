@@ -40,3 +40,9 @@ son / activation du son :
 panneau reconnu : 
 	image : le panneau 
 	chiffre : % de prediction
+
+
+stm32F746G-disco comme la F4
+Driver_CAN2.ObjectConfigure(0,ARM_CAN_OBJ_RX);				// Objet 0 du CAN2 pour r�ception
+Driver_CAN2.ObjectConfigure(2,ARM_CAN_OBJ_TX);				// Objet 2 du CAN2 pour �mission
+
