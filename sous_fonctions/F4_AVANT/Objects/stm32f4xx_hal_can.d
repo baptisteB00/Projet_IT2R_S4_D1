@@ -1,5 +1,5 @@
-./objects/stm32f4xx_hal_pwr.o: \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr.c \
+./objects/stm32f4xx_hal_can.o: \
+  C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_can.c \
   RTE\_Target_1\Pre_Include_Global.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   RTE\Device\STM32F407VGTx\stm32f4xx_hal_conf.h \

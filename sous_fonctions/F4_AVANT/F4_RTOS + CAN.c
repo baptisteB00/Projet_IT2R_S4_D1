@@ -2,6 +2,7 @@
 #include "Driver_USART.h"
 #include "Driver_SPI.h"                 // CMSIS Driver:SPI
 #include "Driver_I2C.h"                 // ::CMSIS Driver:I2C
+#include "Driver_CAN.h"                 // CMSIS Driver:CAN
 #include "stm32f4xx_hal.h"              // Keil::Device:STM32Cube HAL:Common
 #include "RTE_Components.h"
 #include "cmsis_os2.h"                  // ::CMSIS:RTOS2
@@ -15,10 +16,6 @@
 #define led_rouge 14
 #define led_bleue 15
 
-#define ATTENTE -1
-#define AUTORISE 1
-#define REFUSE 0
-
 # define VERT 0x00FF00F0
 # define ROUGE 0xFF0000F0
 # define BLEU 0x0000FFF0
@@ -27,7 +24,7 @@
 # define JAUNE 0xFF00FFF0
 
 # define Eteint 0x000000E0
-# define NbLEDs 60
+# define NbLEDs 16
 
 #define Son_Clignotants 0x01
 #define Son_Demarrage 0x02
@@ -43,11 +40,13 @@ extern ARM_DRIVER_USART Driver_USART2;
 extern ARM_DRIVER_USART Driver_USART3;
 extern ARM_DRIVER_SPI Driver_SPI1;
 extern ARM_DRIVER_I2C Driver_I2C1;
+extern ARM_DRIVER_CAN Driver_CAN1;
+extern ARM_DRIVER_CAN Driver_CAN2;
 
 // Variables partagées entre la fonction d'interruption interne au driver et le main
 // volatile car badge_complet est modifié dans le Callback (=>nécessité de stockage dans la ram)
 uint8_t buffer_rfid[14]; 
-uint32_t tab[17];
+uint32_t led[17];
 
 ADC_HandleTypeDef ADC1_Hand;
 
@@ -58,7 +57,6 @@ void Init_SPI(void);
 void Identification(unsigned char badge_maitre[], uint8_t recu[]);
 void allumer_led(int n);
 void eteindre_led(int n);
-void Init_LEDs(void);
 void Clignotants(void);
 void Phares(void);
 void allumer1LED(uint8_t numLED,uint32_t COLOR);
@@ -68,14 +66,15 @@ void Init_I2C(void);
 void write1byte(uint8_t addr, uint8_t reg, uint8_t val);
 uint8_t read1byte(uint8_t addr, uint8_t reg);
 uint16_t get_distance(uint8_t addr);
-
+void Init_CAN1(void);
+void Init_CAN2(void);
 
 //Tâches
-osThreadId_t tid_mySPI_Thread, ID_Allumer1, ID_RFID, ID_Phares, ID_Clignotants, ID_DFP, ID_Klaxon, ID_Sensorlight, ID_Radar_Droit, ID_Radar_Gauche;
+osThreadId_t tid_mySPI_Thread, ID_Allumer1, ID_RFID, ID_Phares, ID_Clignotants, ID_DFP, ID_Klaxon, ID_Sensorlight, ID_Radar_Droit, ID_Radar_Gauche, ID_CAN1, ID_CAN2;
 osMutexId_t MUT_EnvoiSPI, MUT_DFP, MUT_I2C;
 osSemaphoreId_t ADCSemaphore;
 
-void tacheRFID(void *arg){
+void tacheRFID(void){
 	unsigned char badge_maitre[12] = {0x33,0x43,0x30,0x30,0x34,0x44,0x39,0x35,0x44,0x32,0x33,0x36};
 	Driver_USART2.Receive(buffer_rfid, 14);
 	while (1) {
@@ -90,29 +89,29 @@ void Phares(void){
   while (1) {
 		flag = osThreadFlagsWait(0x06, osFlagsWaitAny, osWaitForever);
 		if (flag == (1<<1)){
-			allumer1LED(1,BLANC);
+			allumer1LED(5,BLANC);
 			allumer1LED(2,BLANC);
 			allumer1LED(3,BLANC);
 			allumer1LED(4,BLANC);
 
-			allumer1LED(5,BLANC);
+			allumer1LED(9,BLANC);
 			allumer1LED(6,BLANC);
 			allumer1LED(7,BLANC);
 			allumer1LED(8,BLANC);
 		}
-		else if (flag == (1<<2)){
-			eteindre1LED(1);
+		else {
+			eteindre1LED(5);
 			eteindre1LED(2);
 			eteindre1LED(3);
 			eteindre1LED(4);
 			
-			eteindre1LED(5);
+			eteindre1LED(9);
 			eteindre1LED(6);
 			eteindre1LED(7);
 			eteindre1LED(8);
 		}
 		osMutexAcquire(MUT_EnvoiSPI, osWaitForever);
-		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
+		Driver_SPI1.Send(led,(NbLEDs+1)*4);
 		osMutexRelease(MUT_EnvoiSPI);
   }
 }
@@ -122,30 +121,47 @@ void Clignotants(void){
   while (1) {
 		flag = osThreadFlagsWait (((1<<0)|(1<<1)),osFlagsWaitAny,osWaitForever);
 		if (flag == (1<<0)){
-			allumer1LED(0,VERT);
-			allumer1LED(9,VERT);
+			allumer1LED(1,VERT);
+			allumer1LED(10,VERT);
+			osMutexAcquire(MUT_EnvoiSPI, osWaitForever);
+			Driver_SPI1.Send(led,(NbLEDs+1)*4);
+			osMutexRelease(MUT_EnvoiSPI);
+			osDelay(500);
+			eteindre1LED(1);
+			eteindre1LED(10);
+			osMutexAcquire(MUT_EnvoiSPI, osWaitForever);
+			Driver_SPI1.Send(led,(NbLEDs+1)*4);
+			osMutexRelease(MUT_EnvoiSPI);
+			osDelay(500);
 		}
 		else if (flag == (1<<1)){
-			allumer1LED(0,ROUGE);
-			allumer1LED(9,ROUGE);
+			allumer1LED(1,ROUGE);
+			allumer1LED(10,ROUGE);
+			osMutexAcquire(MUT_EnvoiSPI, osWaitForever);
+			Driver_SPI1.Send(led,(NbLEDs+1)*4);
+			osMutexRelease(MUT_EnvoiSPI);
+			osDelay(500);
+			eteindre1LED(1);
+			eteindre1LED(10);
+			osMutexAcquire(MUT_EnvoiSPI, osWaitForever);
+			Driver_SPI1.Send(led,(NbLEDs+1)*4);
+			osMutexRelease(MUT_EnvoiSPI);
+			osDelay(500);
 		}
 		else if (flag == (1<<2)){
-			allumer1LED(0,BLANC);
-			allumer1LED(9,BLANC);
-			osThreadFlagsSet(ID_DFP, (1<<2));
+			allumer1LED(1,BLANC);
+			allumer1LED(16,BLANC);
+			osMutexAcquire(MUT_EnvoiSPI, osWaitForever);
+			Driver_SPI1.Send(led,(NbLEDs+1)*4);
+			osMutexRelease(MUT_EnvoiSPI);
+			osDelay(100);
+			eteindre1LED(1);
+			eteindre1LED(16);
+			osMutexAcquire(MUT_EnvoiSPI, osWaitForever);
+			Driver_SPI1.Send(led,(NbLEDs+1)*4);
+			osMutexRelease(MUT_EnvoiSPI);
+			osDelay(100);
 		}
-		osMutexAcquire(MUT_EnvoiSPI, osWaitForever);
-		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
-		osMutexRelease(MUT_EnvoiSPI);
-		osDelay(500);
-		
-		eteindre1LED(0);
-		eteindre1LED(9);
-		
-		osMutexAcquire(MUT_EnvoiSPI, osWaitForever);
-		Driver_SPI1.Send(tab,(NbLEDs+2)*4);
-		osMutexRelease(MUT_EnvoiSPI);
-		osDelay(500);
   }
 }
 
@@ -162,17 +178,20 @@ void DFP(void){
     osDelay(25);
 		while(1){
 			flag = osThreadFlagsWait(0xFFFF, osFlagsWaitAny, osWaitForever);
-			if (flag == (1<<0)){
-				sendDFCommand(0x03, 0x00, Son_Deverouillage);
-			}
-			else if(flag == (1<<1)){
-				sendDFCommand(0x03, 0x00, Son_Klaxon);
+			if (flag == (1<<1)){
+				sendDFCommand(0x03, 0x00, Son_Clignotants);
 			}
 			else if(flag == (1<<2)){
-				sendDFCommand(0x03, 0x00, Son_Clignotants);
+				sendDFCommand(0x03, 0x00, Son_Demarrage);
 			}
 			else if(flag == (1<<3)){
 				sendDFCommand(0x03, 0x00, Son_Radar);
+			}
+			else if(flag == (1<<4)){
+				sendDFCommand(0x03, 0x00, Son_Klaxon);
+			}
+			else if(flag == (1<<5)){
+				sendDFCommand(0x03, 0x00, Son_Deverouillage);
 			}
 		}
 }
@@ -183,7 +202,7 @@ void SensorLight(void){
 		HAL_ADC_Start(&ADC1_Hand);
 		while(HAL_ADC_PollForConversion(&ADC1_Hand, 1000) != HAL_OK);
 		valeur = HAL_ADC_GetValue(&ADC1_Hand);
-    if (valeur < 4095) {
+    if (valeur < 3000) {
 			osThreadFlagsSet(ID_Phares, (1<<1)); 
 		}
 		else{
@@ -201,7 +220,8 @@ void RadarDroit(void){
 			if ((distD < 25)){
 				//osThreadFlagsSet(ID_DFP, (1<<3));
 				allumer_led(led_rouge);
-				osDelay(distD*distD);
+				osThreadFlagsSet(ID_DFP, (1<<3));
+				osDelay(2*distD*distD);
 				eteindre_led(led_rouge);
 			}
 		}
@@ -218,11 +238,40 @@ void RadarGauche(void){
 			if ((distG < 25)){
 				//osThreadFlagsSet(ID_DFP, (1<<3));
 				allumer_led(led_verte);
-				osDelay(distG*distG);
+				osDelay(2*distG*distG);
 				eteindre_led(led_verte);
 			}
 		}
 		//osMutexRelease(MUT_I2C);
+	}
+}
+
+void TCAN1(void){
+	ARM_CAN_MSG_INFO	rx_msg_info;
+	uint8_t data_buf[8];
+	while(1){
+		Driver_CAN1.MessageRead(0, &rx_msg_info, data_buf, 5);
+		if (rx_msg_info.id == 0x001){
+			if (data_buf[0] == 0x01){
+				osThreadFlagsSet(ID_Clignotants, (1<<2));
+			}
+		}
+	}
+}
+
+void TCAN2(void){
+	ARM_CAN_MSG_INFO	tx_msg_info;
+	uint8_t data_buf[8];
+	for(int i = 0; i<8; i++) data_buf[i] = 0;
+	
+	tx_msg_info.id = 0x001;
+	tx_msg_info.rtr = 0;
+	tx_msg_info.dlc = 5;
+	data_buf[0] = 0x01;
+	
+	while(1){
+		Driver_CAN1.MessageSend(2, &tx_msg_info, data_buf, 5);
+		osDelay(100);
 	}
 }
 
@@ -234,7 +283,7 @@ void My_USART_Callback(unsigned int event) {
 }
 
 void EXTI0_IRQHandler(void) {
-		osThreadFlagsSet(ID_DFP, (1<<1));
+		osThreadFlagsSet(ID_DFP, (1<<4));
     EXTI->PR = EXTI_PR_PR0; // Acquittement de l'interruption matériellement
 }
 
@@ -257,21 +306,23 @@ int main(void) {
     NVIC_EnableIRQ(EXTI0_IRQn);   // Activer dans le NVIC
 	
 		ADC_Initialize(&ADC1_Hand,1);
-	
-		Init_LEDs();
     Init_UART();
 		Init_SPI();
 		HAL_Init();
 		Init_I2C();
-	
+		Init_CAN1();
+		
 		osKernelInitialize();
-	  ID_RFID = osThreadNew(tacheRFID, NULL, NULL);
+	
+	  ID_RFID = osThreadNew((osThreadId_t)tacheRFID, NULL, NULL);
 		ID_Phares = osThreadNew ((osThreadId_t)Phares, NULL, NULL);
 		ID_Clignotants = osThreadNew((osThreadId_t)Clignotants, NULL, NULL);
 		ID_DFP = osThreadNew((osThreadId_t)DFP, NULL, NULL);
 		ID_Sensorlight = osThreadNew((osThreadId_t)SensorLight, NULL, NULL);
 		ID_Radar_Gauche = osThreadNew((osThreadId_t)RadarGauche, NULL, NULL);
 		ID_Radar_Droit = osThreadNew((osThreadId_t)RadarDroit, NULL, NULL);
+		//ID_CAN1 = osThreadNew((osThreadId_t)TCAN1, NULL, NULL);
+		//ID_CAN2 = osThreadNew((osThreadId_t)TCAN2, NULL, NULL);
 		
 		
 		MUT_EnvoiSPI = osMutexNew(NULL);
@@ -325,6 +376,42 @@ void Init_I2C(void){
 //	Driver_I2C1.Control(	ARM_I2C_BUS_CLEAR,
 //							0 );
 }
+
+void Init_CAN1 (void) {
+    Driver_CAN1.Initialize(NULL,NULL);
+    Driver_CAN1.PowerControl(ARM_POWER_FULL);
+    Driver_CAN1.SetMode(ARM_CAN_MODE_INITIALIZATION);
+    Driver_CAN1.SetBitrate(
+        ARM_CAN_BITRATE_NOMINAL, // débit fixe
+        125000, // 125 kbits/s (LS)
+        ARM_CAN_BIT_PROP_SEG(5U) | // prop. seg = 5 TQ
+        ARM_CAN_BIT_PHASE_SEG1(1U) | // phase seg1 = 1 TQ
+        ARM_CAN_BIT_PHASE_SEG2(1U) | // phase seg2 = 1 TQ
+        ARM_CAN_BIT_SJW(1U) // Resync. Seg = 1 TQ
+    );
+    Driver_CAN1.ObjectConfigure(2U, ARM_CAN_OBJ_TX); // TX en emmission
+		Driver_CAN1.ObjectConfigure(0U, ARM_CAN_OBJ_RX); // RX en reception
+    //Driver_CAN1.SetMode(ARM_CAN_MODE_NORMAL);
+}
+
+void Init_CAN2(void)
+{	
+	Driver_CAN2.Initialize(NULL,NULL);
+	Driver_CAN2.PowerControl(ARM_POWER_FULL);
+	Driver_CAN2.SetMode(ARM_CAN_MODE_INITIALIZATION);
+	Driver_CAN2.SetBitrate(	ARM_CAN_BITRATE_NOMINAL, // débit fixe
+			125000, // 125 kbits/s (LS)
+			ARM_CAN_BIT_PROP_SEG(5U) | //prop. seg = 5 TQ
+			ARM_CAN_BIT_PHASE_SEG1(1U) | //phase seg1=1 TQ
+			ARM_CAN_BIT_PHASE_SEG2(1U) | //phase seg2=1 TQ
+			ARM_CAN_BIT_SJW(1U) // Resync. Seg = 1 TQ
+	);						
+	Driver_CAN2.ObjectConfigure(2U ,ARM_CAN_OBJ_TX); // TX en emmission
+	Driver_CAN2.ObjectConfigure(0U, ARM_CAN_OBJ_RX); // RX en reception
+	//Driver_CAN2.SetMode(ARM_CAN_MODE_NORMAL); // fin initialisation
+}
+
+
 //Badge
 void Identification(unsigned char chaine[], uint8_t recu[]) {
     int i, b = 0;
@@ -335,7 +422,7 @@ void Identification(unsigned char chaine[], uint8_t recu[]) {
 
     if (b == 12){
 			osThreadFlagsSet((osThreadId_t)ID_Clignotants, (1<<0));
-			osThreadFlagsSet((osThreadId_t)ID_DFP, (1<<0));
+			osThreadFlagsSet(ID_DFP, (1<<2));
 			eteindre_led(led_orange);
 			eteindre_led(led_rouge);
 			allumer_led(led_verte);
@@ -400,19 +487,12 @@ void eteindre_led(int n){
 }
 
 void allumer1LED(uint8_t numLED, uint32_t COLOR){
-	tab[numLED]=COLOR;
+	led[numLED]=COLOR;
 }
 
 void eteindre1LED(uint8_t numLED){
-	tab[numLED]=Eteint;
+	led[numLED]=Eteint;
 }
-
-void Init_LEDs(void){
-	for(int i=0;i<17;i++){
-	tab[i] = Eteint;
-	}
-}
-
 void write1byte(unsigned char capt_addr, unsigned char reg, unsigned char val) {
     uint8_t tab[2];
 		

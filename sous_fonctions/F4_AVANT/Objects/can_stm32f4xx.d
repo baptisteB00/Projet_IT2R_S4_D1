@@ -1,6 +1,11 @@
-./objects/stm32f4xx_hal_pwr.o: \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr.c \
+./objects/can_stm32f4xx.o: \
+  C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\CMSIS\Driver\CAN_STM32F4xx.c \
   RTE\_Target_1\Pre_Include_Global.h \
+  C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\CMSIS\Driver\CAN_STM32F4xx.h \
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Core\Include\cmsis_compiler.h \
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Core\Include\cmsis_armclang.h \
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Driver\Include\Driver_CAN.h \
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Driver\Include\Driver_Common.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   RTE\Device\STM32F407VGTx\stm32f4xx_hal_conf.h \
   RTE\_Target_1\RTE_Components.h \
@@ -29,4 +34,5 @@
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr_ex.h \
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spi.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_usart.h
+  C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_usart.h \
+  RTE\Device\STM32F407VGTx\RTE_Device.h
