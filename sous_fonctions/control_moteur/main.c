@@ -1,14 +1,28 @@
-#include "LPC17xx.h"                    // Device header
+/*------------------------------------
+Projet IT2R 2026 S4
+Auteurs : Alexandre Ho, Lucas VINCENTI
+
+repris sur base Baptiste Bousset
+--------------------------------------
+Programme acquisition Trames Bluetooth
+-------------------------------------*/
+
+#include "Driver_I2C.h"
+#include "Board_GLCD.h"
+#include "GLCD_Config.h"
+#include "stdio.h"
+#include "RTE_Components.h"
+#include  CMSIS_device_header
 #include "Board_ADC.h"                  // Board Support:A/D Converter
 
-
+#include "Driver_USART.h"  
 /*................PIN....................
 P0.23 => moteur de la voiture
 P2.25 => servo moteur de direction
 .......................................*/
 
 volatile uint32_t VAL_PWM_SERVO = 37500;
-
+extern ARM_DRIVER_USART Driver_USART1;
 enum sens {AVANT, ARRIERE, STOP_HAUT,STOP_BAS,DESACTIVE};
 enum return_vit{vitOK,vitERROR};
 
@@ -18,9 +32,15 @@ void init_servo_moteur();
 enum return_vit control_vitesse(uint8_t val_vitesse);
 void direction_roue(int16_t angle);
 void control_hacheur(enum sens direction );
+void USART_Init(void);
+#include "Board_GLCD.h"
+#include "GLCD_Config.h"
 
+extern GLCD_FONT GLCD_Font_16x24;
 int main(void){
-	
+	char cmd_bluth[3],tab[32],tab2[32];
+	int i;
+	USART_Init();
   init_moteur_motricite();
 	
 	init_servo_moteur();
@@ -31,8 +51,23 @@ int main(void){
 	
 	direction_roue(90);
 	control_hacheur(AVANT);
+	
+	GLCD_Initialize();// Initialisation du LCD
+	GLCD_ClearScreen();
+	GLCD_SetFont(&GLCD_Font_16x24);
 
 	while (1){
+		
+		Driver_USART1.Receive(cmd_bluth, 3);
+		while (Driver_USART1.GetRxCount() == 0);
+		sprintf(tab," %02X  %02X ",cmd_bluth[0],cmd_bluth[1]);
+		sprintf(tab2," %02X",cmd_bluth[2]);
+		
+		
+		GLCD_DrawString(10,10,tab);
+		GLCD_DrawString(10,50,tab2);
+		for ( i =0; i>200;i++);
+
 		ADC_StartConversion();
 		while(ADC_ConversionDone()!=0);
 		float valeur = ADC_GetValue();
@@ -45,12 +80,29 @@ int main(void){
 		}else if ((LPC_GPIO1->FIOPIN & (1<<25))==1<<25){
 			control_hacheur(AVANT);
 		}
-		
+		/*Avencer =  octect 0 :00   octect 1 :7F
+			Reculer =  octect 0 :00   octect 1 :80
+			Tourner à droite =  octect 0 :7F   octect 1 :7F
+			Tourner à gauche =  octect 0 :80   octect 1 :7F
+		*/
 	}
 }
 
-void init_servo_moteur()
-{
+void USART_Init(void){
+		Driver_USART1.Initialize(NULL);
+	Driver_USART1.PowerControl(ARM_POWER_FULL);
+	Driver_USART1.Control(	ARM_USART_MODE_ASYNCHRONOUS |
+							ARM_USART_DATA_BITS_8		|
+							ARM_USART_STOP_BITS_1		|
+							ARM_USART_PARITY_NONE		|
+							ARM_USART_FLOW_CONTROL_NONE,
+							115200);
+	Driver_USART1.Control(ARM_USART_CONTROL_TX,1);
+	Driver_USART1.Control(ARM_USART_CONTROL_RX,1);
+
+}	
+
+void init_servo_moteur(){
 		LPC_GPIO3->FIODIR3|=(1<<2); // active la sortie utiliser par l'interuption du timer
 		// Validation des 4 TIMERS   
 		LPC_SC->PCONP = LPC_SC->PCONP | 0x00C00006;   
@@ -84,8 +136,8 @@ void TIMER0_IRQHandler(void){
 }
 
 
-void init_moteur_motricite(void)
-{
+
+void init_moteur_motricite(void){
 LPC_SC->PCONP |= 0x00000040; // Enable PWM1
 LPC_PINCON->PINSEL7 |= (3<<18); // Broches P3.25
 LPC_PWM1->PR = 0; // Prescaler
@@ -110,9 +162,7 @@ IN B : P0.17
 */
 
 void control_hacheur(enum sens direction) {
-
-    switch (direction) {
-    
+    switch (direction){
         case AVANT:
             // Active les 4 quadrants (pins 18 et 19) et IN A : HAUT (pin 16)
             LPC_GPIO0->FIOSET = (1<<19) | (1<<18) | (1<<16);
@@ -150,7 +200,6 @@ void control_hacheur(enum sens direction) {
 
 //valeur entre 0 et 100
 enum return_vit control_vitesse(uint8_t val_vitesse){
-	
 	if(val_vitesse<=100 && val_vitesse>=0){
 	
 	LPC_PWM1->MR2 = (uint16_t)(val_vitesse * 2499.0)/100.0; //*24.99 car MR0 entre 0 et 2499
