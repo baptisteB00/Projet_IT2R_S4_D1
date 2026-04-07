@@ -142,7 +142,9 @@ void thread_EmissionCAN(void *argument)
 	DataCoordonnee Coordonnee;
 	ARM_CAN_MSG_INFO tx_msg_info;
 	char *ptr;
-	uint8_t data_buff[8];
+	uint8_t data_buff_temps[8];
+	uint8_t data_buff_latitude[8];
+	uint8_t data_buff_longitude[8];
 	uint16_t i = 0;
 	
 	while(1)
@@ -152,22 +154,30 @@ void thread_EmissionCAN(void *argument)
 		tx_msg_info.id = ARM_CAN_STANDARD_ID(0x0F6);
 		tx_msg_info.rtr = 0;
 		
-//		for (i=0; i<15; i++)
-//		{
-//			data_buff[i] = *Coordonnee.temps + i;
-//		}
+		data_buff_temps[0] = *Coordonnee.temps;
+		data_buff_temps[1] = *(Coordonnee.temps+1);
+		data_buff_temps[2] = *(Coordonnee.temps+2);
+		data_buff_temps[3] = *(Coordonnee.temps+3);
+		data_buff_temps[4] = *(Coordonnee.temps+4);
+		data_buff_temps[5] = *(Coordonnee.temps+5);
 		
-		data_buff[8] = *Coordonnee.temps;
+		data_buff_latitude[0]= *Coordonnee.latitude;
+		data_buff_latitude[1]= *(Coordonnee.latitude+1);
+		data_buff_latitude[2]= *(Coordonnee.latitude+2);
+		data_buff_latitude[3]= *(Coordonnee.latitude+3);
+		
+		data_buff_longitude[0]=*Coordonnee.longitude;
+		data_buff_longitude[1]=*(Coordonnee.longitude+1);
+		data_buff_longitude[2]=*(Coordonnee.longitude+2);
+		data_buff_longitude[3]=*(Coordonnee.longitude+3);
+		data_buff_longitude[4]=*(Coordonnee.longitude+4);
 		
 		
-		
-		
-//		ptr = &Coordonnee.temps;
-//		data_buff[0] = *ptr;
-//		data_buff[1] = *Coordonnee.latitude;
-//		data_buff[2] = *Coordonnee.longitude;
-		
-		Driver_CAN2.MessageSend(1, &tx_msg_info, data_buff, 2); 
+		Driver_CAN2.MessageSend(1, &tx_msg_info, data_buff_temps, 6); 
+//		osDelay(10);
+//		Driver_CAN2.MessageSend(1, &tx_msg_info, data_buff_latitude, 4);
+////		osDelay(10);
+//		Driver_CAN2.MessageSend(1, &tx_msg_info, data_buff_longitude, 5);
 		
 		osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);
 		osDelay(100);
