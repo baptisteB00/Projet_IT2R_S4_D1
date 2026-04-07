@@ -107,4 +107,6 @@
   C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Include\rtx_def.h \
   RTE\CMSIS\RTX_Config.h \
   C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Driver\Include\Driver_CAN.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Driver\Include\Driver_Common.h
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Driver\Include\Driver_Common.h \
+  AppWizzard\Source\Generated\Resource.h \
+  C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.17.0\Board\Board_LED.h

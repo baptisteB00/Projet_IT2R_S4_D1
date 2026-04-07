@@ -32,12 +32,10 @@ Using Keil project: C:\Etudiants\git\Projet_IT2R_S4_D1\sous_fonctions\IHM_superv
 C:\Etudiants\git\Projet_IT2R_S4_D1\sous_fonctions\IHM_supervision_CAN\TP_AppWizard_emWin\AppWizzard\Config\gui_config.h already exists
 No changes to project, .uvprojx not modified.
 GUI_All.c generated successfully.
-main.c(107): error: use of undeclared identifier 'ID_VAR_Phare'
-  107 |                                 APPW_GetVarData( ID_VAR_Phare, 0);
-      |                                                  ^
-1 error generated.
 compiling main.c...
-".\Objects\TP_AppWizard_emWin.axf" - 1 Error(s), 0 Warning(s).
+linking...
+Program Size: Code=229968 RO-data=481400 RW-data=8560 ZI-data=4248712  
+".\Objects\TP_AppWizard_emWin.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -61,6 +59,7 @@ Package Vendor: Keil
                 https://www.keil.com/pack/Keil.MDK-Middleware.7.17.0.pack
                 Keil::MDK-Middleware@7.17.0
                 Middleware for Keil MDK-Professional and MDK-Plus
+   * Component: LED Version: 1.0.0
    * Component: Touchscreen Version: 1.0.1
 
 Package Vendor: Keil
@@ -79,6 +78,7 @@ Package Vendor: Keil
    * Component: Basic I/O Version: 1.1.1
    * Component: SDRAM Version: 1.1.1
    * Component: Touch Screen Version: 1.1.1
+   * Component: LED Version: 1.1.1
    * Component: Touchscreen Version: 1.1.1
    * Component: emWin LCD Variant: RGB IF Version: 1.1.1
    * Component: CAN Version: 1.15.0
@@ -147,6 +147,9 @@ Package Vendor: Keil
       Source file:   Template/svc_user.c
       Source file:   Template/Semaphore.c
 
+   * Component: Board Support:LED(API)@1.0.0
+      Include file:  Board/Board_LED.h
+
    * Component: Board Support:Touchscreen(API)@1.0.1
       Include file:  Board/Board_Touch.h
 
@@ -176,6 +179,9 @@ Package Vendor: Keil
       Include file:  Drivers/BSP/STM32746G-Discovery/stm32746g_discovery_ts.h
       Source file:   Drivers/BSP/STM32746G-Discovery/stm32746g_discovery_ts.c
       Source file:   Drivers/BSP/Components/ft5336/ft5336.c
+
+   * Component: Keil::Board Support&STM32F746G-Discovery:LED@1.1.1
+      Source file:   MDK/Boards/ST/STM32F746G_Discovery/Common/LED_746G_Discovery.c
 
    * Component: Keil::Board Support&STM32F746G-Discovery:Touchscreen@1.1.1
       Source file:   MDK/Boards/ST/STM32F746G_Discovery/Common/Touch_746G_Discovery.c
@@ -262,8 +268,7 @@ Package Vendor: Keil
 
    * Component: Segger::Graphics&MDK-Pro:Input Device:Touchscreen@6.32.3
       Source file:   emWin/Sample/GUI_X/GUI_X_Touch.c
-Target not created.
-Build Time Elapsed:  00:00:00
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

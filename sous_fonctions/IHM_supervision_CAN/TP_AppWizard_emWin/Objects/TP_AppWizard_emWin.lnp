@@ -51,6 +51,7 @@
 ".\objects\stm32746g_discovery_ts.o"
 ".\objects\lcd_x.o"
 ".\objects\touch_746g_discovery.o"
+".\objects\led_746g_discovery.o"
 ".\objects\irq_armv7m.o"
 ".\objects\rtx_delay.o"
 ".\objects\rtx_evflags.o"

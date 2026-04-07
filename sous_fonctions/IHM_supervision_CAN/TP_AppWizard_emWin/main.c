@@ -4,6 +4,11 @@
 #include "stm32f7xx_hal.h"              // Device:STM32Cube HAL:Common
 #include "Driver_CAN.h"                 // CMSIS Driver:CAN
 
+#include "GUI.h"        // Nécessaire pour GUI_Lock() / GUI_Unlock()
+#include "Resource.h"
+
+#include "stdio.h"
+#include "Board_LED.h"                  // Board Support:LED
 
 extern void configuration_overclock(void);
 extern int Init_GUIThread (void);
@@ -13,6 +18,7 @@ void CANthreadR(void);
 
 osThreadId_t id_CANthreadR;
 
+osThreadAttr_t config = {.priority=osPriorityRealtime7};
 
 void init_CAN1();
 typedef struct {
@@ -38,7 +44,7 @@ int main(void)
 	**********************************/
 	
 	//Initialiser vos périphériques ici
-	
+	LED_Initialize();
 	/**********************************
 	Fin Initialisation périphérique
 	**********************************/
@@ -50,7 +56,7 @@ int main(void)
 	#ifdef RTE_CMSIS_RTOS2
 	  /* Initialize CMSIS-RTOS2 */
 	  osKernelInitialize ();
-		id_CANthreadR = osThreadNew((osThreadFunc_t)CANthreadR, NULL, NULL);
+		id_CANthreadR = osThreadNew((osThreadFunc_t)CANthreadR, NULL, &config);
 	  /* Create thread functions that start executing */
 		Init_GUIThread();
 		
@@ -92,6 +98,7 @@ void CANthreadR(void)
 {
 	ARM_CAN_MSG_INFO rx_msg_info;
 	uint8_t data_buf[8];
+	char text[25];
 
 	init_CAN1();
 	
@@ -101,14 +108,32 @@ void CANthreadR(void)
 		//.............
 		
 		Driver_CAN1.MessageRead(0, &rx_msg_info, data_buf, 8); // 8 data max
+		GUI_Lock();
 		switch ( rx_msg_info.id){
 			case 296:
+				sprintf(text,"%d",data_buf[0]);
+			APPW_SetText(ID_SCREEN_FEUX,ID_RTEXT_2,text);
 				if (data_buf[0]>50){
-				APPW_GetVarData( ID_VAR_Phare, 0);
+					LED_Off(0);
+				APPW_SetVarData(ID_Var_ClignoG, 1);
+				}else{
+					LED_On(0);
+				APPW_SetVarData(ID_Var_ClignoG, 0);
 				}
 
+					 int val = APPW_GetVarData(ID_VAR_Phare, 0); 
+
+    // 2. Préparer la structure du message CAN
+    ARM_CAN_MSG_INFO tx_msg_info;
+
+    tx_msg_info.id = ARM_CAN_STANDARD_ID(rx_msg_info.id); 
+		tx_msg_info.rtr = 0;
+
+    Driver_CAN1.MessageSend(2, &tx_msg_info, data_buf, 4);
+				
 			 break;
 		}
+		GUI_Unlock(); // Débloque la tâche GUI
 
 	}		
 }
