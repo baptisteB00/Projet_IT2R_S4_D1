@@ -143,6 +143,7 @@ void thread_EmissionCAN(void *argument)
 	ARM_CAN_MSG_INFO tx_msg_info;
 	char *ptr;
 	uint8_t data_buff[8];
+	uint16_t i = 0;
 	
 	while(1)
 	{
@@ -150,14 +151,23 @@ void thread_EmissionCAN(void *argument)
 		
 		tx_msg_info.id = ARM_CAN_STANDARD_ID(0x0F6);
 		tx_msg_info.rtr = 0;
-			
-		data_buff[0] = *Coordonnee.temps;
+		
+//		for (i=0; i<15; i++)
+//		{
+//			data_buff[i] = *Coordonnee.temps + i;
+//		}
+		
+		data_buff[8] = *Coordonnee.temps;
+		
+		
+		
+		
 //		ptr = &Coordonnee.temps;
 //		data_buff[0] = *ptr;
 //		data_buff[1] = *Coordonnee.latitude;
 //		data_buff[2] = *Coordonnee.longitude;
 		
-		Driver_CAN2.MessageSend(1, &tx_msg_info, data_buff, 5); 
+		Driver_CAN2.MessageSend(1, &tx_msg_info, data_buff, 2); 
 		
 		osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);
 		osDelay(100);
