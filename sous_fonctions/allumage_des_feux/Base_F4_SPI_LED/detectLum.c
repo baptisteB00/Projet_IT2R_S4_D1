@@ -30,7 +30,9 @@ int main(void){
 	Init_LEDs();
 	
 	while(1){
-			
+		HAL_ADC_Start(&ADC1_HAND);
+		HAL_ADC_GetValue(&ADC1_HAND);
+		
 		allumer1LED(2,BLANC_Fort);
 		allumer1LED(3,Eteint);
 		allumer1LED(4,Eteint);
