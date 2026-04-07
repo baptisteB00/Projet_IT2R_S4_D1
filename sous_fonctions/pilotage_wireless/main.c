@@ -111,22 +111,36 @@ void Thread_Nunchuck (void const* argument){
 void Thread_Bluetooth (void const* argument){
 	(void)argument;
 	char data_transmit[2]; // [ Direction --> -128° to 127° , vitesse --> -128 to 127], reversible avec valeur negative
-	while (1){
-		
-		if (((data[0] > 0x80)&(data[0] < 0x90)) & ((data[1] > 0x65)&(data[1] < 0x90))){ // Neutre
+//	while (1){
+//		if ((data[0] == 0x85)& (data[1]== 0x7C )) { // Neutre
+//			data_transmit[0] = 0x00;
+//			data_transmit[1] = 0x00;
+//		}
+//		// Vitesse
+//		if(data[1] > 0x7B){data_transmit[1] = 0x7F;}//Avance
+//		else if(data[1] < 0x7B){data_transmit[1] = 0x80;}//Recule
+//		//Direction
+//		if (((data[0] > 0x62)&(data[0] < 0x95))){data_transmit[0] = 0x00 ;} //devant
+//		else if (data[0] < 0x62){data_transmit[0] = 0x80;}// Droite
+//		else if (data[0] > 0x95){data_transmit[0] = 0x7F;}// Gauche
+//		
+//		Driver_USART1.Send(data_transmit, 2);	
+//		while(Driver_USART1.GetTxCount() < 2);		
+//		osDelay(2000);
+//	}
+		while (1){
+		if ((data[0] == 0x85)& (data[1]== 0x7C )) { // Neutre
 			data_transmit[0] = 0x00;
 			data_transmit[1] = 0x00;
 		}
-		else if (((data[0] > 0x62)&(data[0] < 0x95))){ // si joystick est dans l'axe
-			if(data[1] > 0xC8){ // Avance droit
-				data_transmit[0] = 0x00 ;
-				data_transmit[1] = 0x7F;
-			}
-			else if(data[1] < 0xAF){ // Recule droit
-				data_transmit[0] = 0x00;
-				data_transmit[1] = 0x80;
-			}
-		}			
+		// Vitesse
+		if(data[1] > 0x80){data_transmit[1] = 0x7F;}//Avance
+		else if(data[1] < 0x6F){data_transmit[1] = 0x80;}//Recule
+		//Direction
+		if (((data[0] > 0x62)&(data[0] < 0x95))){data_transmit[0] = 0x00 ;} //devant
+		else if (data[0] < 0x62){data_transmit[0] = 0x80;}// Droite
+		else if (data[0] > 0x95){data_transmit[0] = 0x7F;}// Gauche
+		
 		Driver_USART1.Send(data_transmit, 2);	
 		while(Driver_USART1.GetTxCount() < 2);		
 		osDelay(2000);
