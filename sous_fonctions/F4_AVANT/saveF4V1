@@ -99,9 +99,6 @@ void Phares(void){
 			allumer1LED(6,BLANC);
 			allumer1LED(7,BLANC);
 			allumer1LED(8,BLANC);
-			
-			allumer1LED(13,ROUGE);
-			allumer1LED(14,ROUGE);
 		}
 		else {
 			eteindre1LED(1);
@@ -113,9 +110,6 @@ void Phares(void){
 			eteindre1LED(6);
 			eteindre1LED(7);
 			eteindre1LED(8);
-			
-			eteindre1LED(13);
-			eteindre1LED(14);
 		}
 		osMutexAcquire(MUT_EnvoiSPI, osWaitForever);
 		Driver_SPI1.Send(led,(NbLEDs+1)*4);
@@ -363,7 +357,6 @@ int main(void) {
 }
 
 // Initialisation
-
 void Init_UART(void) {
     // Initialisation de l'UART2 via le Driver CMSIS
     Driver_USART2.Initialize(My_USART_Callback); // Liaison du Callback
