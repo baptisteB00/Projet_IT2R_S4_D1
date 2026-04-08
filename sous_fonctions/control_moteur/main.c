@@ -48,7 +48,7 @@ int main(void){
 	ADC_Initialize();
 	
 	LPC_PWM1->MR2 =500;
-	
+
 	direction_roue(90);
 	control_hacheur(AVANT);
 	
@@ -80,6 +80,16 @@ int main(void){
 		}else if ((LPC_GPIO1->FIOPIN & (1<<25))==1<<25){
 			control_hacheur(AVANT);
 		}
+		// Controle Direction
+		if(cmd_bluth[1] == 0x7F){direction_roue(0);}
+		else if(cmd_bluth[1] == 0x80){direction_roue(60);}
+		else{direction_roue(30);}
+		// Controle Vitesse
+		if (cmd_bluth[2]== 0x7F){control_hacheur(AVANT);}
+		else if (cmd_bluth[2]== 0x80){control_hacheur(ARRIERE);}
+		else{control_hacheur(DESACTIVE);}
+		
+		
 		/*Avencer =  octect 0 :00   octect 1 :7F
 			Reculer =  octect 0 :00   octect 1 :80
 			Tourner à droite =  octect 0 :7F   octect 1 :7F

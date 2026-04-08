@@ -115,14 +115,14 @@ void Thread_Bluetooth (void const* argument){
 		while (1){
 		data_transmit[2] = data[5] & 0x03; // Lecture BP
 			
-
-		if ((data[0] == 0x85)& (data[1]== 0x7C )) { // Neutre
+		if(data[1] > 0x80){data_transmit[1] = 0x7F;}//Avance
+		else if(data[1] < 0x6F){data_transmit[1] = 0x80;}//Recule
+		// Neutre
+		else 
+		{
 			data_transmit[0] = 0x00;
 			data_transmit[1] = 0x00;
 		}
-		// Vitesse
-		if(data[1] > 0x80){data_transmit[1] = 0x7F;}//Avance
-		else if(data[1] < 0x6F){data_transmit[1] = 0x80;}//Recule
 		//Direction
 		if (((data[0] > 0x62)&(data[0] < 0x95))){data_transmit[0] = 0x00 ;} //devant
 		else if (data[0] < 0x62){data_transmit[0] = 0x80;}// Droite
@@ -130,7 +130,7 @@ void Thread_Bluetooth (void const* argument){
 		
 		Driver_USART1.Send(data_transmit,3);	
 		while(Driver_USART1.GetTxCount() < 2);		
-		osDelay(100);
+		osDelay(200);
 	}
 }
 

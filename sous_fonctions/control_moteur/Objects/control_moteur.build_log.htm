@@ -27,23 +27,23 @@ Project File Date:  04/07/2026
 <h2>Output:</h2>
 *** Using Compiler 'V6.24', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Rebuild target 'Target_1'
+compiling system_LPC17xx.c...
+compiling GLCD_Fonts.c...
 C:/Keil_v5/ARM/PACK/Keil/LPC1700_DFP/3.0.0/Boards/Keil/MCB1700/Common/ADC_MCB1700.c(155): warning: variable 'adstat' set but not used [-Wunused-but-set-variable]
   155 |   volatile uint32_t adstat;
       |                     ^
 1 warning generated.
 compiling ADC_MCB1700.c...
-compiling GLCD_Fonts.c...
 compiling GPIO_LPC17xx.c...
-compiling system_LPC17xx.c...
-compiling PIN_LPC17xx.c...
 assembling startup_LPC17xx.s...
-compiling GLCD_MCB1700.c...
-compiling main.c...
-compiling GPDMA_LPC17xx.c...
 compiling SSP_LPC17xx.c...
 compiling UART_LPC17xx.c...
+compiling PIN_LPC17xx.c...
+compiling GLCD_MCB1700.c...
+compiling GPDMA_LPC17xx.c...
+compiling main.c...
 linking...
-Program Size: Code=31072 RO-data=6804 RW-data=12 ZI-data=908  
+Program Size: Code=31164 RO-data=6804 RW-data=12 ZI-data=908  
 ".\Objects\control_moteur.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -106,10 +106,10 @@ Package Vendor: Keil
       Source file:   Boards/Keil/MCB1700/Common/ADC_MCB1700.c
 
    * Component: Keil::Board Support&MCB1700:Graphic LCD@1.0.0
-      Source file:   Boards/Keil/MCB1700/Common/GLCD_Fonts.c
-      Source file:   Boards/Keil/MCB1700/Common/GLCD_MCB1700.c
-      Include file:  Boards/Keil/MCB1700/Common/GLCD_Fonts.h
       Include file:  Boards/Keil/MCB1700/Common/GLCD_Config.h
+      Source file:   Boards/Keil/MCB1700/Common/GLCD_Fonts.c
+      Include file:  Boards/Keil/MCB1700/Common/GLCD_Fonts.h
+      Source file:   Boards/Keil/MCB1700/Common/GLCD_MCB1700.c
 
    * Component: Keil::CMSIS Driver:SPI:SSP@2.10.0
       Source file:   RTE_Driver/SSP_LPC17xx.c
@@ -122,18 +122,18 @@ Package Vendor: Keil
       Include file:  RTE_Driver/GPDMA_LPC17xx.h
 
    * Component: Keil::Device:GPIO@1.1.0
-      Include file:  RTE_Driver/GPIO_LPC17xx.h
       Source file:   RTE_Driver/GPIO_LPC17xx.c
+      Include file:  RTE_Driver/GPIO_LPC17xx.h
 
    * Component: Keil::Device:PIN@1.0.0
-      Source file:   RTE_Driver/PIN_LPC17xx.c
       Include file:  RTE_Driver/PIN_LPC17xx.h
+      Source file:   RTE_Driver/PIN_LPC17xx.c
 
    * Component: Keil::Device:Startup@1.0.0
+      Include file:  RTE_Driver/Config/RTE_Device.h
       Source file:   Device/Source/system_LPC17xx.c
       Include file:  Device/Include/LPC17xx.h
       Source file:   Device/Source/ARM/startup_LPC17xx.s
-      Include file:  RTE_Driver/Config/RTE_Device.h
 Build Time Elapsed:  00:00:00
 </pre>
 </body>
