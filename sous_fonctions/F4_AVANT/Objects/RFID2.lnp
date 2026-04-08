@@ -1,6 +1,6 @@
 --cpu=Cortex-M4.fp.sp
 ".\objects\adc_f4.o"
-".\objects\f4_rtos + can.o"
+".\objects\f4_rtos 2 + can.o"
 ".\objects\irq_armv7m.o"
 ".\objects\rtx_delay.o"
 ".\objects\rtx_evflags.o"

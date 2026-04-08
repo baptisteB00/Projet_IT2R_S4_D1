@@ -391,9 +391,9 @@
               <FilePath>.\adc_F4.c</FilePath>
             </File>
             <File>
-              <FileName>F4_RTOS + CAN.c</FileName>
+              <FileName>F4_RTOS 2 + CAN.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\F4_RTOS + CAN.c</FilePath>
+              <FilePath>.\F4_RTOS 2 + CAN.c</FilePath>
             </File>
           </Files>
         </Group>
