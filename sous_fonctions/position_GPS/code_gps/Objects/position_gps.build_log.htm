@@ -22,23 +22,38 @@ Dialog DLL:      TCM.DLL V1.56.6.0
  
 <h2>Project:</h2>
 C:\Etudiants\Git\Projet_IT2R_S4_D1\sous_fonctions\position_GPS\code_gps\position_gps.uvprojx
-Project File Date:  04/07/2026
+Project File Date:  04/08/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.24', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Rebuild target 'Target_1'
-compiling rtx_evr.c...
-main.c(99): warning: flag '0' results in undefined behavior with 's' conversion specifier [-Wformat]
-   99 |                 sprintf(val, "%06s", MessageRecu.data);         // On prend les 6 premiers caract<E8>re (<E0> partir du $)
+compiling RTX_Config.c...
+main.c(104): warning: flag '0' results in undefined behavior with 's' conversion specifier [-Wformat]
+  104 |                 sprintf(val, "%06s", MessageRecu.data);         // On prend les 6 premiers caract<E8>re (<E0> partir du $)
       |                               ~^~~
-main.c(108): warning: passing 'uint8_t[100]' (aka 'unsigned char[100]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-  108 |                         Coordonnee.temps = strtok(MessageRecu.data, separateur);
+main.c(105): warning: flag '0' results in undefined behavior with 's' conversion specifier [-Wformat]
+  105 |                 sprintf(val2, "%06s", MessageRecu.data+1);              
+      |                                ~^~~
+main.c(116): warning: passing 'uint8_t[100]' (aka 'unsigned char[100]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  116 |                         Coordonnee.temps = strtok(MessageRecu.data, separateur);
       |                                                   ^~~~~~~~~~~~~~~~
 C:\Keil_v5\ARM\ARMCLANG\bin\..\include\string.h(280): note: passing argument to parameter here
   280 | extern _ARMABI char *strtok(char * __restrict /*s1*/, const char * __restrict /*s2*/) __attribute__((__nonnull__(2)));
       |                                                     ^
-main.c(123): warning: passing 'uint8_t[100]' (aka 'unsigned char[100]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-  123 |                         Coordonnee.temps = strtok(MessageRecu.data, separateur);
+main.c(131): warning: passing 'uint8_t[100]' (aka 'unsigned char[100]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  131 |                         Coordonnee.temps = strtok(MessageRecu.data, separateur);
+      |                                                   ^~~~~~~~~~~~~~~~
+C:\Keil_v5\ARM\ARMCLANG\bin\..\include\string.h(280): note: passing argument to parameter here
+  280 | extern _ARMABI char *strtok(char * __restrict /*s1*/, const char * __restrict /*s2*/) __attribute__((__nonnull__(2)));
+      |                                                     ^
+main.c(145): warning: passing 'uint8_t[100]' (aka 'unsigned char[100]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  145 |                         Coordonnee.temps = strtok(MessageRecu.data, separateur);
+      |                                                   ^~~~~~~~~~~~~~~~
+C:\Keil_v5\ARM\ARMCLANG\bin\..\include\string.h(280): note: passing argument to parameter here
+  280 | extern _ARMABI char *strtok(char * __restrict /*s1*/, const char * __restrict /*s2*/) __attribute__((__nonnull__(2)));
+      |                                                     ^
+main.c(160): warning: passing 'uint8_t[100]' (aka 'unsigned char[100]') to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  160 |                         Coordonnee.temps = strtok(MessageRecu.data, separateur);
       |                                                   ^~~~~~~~~~~~~~~~
 C:\Keil_v5\ARM\ARMCLANG\bin\..\include\string.h(280): note: passing argument to parameter here
   280 | extern _ARMABI char *strtok(char * __restrict /*s1*/, const char * __restrict /*s2*/) __attribute__((__nonnull__(2)));
@@ -52,58 +67,61 @@ main.c(87): warning: unused variable 'val_GPRMC' [-Wunused-variable]
 main.c(88): warning: unused variable 'val_GPGGA' [-Wunused-variable]
    88 |         char val_GPGGA[10];
       |              ^~~~~~~~~
-main.c(99): warning: 'sprintf' will always overflow; destination buffer has size 6, but format string expands to at least 7 [-Wformat-overflow]
-   99 |                 sprintf(val, "%06s", MessageRecu.data);         // On prend les 6 premiers caract<E8>re (<E0> partir du $)
+main.c(104): warning: 'sprintf' will always overflow; destination buffer has size 6, but format string expands to at least 7 [-Wformat-overflow]
+  104 |                 sprintf(val, "%06s", MessageRecu.data);         // On prend les 6 premiers caract<E8>re (<E0> partir du $)
       |                 ^
-main.c(144): warning: unused variable 'ptr' [-Wunused-variable]
-  144 |         char *ptr;
+main.c(105): warning: 'sprintf' will always overflow; destination buffer has size 6, but format string expands to at least 7 [-Wformat-overflow]
+  105 |                 sprintf(val2, "%06s", MessageRecu.data+1);              
+      |                 ^
+main.c(182): warning: unused variable 'ptr' [-Wunused-variable]
+  182 |         char *ptr;
       |               ^~~
-main.c(148): warning: unused variable 'i' [-Wunused-variable]
-  148 |         uint16_t i = 0;
+main.c(186): warning: unused variable 'i' [-Wunused-variable]
+  186 |         uint16_t i = 0;
       |                  ^
-main.c(327): warning: unused parameter 'obj_idx' [-Wunused-parameter]
-  327 | void myCAN2_callback(uint32_t obj_idx, uint32_t event)
+main.c(365): warning: unused parameter 'obj_idx' [-Wunused-parameter]
+  365 | void myCAN2_callback(uint32_t obj_idx, uint32_t event)
       |                               ^
-10 warnings generated.
+14 warnings generated.
 compiling main.c...
-compiling rtx_mutex.c...
 assembling irq_armv7m.S...
-compiling rtx_evflags.c...
-compiling rtx_system.c...
-compiling rtx_lib.c...
-compiling RTX_Config.c...
-compiling os_systick.c...
-compiling rtx_delay.c...
 compiling rtx_kernel.c...
-compiling rtx_mempool.c...
-compiling rtx_memory.c...
-compiling rtx_timer.c...
-compiling CAN_STM32F4xx.c...
-compiling rtx_msgqueue.c...
 compiling rtx_semaphore.c...
-compiling USART_STM32F4xx.c...
+compiling rtx_msgqueue.c...
+compiling os_systick.c...
+compiling rtx_evflags.c...
+compiling rtx_evr.c...
+compiling rtx_memory.c...
+compiling rtx_delay.c...
+compiling rtx_system.c...
 compiling EventRecorder.c...
+compiling rtx_timer.c...
+compiling rtx_lib.c...
+compiling rtx_mempool.c...
+compiling USART_STM32F4xx.c...
+compiling rtx_mutex.c...
+compiling CAN_STM32F4xx.c...
 compiling rtx_thread.c...
 compiling stm32f4xx_hal.c...
+compiling stm32f4xx_hal_gpio.c...
+compiling stm32f4xx_hal_can.c...
 compiling stm32f4xx_hal_pwr_ex.c...
+compiling stm32f4xx_hal_cortex.c...
+compiling stm32f4xx_hal_dma.c...
 C:/Keil_v5/ARM/PACK/Keil/STM32F4xx_DFP/2.17.1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c(379): warning: unused parameter 'Regulator' [-Wunused-parameter]
   379 | void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SLEEPEntry)
       |                                      ^
 1 warning generated.
 compiling stm32f4xx_hal_pwr.c...
-compiling stm32f4xx_hal_gpio.c...
-compiling stm32f4xx_hal_dma.c...
-compiling stm32f4xx_hal_cortex.c...
 compiling stm32f4xx_hal_rcc.c...
-compiling stm32f4xx_hal_can.c...
-assembling startup_stm32f407xx.s...
 compiling stm32f4xx_hal_dma_ex.c...
-compiling system_stm32f4xx.c...
+assembling startup_stm32f407xx.s...
 compiling stm32f4xx_hal_rcc_ex.c...
+compiling system_stm32f4xx.c...
 compiling stm32f4xx_hal_usart.c...
 linking...
-Program Size: Code=49100 RO-data=1528 RW-data=280 ZI-data=38032  
-".\Objects\position_gps.axf" - 0 Error(s), 11 Warning(s).
+Program Size: Code=49344 RO-data=1528 RW-data=280 ZI-data=55264  
+".\Objects\position_gps.axf" - 0 Error(s), 15 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -164,9 +182,9 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS-View:Event Recorder&DAP@1.6.0
-      Include file:  EventRecorder/Include/EventRecorder.h
       Include file:  EventRecorder/Config/EventRecorderConf.h
       Source file:   EventRecorder/Source/EventRecorder.c
+      Include file:  EventRecorder/Include/EventRecorder.h
 
    * Component: ARM::CMSIS:CORE@6.2.0
 
@@ -176,30 +194,30 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:RTOS2:Keil RTX5&Source@5.9.0
       Include file:  Include/rtx_os.h
       Include file:  Config/RTX_Config.h
-      Source file:   Template/main.c
-      Source file:   Config/RTX_Config.c
-      Source file:   Source/rtx_thread.c
-      Source file:   Source/rtx_evflags.c
-      Source file:   Template/MemPool.c
-      Source file:   Source/rtx_evr.c
-      Source file:   Template/Events.c
-      Source file:   Source/rtx_mempool.c
-      Source file:   Source/rtx_memory.c
-      Source file:   Template/Thread.c
       Source file:   Source/rtx_msgqueue.c
-      Source file:   Template/Timer.c
-      Source file:   Source/rtx_mutex.c
-      Source file:   Source/rtx_lib.c
-      Source file:   Template/svc_user.c
-      Source file:   Source/rtx_delay.c
-      Source file:   Template/MsgQueue.c
-      Source file:   Source/rtx_timer.c
+      Source file:   Template/main.c
       Source file:   Template/Semaphore.c
-      Source file:   Source/rtx_kernel.c
-      Source file:   Source/rtx_semaphore.c
+      Source file:   Template/MsgQueue.c
+      Source file:   Template/Timer.c
+      Source file:   Source/rtx_evflags.c
+      Source file:   Source/rtx_memory.c
       Source file:   Template/Mutex.c
+      Source file:   Source/rtx_semaphore.c
+      Source file:   Source/rtx_kernel.c
+      Source file:   Template/svc_user.c
+      Source file:   Source/rtx_timer.c
+      Source file:   Source/rtx_mutex.c
+      Source file:   Source/rtx_thread.c
       Source file:   Source/rtx_system.c
+      Source file:   Template/Thread.c
+      Source file:   Source/rtx_evr.c
+      Source file:   Source/rtx_mempool.c
+      Source file:   Source/rtx_delay.c
+      Source file:   Config/RTX_Config.c
+      Source file:   Source/rtx_lib.c
       Source file:   Source/GCC/irq_armv7m.S
+      Source file:   Template/Events.c
+      Source file:   Template/MemPool.c
 
    * Component: CMSIS Driver:CAN(API)@1.3.0
       Include file:  CMSIS/Driver/Include/Driver_CAN.h
@@ -222,14 +240,14 @@ Package Vendor: Keil
       Source file:   CMSIS/Driver/USART_STM32F4xx.c
 
    * Component: Keil::Device:STM32Cube Framework:Classic@1.8.1
-      Source file:   MDK/Templates_LL/Src/main.c
-      Include file:  MDK/Templates_LL/Inc/main.h
-      Source file:   MDK/Templates/Src/stm32f4xx_it.c
-      Include file:  MDK/Templates/Inc/stm32f4xx_it.h
-      Source file:   MDK/Templates/Src/main.c
-      Include file:  MDK/Templates/Inc/stm32f4xx_hal_conf.h
       Include file:  CMSIS/Driver/Config/RTE_Device.h
       Source file:   MDK/Templates/Src/stm32f4xx_hal_msp.c
+      Include file:  MDK/Templates_LL/Inc/main.h
+      Include file:  MDK/Templates/Inc/stm32f4xx_hal_conf.h
+      Source file:   MDK/Templates_LL/Src/main.c
+      Include file:  MDK/Templates/Inc/stm32f4xx_it.h
+      Source file:   MDK/Templates/Src/main.c
+      Source file:   MDK/Templates/Src/stm32f4xx_it.c
       Include file:  MDK/Templates/Inc/main.h
 
    * Component: Keil::Device:STM32Cube HAL:CAN@1.8.1
@@ -250,8 +268,8 @@ Package Vendor: Keil
       Source file:   Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c
 
    * Component: Keil::Device:STM32Cube HAL:PWR@1.8.1
-      Source file:   Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
       Source file:   Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
+      Source file:   Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
 
    * Component: Keil::Device:STM32Cube HAL:RCC@1.8.1
       Source file:   Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
@@ -261,12 +279,12 @@ Package Vendor: Keil
       Source file:   Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_usart.c
 
    * Component: Keil::Device:Startup@2.6.3
-      Source file:   MDK/Device/Source/ARM/STM32F40xxx_41xxx_OPT.s
       Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f407xx.s
       Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
+      Source file:   MDK/Device/Source/ARM/STM32F40xxx_41xxx_OPT.s
       Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
       Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

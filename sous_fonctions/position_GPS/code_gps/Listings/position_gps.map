@@ -5377,79 +5377,79 @@ Image Symbol Table
     svcRtxThreadNew                          0x0800b1d1   Thumb Code  1130  rtx_thread.o(.text.svcRtxThreadNew)
     [Anonymous Symbol]                       0x0800b1d0   Section        0  rtx_thread.o(.text.svcRtxThreadNew)
     [Anonymous Symbol]                       0x0800b63c   Section        0  main.o(.text.thread_Decode)
-    [Anonymous Symbol]                       0x0800b778   Section        0  main.o(.text.thread_EmissionCAN)
-    [Anonymous Symbol]                       0x0800b850   Section        0  main.o(.text.thread_ReceptUART)
-    user_perthread_libspace_free             0x0800b8ad   Thumb Code    72  rtx_lib.o(.text.user_perthread_libspace_free)
-    [Anonymous Symbol]                       0x0800b8ac   Section        0  rtx_lib.o(.text.user_perthread_libspace_free)
-    xPSR_InitVal                             0x0800b8f5   Thumb Code    18  rtx_thread.o(.text.xPSR_InitVal)
-    [Anonymous Symbol]                       0x0800b8f4   Section        0  rtx_thread.o(.text.xPSR_InitVal)
-    CL$$btod_d2e                             0x0800b906   Section       62  btod.o(CL$$btod_d2e)
-    CL$$btod_d2e_denorm_low                  0x0800b944   Section       70  btod.o(CL$$btod_d2e_denorm_low)
-    CL$$btod_d2e_norm_op1                    0x0800b98a   Section       96  btod.o(CL$$btod_d2e_norm_op1)
-    CL$$btod_div_common                      0x0800b9ec   Section      824  btod.o(CL$$btod_div_common)
-    CL$$btod_e2e                             0x0800bd24   Section      220  btod.o(CL$$btod_e2e)
-    CL$$btod_ediv                            0x0800be00   Section       42  btod.o(CL$$btod_ediv)
-    CL$$btod_emul                            0x0800be2a   Section       42  btod.o(CL$$btod_emul)
-    CL$$btod_mult_common                     0x0800be54   Section      580  btod.o(CL$$btod_mult_common)
-    i.__ARM_fpclassify                       0x0800c098   Section        0  fpclassify.o(i.__ARM_fpclassify)
-    i._is_digit                              0x0800c0c8   Section        0  __printf_wp.o(i._is_digit)
-    locale$$code                             0x0800c0d8   Section       44  lc_numeric_c.o(locale$$code)
-    locale$$code                             0x0800c104   Section       44  lc_ctype_c.o(locale$$code)
-    $v0                                      0x0800c130   Number         0  fpinit.o(x$fpl$fpinit)
-    x$fpl$fpinit                             0x0800c130   Section       26  fpinit.o(x$fpl$fpinit)
-    $v0                                      0x0800c14a   Number         0  printf1.o(x$fpl$printf1)
-    x$fpl$printf1                            0x0800c14a   Section        4  printf1.o(x$fpl$printf1)
-    $v0                                      0x0800c14e   Number         0  printf2.o(x$fpl$printf2)
-    x$fpl$printf2                            0x0800c14e   Section        4  printf2.o(x$fpl$printf2)
-    x$fpl$usenofp                            0x0800c152   Section        0  usenofp.o(x$fpl$usenofp)
-    initial_mbstate                          0x0800c154   Data           8  _printf_wctomb.o(.constdata)
-    .constdata                               0x0800c154   Section        8  _printf_wctomb.o(.constdata)
-    uc_hextab                                0x0800c15c   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
-    .constdata                               0x0800c15c   Section       40  _printf_hex_int_ll_ptr.o(.constdata)
-    lc_hextab                                0x0800c170   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
-    maptable                                 0x0800c184   Data          17  __printf_flags_ss_wp.o(.constdata)
-    .constdata                               0x0800c184   Section       17  __printf_flags_ss_wp.o(.constdata)
-    lc_hextab                                0x0800c195   Data          19  _printf_fp_hex.o(.constdata)
-    .constdata                               0x0800c195   Section       38  _printf_fp_hex.o(.constdata)
-    uc_hextab                                0x0800c1a8   Data          19  _printf_fp_hex.o(.constdata)
-    tenpwrs_x                                0x0800c1bc   Data          60  bigflt0.o(.constdata)
-    .constdata                               0x0800c1bc   Section      148  bigflt0.o(.constdata)
-    tenpwrs_i                                0x0800c1f8   Data          64  bigflt0.o(.constdata)
-    __tagsym$$used.4                         0x0800c250   Number         0  rtx_lib.o(.rodata)
-    __tagsym$$used.5                         0x0800c2c0   Number         0  rtx_lib.o(.rodata)
-    __tagsym$$used.0                         0x0800c384   Number         0  eventrecorder.o(.rodata.EventRecorderInfo)
-    USART3_Resources                         0x0800c39c   Data          52  usart_stm32f4xx.o(.rodata.USART3_Resources)
-    [Anonymous Symbol]                       0x0800c39c   Section        0  usart_stm32f4xx.o(.rodata.USART3_Resources)
-    USART3_rx                                0x0800c3d0   Data          12  usart_stm32f4xx.o(.rodata.USART3_rx)
-    [Anonymous Symbol]                       0x0800c3d0   Section        0  usart_stm32f4xx.o(.rodata.USART3_rx)
-    USART3_tx                                0x0800c3dc   Data          12  usart_stm32f4xx.o(.rodata.USART3_tx)
-    [Anonymous Symbol]                       0x0800c3dc   Section        0  usart_stm32f4xx.o(.rodata.USART3_tx)
-    os_idle_thread_attr                      0x0800c3ec   Data          36  rtx_lib.o(.rodata.os_idle_thread_attr)
-    [Anonymous Symbol]                       0x0800c3ec   Section        0  rtx_lib.o(.rodata.os_idle_thread_attr)
-    os_timer_mq_attr                         0x0800c410   Data          24  rtx_lib.o(.rodata.os_timer_mq_attr)
-    [Anonymous Symbol]                       0x0800c410   Section        0  rtx_lib.o(.rodata.os_timer_mq_attr)
-    os_timer_thread_attr                     0x0800c428   Data          36  rtx_lib.o(.rodata.os_timer_thread_attr)
-    [Anonymous Symbol]                       0x0800c428   Section        0  rtx_lib.o(.rodata.os_timer_thread_attr)
-    ptr_CANx                                 0x0800c44c   Data          12  can_stm32f4xx.o(.rodata.ptr_CANx)
-    [Anonymous Symbol]                       0x0800c44c   Section        0  can_stm32f4xx.o(.rodata.ptr_CANx)
-    .L.str                                   0x0800c458   Data           2  main.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x0800c458   Section        0  main.o(.rodata.str1.1)
-    .L.str.3                                 0x0800c45a   Data           7  main.o(.rodata.str1.1)
-    .L.str.2                                 0x0800c461   Data           7  main.o(.rodata.str1.1)
-    .L.str.1                                 0x0800c468   Data           5  main.o(.rodata.str1.1)
-    .L.str                                   0x0800c46d   Data          11  rtx_kernel.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x0800c46d   Section        0  rtx_kernel.o(.rodata.str1.1)
-    locale$$data                             0x0800c498   Section       28  lc_numeric_c.o(locale$$data)
-    __lcnum_c_name                           0x0800c49c   Data           2  lc_numeric_c.o(locale$$data)
-    __lcnum_c_start                          0x0800c4a4   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_point                          0x0800c4b0   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_thousands                      0x0800c4b2   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_grouping                       0x0800c4b3   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_end                            0x0800c4b4   Data           0  lc_numeric_c.o(locale$$data)
-    locale$$data                             0x0800c4b4   Section      272  lc_ctype_c.o(locale$$data)
-    __lcctype_c_name                         0x0800c4b8   Data           2  lc_ctype_c.o(locale$$data)
-    __lcctype_c_start                        0x0800c4c0   Data           0  lc_ctype_c.o(locale$$data)
-    __lcctype_c_end                          0x0800c5c4   Data           0  lc_ctype_c.o(locale$$data)
+    [Anonymous Symbol]                       0x0800b86c   Section        0  main.o(.text.thread_EmissionCAN)
+    [Anonymous Symbol]                       0x0800b944   Section        0  main.o(.text.thread_ReceptUART)
+    user_perthread_libspace_free             0x0800b9a1   Thumb Code    72  rtx_lib.o(.text.user_perthread_libspace_free)
+    [Anonymous Symbol]                       0x0800b9a0   Section        0  rtx_lib.o(.text.user_perthread_libspace_free)
+    xPSR_InitVal                             0x0800b9e9   Thumb Code    18  rtx_thread.o(.text.xPSR_InitVal)
+    [Anonymous Symbol]                       0x0800b9e8   Section        0  rtx_thread.o(.text.xPSR_InitVal)
+    CL$$btod_d2e                             0x0800b9fa   Section       62  btod.o(CL$$btod_d2e)
+    CL$$btod_d2e_denorm_low                  0x0800ba38   Section       70  btod.o(CL$$btod_d2e_denorm_low)
+    CL$$btod_d2e_norm_op1                    0x0800ba7e   Section       96  btod.o(CL$$btod_d2e_norm_op1)
+    CL$$btod_div_common                      0x0800bae0   Section      824  btod.o(CL$$btod_div_common)
+    CL$$btod_e2e                             0x0800be18   Section      220  btod.o(CL$$btod_e2e)
+    CL$$btod_ediv                            0x0800bef4   Section       42  btod.o(CL$$btod_ediv)
+    CL$$btod_emul                            0x0800bf1e   Section       42  btod.o(CL$$btod_emul)
+    CL$$btod_mult_common                     0x0800bf48   Section      580  btod.o(CL$$btod_mult_common)
+    i.__ARM_fpclassify                       0x0800c18c   Section        0  fpclassify.o(i.__ARM_fpclassify)
+    i._is_digit                              0x0800c1bc   Section        0  __printf_wp.o(i._is_digit)
+    locale$$code                             0x0800c1cc   Section       44  lc_numeric_c.o(locale$$code)
+    locale$$code                             0x0800c1f8   Section       44  lc_ctype_c.o(locale$$code)
+    $v0                                      0x0800c224   Number         0  fpinit.o(x$fpl$fpinit)
+    x$fpl$fpinit                             0x0800c224   Section       26  fpinit.o(x$fpl$fpinit)
+    $v0                                      0x0800c23e   Number         0  printf1.o(x$fpl$printf1)
+    x$fpl$printf1                            0x0800c23e   Section        4  printf1.o(x$fpl$printf1)
+    $v0                                      0x0800c242   Number         0  printf2.o(x$fpl$printf2)
+    x$fpl$printf2                            0x0800c242   Section        4  printf2.o(x$fpl$printf2)
+    x$fpl$usenofp                            0x0800c246   Section        0  usenofp.o(x$fpl$usenofp)
+    initial_mbstate                          0x0800c248   Data           8  _printf_wctomb.o(.constdata)
+    .constdata                               0x0800c248   Section        8  _printf_wctomb.o(.constdata)
+    uc_hextab                                0x0800c250   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
+    .constdata                               0x0800c250   Section       40  _printf_hex_int_ll_ptr.o(.constdata)
+    lc_hextab                                0x0800c264   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
+    maptable                                 0x0800c278   Data          17  __printf_flags_ss_wp.o(.constdata)
+    .constdata                               0x0800c278   Section       17  __printf_flags_ss_wp.o(.constdata)
+    lc_hextab                                0x0800c289   Data          19  _printf_fp_hex.o(.constdata)
+    .constdata                               0x0800c289   Section       38  _printf_fp_hex.o(.constdata)
+    uc_hextab                                0x0800c29c   Data          19  _printf_fp_hex.o(.constdata)
+    tenpwrs_x                                0x0800c2b0   Data          60  bigflt0.o(.constdata)
+    .constdata                               0x0800c2b0   Section      148  bigflt0.o(.constdata)
+    tenpwrs_i                                0x0800c2ec   Data          64  bigflt0.o(.constdata)
+    __tagsym$$used.4                         0x0800c344   Number         0  rtx_lib.o(.rodata)
+    __tagsym$$used.5                         0x0800c3b4   Number         0  rtx_lib.o(.rodata)
+    __tagsym$$used.0                         0x0800c478   Number         0  eventrecorder.o(.rodata.EventRecorderInfo)
+    USART3_Resources                         0x0800c490   Data          52  usart_stm32f4xx.o(.rodata.USART3_Resources)
+    [Anonymous Symbol]                       0x0800c490   Section        0  usart_stm32f4xx.o(.rodata.USART3_Resources)
+    USART3_rx                                0x0800c4c4   Data          12  usart_stm32f4xx.o(.rodata.USART3_rx)
+    [Anonymous Symbol]                       0x0800c4c4   Section        0  usart_stm32f4xx.o(.rodata.USART3_rx)
+    USART3_tx                                0x0800c4d0   Data          12  usart_stm32f4xx.o(.rodata.USART3_tx)
+    [Anonymous Symbol]                       0x0800c4d0   Section        0  usart_stm32f4xx.o(.rodata.USART3_tx)
+    os_idle_thread_attr                      0x0800c4e0   Data          36  rtx_lib.o(.rodata.os_idle_thread_attr)
+    [Anonymous Symbol]                       0x0800c4e0   Section        0  rtx_lib.o(.rodata.os_idle_thread_attr)
+    os_timer_mq_attr                         0x0800c504   Data          24  rtx_lib.o(.rodata.os_timer_mq_attr)
+    [Anonymous Symbol]                       0x0800c504   Section        0  rtx_lib.o(.rodata.os_timer_mq_attr)
+    os_timer_thread_attr                     0x0800c51c   Data          36  rtx_lib.o(.rodata.os_timer_thread_attr)
+    [Anonymous Symbol]                       0x0800c51c   Section        0  rtx_lib.o(.rodata.os_timer_thread_attr)
+    ptr_CANx                                 0x0800c540   Data          12  can_stm32f4xx.o(.rodata.ptr_CANx)
+    [Anonymous Symbol]                       0x0800c540   Section        0  can_stm32f4xx.o(.rodata.ptr_CANx)
+    .L.str                                   0x0800c54c   Data           2  main.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x0800c54c   Section        0  main.o(.rodata.str1.1)
+    .L.str.3                                 0x0800c54e   Data           7  main.o(.rodata.str1.1)
+    .L.str.2                                 0x0800c555   Data           7  main.o(.rodata.str1.1)
+    .L.str.1                                 0x0800c55c   Data           5  main.o(.rodata.str1.1)
+    .L.str                                   0x0800c561   Data          11  rtx_kernel.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x0800c561   Section        0  rtx_kernel.o(.rodata.str1.1)
+    locale$$data                             0x0800c58c   Section       28  lc_numeric_c.o(locale$$data)
+    __lcnum_c_name                           0x0800c590   Data           2  lc_numeric_c.o(locale$$data)
+    __lcnum_c_start                          0x0800c598   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_point                          0x0800c5a4   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_thousands                      0x0800c5a6   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_grouping                       0x0800c5a7   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_end                            0x0800c5a8   Data           0  lc_numeric_c.o(locale$$data)
+    locale$$data                             0x0800c5a8   Section      272  lc_ctype_c.o(locale$$data)
+    __lcctype_c_name                         0x0800c5ac   Data           2  lc_ctype_c.o(locale$$data)
+    __lcctype_c_start                        0x0800c5b4   Data           0  lc_ctype_c.o(locale$$data)
+    __lcctype_c_end                          0x0800c6b8   Data           0  lc_ctype_c.o(locale$$data)
     _strtok_saves1                           0x20000000   Data           4  strtok.o(.data)
     .data                                    0x20000000   Section        4  strtok.o(.data)
     .bss                                     0x20000140   Section       96  libspace.o(.bss)
@@ -5473,30 +5473,30 @@ Image Symbol Table
     EventStatus                              0x20000700   Data          36  eventrecorder.o(.bss.noinit)
     os_isr_queue                             0x20000728   Data          64  rtx_lib.o(.bss.os)
     [Anonymous Symbol]                       0x20000728   Section        0  rtx_lib.o(.bss.os)
-    os_mem                                   0x20000768   Data       32768  rtx_lib.o(.bss.os)
-    PendST                                   0x20008768   Data           1  os_systick.o(.bss.os)
-    [Anonymous Symbol]                       0x20008768   Section        0  os_systick.o(.bss.os)
-    os_libspace_id                           0x2000876c   Data          16  rtx_lib.o(.bss.os.libspace)
-    [Anonymous Symbol]                       0x2000876c   Section        0  rtx_lib.o(.bss.os.libspace)
-    os_libspace                              0x2000877c   Data         480  rtx_lib.o(.bss.os.libspace)
-    os_timer_mq_cb                           0x2000895c   Data          52  rtx_lib.o(.bss.os.msgqueue.cb)
-    [Anonymous Symbol]                       0x2000895c   Section        0  rtx_lib.o(.bss.os.msgqueue.cb)
-    os_timer_mq_data                         0x20008990   Data          80  rtx_lib.o(.bss.os.msgqueue.mem)
-    [Anonymous Symbol]                       0x20008990   Section        0  rtx_lib.o(.bss.os.msgqueue.mem)
-    os_idle_thread_cb                        0x200089e0   Data          80  rtx_lib.o(.bss.os.thread.cb)
-    [Anonymous Symbol]                       0x200089e0   Section        0  rtx_lib.o(.bss.os.thread.cb)
-    os_timer_thread_cb                       0x20008a30   Data          80  rtx_lib.o(.bss.os.thread.cb)
-    os_idle_thread_stack                     0x20008a80   Data         800  rtx_lib.o(.bss.os.thread.idle.stack)
-    [Anonymous Symbol]                       0x20008a80   Section        0  rtx_lib.o(.bss.os.thread.idle.stack)
-    os_timer_thread_stack                    0x20008da0   Data         512  rtx_lib.o(.bss.os.thread.timer.stack)
-    [Anonymous Symbol]                       0x20008da0   Section        0  rtx_lib.o(.bss.os.thread.timer.stack)
-    os_kernel_is_active.os_kernel_active     0x20008fa0   Data           1  rtx_lib.o(.bss.os_kernel_is_active.os_kernel_active)
-    [Anonymous Symbol]                       0x20008fa0   Section        0  rtx_lib.o(.bss.os_kernel_is_active.os_kernel_active)
-    Heap_Mem                                 0x20008fa8   Data         512  startup_stm32f407xx.o(HEAP)
-    HEAP                                     0x20008fa8   Section      512  startup_stm32f407xx.o(HEAP)
-    Stack_Mem                                0x200091a8   Data        1024  startup_stm32f407xx.o(STACK)
-    STACK                                    0x200091a8   Section     1024  startup_stm32f407xx.o(STACK)
-    __initial_sp                             0x200095a8   Data           0  startup_stm32f407xx.o(STACK)
+    os_mem                                   0x20000768   Data       50000  rtx_lib.o(.bss.os)
+    PendST                                   0x2000cab8   Data           1  os_systick.o(.bss.os)
+    [Anonymous Symbol]                       0x2000cab8   Section        0  os_systick.o(.bss.os)
+    os_libspace_id                           0x2000cabc   Data          16  rtx_lib.o(.bss.os.libspace)
+    [Anonymous Symbol]                       0x2000cabc   Section        0  rtx_lib.o(.bss.os.libspace)
+    os_libspace                              0x2000cacc   Data         480  rtx_lib.o(.bss.os.libspace)
+    os_timer_mq_cb                           0x2000ccac   Data          52  rtx_lib.o(.bss.os.msgqueue.cb)
+    [Anonymous Symbol]                       0x2000ccac   Section        0  rtx_lib.o(.bss.os.msgqueue.cb)
+    os_timer_mq_data                         0x2000cce0   Data          80  rtx_lib.o(.bss.os.msgqueue.mem)
+    [Anonymous Symbol]                       0x2000cce0   Section        0  rtx_lib.o(.bss.os.msgqueue.mem)
+    os_idle_thread_cb                        0x2000cd30   Data          80  rtx_lib.o(.bss.os.thread.cb)
+    [Anonymous Symbol]                       0x2000cd30   Section        0  rtx_lib.o(.bss.os.thread.cb)
+    os_timer_thread_cb                       0x2000cd80   Data          80  rtx_lib.o(.bss.os.thread.cb)
+    os_idle_thread_stack                     0x2000cdd0   Data         800  rtx_lib.o(.bss.os.thread.idle.stack)
+    [Anonymous Symbol]                       0x2000cdd0   Section        0  rtx_lib.o(.bss.os.thread.idle.stack)
+    os_timer_thread_stack                    0x2000d0f0   Data         512  rtx_lib.o(.bss.os.thread.timer.stack)
+    [Anonymous Symbol]                       0x2000d0f0   Section        0  rtx_lib.o(.bss.os.thread.timer.stack)
+    os_kernel_is_active.os_kernel_active     0x2000d2f0   Data           1  rtx_lib.o(.bss.os_kernel_is_active.os_kernel_active)
+    [Anonymous Symbol]                       0x2000d2f0   Section        0  rtx_lib.o(.bss.os_kernel_is_active.os_kernel_active)
+    Heap_Mem                                 0x2000d2f8   Data         512  startup_stm32f407xx.o(HEAP)
+    HEAP                                     0x2000d2f8   Section      512  startup_stm32f407xx.o(HEAP)
+    Stack_Mem                                0x2000d4f8   Data        1024  startup_stm32f407xx.o(STACK)
+    STACK                                    0x2000d4f8   Section     1024  startup_stm32f407xx.o(STACK)
+    __initial_sp                             0x2000d8f8   Data           0  startup_stm32f407xx.o(STACK)
     FPCCR                                    0xe000ef34   Number         0  irq_armv7m.o ABSOLUTE
 
     Global Symbols
@@ -5936,38 +5936,38 @@ Image Symbol Table
     osThreadFlagsSet                         0x0800a01d   Thumb Code    94  rtx_thread.o(.text.osThreadFlagsSet)
     osThreadFlagsWait                        0x0800a07d   Thumb Code   114  rtx_thread.o(.text.osThreadFlagsWait)
     osThreadNew                              0x0800a0f1   Thumb Code   114  rtx_thread.o(.text.osThreadNew)
-    thread_Decode                            0x0800b63d   Thumb Code   314  main.o(.text.thread_Decode)
-    thread_EmissionCAN                       0x0800b779   Thumb Code   216  main.o(.text.thread_EmissionCAN)
-    thread_ReceptUART                        0x0800b851   Thumb Code    90  main.o(.text.thread_ReceptUART)
-    _btod_d2e                                0x0800b907   Thumb Code    62  btod.o(CL$$btod_d2e)
-    _d2e_denorm_low                          0x0800b945   Thumb Code    70  btod.o(CL$$btod_d2e_denorm_low)
-    _d2e_norm_op1                            0x0800b98b   Thumb Code    96  btod.o(CL$$btod_d2e_norm_op1)
-    __btod_div_common                        0x0800b9ed   Thumb Code   696  btod.o(CL$$btod_div_common)
-    _e2e                                     0x0800bd25   Thumb Code   220  btod.o(CL$$btod_e2e)
-    _btod_ediv                               0x0800be01   Thumb Code    42  btod.o(CL$$btod_ediv)
-    _btod_emul                               0x0800be2b   Thumb Code    42  btod.o(CL$$btod_emul)
-    __btod_mult_common                       0x0800be55   Thumb Code   580  btod.o(CL$$btod_mult_common)
-    __ARM_fpclassify                         0x0800c099   Thumb Code    48  fpclassify.o(i.__ARM_fpclassify)
-    _is_digit                                0x0800c0c9   Thumb Code    14  __printf_wp.o(i._is_digit)
-    _get_lc_numeric                          0x0800c0d9   Thumb Code    44  lc_numeric_c.o(locale$$code)
-    _get_lc_ctype                            0x0800c105   Thumb Code    44  lc_ctype_c.o(locale$$code)
-    $Super$$_fp_init                         0x0800c131   Thumb Code    26  fpinit.o(x$fpl$fpinit)
-    __fplib_config_fpu_vfp                   0x0800c149   Thumb Code     0  fpinit.o(x$fpl$fpinit)
-    __fplib_config_pureend_doubles           0x0800c149   Thumb Code     0  fpinit.o(x$fpl$fpinit)
-    _printf_fp_dec                           0x0800c14b   Thumb Code     4  printf1.o(x$fpl$printf1)
-    _printf_fp_hex                           0x0800c14f   Thumb Code     4  printf2.o(x$fpl$printf2)
-    __I$use$fp                               0x0800c152   Number         0  usenofp.o(x$fpl$usenofp)
-    osRtxConfig                              0x0800c250   Data         112  rtx_lib.o(.rodata)
-    os_cb_sections                           0x0800c2c0   Data          56  rtx_lib.o(.rodata)
-    AHBPrescTable                            0x0800c2f8   Data          16  system_stm32f4xx.o(.rodata.AHBPrescTable)
-    APBPrescTable                            0x0800c308   Data           8  system_stm32f4xx.o(.rodata.APBPrescTable)
-    Driver_CAN2                              0x0800c310   Data          60  can_stm32f4xx.o(.rodata.Driver_CAN2)
-    Driver_USART3                            0x0800c34c   Data          56  usart_stm32f4xx.o(.rodata.Driver_USART3)
-    EventRecorderInfo                        0x0800c384   Data          24  eventrecorder.o(.rodata.EventRecorderInfo)
-    osRtxUserSVC                             0x0800c3e8   Data           4  rtx_lib.o(.rodata.osRtxUserSVC)
-    Region$$Table$$Base                      0x0800c478   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x0800c498   Number         0  anon$$obj.o(Region$$Table)
-    __ctype                                  0x0800c4c1   Data           0  lc_ctype_c.o(locale$$data)
+    thread_Decode                            0x0800b63d   Thumb Code   558  main.o(.text.thread_Decode)
+    thread_EmissionCAN                       0x0800b86d   Thumb Code   216  main.o(.text.thread_EmissionCAN)
+    thread_ReceptUART                        0x0800b945   Thumb Code    90  main.o(.text.thread_ReceptUART)
+    _btod_d2e                                0x0800b9fb   Thumb Code    62  btod.o(CL$$btod_d2e)
+    _d2e_denorm_low                          0x0800ba39   Thumb Code    70  btod.o(CL$$btod_d2e_denorm_low)
+    _d2e_norm_op1                            0x0800ba7f   Thumb Code    96  btod.o(CL$$btod_d2e_norm_op1)
+    __btod_div_common                        0x0800bae1   Thumb Code   696  btod.o(CL$$btod_div_common)
+    _e2e                                     0x0800be19   Thumb Code   220  btod.o(CL$$btod_e2e)
+    _btod_ediv                               0x0800bef5   Thumb Code    42  btod.o(CL$$btod_ediv)
+    _btod_emul                               0x0800bf1f   Thumb Code    42  btod.o(CL$$btod_emul)
+    __btod_mult_common                       0x0800bf49   Thumb Code   580  btod.o(CL$$btod_mult_common)
+    __ARM_fpclassify                         0x0800c18d   Thumb Code    48  fpclassify.o(i.__ARM_fpclassify)
+    _is_digit                                0x0800c1bd   Thumb Code    14  __printf_wp.o(i._is_digit)
+    _get_lc_numeric                          0x0800c1cd   Thumb Code    44  lc_numeric_c.o(locale$$code)
+    _get_lc_ctype                            0x0800c1f9   Thumb Code    44  lc_ctype_c.o(locale$$code)
+    $Super$$_fp_init                         0x0800c225   Thumb Code    26  fpinit.o(x$fpl$fpinit)
+    __fplib_config_fpu_vfp                   0x0800c23d   Thumb Code     0  fpinit.o(x$fpl$fpinit)
+    __fplib_config_pureend_doubles           0x0800c23d   Thumb Code     0  fpinit.o(x$fpl$fpinit)
+    _printf_fp_dec                           0x0800c23f   Thumb Code     4  printf1.o(x$fpl$printf1)
+    _printf_fp_hex                           0x0800c243   Thumb Code     4  printf2.o(x$fpl$printf2)
+    __I$use$fp                               0x0800c246   Number         0  usenofp.o(x$fpl$usenofp)
+    osRtxConfig                              0x0800c344   Data         112  rtx_lib.o(.rodata)
+    os_cb_sections                           0x0800c3b4   Data          56  rtx_lib.o(.rodata)
+    AHBPrescTable                            0x0800c3ec   Data          16  system_stm32f4xx.o(.rodata.AHBPrescTable)
+    APBPrescTable                            0x0800c3fc   Data           8  system_stm32f4xx.o(.rodata.APBPrescTable)
+    Driver_CAN2                              0x0800c404   Data          60  can_stm32f4xx.o(.rodata.Driver_CAN2)
+    Driver_USART3                            0x0800c440   Data          56  usart_stm32f4xx.o(.rodata.Driver_USART3)
+    EventRecorderInfo                        0x0800c478   Data          24  eventrecorder.o(.rodata.EventRecorderInfo)
+    osRtxUserSVC                             0x0800c4dc   Data           4  rtx_lib.o(.rodata.osRtxUserSVC)
+    Region$$Table$$Base                      0x0800c56c   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x0800c58c   Number         0  anon$$obj.o(Region$$Table)
+    __ctype                                  0x0800c5b5   Data           0  lc_ctype_c.o(locale$$data)
     SystemCoreClock                          0x20000004   Data           4  system_stm32f4xx.o(.data.SystemCoreClock)
     configDecode                             0x20000008   Data          36  main.o(.data.configDecode)
     configEmissionCAN                        0x2000002c   Data          36  main.o(.data.configEmissionCAN)
@@ -5982,11 +5982,11 @@ Image Symbol Table
     ID_ReceptUART                            0x200001c0   Data           4  main.o(.bss.ID_ReceptUART)
     Message                                  0x200001c4   Data         100  main.o(.bss.Message)
     idx                                      0x2000026e   Data           1  main.o(.bss.idx)
-    .bss.os.msgqueue.cb$$Base                0x2000895c   Number         0  rtx_lib.o(.bss.os.msgqueue.cb)
-    .bss.os.msgqueue.cb$$Limit               0x20008990   Number         0  rtx_lib.o(.bss.os.msgqueue.cb)
-    .bss.os.thread.cb$$Base                  0x200089e0   Number         0  rtx_lib.o(.bss.os.thread.cb)
-    .bss.os.thread.cb$$Limit                 0x20008a80   Number         0  rtx_lib.o(.bss.os.thread.cb)
-    uwTick                                   0x20008fa4   Data           4  stm32f4xx_hal.o(.bss.uwTick)
+    .bss.os.msgqueue.cb$$Base                0x2000ccac   Number         0  rtx_lib.o(.bss.os.msgqueue.cb)
+    .bss.os.msgqueue.cb$$Limit               0x2000cce0   Number         0  rtx_lib.o(.bss.os.msgqueue.cb)
+    .bss.os.thread.cb$$Base                  0x2000cd30   Number         0  rtx_lib.o(.bss.os.thread.cb)
+    .bss.os.thread.cb$$Limit                 0x2000cdd0   Number         0  rtx_lib.o(.bss.os.thread.cb)
+    uwTick                                   0x2000d2f4   Data           4  stm32f4xx_hal.o(.bss.uwTick)
 
 
 
@@ -5996,9 +5996,9 @@ Memory Map of the image
 
   Image Entry point : 0x08000189
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000c740, Max: 0x00100000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000c800, Max: 0x00100000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x0000c5c4, Max: 0x00100000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x0000c6b8, Max: 0x00100000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -6614,71 +6614,71 @@ Memory Map of the image
     0x0800b1ce   0x0800b1ce   0x00000002   PAD
     0x0800b1d0   0x0800b1d0   0x0000046a   Code   RO         1040    .text.svcRtxThreadNew  rtx_thread.o
     0x0800b63a   0x0800b63a   0x00000002   PAD
-    0x0800b63c   0x0800b63c   0x0000013a   Code   RO            4    .text.thread_Decode  main.o
-    0x0800b776   0x0800b776   0x00000002   PAD
-    0x0800b778   0x0800b778   0x000000d8   Code   RO            6    .text.thread_EmissionCAN  main.o
-    0x0800b850   0x0800b850   0x0000005a   Code   RO            2    .text.thread_ReceptUART  main.o
-    0x0800b8aa   0x0800b8aa   0x00000002   PAD
-    0x0800b8ac   0x0800b8ac   0x00000048   Code   RO          626    .text.user_perthread_libspace_free  rtx_lib.o
-    0x0800b8f4   0x0800b8f4   0x00000012   Code   RO         1134    .text.xPSR_InitVal  rtx_thread.o
-    0x0800b906   0x0800b906   0x0000003e   Code   RO         2245    CL$$btod_d2e        c_w.l(btod.o)
-    0x0800b944   0x0800b944   0x00000046   Code   RO         2247    CL$$btod_d2e_denorm_low  c_w.l(btod.o)
-    0x0800b98a   0x0800b98a   0x00000060   Code   RO         2246    CL$$btod_d2e_norm_op1  c_w.l(btod.o)
-    0x0800b9ea   0x0800b9ea   0x00000002   PAD
-    0x0800b9ec   0x0800b9ec   0x00000338   Code   RO         2255    CL$$btod_div_common  c_w.l(btod.o)
-    0x0800bd24   0x0800bd24   0x000000dc   Code   RO         2252    CL$$btod_e2e        c_w.l(btod.o)
-    0x0800be00   0x0800be00   0x0000002a   Code   RO         2249    CL$$btod_ediv       c_w.l(btod.o)
-    0x0800be2a   0x0800be2a   0x0000002a   Code   RO         2248    CL$$btod_emul       c_w.l(btod.o)
-    0x0800be54   0x0800be54   0x00000244   Code   RO         2254    CL$$btod_mult_common  c_w.l(btod.o)
-    0x0800c098   0x0800c098   0x00000030   Code   RO         2285    i.__ARM_fpclassify  m_wm.l(fpclassify.o)
-    0x0800c0c8   0x0800c0c8   0x0000000e   Code   RO         2143    i._is_digit         c_w.l(__printf_wp.o)
-    0x0800c0d6   0x0800c0d6   0x00000002   PAD
-    0x0800c0d8   0x0800c0d8   0x0000002c   Code   RO         2270    locale$$code        c_w.l(lc_numeric_c.o)
-    0x0800c104   0x0800c104   0x0000002c   Code   RO         2297    locale$$code        c_w.l(lc_ctype_c.o)
-    0x0800c130   0x0800c130   0x0000001a   Code   RO         2078    x$fpl$fpinit        fz_wm.l(fpinit.o)
-    0x0800c14a   0x0800c14a   0x00000004   Code   RO         2180    x$fpl$printf1       fz_wm.l(printf1.o)
-    0x0800c14e   0x0800c14e   0x00000004   Code   RO         2182    x$fpl$printf2       fz_wm.l(printf2.o)
-    0x0800c152   0x0800c152   0x00000000   Code   RO         2284    x$fpl$usenofp       fz_wm.l(usenofp.o)
-    0x0800c152   0x0800c152   0x00000002   PAD
-    0x0800c154   0x0800c154   0x00000008   Data   RO         2102    .constdata          c_w.l(_printf_wctomb.o)
-    0x0800c15c   0x0800c15c   0x00000028   Data   RO         2131    .constdata          c_w.l(_printf_hex_int_ll_ptr.o)
-    0x0800c184   0x0800c184   0x00000011   Data   RO         2151    .constdata          c_w.l(__printf_flags_ss_wp.o)
-    0x0800c195   0x0800c195   0x00000026   Data   RO         2214    .constdata          c_w.l(_printf_fp_hex.o)
-    0x0800c1bb   0x0800c1bb   0x00000001   PAD
-    0x0800c1bc   0x0800c1bc   0x00000094   Data   RO         2243    .constdata          c_w.l(bigflt0.o)
-    0x0800c250   0x0800c250   0x00000070   Data   RO          640    .rodata             rtx_lib.o
-    0x0800c2c0   0x0800c2c0   0x00000038   Data   RO          643    .rodata             rtx_lib.o
-    0x0800c2f8   0x0800c2f8   0x00000010   Data   RO         2049    .rodata.AHBPrescTable  system_stm32f4xx.o
-    0x0800c308   0x0800c308   0x00000008   Data   RO         2050    .rodata.APBPrescTable  system_stm32f4xx.o
-    0x0800c310   0x0800c310   0x0000003c   Data   RO         1382    .rodata.Driver_CAN2  can_stm32f4xx.o
-    0x0800c34c   0x0800c34c   0x00000038   Data   RO         1463    .rodata.Driver_USART3  usart_stm32f4xx.o
-    0x0800c384   0x0800c384   0x00000018   Data   RO         1528    .rodata.EventRecorderInfo  eventrecorder.o
-    0x0800c39c   0x0800c39c   0x00000034   Data   RO         1468    .rodata.USART3_Resources  usart_stm32f4xx.o
-    0x0800c3d0   0x0800c3d0   0x0000000c   Data   RO         1465    .rodata.USART3_rx   usart_stm32f4xx.o
-    0x0800c3dc   0x0800c3dc   0x0000000c   Data   RO         1464    .rodata.USART3_tx   usart_stm32f4xx.o
-    0x0800c3e8   0x0800c3e8   0x00000004   Data   RO          642    .rodata.osRtxUserSVC  rtx_lib.o
-    0x0800c3ec   0x0800c3ec   0x00000024   Data   RO          637    .rodata.os_idle_thread_attr  rtx_lib.o
-    0x0800c410   0x0800c410   0x00000018   Data   RO          639    .rodata.os_timer_mq_attr  rtx_lib.o
-    0x0800c428   0x0800c428   0x00000024   Data   RO          638    .rodata.os_timer_thread_attr  rtx_lib.o
-    0x0800c44c   0x0800c44c   0x0000000c   Data   RO         1386    .rodata.ptr_CANx    can_stm32f4xx.o
-    0x0800c458   0x0800c458   0x00000015   Data   RO           21    .rodata.str1.1      main.o
-    0x0800c46d   0x0800c46d   0x0000000b   Data   RO          607    .rodata.str1.1      rtx_kernel.o
-    0x0800c478   0x0800c478   0x00000020   Data   RO         2430    Region$$Table       anon$$obj.o
-    0x0800c498   0x0800c498   0x0000001c   Data   RO         2269    locale$$data        c_w.l(lc_numeric_c.o)
-    0x0800c4b4   0x0800c4b4   0x00000110   Data   RO         2296    locale$$data        c_w.l(lc_ctype_c.o)
+    0x0800b63c   0x0800b63c   0x0000022e   Code   RO            4    .text.thread_Decode  main.o
+    0x0800b86a   0x0800b86a   0x00000002   PAD
+    0x0800b86c   0x0800b86c   0x000000d8   Code   RO            6    .text.thread_EmissionCAN  main.o
+    0x0800b944   0x0800b944   0x0000005a   Code   RO            2    .text.thread_ReceptUART  main.o
+    0x0800b99e   0x0800b99e   0x00000002   PAD
+    0x0800b9a0   0x0800b9a0   0x00000048   Code   RO          626    .text.user_perthread_libspace_free  rtx_lib.o
+    0x0800b9e8   0x0800b9e8   0x00000012   Code   RO         1134    .text.xPSR_InitVal  rtx_thread.o
+    0x0800b9fa   0x0800b9fa   0x0000003e   Code   RO         2245    CL$$btod_d2e        c_w.l(btod.o)
+    0x0800ba38   0x0800ba38   0x00000046   Code   RO         2247    CL$$btod_d2e_denorm_low  c_w.l(btod.o)
+    0x0800ba7e   0x0800ba7e   0x00000060   Code   RO         2246    CL$$btod_d2e_norm_op1  c_w.l(btod.o)
+    0x0800bade   0x0800bade   0x00000002   PAD
+    0x0800bae0   0x0800bae0   0x00000338   Code   RO         2255    CL$$btod_div_common  c_w.l(btod.o)
+    0x0800be18   0x0800be18   0x000000dc   Code   RO         2252    CL$$btod_e2e        c_w.l(btod.o)
+    0x0800bef4   0x0800bef4   0x0000002a   Code   RO         2249    CL$$btod_ediv       c_w.l(btod.o)
+    0x0800bf1e   0x0800bf1e   0x0000002a   Code   RO         2248    CL$$btod_emul       c_w.l(btod.o)
+    0x0800bf48   0x0800bf48   0x00000244   Code   RO         2254    CL$$btod_mult_common  c_w.l(btod.o)
+    0x0800c18c   0x0800c18c   0x00000030   Code   RO         2285    i.__ARM_fpclassify  m_wm.l(fpclassify.o)
+    0x0800c1bc   0x0800c1bc   0x0000000e   Code   RO         2143    i._is_digit         c_w.l(__printf_wp.o)
+    0x0800c1ca   0x0800c1ca   0x00000002   PAD
+    0x0800c1cc   0x0800c1cc   0x0000002c   Code   RO         2270    locale$$code        c_w.l(lc_numeric_c.o)
+    0x0800c1f8   0x0800c1f8   0x0000002c   Code   RO         2297    locale$$code        c_w.l(lc_ctype_c.o)
+    0x0800c224   0x0800c224   0x0000001a   Code   RO         2078    x$fpl$fpinit        fz_wm.l(fpinit.o)
+    0x0800c23e   0x0800c23e   0x00000004   Code   RO         2180    x$fpl$printf1       fz_wm.l(printf1.o)
+    0x0800c242   0x0800c242   0x00000004   Code   RO         2182    x$fpl$printf2       fz_wm.l(printf2.o)
+    0x0800c246   0x0800c246   0x00000000   Code   RO         2284    x$fpl$usenofp       fz_wm.l(usenofp.o)
+    0x0800c246   0x0800c246   0x00000002   PAD
+    0x0800c248   0x0800c248   0x00000008   Data   RO         2102    .constdata          c_w.l(_printf_wctomb.o)
+    0x0800c250   0x0800c250   0x00000028   Data   RO         2131    .constdata          c_w.l(_printf_hex_int_ll_ptr.o)
+    0x0800c278   0x0800c278   0x00000011   Data   RO         2151    .constdata          c_w.l(__printf_flags_ss_wp.o)
+    0x0800c289   0x0800c289   0x00000026   Data   RO         2214    .constdata          c_w.l(_printf_fp_hex.o)
+    0x0800c2af   0x0800c2af   0x00000001   PAD
+    0x0800c2b0   0x0800c2b0   0x00000094   Data   RO         2243    .constdata          c_w.l(bigflt0.o)
+    0x0800c344   0x0800c344   0x00000070   Data   RO          640    .rodata             rtx_lib.o
+    0x0800c3b4   0x0800c3b4   0x00000038   Data   RO          643    .rodata             rtx_lib.o
+    0x0800c3ec   0x0800c3ec   0x00000010   Data   RO         2049    .rodata.AHBPrescTable  system_stm32f4xx.o
+    0x0800c3fc   0x0800c3fc   0x00000008   Data   RO         2050    .rodata.APBPrescTable  system_stm32f4xx.o
+    0x0800c404   0x0800c404   0x0000003c   Data   RO         1382    .rodata.Driver_CAN2  can_stm32f4xx.o
+    0x0800c440   0x0800c440   0x00000038   Data   RO         1463    .rodata.Driver_USART3  usart_stm32f4xx.o
+    0x0800c478   0x0800c478   0x00000018   Data   RO         1528    .rodata.EventRecorderInfo  eventrecorder.o
+    0x0800c490   0x0800c490   0x00000034   Data   RO         1468    .rodata.USART3_Resources  usart_stm32f4xx.o
+    0x0800c4c4   0x0800c4c4   0x0000000c   Data   RO         1465    .rodata.USART3_rx   usart_stm32f4xx.o
+    0x0800c4d0   0x0800c4d0   0x0000000c   Data   RO         1464    .rodata.USART3_tx   usart_stm32f4xx.o
+    0x0800c4dc   0x0800c4dc   0x00000004   Data   RO          642    .rodata.osRtxUserSVC  rtx_lib.o
+    0x0800c4e0   0x0800c4e0   0x00000024   Data   RO          637    .rodata.os_idle_thread_attr  rtx_lib.o
+    0x0800c504   0x0800c504   0x00000018   Data   RO          639    .rodata.os_timer_mq_attr  rtx_lib.o
+    0x0800c51c   0x0800c51c   0x00000024   Data   RO          638    .rodata.os_timer_thread_attr  rtx_lib.o
+    0x0800c540   0x0800c540   0x0000000c   Data   RO         1386    .rodata.ptr_CANx    can_stm32f4xx.o
+    0x0800c54c   0x0800c54c   0x00000015   Data   RO           21    .rodata.str1.1      main.o
+    0x0800c561   0x0800c561   0x0000000b   Data   RO          607    .rodata.str1.1      rtx_kernel.o
+    0x0800c56c   0x0800c56c   0x00000020   Data   RO         2430    Region$$Table       anon$$obj.o
+    0x0800c58c   0x0800c58c   0x0000001c   Data   RO         2269    locale$$data        c_w.l(lc_numeric_c.o)
+    0x0800c5a8   0x0800c5a8   0x00000110   Data   RO         2296    locale$$data        c_w.l(lc_ctype_c.o)
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x0800c600, Size: 0x000095a8, Max: 0x00020000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x0800c6c0, Size: 0x0000d8f8, Max: 0x00020000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x0800c600   0x00000004   Data   RW         2064    .data               c_w.l(strtok.o)
-    0x20000004   0x0800c604   0x00000004   Data   RW         2048    .data.SystemCoreClock  system_stm32f4xx.o
-    0x20000008   0x0800c608   0x00000024   Data   RW           25    .data.configDecode  main.o
-    0x2000002c   0x0800c62c   0x00000024   Data   RW           24    .data.configEmissionCAN  main.o
-    0x20000050   0x0800c650   0x00000024   Data   RW           23    .data.configReceptUART  main.o
-    0x20000074   0x0800c674   0x000000a4   Data   RW          608    .data.os            rtx_kernel.o
-    0x20000118   0x0800c718   0x00000028   PAD
+    0x20000000   0x0800c6c0   0x00000004   Data   RW         2064    .data               c_w.l(strtok.o)
+    0x20000004   0x0800c6c4   0x00000004   Data   RW         2048    .data.SystemCoreClock  system_stm32f4xx.o
+    0x20000008   0x0800c6c8   0x00000024   Data   RW           25    .data.configDecode  main.o
+    0x2000002c   0x0800c6ec   0x00000024   Data   RW           24    .data.configEmissionCAN  main.o
+    0x20000050   0x0800c710   0x00000024   Data   RW           23    .data.configReceptUART  main.o
+    0x20000074   0x0800c734   0x000000a4   Data   RW          608    .data.os            rtx_kernel.o
+    0x20000118   0x0800c7d8   0x00000028   PAD
     0x20000140        -       0x00000060   Zero   RW         2288    .bss                c_w.l(libspace.o)
     0x200001a0        -       0x00000008   Zero   RW         1380    .bss.CAN_SignalObjectEvent  can_stm32f4xx.o
     0x200001a8        -       0x00000008   Zero   RW         1381    .bss.CAN_SignalUnitEvent  can_stm32f4xx.o
@@ -6694,23 +6694,23 @@ Memory Map of the image
     0x20000262        -       0x00000002   Zero   RW         1387    .bss.can_driver_powered  can_stm32f4xx.o
     0x20000264        -       0x0000000a   Zero   RW         1379    .bss.can_obj_cfg    can_stm32f4xx.o
     0x2000026e        -       0x00000001   Zero   RW           18    .bss.idx            main.o
-    0x2000026f   0x0800c718   0x00000011   PAD
+    0x2000026f   0x0800c7d8   0x00000011   PAD
     0x20000280        -       0x000004a4   Zero   RW         1527    .bss.noinit         eventrecorder.o
-    0x20000724   0x0800c718   0x00000004   PAD
-    0x20000728        -       0x00008040   Zero   RW          636    .bss.os             rtx_lib.o
-    0x20008768        -       0x00000001   Zero   RW         1286    .bss.os             os_systick.o
-    0x20008769   0x0800c718   0x00000003   PAD
-    0x2000876c        -       0x000001f0   Zero   RW          644    .bss.os.libspace    rtx_lib.o
-    0x2000895c        -       0x00000034   Zero   RW          648    .bss.os.msgqueue.cb  rtx_lib.o
-    0x20008990        -       0x00000050   Zero   RW          649    .bss.os.msgqueue.mem  rtx_lib.o
-    0x200089e0        -       0x000000a0   Zero   RW          645    .bss.os.thread.cb   rtx_lib.o
-    0x20008a80        -       0x00000320   Zero   RW          646    .bss.os.thread.idle.stack  rtx_lib.o
-    0x20008da0        -       0x00000200   Zero   RW          647    .bss.os.thread.timer.stack  rtx_lib.o
-    0x20008fa0        -       0x00000001   Zero   RW          650    .bss.os_kernel_is_active.os_kernel_active  rtx_lib.o
-    0x20008fa1   0x0800c718   0x00000003   PAD
-    0x20008fa4        -       0x00000004   Zero   RW         1592    .bss.uwTick         stm32f4xx_hal.o
-    0x20008fa8        -       0x00000200   Zero   RW         2035    HEAP                startup_stm32f407xx.o
-    0x200091a8        -       0x00000400   Zero   RW         2034    STACK               startup_stm32f407xx.o
+    0x20000724   0x0800c7d8   0x00000004   PAD
+    0x20000728        -       0x0000c390   Zero   RW          636    .bss.os             rtx_lib.o
+    0x2000cab8        -       0x00000001   Zero   RW         1286    .bss.os             os_systick.o
+    0x2000cab9   0x0800c7d8   0x00000003   PAD
+    0x2000cabc        -       0x000001f0   Zero   RW          644    .bss.os.libspace    rtx_lib.o
+    0x2000ccac        -       0x00000034   Zero   RW          648    .bss.os.msgqueue.cb  rtx_lib.o
+    0x2000cce0        -       0x00000050   Zero   RW          649    .bss.os.msgqueue.mem  rtx_lib.o
+    0x2000cd30        -       0x000000a0   Zero   RW          645    .bss.os.thread.cb   rtx_lib.o
+    0x2000cdd0        -       0x00000320   Zero   RW          646    .bss.os.thread.idle.stack  rtx_lib.o
+    0x2000d0f0        -       0x00000200   Zero   RW          647    .bss.os.thread.timer.stack  rtx_lib.o
+    0x2000d2f0        -       0x00000001   Zero   RW          650    .bss.os_kernel_is_active.os_kernel_active  rtx_lib.o
+    0x2000d2f1   0x0800c7d8   0x00000003   PAD
+    0x2000d2f4        -       0x00000004   Zero   RW         1592    .bss.uwTick         stm32f4xx_hal.o
+    0x2000d2f8        -       0x00000200   Zero   RW         2035    HEAP                startup_stm32f407xx.o
+    0x2000d4f8        -       0x00000400   Zero   RW         2034    STACK               startup_stm32f407xx.o
 
 
 ==============================================================================
@@ -6723,13 +6723,13 @@ Image component sizes
       9894         30         72          0         30      22619   can_stm32f4xx.o
       2102          0         24          0       1188       8897   eventrecorder.o
        256         16          0          0          0        776   irq_armv7m.o
-      1106          0         21        108        121       5900   main.o
+      1350          0         21        108        121       6198   main.o
        204          0          0          0          1       4729   os_systick.o
         56          6          0          0          0        745   rtx_config.o
        230          0          0          0          0       2756   rtx_delay.o
       1914          0          0          0          0      29866   rtx_evr.o
       1392          0         11        164          0      17936   rtx_kernel.o
-       300          0        268          0      34933       7983   rtx_lib.o
+       300          0        268          0      52165       7983   rtx_lib.o
        710          0          0          0          0       2348   rtx_memory.o
        478          0          0          0          0      12595   rtx_mempool.o
       3052          0          0          0          0      15221   rtx_msgqueue.o
@@ -6747,7 +6747,7 @@ Image component sizes
       8344         52        132          0         56      21890   usart_stm32f4xx.o
 
     ----------------------------------------------------------------------
-     41562        140        976        276      37936     255694   Object Totals
+     41806        140        976        276      55168     255992   Object Totals
          0          0         32          0          0          0   (incl. Generated)
        318          0          0          0         67          0   (incl. Padding)
 
@@ -6865,15 +6865,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     49100        416       1528        280      38032     257646   Grand Totals
-     49100        416       1528        280      38032     257646   ELF Image Totals
-     49100        416       1528        280          0          0   ROM Totals
+     49344        416       1528        280      55264     257944   Grand Totals
+     49344        416       1528        280      55264     257944   ELF Image Totals
+     49344        416       1528        280          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                50628 (  49.44kB)
-    Total RW  Size (RW Data + ZI Data)             38312 (  37.41kB)
-    Total ROM Size (Code + RO Data + RW Data)      50908 (  49.71kB)
+    Total RO  Size (Code + RO Data)                50872 (  49.68kB)
+    Total RW  Size (RW Data + ZI Data)             55544 (  54.24kB)
+    Total ROM Size (Code + RO Data + RW Data)      51152 (  49.95kB)
 
 ==============================================================================
 

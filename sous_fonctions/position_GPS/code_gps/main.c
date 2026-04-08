@@ -87,23 +87,31 @@ void thread_Decode(void *argument)
 	char val_GPRMC[10];
 	char val_GPGGA[10];
 	char val[6];
+	char val2[6];
 	const char *separateur = ",";
 
-	int32_t retour_val_GPRMC;
-	int32_t retour_val_GPGGA;
+	int32_t  retour_val_GPRMC;
+	int32_t  retour_val_GPGGA;
+	
+	int32_t  retour_val_GPRMCb;
+	int32_t  retour_val_GPGGAb;
+	
 	
 	while(1)
 	{
 		osMessageQueueGet(ID_BAL_DECODE, &MessageRecu, NULL, osWaitForever); // On attend recevoir la mailbox du thread Recept UART
 		
 		sprintf(val, "%06s", MessageRecu.data);		// On prend les 6 premiers caractère (à partir du $)
-		
+		sprintf(val2, "%06s", MessageRecu.data+1);		
 		
 		retour_val_GPRMC = strncmp(val, "$GPRMC",6);	// strncmp renvoie 0 correspond à la chaîne de carcactère
 		retour_val_GPGGA = strncmp(val, "$GPGGA",6);
+		
+		retour_val_GPRMCb = strncmp(val2, "$GPRMC",6);	// strncmp renvoie 0 correspond à la chaîne de carcactère
+		retour_val_GPGGAb = strncmp(val2, "$GPGGA",6);
 
 		
-		if (retour_val_GPRMC == NULL)		// En fonction de ce qu'on reçoit au début de la trame, notre code va dans une de ses conditions pour décoder la bonne trame
+		if ((retour_val_GPRMC == NULL)|| (retour_val_GPRMCb == NULL))		// En fonction de ce qu'on reçoit au début de la trame, notre code va dans une de ses conditions pour décoder la bonne trame
 		{
 			Coordonnee.temps = strtok(MessageRecu.data, separateur);
 			
@@ -118,7 +126,7 @@ void thread_Decode(void *argument)
 				}		
 		}
 		
-		if (retour_val_GPGGA == NULL)	// Renvo
+		if ((retour_val_GPGGA == NULL)|| (retour_val_GPGGAb == NULL)) 	// Renvo
 		{
 			Coordonnee.temps = strtok(MessageRecu.data, separateur);
 			 
@@ -131,6 +139,36 @@ void thread_Decode(void *argument)
 				  Coordonnee.est_ouest = strtok (NULL, separateur);
 				}				 
 		}
+		
+		if (retour_val_GPRMCb == NULL)		// En fonction de ce qu'on reçoit au début de la trame, notre code va dans une de ses conditions pour décoder la bonne trame
+		{
+			Coordonnee.temps = strtok(MessageRecu.data, separateur);
+			
+			if (Coordonnee.temps != NULL)
+				{
+					Coordonnee.temps 		 = strtok (NULL, separateur); 
+					Coordonnee.alerte 	 = strtok (NULL, separateur); 
+					Coordonnee.latitude  = strtok (NULL, separateur);
+				  Coordonnee.nord_sud  = strtok (NULL, separateur);
+				  Coordonnee.longitude = strtok (NULL, separateur);
+				  Coordonnee.est_ouest = strtok (NULL, separateur);
+				}		
+		}
+		
+		if (retour_val_GPGGAb == NULL) 	// Renvo
+		{
+			Coordonnee.temps = strtok(MessageRecu.data, separateur);
+			 
+			if (Coordonnee.temps != NULL)
+				{
+					Coordonnee.temps 		 = strtok (NULL, separateur); 
+					Coordonnee.latitude  = strtok (NULL, separateur);
+				  Coordonnee.nord_sud  = strtok (NULL, separateur);
+				  Coordonnee.longitude = strtok (NULL, separateur);
+				  Coordonnee.est_ouest = strtok (NULL, separateur);
+				}				 
+		}
+		
 		osMessageQueuePut(ID_BAL_EMET_CAN,&Coordonnee , NULL, osWaitForever);
 	}
 }
