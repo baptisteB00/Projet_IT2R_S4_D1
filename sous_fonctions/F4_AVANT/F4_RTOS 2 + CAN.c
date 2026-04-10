@@ -10,6 +10,7 @@
 #include "rtx_os.h"                     // CMSIS:RTOS2:Keil RTX5&&Source
 #include "stdio.h"
 #include "adc_F4.h"
+#include <stdlib.h>
 
 #define led_verte 12
 #define led_orange 13
@@ -47,7 +48,7 @@ extern ARM_DRIVER_CAN Driver_CAN2;
 // volatile car badge_complet est modifié dans le Callback (=>nécessité de stockage dans la ram)
 uint8_t buffer_rfid[14]; 
 uint32_t led[17];
-uint32_t verrouillage = 1;
+bool verrouillage = 1;
 
 ADC_HandleTypeDef ADC1_Hand;
 
@@ -73,11 +74,11 @@ void Init_LEDs(void);
 void Envoi_SPI(void);
 void allumerPhares(void);
 void eteindrePhares(void);
+void Disco(void);
 
 //Tâches
-osThreadId_t tid_mySPI_Thread, ID_Allumer1, ID_RFID, ID_Envoi_SPI, ID_Phares, ID_Clignotants, ID_DFP, ID_Klaxon, ID_Sensorlight, ID_Radar_Droit, ID_Radar_Gauche, ID_CAN1, ID_CAN2;
+osThreadId_t tid_mySPI_Thread, ID_Allumer1, ID_RFID, ID_Envoi_SPI, ID_Phares, ID_Clignotants, ID_DFP, ID_Klaxon, ID_Sensorlight, ID_Radar_Droit, ID_Radar_Gauche, ID_CAN1, ID_CAN2, ID_Disco;
 osMutexId_t MUT_LEDs, MUT_DFP, MUT_I2C;
-osSemaphoreId_t ADCSemaphore;
 
 void tacheRFID(void){
 	unsigned char badge_maitre[12] = {0x33,0x43,0x30,0x30,0x34,0x44,0x39,0x35,0x44,0x32,0x33,0x36};
@@ -258,6 +259,39 @@ void RadarGauche(void){
 	}
 }
 
+void Disco(void){
+	uint32_t couleurs[] = {VERT, ROUGE, BLEU, ORANGE, BLANC, JAUNE};
+	uint32_t flag;
+	bool disco_actif = 0;
+	int i;
+
+	while(1) {
+			if (disco_actif == 0) {
+					flag = osThreadFlagsWait((1<<0), osFlagsWaitAny, osWaitForever);
+					if (flag == (1<<0)) {
+							disco_actif = 1;
+					}
+			} 
+			else {
+
+					flag = osThreadFlagsWait((1<<1), osFlagsWaitAny, 150);
+					
+					if (flag == (1<<1)) {
+							disco_actif = 0;
+							for (i = 0; i < NbLEDs; i++) {
+									eteindre1LED(i);
+							}
+					} 
+					else {
+							for (int i = 0; i < NbLEDs; i++) {
+									allumer1LED(i, couleurs[rand() % 6]);
+							}
+							osDelay(500);
+					}
+			}
+	}
+}
+
 void TCAN1(void){
 	ARM_CAN_MSG_INFO	rx_msg_info;
 	uint8_t data_buf[8];
@@ -291,6 +325,13 @@ void TCAN2(void){
 void My_USART_Callback(unsigned int event) {
     if (event & ARM_USART_EVENT_RECEIVE_COMPLETE) {
 				osThreadFlagsSet(ID_RFID, (1<<0));
+    }
+}
+
+void My_I2C_Callback(uint32_t event) {
+    if (event & ARM_I2C_EVENT_TRANSFER_DONE) {
+        osThreadFlagsSet(ID_Radar_Droit, (1<<0));
+				osThreadFlagsSet(ID_Radar_Gauche, (1<<0));
     }
 }
 
@@ -337,12 +378,11 @@ int main(void) {
 		//ID_CAN1 = osThreadNew((osThreadId_t)TCAN1, NULL, NULL);
 		//ID_CAN2 = osThreadNew((osThreadId_t)TCAN2, NULL, NULL);
 		ID_Envoi_SPI = osThreadNew((osThreadId_t)Envoi_SPI, NULL, NULL);
-		
+		ID_Disco = osThreadNew((osThreadId_t)Disco, NULL, NULL);
 		
 		MUT_LEDs = osMutexNew(NULL);
 		MUT_DFP = osMutexNew(NULL);
 		MUT_I2C = osMutexNew(NULL);
-		ADCSemaphore = osSemaphoreNew(1, 0, NULL);
 	
 		osKernelStart();
 }
@@ -407,6 +447,7 @@ void Init_CAN1 (void) {
     Driver_CAN1.ObjectConfigure(2U, ARM_CAN_OBJ_TX); // TX en emmission
 		Driver_CAN1.ObjectConfigure(0U, ARM_CAN_OBJ_RX); // RX en reception
     //Driver_CAN1.SetMode(ARM_CAN_MODE_NORMAL);
+		//Driver_CAN1.SetMode(ARM_CAN_MODE_LOOPBACK);
 }
 
 void Init_CAN2(void) {	
@@ -423,6 +464,7 @@ void Init_CAN2(void) {
 	Driver_CAN2.ObjectConfigure(2U ,ARM_CAN_OBJ_TX); // TX en emmission
 	Driver_CAN2.ObjectConfigure(0U, ARM_CAN_OBJ_RX); // RX en reception
 	//Driver_CAN2.SetMode(ARM_CAN_MODE_NORMAL); // fin initialisation
+	//Driver_CAN2.SetMode(ARM_CAN_MODE_LOOPBACK);
 }
 
 void Init_LEDs(void){
@@ -526,19 +568,20 @@ void write1byte(unsigned char capt_addr, unsigned char reg, unsigned char val) {
 		tab[0]= reg;
 		tab[1]= val;
     Driver_I2C1.MasterTransmit(capt_addr, tab, 2, false); // Envoi START + ADDR_Slave+W + REG + DATA + STOP 
-    while (Driver_I2C1.GetStatus().busy == 1); // Attente fin de transmission physique 
+    //while (Driver_I2C1.GetStatus().busy == 1); // Attente fin de transmission physique 
+		osThreadFlagsWait((1<<0), osFlagsWaitAll, osWaitForever);
 }
 
 uint8_t read1byte(uint8_t capt_addr, uint8_t reg) {
     uint8_t valeur;
     // Envoi de la sous-adresse avec RESTART (true) 
     Driver_I2C1.MasterTransmit(capt_addr, &reg, 1, true); 
-    while (Driver_I2C1.GetStatus().busy == 1);
+    osThreadFlagsWait((1<<0), osFlagsWaitAll, osWaitForever);
 	
     
     // Réception de l'octet 
     Driver_I2C1.MasterReceive(capt_addr, &valeur, 1, false);
-    while (Driver_I2C1.GetStatus().busy == 1);
+    osThreadFlagsWait((1<<0), osFlagsWaitAll, osWaitForever);
     
     return valeur; 
 }
