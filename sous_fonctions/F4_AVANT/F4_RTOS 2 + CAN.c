@@ -257,10 +257,10 @@ void RadarDroit(void){
 				}
 			}
 			//osMutexRelease(MUT_I2C);
-			osThreadFlagsSet((osThreadId_t)ID_CANT, (1<<0));
 			msg.Buf[0] = distD;
 			msg.Idx = 0;
 			osMessageQueuePut(MB_Radars, &msg, NULL, osWaitForever);
+			osThreadFlagsSet((osThreadId_t)ID_CANT, (1<<0));
 		}
 	}
 }
@@ -283,10 +283,10 @@ void RadarGauche(void){
 				}
 			}
 			//osMutexRelease(MUT_I2C);
-			osThreadFlagsSet((osThreadId_t)ID_CANT, (1<<1));
 			msg.Buf[0] = distG;
 			msg.Idx = 1;
 			osMessageQueuePut(MB_Radars, &msg, NULL, osWaitForever);
+			osThreadFlagsSet((osThreadId_t)ID_CANT, (1<<1));
 		}
 	}
 }
