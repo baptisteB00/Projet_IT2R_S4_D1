@@ -87,11 +87,18 @@ void Envoi_SPI(void);
 void allumerPhares(void);
 void eteindrePhares(void);
 void Disco(void);
-void Envoi_CAN(ARM_CAN_MSG_INFO msg_info, uint32_t ID, uint8_t data[], uint8_t rtr, uint8_t dlc);
+void Envoi_CAN(uint32_t ID, uint8_t data[], uint8_t rtr, uint8_t dlc);
 
 //Tâches
-osThreadId_t tid_mySPI_Thread, ID_Allumer1, ID_RFID, ID_Envoi_SPI, ID_Phares, ID_Clignotants, ID_DFP, ID_Klaxon, ID_Sensorlight, ID_Radar_Droit, ID_Radar_Gauche, ID_TCAN, ID_Disco;
+osThreadId_t tid_mySPI_Thread, ID_Allumer1, ID_RFID, ID_Envoi_SPI, ID_Phares, ID_Clignotants, ID_DFP, ID_Klaxon, ID_Sensorlight, ID_Radar_Droit, ID_Radar_Gauche, ID_CANR, ID_CANT, ID_Disco;
 osMutexId_t MUT_LEDs, MUT_DFP, MUT_I2C;
+osMessageQueueId_t MB_Radars;
+
+typedef struct {                             
+  uint16_t Buf[16];
+  uint8_t Idx;
+} MSGQUEUE_OBJ_t;
+
 
 void tacheRFID(void){
 	unsigned char badge_maitre[12] = {0x33,0x43,0x30,0x30,0x34,0x44,0x39,0x35,0x44,0x32,0x33,0x36};
@@ -232,6 +239,7 @@ void Envoi_SPI(void){
 }
 
 void RadarDroit(void){
+	MSGQUEUE_OBJ_t msg;
 	uint16_t distD = 0;
 	while(1){
 		if (verrouillage == 0){
@@ -249,11 +257,16 @@ void RadarDroit(void){
 				}
 			}
 			//osMutexRelease(MUT_I2C);
+			osThreadFlagsSet((osThreadId_t)ID_CANT, (1<<0));
+			msg.Buf[0] = distD;
+			msg.Idx = 0;
+			osMessageQueuePut(MB_Radars, &msg, NULL, osWaitForever);
 		}
 	}
 }
 
 void RadarGauche(void){
+	MSGQUEUE_OBJ_t msg;
 	uint16_t distG=0;
 	while(1){
 		if (verrouillage == 0){
@@ -270,6 +283,10 @@ void RadarGauche(void){
 				}
 			}
 			//osMutexRelease(MUT_I2C);
+			osThreadFlagsSet((osThreadId_t)ID_CANT, (1<<1));
+			msg.Buf[0] = distG;
+			msg.Idx = 1;
+			osMessageQueuePut(MB_Radars, &msg, NULL, osWaitForever);
 		}
 	}
 }
@@ -307,14 +324,34 @@ void Disco(void){
 	}
 }
 
-void TCAN(void){
+void CANR(void){
 	ARM_CAN_MSG_INFO	msg_info;
+	uint32_t flag;
 	uint8_t data_buf[8];
 	while(1){
 		Driver_CAN1.MessageRead(0, &msg_info, data_buf, 5);
 		if ((msg_info.id == ID_CAN_Radars)&&(msg_info.dlc == 0)&&(data_buf[0] == 0)){
-				osThreadFlagsSet((osThreadId_t)ID_Radar_Droit, (1<<0));
-				osThreadFlagsSet((osThreadId_t)ID_Radar_Gauche, (1<<0));
+			osThreadFlagsSet((osThreadId_t)ID_Radar_Droit, (1<<0));
+			osThreadFlagsSet((osThreadId_t)ID_Radar_Gauche, (1<<0));
+		}
+	}
+}
+
+void CANT(void){
+	uint8_t data[8];
+	uint16_t msg;
+	uint32_t event_radar;
+	while(1){
+		event_radar = osThreadFlagsWait(0x03, osFlagsWaitAll, osWaitForever);
+		if (event_radar == 0x03){
+			data[0] = 0;
+			osMessageQueueGet(MB_Radars, &msg, NULL, osWaitForever);
+			data[1] = ((msg & 0xFF00)>>8);
+			data[2] = (uint8_t)(msg & 0x00FF);
+			osMessageQueueGet(MB_Radars, &msg, NULL, osWaitForever);
+			data[2] = ((msg & 0xFF00)>>8);
+			data[3] = (uint8_t)(msg & 0x00FF);
+			Envoi_CAN(ID_CAN_Radars, data, 0, 5);
 		}
 	}
 }
@@ -373,13 +410,16 @@ int main(void) {
 		ID_Sensorlight = osThreadNew((osThreadId_t)SensorLight, NULL, NULL);
 		ID_Radar_Gauche = osThreadNew((osThreadId_t)RadarGauche, NULL, NULL);
 		ID_Radar_Droit = osThreadNew((osThreadId_t)RadarDroit, NULL, NULL);
-		ID_TCAN = osThreadNew((osThreadId_t)TCAN, NULL, NULL);
+		ID_CANR = osThreadNew((osThreadId_t)CANR, NULL, NULL);
+		ID_CANT = osThreadNew((osThreadId_t)CANT, NULL, NULL);
 		ID_Envoi_SPI = osThreadNew((osThreadId_t)Envoi_SPI, NULL, NULL);
 		ID_Disco = osThreadNew((osThreadId_t)Disco, NULL, NULL);
 		
 		MUT_LEDs = osMutexNew(NULL);
 		MUT_DFP = osMutexNew(NULL);
 		MUT_I2C = osMutexNew(NULL);
+		
+		MB_Radars = osMessageQueueNew(16, sizeof(MSGQUEUE_OBJ_t), NULL);
 	
 		osKernelStart();
 }
@@ -496,7 +536,8 @@ void Identification(unsigned char chaine[], uint8_t recu[]) {
 }
 
 //Envoi CAN
-void Envoi_CAN(ARM_CAN_MSG_INFO msg_info, uint32_t ID, uint8_t data[], uint8_t rtr, uint8_t dlc){
+void Envoi_CAN(uint32_t ID, uint8_t data[], uint8_t rtr, uint8_t dlc){
+	ARM_CAN_MSG_INFO msg_info;
 	msg_info.id = ID;
 	msg_info.dlc = dlc;
 	msg_info.rtr = rtr;
