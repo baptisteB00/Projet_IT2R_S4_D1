@@ -12,31 +12,46 @@
 #include "adc_F4.h"
 #include <stdlib.h>
 
+//LEDs STM32
 #define led_verte 12
 #define led_orange 13
 #define led_rouge 14
 #define led_bleue 15
 
+//LEDs SPI
 # define VERT 0x00FF00F0
 # define ROUGE 0xFF0000F0
 # define BLEU 0x0000FFF0
 # define ORANGE 0xCF0F00F0
 # define BLANC 0xFFFFFFFE
 # define JAUNE 0xFF00FFF0
-
 # define Eteint 0x000000E0
 # define NbLEDs 16
 
+//DFP
 #define Son_Clignotants 0x01
 #define Son_Demarrage 0x02
 #define Son_Radar 0x03
 #define Son_Klaxon 0x04
 #define Son_Deverouillage 0x05
 
+//Adresses Radars (I2C)
 #define CAPTAvD 0x70 //0xE0
 #define CAPTAvG 0x71 //0xE2
 
-// Déclarations Externes
+//ID CAN
+#define ID_CAN_Radars 0x010
+#define ID_CAN_Lidar 0x011
+#define ID_CAN_Panneau 0x012
+#define ID_CAN_Nunchuk 0x020
+#define ID_CAN_Vitesse 0x021
+#define ID_CAN_LEDs 0x030
+#define ID_CAN_Porte 0x031
+#define ID_CAN_DFP 0x032
+#define ID_CAN_Capteurs 0x033
+#define ID_CAN_GPS 0x034
+
+//Déclarations Externes
 extern ARM_DRIVER_USART Driver_USART2;
 extern ARM_DRIVER_USART Driver_USART3;
 extern ARM_DRIVER_SPI Driver_SPI1;
@@ -44,8 +59,6 @@ extern ARM_DRIVER_I2C Driver_I2C1;
 extern ARM_DRIVER_CAN Driver_CAN1;
 extern ARM_DRIVER_CAN Driver_CAN2;
 
-// Variables partagées entre la fonction d'interruption interne au driver et le main
-// volatile car badge_complet est modifié dans le Callback (=>nécessité de stockage dans la ram)
 uint8_t buffer_rfid[14]; 
 uint32_t led[17];
 bool verrouillage = 1;
@@ -68,16 +81,16 @@ void Init_I2C(void);
 void write1byte(uint8_t addr, uint8_t reg, uint8_t val);
 uint8_t read1byte(uint8_t addr, uint8_t reg);
 uint16_t get_distance(uint8_t addr);
-void Init_CAN1(void);
-void Init_CAN2(void);
+void Init_CAN(void);
 void Init_LEDs(void);
 void Envoi_SPI(void);
 void allumerPhares(void);
 void eteindrePhares(void);
 void Disco(void);
+void Envoi_CAN(ARM_CAN_MSG_INFO msg_info, uint32_t ID, uint8_t data[], uint8_t rtr, uint8_t dlc);
 
 //Tâches
-osThreadId_t tid_mySPI_Thread, ID_Allumer1, ID_RFID, ID_Envoi_SPI, ID_Phares, ID_Clignotants, ID_DFP, ID_Klaxon, ID_Sensorlight, ID_Radar_Droit, ID_Radar_Gauche, ID_CAN1, ID_CAN2, ID_Disco;
+osThreadId_t tid_mySPI_Thread, ID_Allumer1, ID_RFID, ID_Envoi_SPI, ID_Phares, ID_Clignotants, ID_DFP, ID_Klaxon, ID_Sensorlight, ID_Radar_Droit, ID_Radar_Gauche, ID_TCAN, ID_Disco;
 osMutexId_t MUT_LEDs, MUT_DFP, MUT_I2C;
 
 void tacheRFID(void){
@@ -222,6 +235,7 @@ void RadarDroit(void){
 	uint16_t distD = 0;
 	while(1){
 		if (verrouillage == 0){
+			osThreadFlagsWait((1<<0), osFlagsWaitAll, osWaitForever);
 			//osMutexAcquire(MUT_I2C, osWaitForever);
 			distD = get_distance(CAPTAvD);
 			if (distD != 0){
@@ -243,6 +257,7 @@ void RadarGauche(void){
 	uint16_t distG=0;
 	while(1){
 		if (verrouillage == 0){
+			osThreadFlagsWait((1<<0), osFlagsWaitAll, osWaitForever);
 			//osMutexAcquire(MUT_I2C, osWaitForever);
 			distG = get_distance(CAPTAvG);
 			if (distG != 0){
@@ -292,32 +307,15 @@ void Disco(void){
 	}
 }
 
-void TCAN1(void){
-	ARM_CAN_MSG_INFO	rx_msg_info;
+void TCAN(void){
+	ARM_CAN_MSG_INFO	msg_info;
 	uint8_t data_buf[8];
 	while(1){
-		Driver_CAN1.MessageRead(0, &rx_msg_info, data_buf, 5);
-		if (rx_msg_info.id == 0x001){
-			if (data_buf[0] == 0x01){
-				osThreadFlagsSet(ID_Clignotants, (1<<2));
-			}
+		Driver_CAN1.MessageRead(0, &msg_info, data_buf, 5);
+		if ((msg_info.id == ID_CAN_Radars)&&(msg_info.dlc == 0)&&(data_buf[0] == 0)){
+				osThreadFlagsSet((osThreadId_t)ID_Radar_Droit, (1<<0));
+				osThreadFlagsSet((osThreadId_t)ID_Radar_Gauche, (1<<0));
 		}
-	}
-}
-
-void TCAN2(void){
-	ARM_CAN_MSG_INFO	tx_msg_info;
-	uint8_t data_buf[8];
-	for(int i = 0; i<8; i++) data_buf[i] = 0;
-	
-	tx_msg_info.id = 0x001;
-	tx_msg_info.rtr = 0;
-	tx_msg_info.dlc = 5;
-	data_buf[0] = 0x01;
-	
-	while(1){
-		Driver_CAN1.MessageSend(2, &tx_msg_info, data_buf, 5);
-		osDelay(100);
 	}
 }
 
@@ -363,7 +361,7 @@ int main(void) {
 		Init_SPI();
 		HAL_Init();
 		Init_I2C();
-		Init_CAN1();
+		Init_CAN();
 		Init_LEDs();
 		
 		osKernelInitialize();
@@ -375,8 +373,7 @@ int main(void) {
 		ID_Sensorlight = osThreadNew((osThreadId_t)SensorLight, NULL, NULL);
 		ID_Radar_Gauche = osThreadNew((osThreadId_t)RadarGauche, NULL, NULL);
 		ID_Radar_Droit = osThreadNew((osThreadId_t)RadarDroit, NULL, NULL);
-		//ID_CAN1 = osThreadNew((osThreadId_t)TCAN1, NULL, NULL);
-		//ID_CAN2 = osThreadNew((osThreadId_t)TCAN2, NULL, NULL);
+		ID_TCAN = osThreadNew((osThreadId_t)TCAN, NULL, NULL);
 		ID_Envoi_SPI = osThreadNew((osThreadId_t)Envoi_SPI, NULL, NULL);
 		ID_Disco = osThreadNew((osThreadId_t)Disco, NULL, NULL);
 		
@@ -387,7 +384,7 @@ int main(void) {
 		osKernelStart();
 }
 
-// Initialisation
+//Initialisation
 
 void Init_UART(void) {
     // Initialisation de l'UART2 via le Driver CMSIS
@@ -432,7 +429,7 @@ void Init_I2C(void){
 //							0 );
 }
 
-void Init_CAN1 (void) {
+void Init_CAN (void) {
     Driver_CAN1.Initialize(NULL,NULL);
     Driver_CAN1.PowerControl(ARM_POWER_FULL);
     Driver_CAN1.SetMode(ARM_CAN_MODE_INITIALIZATION);
@@ -450,22 +447,7 @@ void Init_CAN1 (void) {
 		//Driver_CAN1.SetMode(ARM_CAN_MODE_LOOPBACK);
 }
 
-void Init_CAN2(void) {	
-	Driver_CAN2.Initialize(NULL,NULL);
-	Driver_CAN2.PowerControl(ARM_POWER_FULL);
-	Driver_CAN2.SetMode(ARM_CAN_MODE_INITIALIZATION);
-	Driver_CAN2.SetBitrate(	ARM_CAN_BITRATE_NOMINAL, // débit fixe
-			125000, // 125 kbits/s (LS)
-			ARM_CAN_BIT_PROP_SEG(5U) | //prop. seg = 5 TQ
-			ARM_CAN_BIT_PHASE_SEG1(1U) | //phase seg1=1 TQ
-			ARM_CAN_BIT_PHASE_SEG2(1U) | //phase seg2=1 TQ
-			ARM_CAN_BIT_SJW(1U) // Resync. Seg = 1 TQ
-	);						
-	Driver_CAN2.ObjectConfigure(2U ,ARM_CAN_OBJ_TX); // TX en emmission
-	Driver_CAN2.ObjectConfigure(0U, ARM_CAN_OBJ_RX); // RX en reception
-	//Driver_CAN2.SetMode(ARM_CAN_MODE_NORMAL); // fin initialisation
-	//Driver_CAN2.SetMode(ARM_CAN_MODE_LOOPBACK);
-}
+
 
 void Init_LEDs(void){
 	int i;
@@ -513,7 +495,14 @@ void Identification(unsigned char chaine[], uint8_t recu[]) {
 		}
 }
 
-// Envoi DFP
+//Envoi CAN
+void Envoi_CAN(ARM_CAN_MSG_INFO msg_info, uint32_t ID, uint8_t data[], uint8_t rtr, uint8_t dlc){
+	msg_info.id = ID;
+	msg_info.dlc = dlc;
+	msg_info.rtr = rtr;
+	Driver_CAN2.MessageSend(2U, &msg_info, data, dlc);
+}
+//Envoi DFP
 void sendDFCommand(uint8_t cmd, uint8_t para1, uint8_t para2) {
     char packet[10];
     short checksum;
