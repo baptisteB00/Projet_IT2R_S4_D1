@@ -57,15 +57,13 @@ extern GUI_CONST_STORAGE unsigned char acANALOG_Button_Up_50px50[];
 extern GUI_CONST_STORAGE unsigned char acANALOG_Button_Down_50px50[];
 extern GUI_CONST_STORAGE unsigned char acVoiture_Dessus[];
 extern GUI_CONST_STORAGE unsigned char acCadenas_FERME[];
-extern GUI_CONST_STORAGE unsigned char acCadenas_ouvert[];
 extern GUI_CONST_STORAGE unsigned char acDARK_Progbar_Tile_V_Blue_16x1[];
 extern GUI_CONST_STORAGE unsigned char acDARK_Progbar_Tile_V_Gray_16x1[];
 extern GUI_CONST_STORAGE unsigned char acICONE_BATTERIE[];
 extern GUI_CONST_STORAGE unsigned char acICONE_HUILE[];
 extern GUI_CONST_STORAGE unsigned char acviseur_nunchuk[];
 extern GUI_CONST_STORAGE unsigned char acDARK_Switch_Thumb_26x26[];
-extern GUI_CONST_STORAGE unsigned char aclune[];
-extern GUI_CONST_STORAGE unsigned char acvide[];
+extern GUI_CONST_STORAGE unsigned char acCadenas_ouvert[];
 
 /*********************************************************************
 *
@@ -103,14 +101,12 @@ extern GUI_CONST_STORAGE APPW_CONTENT ID_CONTENT_000_Data;
 *       Screens
 */
 #define ID_SCREEN_ACCUEIL (GUI_ID_USER + 4096)
-#define ID_SCREEN_PANNEAU (GUI_ID_USER + 4101)
 #define ID_SCREEN_FEUX (GUI_ID_USER + 4097)
 #define ID_SCREEN_PORTE (GUI_ID_USER + 4098)
 #define ID_SCREEN_VITESSE (GUI_ID_USER + 4099)
 #define ID_SCREEN_SON (GUI_ID_USER + 4100)
 
 extern APPW_ROOT_INFO ID_SCREEN_ACCUEIL_RootInfo;
-extern APPW_ROOT_INFO ID_SCREEN_PANNEAU_RootInfo;
 extern APPW_ROOT_INFO ID_SCREEN_FEUX_RootInfo;
 extern APPW_ROOT_INFO ID_SCREEN_PORTE_RootInfo;
 extern APPW_ROOT_INFO ID_SCREEN_VITESSE_RootInfo;

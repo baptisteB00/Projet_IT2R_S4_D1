@@ -17,12 +17,9 @@ Purpose     : AppWizard managed file, function content could be changed
 #include "Application.h"
 #include "../Generated/Resource.h"
 #include "../Generated/ID_SCREEN_FEUX.h"
-#include "Driver_CAN.h" 
-
 
 /*** Begin of user code area ***/
-#include "Driver_CAN.h" 
-extern   ARM_DRIVER_CAN        Driver_CAN1;
+
 /*** End of user code area ***/
 
 /*********************************************************************
@@ -66,153 +63,6 @@ void ID_SCREEN_FEUX__ID_BUTTON_NEXT__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM * 
 *       ID_SCREEN_FEUX__ID_BUTTON_PREVIOUS__WM_NOTIFICATION_CLICKED
 */
 void ID_SCREEN_FEUX__ID_BUTTON_PREVIOUS__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
-  GUI_USE_PARA(pAction);
-  GUI_USE_PARA(hScreen);
-  GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
-}
-
-/*********************************************************************
-*
-*       ID_SCREEN_FEUX__ID_BUTTON_clignoG__WM_NOTIFICATION_CLICKED
-*/
-void ID_SCREEN_FEUX__ID_BUTTON_clignoG__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
-  GUI_USE_PARA(pAction);
-  GUI_USE_PARA(hScreen);
-  GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
-}
-
-/*********************************************************************
-*
-*       ID_SCREEN_FEUX__ID_BUTTON_clignoD__WM_NOTIFICATION_CLICKED
-*/
-void ID_SCREEN_FEUX__ID_BUTTON_clignoD__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
-  GUI_USE_PARA(pAction);
-  GUI_USE_PARA(hScreen);
-  GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
-	
-	
-}
-
-/*********************************************************************
-*
-*       ID_SCREEN_FEUX__ID_BUTTON_Phare__WM_NOTIFICATION_CLICKED
-*/
-void ID_SCREEN_FEUX__ID_BUTTON_Phare__WM_NOTIFICATION_CLICKED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
-  GUI_USE_PARA(pAction);
-  GUI_USE_PARA(hScreen);
-  GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
-
-	 int val = APPW_GetVarData(ID_VAR_Phare, 0); 
-
-    // 2. Préparer la structure du message CAN
-    ARM_CAN_MSG_INFO tx_msg_info;
-    uint8_t data_buf[8] = {1,2,3,4,5,6,7,8};
-
-
-    tx_msg_info.id = ARM_CAN_STANDARD_ID(0x01); 
-		tx_msg_info.rtr = 0;
-
-    Driver_CAN1.MessageSend(2, &tx_msg_info, data_buf, 4);
-	
-}
-
-/*********************************************************************
-*
-*       ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_00__APPW_JOB_START
-*/
-void ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_00__APPW_JOB_START(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
-  GUI_USE_PARA(pAction);
-  GUI_USE_PARA(hScreen);
-  GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
-}
-
-/*********************************************************************
-*
-*       ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_00__APPW_JOB_STOP
-*/
-void ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_00__APPW_JOB_STOP(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
-  GUI_USE_PARA(pAction);
-  GUI_USE_PARA(hScreen);
-  GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
-}
-
-/*********************************************************************
-*
-*       ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_01__APPW_JOB_START
-*/
-void ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_01__APPW_JOB_START(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
-  GUI_USE_PARA(pAction);
-  GUI_USE_PARA(hScreen);
-  GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
-}
-
-/*********************************************************************
-*
-*       ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_01__APPW_JOB_STOP
-*/
-void ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_01__APPW_JOB_STOP(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
-  GUI_USE_PARA(pAction);
-  GUI_USE_PARA(hScreen);
-  GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
-}
-
-/*********************************************************************
-*
-*       ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_Mode_lumiere__APPW_JOB_SETBITMAP
-*/
-void ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_Mode_lumiere__APPW_JOB_SETBITMAP(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
-  GUI_USE_PARA(pAction);
-  GUI_USE_PARA(hScreen);
-  GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
-}
-
-/*********************************************************************
-*
-*       ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_00__APPW_JOB_SETBITMAP
-*/
-void ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_00__APPW_JOB_SETBITMAP(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
-  GUI_USE_PARA(pAction);
-  GUI_USE_PARA(hScreen);
-  GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
-}
-
-/*********************************************************************
-*
-*       ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_BUTTON_Phare__APPW_JOB_SETBITMAP
-*/
-void ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_BUTTON_Phare__APPW_JOB_SETBITMAP(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
-  GUI_USE_PARA(pAction);
-  GUI_USE_PARA(hScreen);
-  GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
-}
-
-/*********************************************************************
-*
-*       ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_Phare__APPW_JOB_SETBITMAP
-*/
-void ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_Phare__APPW_JOB_SETBITMAP(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
-  GUI_USE_PARA(pAction);
-  GUI_USE_PARA(hScreen);
-  GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
-}
-
-/*********************************************************************
-*
-*       ID_SCREEN_FEUX__ID_BUTTON_Phare__WM_NOTIFICATION_CLICKED_0
-*/
-void ID_SCREEN_FEUX__ID_BUTTON_Phare__WM_NOTIFICATION_CLICKED_0(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
   GUI_USE_PARA(pAction);
   GUI_USE_PARA(hScreen);
   GUI_USE_PARA(pMsg);

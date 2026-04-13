@@ -41,7 +41,7 @@ Purpose     : Generated file do NOT edit!
 #define ID_GAUGE_1DG       (GUI_ID_USER + 17)
 #define ID_GAUGE_2DG       (GUI_ID_USER + 18)
 #define ID_GAUGE_3DG       (GUI_ID_USER + 19)
-#define ID_BUTTON_00       (GUI_ID_USER + 20)
+#define ID_IMAGE_00        (GUI_ID_USER + 7)
 
 /*********************************************************************
 *

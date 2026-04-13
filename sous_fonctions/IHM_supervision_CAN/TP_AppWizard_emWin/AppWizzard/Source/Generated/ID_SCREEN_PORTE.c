@@ -237,10 +237,10 @@ static APPW_CREATE_ITEM _aCreate[] = {
     },
     { 0, 0 }
   },
-  { WM_OBJECT_BUTTON_Create,
-    ID_BUTTON_00, ID_SCREEN_PORTE,
-    { { { DISPOSE_MODE_REL_PARENT, 195, 0, 0 },
-        { DISPOSE_MODE_REL_PARENT, 115, 0, 0 },
+  { WM_OBJECT_IMAGE_Create,
+    ID_IMAGE_00, ID_SCREEN_PORTE,
+    { { { DISPOSE_MODE_REL_PARENT, 206, 0, 0 },
+        { DISPOSE_MODE_REL_PARENT, 116, 0, 0 },
         { DISPOSE_MODE_NULL, 0, 0, 0 },
         { DISPOSE_MODE_NULL, 0, 0, 0 },
       },
@@ -451,11 +451,8 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_GAUGE_3DG,       APPW_SET_PROP_VALUES,       { ARG_V(16),
                                                       ARG_V(16) } },
   { ID_GAUGE_3DG,       APPW_SET_PROP_VALUE,        { ARG_V(999) } },
-  { ID_BUTTON_00,       APPW_SET_PROP_SBITMAPS,     { ARG_VP(0, acCadenas_FERME),
-                                                      ARG_VP(0, acCadenas_ouvert), } },
-  { ID_BUTTON_00,       APPW_SET_PROP_COLORS,       { ARG_V(0xffc0c0c0),
-                                                      ARG_V(0xffc0c0c0),
-                                                      ARG_V(GUI_INVALID_COLOR) } },
+  { ID_IMAGE_00,        APPW_SET_PROP_SBITMAP,      { ARG_VP(0, acCadenas_FERME),
+                                                      ARG_V(1096), } },
 };
 
 /*********************************************************************
@@ -506,13 +503,13 @@ static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
       ARG_V(0),
     }, 0, NULL
   },
-  { ID_VAR_Cadena,      WM_NOTIFICATION_VALUE_CHANGED,    ID_IMAGE_Voiture,   APPW_JOB_SETBITMAP,      ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_00__APPW_JOB_SETBITMAP,
+  { ID_VAR_Cadena,      WM_NOTIFICATION_VALUE_CHANGED,    ID_IMAGE_00,        APPW_JOB_SETBITMAP,      ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_00__APPW_JOB_SETBITMAP,
     { ARG_V(0),
       ARG_VP(0, acCadenas_FERME),
       ARG_V(1096),
     }, 0, &_Condition_03
   },
-  { ID_VAR_Cadena,      WM_NOTIFICATION_VALUE_CHANGED,    ID_IMAGE_Voiture,   APPW_JOB_SETBITMAP,      ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_00__APPW_JOB_SETBITMAP_0,
+  { ID_VAR_Cadena,      WM_NOTIFICATION_VALUE_CHANGED,    ID_IMAGE_00,        APPW_JOB_SETBITMAP,      ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_00__APPW_JOB_SETBITMAP_0,
     { ARG_V(0),
       ARG_VP(0, acCadenas_ouvert),
       ARG_V(920),

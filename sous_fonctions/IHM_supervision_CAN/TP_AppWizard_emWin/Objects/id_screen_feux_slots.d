@@ -76,6 +76,4 @@
   C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\LISTBOX_Private.h \
   C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\WHEEL_Private.h \
   C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\MOVIE_Private.h \
-  AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_FEUX.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Driver\Include\Driver_CAN.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Driver\Include\Driver_Common.h
+  AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_FEUX.h

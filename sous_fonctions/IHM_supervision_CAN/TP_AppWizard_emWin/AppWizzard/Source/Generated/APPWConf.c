@@ -47,7 +47,6 @@ Purpose     : Generated file do NOT edit!
 */
 static APPW_ROOT_INFO * _apRootList[] = {
   &ID_SCREEN_ACCUEIL_RootInfo,
-  &ID_SCREEN_PANNEAU_RootInfo,
   &ID_SCREEN_FEUX_RootInfo,
   &ID_SCREEN_PORTE_RootInfo,
   &ID_SCREEN_VITESSE_RootInfo,
@@ -67,8 +66,8 @@ static unsigned _NumScreens = GUI_COUNTOF(_apRootList);
 static APPW_VAR_OBJECT _aVarList[] = {
   { ID_PositionViseurX, 0, 270, NULL },
   { ID_PositionViseurY, 0, 130, NULL },
-  { ID_Var_ClignoG, 0, 0, NULL },
-  { ID_Var_ClignoD, 0, 0, NULL },
+  { ID_Var_ClignoG, 0, 1, NULL },
+  { ID_Var_ClignoD, 0, 1, NULL },
   { ID_VAR_MODE_LUMIERE, 0, 0, NULL },
   { ID_VAR_Cadena, 0, 0, NULL },
   { ID_VAR_Phare, 0, 0, NULL },

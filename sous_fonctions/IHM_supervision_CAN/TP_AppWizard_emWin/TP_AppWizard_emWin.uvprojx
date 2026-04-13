@@ -590,11 +590,6 @@
               <FilePath>AppWizzard/Resource/Image/ICONE_HUILE.c</FilePath>
             </File>
             <File>
-              <FileName>lune.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>AppWizzard/Resource/Image/lune.c</FilePath>
-            </File>
-            <File>
               <FileName>Cligno_DROIT_60x60.c</FileName>
               <FileType>1</FileType>
               <FilePath>AppWizzard/Resource/Movie/Cligno_DROIT_60x60.c</FilePath>
@@ -618,11 +613,6 @@
               <FileName>viseur_nunchuk.c</FileName>
               <FileType>1</FileType>
               <FilePath>AppWizzard/Resource/Image/viseur_nunchuk.c</FilePath>
-            </File>
-            <File>
-              <FileName>vide.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>AppWizzard/Resource/Image/vide.c</FilePath>
             </File>
           </Files>
         </Group>

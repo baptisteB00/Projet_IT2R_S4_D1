@@ -76,7 +76,8 @@ void ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_00__APPW_JOB_SETBI
   GUI_USE_PARA(pAction);
   GUI_USE_PARA(hScreen);
   GUI_USE_PARA(pMsg);
-  GUI_USE_PARA(pResult);
+ 	GUI_USE_PARA(pResult);
+
 }
 
 /*********************************************************************
