@@ -96,26 +96,29 @@ void thread_Decode(void *argument)
 	int32_t  retour_val_GPRMCb;
 	int32_t  retour_val_GPGGAb;
 	
+	char * strToken;
+	
 	
 	while(1)
 	{
 		osMessageQueueGet(ID_BAL_DECODE, &MessageRecu, NULL, osWaitForever); // On attend recevoir la mailbox du thread Recept UART
 		
-		sprintf(val, "%06s", MessageRecu.data);		// On prend les 6 premiers caractère (à partir du $)
-		sprintf(val2, "%06s", MessageRecu.data+1);		
+		//sprintf(val, "%06s", MessageRecu.data);		// On prend les 6 premiers caractère (à partir du $)
+		//sprintf(val2, "%06s", MessageRecu.data+1);		
 		
-		retour_val_GPRMC = strncmp(val, "$GPRMC",6);	// strncmp renvoie 0 correspond à la chaîne de carcactère
-		retour_val_GPGGA = strncmp(val, "$GPGGA",6);
+		retour_val_GPRMC = strncmp(MessageRecu.data, "$GPRMC",6);	// strncmp renvoie 0 correspond à la chaîne de carcactère
+		retour_val_GPGGA = strncmp(MessageRecu.data, "$GPGGA",6);
 		
-		retour_val_GPRMCb = strncmp(val2, "$GPRMC",6);	// strncmp renvoie 0 correspond à la chaîne de carcactère
-		retour_val_GPGGAb = strncmp(val2, "$GPGGA",6);
+		retour_val_GPRMCb = strncmp(MessageRecu.data+1, "$GPRMC",6);	// strncmp renvoie 0 correspond à la chaîne de carcactère
+		retour_val_GPGGAb = strncmp(MessageRecu.data+1, "$GPGGA",6);
 
 		
-		if ((retour_val_GPRMC == NULL)|| (retour_val_GPRMCb == NULL))		// En fonction de ce qu'on reçoit au début de la trame, notre code va dans une de ses conditions pour décoder la bonne trame
+		
+		if (retour_val_GPRMC == NULL)		// En fonction de ce qu'on reçoit au début de la trame, notre code va dans une de ses conditions pour décoder la bonne trame
 		{
-			Coordonnee.temps = strtok(MessageRecu.data, separateur);
+			 strToken = strtok(MessageRecu.data, separateur);
 			
-			if (Coordonnee.temps != NULL)
+			if (strToken != NULL)
 				{
 					Coordonnee.temps 		 = strtok (NULL, separateur); 
 					Coordonnee.alerte 	 = strtok (NULL, separateur); 
@@ -124,27 +127,35 @@ void thread_Decode(void *argument)
 				  Coordonnee.longitude = strtok (NULL, separateur);
 				  Coordonnee.est_ouest = strtok (NULL, separateur);
 				}		
+				while ( strToken != NULL ) {
+        // On demande le token suivant.
+        strToken = strtok ( NULL, separateur );
+				}		
 		}
 		
-		if ((retour_val_GPGGA == NULL)|| (retour_val_GPGGAb == NULL)) 	// Renvo
+		else if (retour_val_GPGGA == NULL) 	// Renvo
 		{
-			Coordonnee.temps = strtok(MessageRecu.data, separateur);
+			strToken = strtok(MessageRecu.data, separateur);
 			 
-			if (Coordonnee.temps != NULL)
+			if (strToken != NULL)
 				{
 					Coordonnee.temps 		 = strtok (NULL, separateur); 
 					Coordonnee.latitude  = strtok (NULL, separateur);
 				  Coordonnee.nord_sud  = strtok (NULL, separateur);
 				  Coordonnee.longitude = strtok (NULL, separateur);
 				  Coordonnee.est_ouest = strtok (NULL, separateur);
-				}				 
+				}	
+			while ( strToken != NULL ) {
+        // On demande le token suivant.
+        strToken = strtok ( NULL, separateur );
+				}				
 		}
 		
-		if (retour_val_GPRMCb == NULL)		// En fonction de ce qu'on reçoit au début de la trame, notre code va dans une de ses conditions pour décoder la bonne trame
+		else if (retour_val_GPRMCb == NULL)		// En fonction de ce qu'on reçoit au début de la trame, notre code va dans une de ses conditions pour décoder la bonne trame
 		{
-			Coordonnee.temps = strtok(MessageRecu.data, separateur);
+			strToken = strtok(MessageRecu.data, separateur);
 			
-			if (Coordonnee.temps != NULL)
+			if (strToken != NULL)
 				{
 					Coordonnee.temps 		 = strtok (NULL, separateur); 
 					Coordonnee.alerte 	 = strtok (NULL, separateur); 
@@ -153,20 +164,28 @@ void thread_Decode(void *argument)
 				  Coordonnee.longitude = strtok (NULL, separateur);
 				  Coordonnee.est_ouest = strtok (NULL, separateur);
 				}		
+				while ( strToken != NULL ) {
+        // On demande le token suivant.
+        strToken = strtok ( NULL, separateur );
+				}
 		}
 		
-		if (retour_val_GPGGAb == NULL) 	// Renvo
+		else if (retour_val_GPGGAb == NULL) 	// Renvo
 		{
-			Coordonnee.temps = strtok(MessageRecu.data, separateur);
+			strToken = strtok(MessageRecu.data, separateur);
 			 
-			if (Coordonnee.temps != NULL)
+			if (strToken != NULL)
 				{
 					Coordonnee.temps 		 = strtok (NULL, separateur); 
 					Coordonnee.latitude  = strtok (NULL, separateur);
 				  Coordonnee.nord_sud  = strtok (NULL, separateur);
 				  Coordonnee.longitude = strtok (NULL, separateur);
 				  Coordonnee.est_ouest = strtok (NULL, separateur);
-				}				 
+				}			
+				while ( strToken != NULL ) {
+        // On demande le token suivant.
+        strToken = strtok ( NULL, separateur );
+				}
 		}
 		
 		osMessageQueuePut(ID_BAL_EMET_CAN,&Coordonnee , NULL, osWaitForever);
@@ -204,11 +223,11 @@ void thread_EmissionCAN(void *argument)
 		data_buff_latitude[2]= *(Coordonnee.latitude+2);
 		data_buff_latitude[3]= *(Coordonnee.latitude+3);
 		
-		data_buff_longitude[0]=*Coordonnee.longitude;
-		data_buff_longitude[1]=*(Coordonnee.longitude+1);
-		data_buff_longitude[2]=*(Coordonnee.longitude+2);
-		data_buff_longitude[3]=*(Coordonnee.longitude+3);
-		data_buff_longitude[4]=*(Coordonnee.longitude+4);
+		data_buff_longitude[0]= *Coordonnee.longitude;
+		data_buff_longitude[1]= *(Coordonnee.longitude+1);
+		data_buff_longitude[2]= *(Coordonnee.longitude+2);
+		data_buff_longitude[3]= *(Coordonnee.longitude+3);
+		data_buff_longitude[4]= *(Coordonnee.longitude+4);
 		
 		
 		Driver_CAN2.MessageSend(1, &tx_msg_info, data_buff_temps, 6); 
@@ -302,20 +321,45 @@ void UART_Callback_GPS(uint32_t event)
 //	}
 	
 	
-	if(event & ARM_USART_EVENT_RECEIVE_COMPLETE)
+//	if(event & ARM_USART_EVENT_RECEIVE_COMPLETE)
+//	{
+//	
+//		if ( (Message.data[idx] != '\n') && (idx < 100) )
+//		{
+//			idx++;
+//			Driver_USART3.Receive(&Message.data[idx], 1);
+//		}
+//		else 
+//		{
+//			osThreadFlagsSet(ID_ReceptUART, 0x0001); // reveille la reception
+//		}
+//		}
+//	
+
+	if (event & ARM_USART_EVENT_RECEIVE_COMPLETE)
 	{
-	
-		if ( (Message.data[idx] != '\n') && (idx < 100) )
+		if (idx == 0)
 		{
-			idx++;
+			if(Message.data[idx] == '$') idx++;
 			Driver_USART3.Receive(&Message.data[idx], 1);
 		}
-		else 
+		else
 		{
-			osThreadFlagsSet(ID_ReceptUART, 0x0001); // reveille la reception
+			if( (idx != 0) && (Message.data[idx] != '\n') )
+			{		
+				idx++;
+				Driver_USART3.Receive(&Message.data[idx], 1);
+			}
+			else if ( (idx !=0) && (Message.data[idx] == '\n') ) osThreadFlagsSet(ID_ReceptUART, 0x0001); // reveille la reception
 		}
 		
+		
+		
+		
 	}
+		
+		
+		
 	
 //	
 //	if(event & ARM_USART_EVENT_RECEIVE_COMPLETE)

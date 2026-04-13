@@ -39,8 +39,6 @@
 #define RTE_Drivers_USART10             /* Driver USART10 */
 /* Keil::Device:STM32Cube Framework:Classic@1.8.1 */
 #define RTE_DEVICE_FRAMEWORK_CLASSIC
-/* Keil::Device:STM32Cube HAL:CAN@1.8.1 */
-#define RTE_DEVICE_HAL_CAN
 /* Keil::Device:STM32Cube HAL:Common@1.8.1 */
 #define RTE_DEVICE_HAL_COMMON
 /* Keil::Device:STM32Cube HAL:Cortex@1.8.1 */
