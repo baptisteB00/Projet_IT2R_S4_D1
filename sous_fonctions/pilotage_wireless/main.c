@@ -14,7 +14,7 @@ Programme acquisition Nunchuck - Multitache
 #include  CMSIS_device_header
 #include "cmsis_os2.h"
 #include "Driver_USART.h"       // Pour les fonctions UART 
-
+#include "stdlib.h"
 /* ------------ Composants et police LCD ----------*/
 #define NUNCHUCK_ADDR 0x52
 
@@ -77,23 +77,29 @@ int main (void) {
 Thread Nunchuck / Thread Bluetooth
 ----------------------------------------------*/
 
+void My_I2C_Callback(uint32_t event){
+	if(event & ARM_I2C_EVENT_TRANSFER_DONE){
+		osThreadFlagsSet((osThreadId_t)ID_Thread_Nunchuck, (1<<0));
+	}
+}
+
 //Thread Nunchuck
 void Thread_Nunchuck (void const* argument){
 	(void)argument;
-	char ligne1[32], ligne2[32], ligne3[32];
+	char ligne1[32], ligne2[32];
 	while (1){
 		osMutexAcquire(mut_Nunchuck,osWaitForever);
 		uint8_t cmd = 0x00;
 		
     // 1. Demande de lecture
     Driver_I2C2.MasterTransmit(NUNCHUCK_ADDR, &cmd, 1, false);
-    while (Driver_I2C2.GetStatus().busy);
+    osThreadFlagsWait((1<<0),osFlagsWaitAll,osWaitForever);
     // 2. Delay
-    osDelay(5);
+    osDelay(20);
 		
     // 3. Lecture des 6 octets
     Driver_I2C2.MasterReceive(NUNCHUCK_ADDR, data, 6, false);
-    while (Driver_I2C2.GetStatus().busy);
+    osThreadFlagsWait((1<<0),osFlagsWaitAll,osWaitForever);
 		
 		// --- Serialisation ---
 		sprintf(ligne1, "ValJoy: X%02X Y%02X", data[0], data[1]);
@@ -114,20 +120,17 @@ void Thread_Bluetooth (void const* argument){
 
 		while (1){
 		data_transmit[2] = data[5] & 0x03; // Lecture BP
-			
-		if(data[1] > 0x80){data_transmit[1] = 0x7F;}//Avance
-		else if(data[1] < 0x6F){data_transmit[1] = 0x80;}//Recule
-		// Neutre
-		else 
-		{
-			data_transmit[0] = 0x00;
-			data_transmit[1] = 0x00;
-		}
-		//Direction
-		if (((data[0] > 0x62)&(data[0] < 0x95))){data_transmit[0] = 0x00 ;} //devant
-		else if (data[0] < 0x62){data_transmit[0] = 0x80;}// Droite
-		else if (data[0] > 0x95){data_transmit[0] = 0x7F;}// Gauche
+				
+		// Vitesse 
+		data_transmit[1] = (char) abs((int)data[1] - 122) / 1.3;
+		// Sens
+		if (data[1] < 0x7B){data_transmit[2] &= 0xFB;} // Sens negatif			
+		else{data_transmit[2] |= 0x04;} // Sens positif	
 		
+		// Direction
+//		data_transmit[0] = (char) (data[0] -133) / 1.5;
+		data_transmit[0] = (data[0]- 122) /2;
+		//Envoi
 		Driver_USART1.Send(data_transmit,3);	
 		while(Driver_USART1.GetTxCount() < 2);		
 		osDelay(200);
@@ -161,7 +164,7 @@ void Nunchuck_Init(void) {
     uint8_t init1[] = {0xF0, 0x55};
     uint8_t init2[] = {0xFB, 0x00};
 
-    Driver_I2C2.Initialize(NULL);
+    Driver_I2C2.Initialize(My_I2C_Callback);
     Driver_I2C2.PowerControl(ARM_POWER_FULL);
     Driver_I2C2.Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_STANDARD);
 

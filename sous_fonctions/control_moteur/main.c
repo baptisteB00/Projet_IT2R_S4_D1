@@ -57,23 +57,24 @@ int main(void){
 	GLCD_SetFont(&GLCD_Font_16x24);
 
 	while (1){
-		
+		// Reception Bluetooth
 		Driver_USART1.Receive(cmd_bluth, 3);
 		while (Driver_USART1.GetRxCount() == 0);
-		sprintf(tab," %02X  %02X ",cmd_bluth[0],cmd_bluth[1]);
-		sprintf(tab2," %02X",cmd_bluth[2]);
 		
-		
+		// Serialisation
+		sprintf(tab," S%02X  Dir%d ",cmd_bluth[0],cmd_bluth[1]);
+		sprintf(tab2," Vit%d",cmd_bluth[2]);
+		// Affichage LCD
 		GLCD_DrawString(10,10,tab);
 		GLCD_DrawString(10,50,tab2);
-		for ( i =0; i>200;i++);
+		for ( i =0; i>200;i++); // delay 
 
 		ADC_StartConversion();
 		while(ADC_ConversionDone()!=0);
 		float valeur = ADC_GetValue();
 		valeur/=4096.0f;
 		direction_roue((valeur * 180.0f)-90);
-		control_vitesse(valeur*100);
+		//control_vitesse(valeur*100);
 		
 		if((LPC_GPIO1->FIOPIN & (1<<23))==1<<23){
 			control_hacheur(ARRIERE);
@@ -81,20 +82,18 @@ int main(void){
 			control_hacheur(AVANT);
 		}
 		// Controle Direction
-		if(cmd_bluth[1] == 0x7F){direction_roue(0);}
-		else if(cmd_bluth[1] == 0x80){direction_roue(60);}
-		else{direction_roue(30);}
+//		if(cmd_bluth[1] == 0x7F){direction_roue(0);}
+//		else if(cmd_bluth[1] == 0x80){direction_roue(60);}
+//		else{direction_roue(30);}
+		direction_roue(cmd_bluth[1]+30);
+		
+		control_vitesse (cmd_bluth[2]);
 		// Controle Vitesse
-		if (cmd_bluth[2]== 0x7F){control_hacheur(AVANT);}
-		else if (cmd_bluth[2]== 0x80){control_hacheur(ARRIERE);}
-		else{control_hacheur(DESACTIVE);}
-		
-		
-		/*Avencer =  octect 0 :00   octect 1 :7F
-			Reculer =  octect 0 :00   octect 1 :80
-			Tourner à droite =  octect 0 :7F   octect 1 :7F
-			Tourner à gauche =  octect 0 :80   octect 1 :7F
-		*/
+//		if (cmd_bluth[2]== 0x7F){control_hacheur(AVANT);}
+//		else if (cmd_bluth[2]== 0x80){control_hacheur(ARRIERE);}
+		if((cmd_bluth[0] & 0x04) == 0x04){control_hacheur(AVANT);}
+		else if((cmd_bluth[0] & 0x04) == 0x00){control_hacheur(ARRIERE);}
+		//else{control_hacheur(DESACTIVE);}
 	}
 }
 
