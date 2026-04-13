@@ -22,70 +22,47 @@ Dialog DLL:      TARMP1.DLL V1.27.1.0
  
 <h2>Project:</h2>
 C:\Etudiants\Git\Projet_IT2R_S4_D1\sous_fonctions\position_GPS\affichage_gps_keil\affichage.uvprojx
-Project File Date:  04/03/2026
+Project File Date:  04/13/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.24', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Rebuild target 'Target_1'
-compiling rtx_memory.c...
-compiling RTX_Config.c...
-compiling rtx_lib.c...
 compiling GLCD_Fonts.c...
-compiling os_systick.c...
-main.c(18): warning: unused parameter 'obj_idx' [-Wunused-parameter]
-   18 | void myCAN1_callback(uint32_t obj_idx, uint32_t event)
-      |                               ^
-main.c(80): warning: data argument not used by format string [-Wformat-extra-args]
-   80 |                         sprintf (heure, " Temps :  ",data_buf[0]);
-      |                                         ~~~~~~~~~~~~ ^
-main.c(81): warning: data argument not used by format string [-Wformat-extra-args]
-   81 |                         sprintf (latitude, " Latitude :  ",data_buf[1]);
-      |                                            ~~~~~~~~~~~~~~~ ^
-main.c(82): warning: data argument not used by format string [-Wformat-extra-args]
-   82 |                         sprintf (nord_sud, " N/S :  ",data_buf[2]);
-      |                                            ~~~~~~~~~~ ^
-main.c(83): warning: data argument not used by format string [-Wformat-extra-args]
-   83 |                         sprintf (longitude, " Longitude :  ",data_buf[3]);
-      |                                             ~~~~~~~~~~~~~~~~ ^
-main.c(84): warning: data argument not used by format string [-Wformat-extra-args]
-   84 |                         sprintf (est_ouest, " E/O :  ",data_buf[4]);
-      |                                             ~~~~~~~~~~ ^
-main.c(62): warning: unused variable 'id' [-Wunused-variable]
-   62 |         uint32_t id;
-      |                  ^~
-main.c(64): warning: unused variable 'status' [-Wunused-variable]
-   64 |         osStatus_t status;
-      |                    ^~~~~~
-main.c(80): warning: 'sprintf' will always overflow; destination buffer has size 0, but format string expands to at least 11 [-Wformat-overflow]
-   80 |                         sprintf (heure, " Temps :  ",data_buf[0]);
-      |                         ^
-9 warnings generated.
-compiling main.c...
 compiling rtx_evflags.c...
-compiling rtx_evr.c...
-assembling irq_armv7m.S...
-compiling rtx_system.c...
-compiling rtx_delay.c...
-compiling rtx_mutex.c...
-compiling rtx_semaphore.c...
 compiling GLCD_MCB1700.c...
-compiling rtx_timer.c...
 compiling rtx_mempool.c...
-compiling PIN_LPC17xx.c...
+compiling rtx_evr.c...
+compiling rtx_lib.c...
+compiling RTX_Config.c...
+compiling os_systick.c...
+compiling rtx_memory.c...
+compiling rtx_delay.c...
+main.c(28): warning: unused parameter 'obj_idx' [-Wunused-parameter]
+   28 | void myCAN1_callback(uint32_t obj_idx, uint32_t event)
+      |                               ^
+main.c(66): warning: unused parameter 'argument' [-Wunused-parameter]
+   66 | void thread_ReceptionCAN(void *argument)
+      |                                ^
+2 warnings generated.
+compiling main.c...
+compiling rtx_system.c...
+compiling rtx_timer.c...
+compiling rtx_semaphore.c...
 compiling rtx_kernel.c...
-C:/Keil_v5/ARM/PACK/Keil/LPC1700_DFP/3.0.0/RTE_Driver/SSP_LPC17xx.c(90): error: "SSP not configured in RTE_Device.h!"
-   90 | #error "SSP not configured in RTE_Device.h!"
-      |  ^
-1 error generated.
-compiling SSP_LPC17xx.c...
 compiling rtx_msgqueue.c...
-assembling startup_LPC17xx.s...
-compiling system_LPC17xx.c...
-compiling CAN_LPC17xx.c...
+compiling rtx_mutex.c...
+assembling irq_armv7m.S...
 compiling rtx_thread.c...
+compiling PIN_LPC17xx.c...
 compiling GPIO_LPC17xx.c...
 compiling GPDMA_LPC17xx.c...
-".\Objects\affichage.axf" - 1 Error(s), 9 Warning(s).
+compiling system_LPC17xx.c...
+assembling startup_LPC17xx.s...
+compiling SSP_LPC17xx.c...
+compiling CAN_LPC17xx.c...
+linking...
+Program Size: Code=43876 RO-data=6704 RW-data=172 ZI-data=22796  
+".\Objects\affichage.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -145,32 +122,32 @@ Package Vendor: Keil
       Source file:   CMSIS/RTOS2/Source/os_systick.c
 
    * Component: ARM::CMSIS:RTOS2:Keil RTX5&Source@5.9.0
-      Include file:  Include/rtx_os.h
-      Source file:   Config/RTX_Config.c
-      Source file:   Template/main.c
       Source file:   Template/Events.c
       Source file:   Template/MemPool.c
-      Include file:  Config/RTX_Config.h
-      Source file:   Source/rtx_timer.c
-      Source file:   Source/rtx_mutex.c
-      Source file:   Template/Semaphore.c
-      Source file:   Source/rtx_memory.c
-      Source file:   Source/GCC/irq_armv7m.S
-      Source file:   Template/Thread.c
-      Source file:   Template/svc_user.c
-      Source file:   Source/rtx_system.c
-      Source file:   Source/rtx_evflags.c
       Source file:   Template/MsgQueue.c
-      Source file:   Source/rtx_semaphore.c
-      Source file:   Source/rtx_msgqueue.c
-      Source file:   Source/rtx_mempool.c
-      Source file:   Source/rtx_lib.c
-      Source file:   Source/rtx_evr.c
       Source file:   Template/Mutex.c
+      Source file:   Template/Thread.c
       Source file:   Template/Timer.c
       Source file:   Source/rtx_kernel.c
       Source file:   Source/rtx_thread.c
+      Source file:   Source/rtx_evflags.c
+      Source file:   Source/rtx_memory.c
+      Source file:   Source/rtx_semaphore.c
+      Source file:   Source/rtx_mutex.c
+      Source file:   Source/rtx_msgqueue.c
+      Source file:   Template/svc_user.c
+      Source file:   Source/rtx_mempool.c
+      Source file:   Config/RTX_Config.c
       Source file:   Source/rtx_delay.c
+      Source file:   Template/Semaphore.c
+      Include file:  Include/rtx_os.h
+      Source file:   Source/rtx_timer.c
+      Include file:  Config/RTX_Config.h
+      Source file:   Template/main.c
+      Source file:   Source/rtx_system.c
+      Source file:   Source/rtx_lib.c
+      Source file:   Source/rtx_evr.c
+      Source file:   Source/GCC/irq_armv7m.S
 
    * Component: Board Support:Graphic LCD(API)@1.0.0
       Include file:  Board/Board_GLCD.h
@@ -200,23 +177,22 @@ Package Vendor: Keil
       Source file:   RTE_Driver/SSP_LPC17xx.c
 
    * Component: Keil::Device:GPDMA@1.4.0
-      Source file:   RTE_Driver/GPDMA_LPC17xx.c
       Include file:  RTE_Driver/GPDMA_LPC17xx.h
+      Source file:   RTE_Driver/GPDMA_LPC17xx.c
 
    * Component: Keil::Device:GPIO@1.1.0
-      Source file:   RTE_Driver/GPIO_LPC17xx.c
       Include file:  RTE_Driver/GPIO_LPC17xx.h
+      Source file:   RTE_Driver/GPIO_LPC17xx.c
 
    * Component: Keil::Device:PIN@1.0.0
       Source file:   RTE_Driver/PIN_LPC17xx.c
       Include file:  RTE_Driver/PIN_LPC17xx.h
 
    * Component: Keil::Device:Startup@1.0.0
+      Include file:  Device/Include/LPC17xx.h
+      Source file:   Device/Source/system_LPC17xx.c
       Include file:  RTE_Driver/Config/RTE_Device.h
       Source file:   Device/Source/ARM/startup_LPC17xx.s
-      Source file:   Device/Source/system_LPC17xx.c
-      Include file:  Device/Include/LPC17xx.h
-Target not created.
 Build Time Elapsed:  00:00:00
 </pre>
 </body>

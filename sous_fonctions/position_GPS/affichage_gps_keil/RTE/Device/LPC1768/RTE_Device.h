@@ -660,12 +660,12 @@
 
 // <e> CAN1 Controller [Driver_CAN1]
 // <i> Configuration settings for Driver_CAN1 in component ::Drivers:CAN
-#define   RTE_CAN_CAN1                  0
+#define   RTE_CAN_CAN1                  1
 
 //   <h> Pin Configuration
 //     <o> CAN1_RD <0=>Not used <1=>P0_0 <2=>P0_21
 //     <i> CAN1 receiver input.
-#define   RTE_CAN1_RD_ID                0
+#define   RTE_CAN1_RD_ID                1
 #if      (RTE_CAN1_RD_ID == 0)
   #define RTE_CAN1_RD_PIN_EN            0
 #elif    (RTE_CAN1_RD_ID == 1)
@@ -684,7 +684,7 @@
 #endif
 //     <o> CAN1_TD <0=>Not used <1=>P0_1 <2=>P0_22
 //     <i> CAN1 transmitter output.
-#define   RTE_CAN1_TD_ID                0
+#define   RTE_CAN1_TD_ID                1
 #if      (RTE_CAN1_TD_ID == 0)
   #define RTE_CAN1_TD_PIN_EN            0
 #elif    (RTE_CAN1_TD_ID == 1)
@@ -706,7 +706,7 @@
 
 // <e> CAN2 Controller [Driver_CAN2]
 // <i> Configuration settings for Driver_CAN2 in component ::Drivers:CAN
-#define   RTE_CAN_CAN2                  1
+#define   RTE_CAN_CAN2                  0
 
 //   <h> Pin Configuration
 //     <o> CAN2_RD <0=>Not used <1=>P0_4 <2=>P2_7
@@ -793,7 +793,7 @@
 
 //     <o> SSP0_MISO <0=>Not used <1=>P0_17 <2=>P1_23
 //     <i> Master In Slave Out for SSP0
-#define   RTE_SSP0_MISO_PIN_SEL         0
+#define   RTE_SSP0_MISO_PIN_SEL         1
 #if      (RTE_SSP0_MISO_PIN_SEL == 0)
   #define RTE_SSP0_MISO_PIN_EN          0
 #elif    (RTE_SSP0_MISO_PIN_SEL == 1)
@@ -813,7 +813,7 @@
 
 //     <o> SSP0_MOSI <0=>Not used <1=>P0_18 <2=>P1_24
 //     <i> Master Out Slave In for SSP0
-#define   RTE_SSP0_MOSI_PIN_SEL         0
+#define   RTE_SSP0_MOSI_PIN_SEL         1
 #if      (RTE_SSP0_MOSI_PIN_SEL == 0)
   #define RTE_SSP0_MOSI_PIN_EN          0
 #elif    (RTE_SSP0_MOSI_PIN_SEL == 1)
@@ -848,7 +848,7 @@
 
 // <e> SSP1 (Synchronous Serial Port 1) [Driver_SPI1]
 // <i> Configuration settings for Driver_SPI1 in component ::Drivers:SPI
-#define RTE_SSP1                        0
+#define RTE_SSP1                        1
 
 //   <h> Pin Configuration
 //     <o> SSP1_SSEL <0=>Not used <1=>P0_6
@@ -884,7 +884,7 @@
 
 //     <o> SSP1_MISO <0=>Not used <1=>P0_8
 //     <i> Master In Slave Out for SSP1
-#define   RTE_SSP1_MISO_PIN_SEL         0
+#define   RTE_SSP1_MISO_PIN_SEL         1
 #if      (RTE_SSP1_MISO_PIN_SEL == 0)
   #define RTE_SSP1_MISO_PIN_EN          0
 #elif    (RTE_SSP1_MISO_PIN_SEL == 1)
@@ -900,7 +900,7 @@
 
 //     <o> SSP1_MOSI <0=>Not used <1=>P0_9
 //     <i> Master Out Slave In for SSP1
-#define   RTE_SSP1_MOSI_PIN_SEL         0
+#define   RTE_SSP1_MOSI_PIN_SEL         1
 #if      (RTE_SSP1_MOSI_PIN_SEL == 0)
   #define RTE_SSP1_MOSI_PIN_EN          0
 #elif    (RTE_SSP1_MOSI_PIN_SEL == 1)
