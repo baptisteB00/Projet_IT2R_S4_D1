@@ -53,6 +53,7 @@ typedef struct
 	char *alerte;				//  RMC
 } DataCoordonnee;
 
+//DataCoordonnee Coordonnee;
 uint8_t idx=0;
 
 DataRecept Message;
@@ -189,6 +190,7 @@ void thread_Decode(void *argument)
 		}
 		
 		osMessageQueuePut(ID_BAL_EMET_CAN,&Coordonnee , NULL, osWaitForever);
+		i++;
 	}
 }
 
@@ -198,48 +200,69 @@ void thread_EmissionCAN(void *argument)
 	
 	DataCoordonnee Coordonnee;
 	ARM_CAN_MSG_INFO tx_msg_info;
-	char *ptr;
-	uint8_t data_buff_temps[8];
-	uint8_t data_buff_latitude[8];
-	uint8_t data_buff_longitude[8];
-	uint16_t i = 0;
+//	char *ptr;
+//	uint8_t data_buff_temps[8];
+//	uint8_t data_buff_latitude[8];
+//	uint8_t data_buff_longitude[8];
+//	uint16_t i = 0;
 	
+	 // Configuration commune pour toutes nos trames
+   tx_msg_info.rtr = 0; // Trame de données
+
 	while(1)
 	{
 		osMessageQueueGet(ID_BAL_EMET_CAN, &Coordonnee, NULL, osWaitForever);		// Reception du BAL du thread decode
 		
+		 // --- Envoi du temps ---
+
 		tx_msg_info.id = ARM_CAN_STANDARD_ID(0x0F6);
-		tx_msg_info.rtr = 0;
+		Driver_CAN2.MessageSend(1, &tx_msg_info, (uint8_t*)Coordonnee.temps, 6);
+		// Attente que le contrôleur CAN ait fini l'envoi
+    osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);
+
+		 // --- Envoi de la latitude ---
+
+		tx_msg_info.id = ARM_CAN_STANDARD_ID(0x0F7);
+		Driver_CAN2.MessageSend(1, &tx_msg_info, (uint8_t*)Coordonnee.latitude, 8);
+		// Attente que le contrôleur CAN ait fini l'envoi
+    osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);
+
+		 // --- Envoi de la longitude ---
+
+		tx_msg_info.id = ARM_CAN_STANDARD_ID(0x0F8);
+		Driver_CAN2.MessageSend(1, &tx_msg_info, (uint8_t*)Coordonnee.longitude, 8);
+		// Attente que le contrôleur CAN ait fini l'envoi
+    osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);		
+
 		
-		data_buff_temps[0] = *Coordonnee.temps;
-		data_buff_temps[1] = *(Coordonnee.temps+1);
-		data_buff_temps[2] = *(Coordonnee.temps+2);
-		data_buff_temps[3] = *(Coordonnee.temps+3);
-		data_buff_temps[4] = *(Coordonnee.temps+4);
-		data_buff_temps[5] = *(Coordonnee.temps+5);
+//		data_buff_temps[0] = *Coordonnee.temps;
+//		data_buff_temps[1] = *(Coordonnee.temps+1);
+//		data_buff_temps[2] = *(Coordonnee.temps+2);
+//		data_buff_temps[3] = *(Coordonnee.temps+3);
+//		data_buff_temps[4] = *(Coordonnee.temps+4);
+//		data_buff_temps[5] = *(Coordonnee.temps+5);
+//		
+//		data_buff_latitude[0]= *Coordonnee.latitude;
+//		data_buff_latitude[1]= *(Coordonnee.latitude+1);
+//		data_buff_latitude[2]= *(Coordonnee.latitude+2);
+//		data_buff_latitude[3]= *(Coordonnee.latitude+3);
+//		
+//		data_buff_longitude[0]= *Coordonnee.longitude;
+//		data_buff_longitude[1]= *(Coordonnee.longitude+1);
+//		data_buff_longitude[2]= *(Coordonnee.longitude+2);
+//		data_buff_longitude[3]= *(Coordonnee.longitude+3);
+//		data_buff_longitude[4]= *(Coordonnee.longitude+4);
 		
-		data_buff_latitude[0]= *Coordonnee.latitude;
-		data_buff_latitude[1]= *(Coordonnee.latitude+1);
-		data_buff_latitude[2]= *(Coordonnee.latitude+2);
-		data_buff_latitude[3]= *(Coordonnee.latitude+3);
 		
-		data_buff_longitude[0]= *Coordonnee.longitude;
-		data_buff_longitude[1]= *(Coordonnee.longitude+1);
-		data_buff_longitude[2]= *(Coordonnee.longitude+2);
-		data_buff_longitude[3]= *(Coordonnee.longitude+3);
-		data_buff_longitude[4]= *(Coordonnee.longitude+4);
-		
-		
-		Driver_CAN2.MessageSend(1, &tx_msg_info, data_buff_temps, 6); 
+//		Driver_CAN2.MessageSend(1, &tx_msg_info, data_buff_temps, 6); 
 //		osDelay(10);
 //		Driver_CAN2.MessageSend(1, &tx_msg_info, data_buff_latitude, 4);
 ////		osDelay(10);
 //		Driver_CAN2.MessageSend(1, &tx_msg_info, data_buff_longitude, 5);
 		
-		osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);
-		osDelay(100);
+//		osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);
+		osDelay(200);
 	}
-	
 	
 }
 

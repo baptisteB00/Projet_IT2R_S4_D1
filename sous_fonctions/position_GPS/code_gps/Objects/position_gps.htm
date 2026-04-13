@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\position_gps.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\position_gps.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6240002: Last Updated: Mon Apr 13 10:08:39 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6240002: Last Updated: Mon Apr 13 12:33:24 2026
 <BR><P>
 <H3>Maximum Stack Usage =        524 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1508,9 +1508,9 @@ Global Symbols
 <P><STRONG><a name="[ca]"></a>HAL_GPIO_Init</STRONG> (Thumb, 950 bytes, Stack size 56 bytes, stm32f4xx_hal_gpio.o(.text.HAL_GPIO_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = HAL_GPIO_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CANx_Uninitialize
+<BR>[Called By]<UL><LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CANx_Uninitialize
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CANx_Initialize
-<LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
 </UL>
 
 <P><STRONG><a name="[14a]"></a>HAL_GPIO_ReadPin</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, stm32f4xx_hal_gpio.o(.text.HAL_GPIO_ReadPin))
@@ -2240,7 +2240,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[61]"></a>thread_Decode</STRONG> (Thumb, 600 bytes, Stack size 232 bytes, main.o(.text.thread_Decode))
+<P><STRONG><a name="[61]"></a>thread_Decode</STRONG> (Thumb, 606 bytes, Stack size 232 bytes, main.o(.text.thread_Decode))
 <BR><BR>[Stack]<UL><LI>Max Depth = 524<LI>Call Chain = thread_Decode &rArr; osMessageQueueGet &rArr; isrRtxMessageQueueGet &rArr; osRtxPostProcess &rArr; osRtxKernelErrorNotify &rArr; EvrRtxKernelErrorNotify &rArr; EventRecord2 &rArr; EventRecordItem &rArr; IncrementRecordsDumped &rArr; atomic_inc_32
 </UL>
 <BR>[Calls]<UL><LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessageQueueGet
@@ -2250,8 +2250,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
-<P><STRONG><a name="[60]"></a>thread_EmissionCAN</STRONG> (Thumb, 216 bytes, Stack size 88 bytes, main.o(.text.thread_EmissionCAN))
-<BR><BR>[Stack]<UL><LI>Max Depth = 380<LI>Call Chain = thread_EmissionCAN &rArr; osMessageQueueGet &rArr; isrRtxMessageQueueGet &rArr; osRtxPostProcess &rArr; osRtxKernelErrorNotify &rArr; EvrRtxKernelErrorNotify &rArr; EventRecord2 &rArr; EventRecordItem &rArr; IncrementRecordsDumped &rArr; atomic_inc_32
+<P><STRONG><a name="[60]"></a>thread_EmissionCAN</STRONG> (Thumb, 162 bytes, Stack size 72 bytes, main.o(.text.thread_EmissionCAN))
+<BR><BR>[Stack]<UL><LI>Max Depth = 364<LI>Call Chain = thread_EmissionCAN &rArr; osMessageQueueGet &rArr; isrRtxMessageQueueGet &rArr; osRtxPostProcess &rArr; osRtxKernelErrorNotify &rArr; EvrRtxKernelErrorNotify &rArr; EventRecord2 &rArr; EventRecordItem &rArr; IncrementRecordsDumped &rArr; atomic_inc_32
 </UL>
 <BR>[Calls]<UL><LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessageQueueGet
 <LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
@@ -3138,242 +3138,6 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osRtxTimerTick
 </UL>
 
-<P><STRONG><a name="[87]"></a>USARTx_GetVersion</STRONG> (Thumb, 18 bytes, Stack size 4 bytes, usart_stm32f4xx.o(.text.USARTx_GetVersion))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = USARTx_GetVersion
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
-</UL>
-<P><STRONG><a name="[88]"></a>USART3_GetCapabilities</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_GetCapabilities))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART3_GetCapabilities &rArr; USART_GetCapabilities
-</UL>
-<BR>[Calls]<UL><LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetCapabilities
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
-</UL>
-<P><STRONG><a name="[13c]"></a>USART_GetCapabilities</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, usart_stm32f4xx.o(.text.USART_GetCapabilities))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART_GetCapabilities
-</UL>
-<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_GetCapabilities
-</UL>
-
-<P><STRONG><a name="[89]"></a>USART3_Initialize</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_Initialize))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80 + Unknown Stack Size
-<LI>Call Chain = USART3_Initialize &rArr; USART_Initialize &rArr; Enable_GPIO_Clock
-</UL>
-<BR>[Calls]<UL><LI><a href="#[142]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Initialize
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
-</UL>
-<P><STRONG><a name="[142]"></a>USART_Initialize</STRONG> (Thumb, 224 bytes, Stack size 24 bytes, usart_stm32f4xx.o(.text.USART_Initialize))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64 + Unknown Stack Size
-<LI>Call Chain = USART_Initialize &rArr; Enable_GPIO_Clock
-</UL>
-<BR>[Calls]<UL><LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Enable_GPIO_Clock
-<LI><a href="#[14b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
-</UL>
-<BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_Initialize
-</UL>
-
-<P><STRONG><a name="[8a]"></a>USART3_Uninitialize</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, usart_stm32f4xx.o(.text.USART3_Uninitialize))
-<BR><BR>[Stack]<UL><LI>Max Depth = 100 + Unknown Stack Size
-<LI>Call Chain = USART3_Uninitialize &rArr; USART_Uninitialize &rArr; USART_PowerControl &rArr; HAL_NVIC_DisableIRQ &rArr; __NVIC_DisableIRQ
-</UL>
-<BR>[Calls]<UL><LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Uninitialize
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
-</UL>
-<P><STRONG><a name="[148]"></a>USART_Uninitialize</STRONG> (Thumb, 192 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART_Uninitialize))
-<BR><BR>[Stack]<UL><LI>Max Depth = 92 + Unknown Stack Size
-<LI>Call Chain = USART_Uninitialize &rArr; USART_PowerControl &rArr; HAL_NVIC_DisableIRQ &rArr; __NVIC_DisableIRQ
-</UL>
-<BR>[Calls]<UL><LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_DeInit
-<LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
-</UL>
-<BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_Uninitialize
-</UL>
-
-<P><STRONG><a name="[8b]"></a>USART3_PowerControl</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_PowerControl))
-<BR><BR>[Stack]<UL><LI>Max Depth = 92 + Unknown Stack Size
-<LI>Call Chain = USART3_PowerControl &rArr; USART_PowerControl &rArr; HAL_NVIC_DisableIRQ &rArr; __NVIC_DisableIRQ
-</UL>
-<BR>[Calls]<UL><LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
-</UL>
-<P><STRONG><a name="[143]"></a>USART_PowerControl</STRONG> (Thumb, 930 bytes, Stack size 56 bytes, usart_stm32f4xx.o(.text.USART_PowerControl))
-<BR><BR>[Stack]<UL><LI>Max Depth = 76 + Unknown Stack Size
-<LI>Call Chain = USART_PowerControl &rArr; HAL_NVIC_DisableIRQ &rArr; __NVIC_DisableIRQ
-</UL>
-<BR>[Calls]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_DisableIRQ
-<LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PeripheralReset
-<LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
-<LI><a href="#[14d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
-<LI><a href="#[14b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
-</UL>
-<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_PowerControl
-<LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Uninitialize
-</UL>
-
-<P><STRONG><a name="[8c]"></a>USART3_Send</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_Send))
-<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = USART3_Send &rArr; USART_Send
-</UL>
-<BR>[Calls]<UL><LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
-</UL>
-<P><STRONG><a name="[145]"></a>USART_Send</STRONG> (Thumb, 162 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART_Send))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = USART_Send
-</UL>
-<BR>[Called By]<UL><LI><a href="#[147]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Transfer
-<LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_Send
-</UL>
-
-<P><STRONG><a name="[8d]"></a>USART3_Receive</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_Receive))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = USART3_Receive &rArr; USART_Receive &rArr; USART_Send
-</UL>
-<BR>[Calls]<UL><LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
-</UL>
-<P><STRONG><a name="[144]"></a>USART_Receive</STRONG> (Thumb, 228 bytes, Stack size 32 bytes, usart_stm32f4xx.o(.text.USART_Receive))
-<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = USART_Receive &rArr; USART_Send
-</UL>
-<BR>[Calls]<UL><LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
-</UL>
-<BR>[Called By]<UL><LI><a href="#[147]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Transfer
-<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_Receive
-</UL>
-
-<P><STRONG><a name="[8e]"></a>USART3_Transfer</STRONG> (Thumb, 32 bytes, Stack size 24 bytes, usart_stm32f4xx.o(.text.USART3_Transfer))
-<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = USART3_Transfer &rArr; USART_Transfer &rArr; USART_Receive &rArr; USART_Send
-</UL>
-<BR>[Calls]<UL><LI><a href="#[147]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Transfer
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
-</UL>
-<P><STRONG><a name="[147]"></a>USART_Transfer</STRONG> (Thumb, 150 bytes, Stack size 32 bytes, usart_stm32f4xx.o(.text.USART_Transfer))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = USART_Transfer &rArr; USART_Receive &rArr; USART_Send
-</UL>
-<BR>[Calls]<UL><LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
-<LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
-</UL>
-<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_Transfer
-</UL>
-
-<P><STRONG><a name="[8f]"></a>USART3_GetTxCount</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, usart_stm32f4xx.o(.text.USART3_GetTxCount))
-<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = USART3_GetTxCount &rArr; USART_GetTxCount
-</UL>
-<BR>[Calls]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetTxCount
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
-</UL>
-<P><STRONG><a name="[140]"></a>USART_GetTxCount</STRONG> (Thumb, 14 bytes, Stack size 4 bytes, usart_stm32f4xx.o(.text.USART_GetTxCount))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = USART_GetTxCount
-</UL>
-<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_GetTxCount
-</UL>
-
-<P><STRONG><a name="[90]"></a>USART3_GetRxCount</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, usart_stm32f4xx.o(.text.USART3_GetRxCount))
-<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = USART3_GetRxCount &rArr; USART_GetRxCount
-</UL>
-<BR>[Calls]<UL><LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetRxCount
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
-</UL>
-<P><STRONG><a name="[13e]"></a>USART_GetRxCount</STRONG> (Thumb, 14 bytes, Stack size 4 bytes, usart_stm32f4xx.o(.text.USART_GetRxCount))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = USART_GetRxCount
-</UL>
-<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_GetRxCount
-</UL>
-
-<P><STRONG><a name="[91]"></a>USART3_Control</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_Control))
-<BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = USART3_Control &rArr; USART_Control &rArr;  USART_Control (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
-</UL>
-<P><STRONG><a name="[13b]"></a>USART_Control</STRONG> (Thumb, 3462 bytes, Stack size 136 bytes, usart_stm32f4xx.o(.text.USART_Control))
-<BR><BR>[Stack]<UL><LI>Max Depth = 192 + In Cycle
-<LI>Call Chain = USART_Control &rArr;  USART_Control (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
-<LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
-<LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_DeInit
-<LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
-</UL>
-<BR>[Called By]<UL><LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_Control
-</UL>
-
-<P><STRONG><a name="[92]"></a>USART3_GetStatus</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_GetStatus))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART3_GetStatus &rArr; USART_GetStatus
-</UL>
-<BR>[Calls]<UL><LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetStatus
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
-</UL>
-<P><STRONG><a name="[13f]"></a>USART_GetStatus</STRONG> (Thumb, 212 bytes, Stack size 8 bytes, usart_stm32f4xx.o(.text.USART_GetStatus))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART_GetStatus
-</UL>
-<BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_GetStatus
-</UL>
-
-<P><STRONG><a name="[93]"></a>USART3_SetModemControl</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_SetModemControl))
-<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = USART3_SetModemControl &rArr; USART_SetModemControl &rArr; HAL_GPIO_WritePin
-</UL>
-<BR>[Calls]<UL><LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SetModemControl
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
-</UL>
-<P><STRONG><a name="[146]"></a>USART_SetModemControl</STRONG> (Thumb, 226 bytes, Stack size 24 bytes, usart_stm32f4xx.o(.text.USART_SetModemControl))
-<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = USART_SetModemControl &rArr; HAL_GPIO_WritePin
-</UL>
-<BR>[Calls]<UL><LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-</UL>
-<BR>[Called By]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_SetModemControl
-</UL>
-
-<P><STRONG><a name="[94]"></a>USART3_GetModemStatus</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_GetModemStatus))
-<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = USART3_GetModemStatus &rArr; USART_GetModemStatus &rArr; HAL_GPIO_ReadPin
-</UL>
-<BR>[Calls]<UL><LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetModemStatus
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
-</UL>
-<P><STRONG><a name="[13d]"></a>USART_GetModemStatus</STRONG> (Thumb, 106 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART_GetModemStatus))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART_GetModemStatus &rArr; HAL_GPIO_ReadPin
-</UL>
-<BR>[Calls]<UL><LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
-</UL>
-<BR>[Called By]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_GetModemStatus
-</UL>
-
-<P><STRONG><a name="[14c]"></a>Enable_GPIO_Clock</STRONG> (Thumb, 474 bytes, Stack size 40 bytes, usart_stm32f4xx.o(.text.Enable_GPIO_Clock))
-<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Enable_GPIO_Clock
-</UL>
-<BR>[Called By]<UL><LI><a href="#[142]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Initialize
-</UL>
-
-<P><STRONG><a name="[14d]"></a>__NVIC_ClearPendingIRQ</STRONG> (Thumb, 48 bytes, Stack size 4 bytes, usart_stm32f4xx.o(.text.__NVIC_ClearPendingIRQ))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_ClearPendingIRQ
-</UL>
-<BR>[Called By]<UL><LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
-</UL>
-
-<P><STRONG><a name="[14e]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 48 bytes, Stack size 4 bytes, usart_stm32f4xx.o(.text.__NVIC_EnableIRQ))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_EnableIRQ
-</UL>
-<BR>[Called By]<UL><LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
-</UL>
-
-<P><STRONG><a name="[14f]"></a>USART_PeripheralReset</STRONG> (Thumb, 444 bytes, Stack size 4 bytes, usart_stm32f4xx.o(.text.USART_PeripheralReset))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = USART_PeripheralReset
-</UL>
-<BR>[Called By]<UL><LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
-</UL>
-
 <P><STRONG><a name="[78]"></a>CAN_GetVersion</STRONG> (Thumb, 18 bytes, Stack size 4 bytes, can_stm32f4xx.o(.text.CAN_GetVersion))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = CAN_GetVersion
 </UL>
@@ -3394,8 +3158,8 @@ Local Symbols
 <P><STRONG><a name="[bf]"></a>CANx_Initialize</STRONG> (Thumb, 228 bytes, Stack size 72 bytes, can_stm32f4xx.o(.text.CANx_Initialize))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = CANx_Initialize &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Enable_GPIO_Clock
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
+<BR>[Calls]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Enable_GPIO_Clock
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN2_Initialize
 </UL>
@@ -3601,6 +3365,242 @@ Local Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = CANx_RemoveFilter
 </UL>
 <BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CANx_ObjectSetFilter
+</UL>
+
+<P><STRONG><a name="[87]"></a>USARTx_GetVersion</STRONG> (Thumb, 18 bytes, Stack size 4 bytes, usart_stm32f4xx.o(.text.USARTx_GetVersion))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = USARTx_GetVersion
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
+</UL>
+<P><STRONG><a name="[88]"></a>USART3_GetCapabilities</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_GetCapabilities))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART3_GetCapabilities &rArr; USART_GetCapabilities
+</UL>
+<BR>[Calls]<UL><LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetCapabilities
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
+</UL>
+<P><STRONG><a name="[13c]"></a>USART_GetCapabilities</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, usart_stm32f4xx.o(.text.USART_GetCapabilities))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART_GetCapabilities
+</UL>
+<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_GetCapabilities
+</UL>
+
+<P><STRONG><a name="[89]"></a>USART3_Initialize</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_Initialize))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80 + Unknown Stack Size
+<LI>Call Chain = USART3_Initialize &rArr; USART_Initialize &rArr; Enable_GPIO_Clock
+</UL>
+<BR>[Calls]<UL><LI><a href="#[142]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Initialize
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
+</UL>
+<P><STRONG><a name="[142]"></a>USART_Initialize</STRONG> (Thumb, 224 bytes, Stack size 24 bytes, usart_stm32f4xx.o(.text.USART_Initialize))
+<BR><BR>[Stack]<UL><LI>Max Depth = 64 + Unknown Stack Size
+<LI>Call Chain = USART_Initialize &rArr; Enable_GPIO_Clock
+</UL>
+<BR>[Calls]<UL><LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Enable_GPIO_Clock
+<LI><a href="#[14b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
+</UL>
+<BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_Initialize
+</UL>
+
+<P><STRONG><a name="[8a]"></a>USART3_Uninitialize</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, usart_stm32f4xx.o(.text.USART3_Uninitialize))
+<BR><BR>[Stack]<UL><LI>Max Depth = 100 + Unknown Stack Size
+<LI>Call Chain = USART3_Uninitialize &rArr; USART_Uninitialize &rArr; USART_PowerControl &rArr; HAL_NVIC_DisableIRQ &rArr; __NVIC_DisableIRQ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Uninitialize
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
+</UL>
+<P><STRONG><a name="[148]"></a>USART_Uninitialize</STRONG> (Thumb, 192 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART_Uninitialize))
+<BR><BR>[Stack]<UL><LI>Max Depth = 92 + Unknown Stack Size
+<LI>Call Chain = USART_Uninitialize &rArr; USART_PowerControl &rArr; HAL_NVIC_DisableIRQ &rArr; __NVIC_DisableIRQ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_DeInit
+<LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
+</UL>
+<BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_Uninitialize
+</UL>
+
+<P><STRONG><a name="[8b]"></a>USART3_PowerControl</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_PowerControl))
+<BR><BR>[Stack]<UL><LI>Max Depth = 92 + Unknown Stack Size
+<LI>Call Chain = USART3_PowerControl &rArr; USART_PowerControl &rArr; HAL_NVIC_DisableIRQ &rArr; __NVIC_DisableIRQ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
+</UL>
+<P><STRONG><a name="[143]"></a>USART_PowerControl</STRONG> (Thumb, 930 bytes, Stack size 56 bytes, usart_stm32f4xx.o(.text.USART_PowerControl))
+<BR><BR>[Stack]<UL><LI>Max Depth = 76 + Unknown Stack Size
+<LI>Call Chain = USART_PowerControl &rArr; HAL_NVIC_DisableIRQ &rArr; __NVIC_DisableIRQ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_DisableIRQ
+<LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PeripheralReset
+<LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
+<LI><a href="#[14d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
+<LI><a href="#[14b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
+</UL>
+<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_PowerControl
+<LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Uninitialize
+</UL>
+
+<P><STRONG><a name="[8c]"></a>USART3_Send</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_Send))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = USART3_Send &rArr; USART_Send
+</UL>
+<BR>[Calls]<UL><LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
+</UL>
+<P><STRONG><a name="[145]"></a>USART_Send</STRONG> (Thumb, 162 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART_Send))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = USART_Send
+</UL>
+<BR>[Called By]<UL><LI><a href="#[147]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Transfer
+<LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_Send
+</UL>
+
+<P><STRONG><a name="[8d]"></a>USART3_Receive</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_Receive))
+<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = USART3_Receive &rArr; USART_Receive &rArr; USART_Send
+</UL>
+<BR>[Calls]<UL><LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
+</UL>
+<P><STRONG><a name="[144]"></a>USART_Receive</STRONG> (Thumb, 228 bytes, Stack size 32 bytes, usart_stm32f4xx.o(.text.USART_Receive))
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = USART_Receive &rArr; USART_Send
+</UL>
+<BR>[Calls]<UL><LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
+</UL>
+<BR>[Called By]<UL><LI><a href="#[147]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Transfer
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_Receive
+</UL>
+
+<P><STRONG><a name="[8e]"></a>USART3_Transfer</STRONG> (Thumb, 32 bytes, Stack size 24 bytes, usart_stm32f4xx.o(.text.USART3_Transfer))
+<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = USART3_Transfer &rArr; USART_Transfer &rArr; USART_Receive &rArr; USART_Send
+</UL>
+<BR>[Calls]<UL><LI><a href="#[147]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Transfer
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
+</UL>
+<P><STRONG><a name="[147]"></a>USART_Transfer</STRONG> (Thumb, 150 bytes, Stack size 32 bytes, usart_stm32f4xx.o(.text.USART_Transfer))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = USART_Transfer &rArr; USART_Receive &rArr; USART_Send
+</UL>
+<BR>[Calls]<UL><LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Receive
+<LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Send
+</UL>
+<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_Transfer
+</UL>
+
+<P><STRONG><a name="[8f]"></a>USART3_GetTxCount</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, usart_stm32f4xx.o(.text.USART3_GetTxCount))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = USART3_GetTxCount &rArr; USART_GetTxCount
+</UL>
+<BR>[Calls]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetTxCount
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
+</UL>
+<P><STRONG><a name="[140]"></a>USART_GetTxCount</STRONG> (Thumb, 14 bytes, Stack size 4 bytes, usart_stm32f4xx.o(.text.USART_GetTxCount))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = USART_GetTxCount
+</UL>
+<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_GetTxCount
+</UL>
+
+<P><STRONG><a name="[90]"></a>USART3_GetRxCount</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, usart_stm32f4xx.o(.text.USART3_GetRxCount))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = USART3_GetRxCount &rArr; USART_GetRxCount
+</UL>
+<BR>[Calls]<UL><LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetRxCount
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
+</UL>
+<P><STRONG><a name="[13e]"></a>USART_GetRxCount</STRONG> (Thumb, 14 bytes, Stack size 4 bytes, usart_stm32f4xx.o(.text.USART_GetRxCount))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = USART_GetRxCount
+</UL>
+<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_GetRxCount
+</UL>
+
+<P><STRONG><a name="[91]"></a>USART3_Control</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_Control))
+<BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = USART3_Control &rArr; USART_Control &rArr;  USART_Control (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
+</UL>
+<P><STRONG><a name="[13b]"></a>USART_Control</STRONG> (Thumb, 3462 bytes, Stack size 136 bytes, usart_stm32f4xx.o(.text.USART_Control))
+<BR><BR>[Stack]<UL><LI>Max Depth = 192 + In Cycle
+<LI>Call Chain = USART_Control &rArr;  USART_Control (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
+<LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_DeInit
+<LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
+<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
+</UL>
+<BR>[Called By]<UL><LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Control
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_Control
+</UL>
+
+<P><STRONG><a name="[92]"></a>USART3_GetStatus</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_GetStatus))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART3_GetStatus &rArr; USART_GetStatus
+</UL>
+<BR>[Calls]<UL><LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetStatus
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
+</UL>
+<P><STRONG><a name="[13f]"></a>USART_GetStatus</STRONG> (Thumb, 212 bytes, Stack size 8 bytes, usart_stm32f4xx.o(.text.USART_GetStatus))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART_GetStatus
+</UL>
+<BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_GetStatus
+</UL>
+
+<P><STRONG><a name="[93]"></a>USART3_SetModemControl</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_SetModemControl))
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = USART3_SetModemControl &rArr; USART_SetModemControl &rArr; HAL_GPIO_WritePin
+</UL>
+<BR>[Calls]<UL><LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SetModemControl
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
+</UL>
+<P><STRONG><a name="[146]"></a>USART_SetModemControl</STRONG> (Thumb, 226 bytes, Stack size 24 bytes, usart_stm32f4xx.o(.text.USART_SetModemControl))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = USART_SetModemControl &rArr; HAL_GPIO_WritePin
+</UL>
+<BR>[Calls]<UL><LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+</UL>
+<BR>[Called By]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_SetModemControl
+</UL>
+
+<P><STRONG><a name="[94]"></a>USART3_GetModemStatus</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART3_GetModemStatus))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = USART3_GetModemStatus &rArr; USART_GetModemStatus &rArr; HAL_GPIO_ReadPin
+</UL>
+<BR>[Calls]<UL><LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetModemStatus
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> usart_stm32f4xx.o(.rodata.Driver_USART3)
+</UL>
+<P><STRONG><a name="[13d]"></a>USART_GetModemStatus</STRONG> (Thumb, 106 bytes, Stack size 16 bytes, usart_stm32f4xx.o(.text.USART_GetModemStatus))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART_GetModemStatus &rArr; HAL_GPIO_ReadPin
+</UL>
+<BR>[Calls]<UL><LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
+</UL>
+<BR>[Called By]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_GetModemStatus
+</UL>
+
+<P><STRONG><a name="[14c]"></a>Enable_GPIO_Clock</STRONG> (Thumb, 474 bytes, Stack size 40 bytes, usart_stm32f4xx.o(.text.Enable_GPIO_Clock))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Enable_GPIO_Clock
+</UL>
+<BR>[Called By]<UL><LI><a href="#[142]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Initialize
+</UL>
+
+<P><STRONG><a name="[14d]"></a>__NVIC_ClearPendingIRQ</STRONG> (Thumb, 48 bytes, Stack size 4 bytes, usart_stm32f4xx.o(.text.__NVIC_ClearPendingIRQ))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_ClearPendingIRQ
+</UL>
+<BR>[Called By]<UL><LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
+</UL>
+
+<P><STRONG><a name="[14e]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 48 bytes, Stack size 4 bytes, usart_stm32f4xx.o(.text.__NVIC_EnableIRQ))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __NVIC_EnableIRQ
+</UL>
+<BR>[Called By]<UL><LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
+</UL>
+
+<P><STRONG><a name="[14f]"></a>USART_PeripheralReset</STRONG> (Thumb, 444 bytes, Stack size 4 bytes, usart_stm32f4xx.o(.text.USART_PeripheralReset))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = USART_PeripheralReset
+</UL>
+<BR>[Called By]<UL><LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_PowerControl
 </UL>
 
 <P><STRONG><a name="[e0]"></a>crc16_ccitt</STRONG> (Thumb, 130 bytes, Stack size 16 bytes, eventrecorder.o(.text.crc16_ccitt))
