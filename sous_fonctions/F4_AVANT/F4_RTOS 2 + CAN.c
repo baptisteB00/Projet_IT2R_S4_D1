@@ -40,9 +40,10 @@
 #define CAPTAvG 0x71 //0xE2
 
 //ID CAN
-#define ID_CAN_Radars 0x010
-#define ID_CAN_Lidar 0x011
-#define ID_CAN_Panneau 0x012
+#define ID_CAN_Radars_Avants 0x010
+#define ID_CAN_Radars_Arrieres 0x011
+#define ID_CAN_Lidar 0x012
+#define ID_CAN_Panneau 0x013
 #define ID_CAN_Nunchuk 0x020
 #define ID_CAN_Vitesse 0x021
 #define ID_CAN_LEDs 0x030
@@ -56,7 +57,6 @@ extern ARM_DRIVER_USART Driver_USART2;
 extern ARM_DRIVER_USART Driver_USART3;
 extern ARM_DRIVER_SPI Driver_SPI1;
 extern ARM_DRIVER_I2C Driver_I2C1;
-extern ARM_DRIVER_CAN Driver_CAN1;
 extern ARM_DRIVER_CAN Driver_CAN2;
 
 uint8_t buffer_rfid[14]; 
@@ -111,17 +111,21 @@ void tacheRFID(void){
 }
 void Phares(void){
 	uint32_t flag;
+	bool phares = 0;
   while (1) {
-		flag = osThreadFlagsWait(0x06, osFlagsWaitAny, osWaitForever);
+		flag = osThreadFlagsWait(0xFF, osFlagsWaitAny, osWaitForever);
 		if (verrouillage == 0){
-			if (flag == (1<<1)){
+			if ((phares == 1)||(flag == (1<<2))){
 				allumerPhares();
 			}
 			else {
 				eteindrePhares();
 			}
 		}
-		else if (flag == (1<<2)){
+		if (flag == (1<<0)){
+				phares = 1-phares;
+		}
+		else if (flag == (1<<1)){
 				allumerPhares();
 				osDelay(125);
 				eteindrePhares();
@@ -132,16 +136,17 @@ void Phares(void){
 			}
 		else {
 				eteindrePhares();
-			}
+		}
   }
 }
 
 void Clignotants(void){
 	uint32_t flag;
+	bool cg = 0, cd = 0;
   while (1) {
 		flag = osThreadFlagsWait (((1<<0)|(1<<1)|(1<<2)|(1<<3)),osFlagsWaitAny,osWaitForever);
 		if (verrouillage == 0){
-			if (flag == (1<<2)){
+			if (cg == 1){
 				allumer1LED(0,ORANGE);
 				allumer1LED(15,ORANGE);
 				osDelay(100);
@@ -149,7 +154,7 @@ void Clignotants(void){
 				eteindre1LED(15);
 				osDelay(100);
 			}
-			else if (flag == (1<<3)){
+			if (cg == 1){
 				allumer1LED(9,ORANGE);
 				allumer1LED(12,ORANGE);
 				osDelay(100);
@@ -157,6 +162,12 @@ void Clignotants(void){
 				eteindre1LED(12);
 				osDelay(100);
 			}
+		}
+		if (flag == (1<<2)){
+				cg = 1 - cg;
+		}
+		else if (flag == (1<<3)){
+				cd = 1 - cd;
 		}
 		else{
 			if (flag == (1<<0)){
@@ -223,10 +234,7 @@ void SensorLight(void){
 			while(HAL_ADC_PollForConversion(&ADC1_Hand, 1000) != HAL_OK);
 			valeur = HAL_ADC_GetValue(&ADC1_Hand);
 			if (valeur < 3000) {
-				osThreadFlagsSet(ID_Phares, (1<<1)); 
-			}
-			else{
-				osThreadFlagsSet(ID_Phares, (1<<2));
+				osThreadFlagsSet(ID_Phares, (1<<2)); 
 			}
 		}
 	}
@@ -324,18 +332,6 @@ void Disco(void){
 	}
 }
 
-void CANR(void){
-	ARM_CAN_MSG_INFO	msg_info;
-	uint32_t flag;
-	uint8_t data_buf[8];
-	while(1){
-		Driver_CAN1.MessageRead(0, &msg_info, data_buf, 5);
-		if ((msg_info.id == ID_CAN_Radars)&&(msg_info.dlc == 0)&&(data_buf[0] == 0)){
-			osThreadFlagsSet((osThreadId_t)ID_Radar_Droit, (1<<0));
-			osThreadFlagsSet((osThreadId_t)ID_Radar_Gauche, (1<<0));
-		}
-	}
-}
 
 void CANT(void){
 	uint8_t data[8];
@@ -343,7 +339,7 @@ void CANT(void){
 	uint32_t event_radar;
 	while(1){
 		event_radar = osThreadFlagsWait(0x03, osFlagsWaitAll, osWaitForever);
-		if (event_radar == 0x03){
+		if (event_radar == 3){
 			data[0] = 0;
 			osMessageQueueGet(MB_Radars, &msg, NULL, osWaitForever);
 			data[1] = ((msg & 0xFF00)>>8);
@@ -351,7 +347,7 @@ void CANT(void){
 			osMessageQueueGet(MB_Radars, &msg, NULL, osWaitForever);
 			data[2] = ((msg & 0xFF00)>>8);
 			data[3] = (uint8_t)(msg & 0x00FF);
-			Envoi_CAN(ID_CAN_Radars, data, 0, 5);
+			Envoi_CAN(ID_CAN_Radars_Avants, data, 0, 4);
 		}
 	}
 }
@@ -370,13 +366,34 @@ void My_I2C_Callback(uint32_t event) {
     }
 }
 
+void My_CAN_Callback (uint32_t obj_idx, uint32_t event) {
+	ARM_CAN_MSG_INFO msg_info;
+	uint8_t data_buf[8];
+	if (event & ARM_CAN_EVENT_RECEIVE) {
+		Driver_CAN2.MessageRead(obj_idx, &msg_info, data_buf, 8);
+		if ((msg_info.id == ID_CAN_Radars_Avants)&&(msg_info.rtr == 1)){
+			osThreadFlagsSet((osThreadId_t)ID_Radar_Droit, (1<<0));
+			osThreadFlagsSet((osThreadId_t)ID_Radar_Gauche, (1<<0));
+		}
+		if ((msg_info.id == ID_CAN_LEDs)&&(data_buf[0] == 0x04)){
+			osThreadFlagsSet((osThreadId_t)ID_Phares, (1<<0));
+		}
+		if ((msg_info.id == ID_CAN_LEDs)&&(data_buf[0] == 0x01)){
+			osThreadFlagsSet((osThreadId_t)ID_Clignotants, (1<<2));
+		}
+		if ((msg_info.id == ID_CAN_LEDs)&&(data_buf[0] == 0x02)){
+			osThreadFlagsSet((osThreadId_t)ID_Clignotants, (1<<3));
+		}
+	}
+}
+
 void EXTI0_IRQHandler(void) {
 		osThreadFlagsSet(ID_DFP, (1<<4));
     EXTI->PR = EXTI_PR_PR0; // Acquittement de l'interruption matériellement
 }
 
 //Main
-int main(void) {
+int main(void) {		
 		//Init LEDs
 		RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN; // Enable the clock of port D of the GPIO (LEDs)
 		GPIOD->MODER |= GPIO_MODER_MODER12_0; // Green LED, set pin 12 as output
@@ -410,7 +427,6 @@ int main(void) {
 		ID_Sensorlight = osThreadNew((osThreadId_t)SensorLight, NULL, NULL);
 		ID_Radar_Gauche = osThreadNew((osThreadId_t)RadarGauche, NULL, NULL);
 		ID_Radar_Droit = osThreadNew((osThreadId_t)RadarDroit, NULL, NULL);
-		ID_CANR = osThreadNew((osThreadId_t)CANR, NULL, NULL);
 		ID_CANT = osThreadNew((osThreadId_t)CANT, NULL, NULL);
 		ID_Envoi_SPI = osThreadNew((osThreadId_t)Envoi_SPI, NULL, NULL);
 		ID_Disco = osThreadNew((osThreadId_t)Disco, NULL, NULL);
@@ -461,7 +477,7 @@ void Init_SPI(void){
 }
 
 void Init_I2C(void){
-	Driver_I2C1.Initialize(NULL);
+	Driver_I2C1.Initialize(My_I2C_Callback);
 	Driver_I2C1.PowerControl(ARM_POWER_FULL);
 	Driver_I2C1.Control(	ARM_I2C_BUS_SPEED,				// 2nd argument = debit
 							ARM_I2C_BUS_SPEED_STANDARD  );	// 100 kHz
@@ -470,10 +486,10 @@ void Init_I2C(void){
 }
 
 void Init_CAN (void) {
-    Driver_CAN1.Initialize(NULL,NULL);
-    Driver_CAN1.PowerControl(ARM_POWER_FULL);
-    Driver_CAN1.SetMode(ARM_CAN_MODE_INITIALIZATION);
-    Driver_CAN1.SetBitrate(
+    Driver_CAN2.Initialize(NULL,My_CAN_Callback);
+    Driver_CAN2.PowerControl(ARM_POWER_FULL);
+    Driver_CAN2.SetMode(ARM_CAN_MODE_INITIALIZATION);
+    Driver_CAN2.SetBitrate(
         ARM_CAN_BITRATE_NOMINAL, // débit fixe
         125000, // 125 kbits/s (LS)
         ARM_CAN_BIT_PROP_SEG(5U) | // prop. seg = 5 TQ
@@ -481,10 +497,22 @@ void Init_CAN (void) {
         ARM_CAN_BIT_PHASE_SEG2(1U) | // phase seg2 = 1 TQ
         ARM_CAN_BIT_SJW(1U) // Resync. Seg = 1 TQ
     );
-    Driver_CAN1.ObjectConfigure(2U, ARM_CAN_OBJ_TX); // TX en emmission
-		Driver_CAN1.ObjectConfigure(0U, ARM_CAN_OBJ_RX); // RX en reception
-    //Driver_CAN1.SetMode(ARM_CAN_MODE_NORMAL);
-		//Driver_CAN1.SetMode(ARM_CAN_MODE_LOOPBACK);
+		Driver_CAN2.ObjectSetFilter( 0U,
+											ARM_CAN_FILTER_ID_RANGE_ADD ,
+											ARM_CAN_STANDARD_ID(0x010),
+											ARM_CAN_STANDARD_ID(0x013)) ;
+		Driver_CAN2.ObjectSetFilter( 0U,
+												ARM_CAN_FILTER_ID_RANGE_ADD ,
+												ARM_CAN_STANDARD_ID(0x020),
+												ARM_CAN_STANDARD_ID(0x021)) ;
+		Driver_CAN2.ObjectSetFilter( 0U,
+												ARM_CAN_FILTER_ID_RANGE_ADD ,
+												ARM_CAN_STANDARD_ID(0x030),
+												ARM_CAN_STANDARD_ID(0x034)) ;
+    Driver_CAN2.ObjectConfigure(2U, ARM_CAN_OBJ_TX); // TX en emmission
+		Driver_CAN2.ObjectConfigure(0U, ARM_CAN_OBJ_RX); // RX en reception
+		Driver_CAN2.SetMode(ARM_CAN_MODE_NORMAL);
+		osDelay(10);
 }
 
 
@@ -506,7 +534,7 @@ void Identification(unsigned char chaine[], uint8_t recu[]) {
     }
     if (b == 12){
 			osThreadFlagsSet((osThreadId_t)ID_DFP, (1<<5));
-			osThreadFlagsSet((osThreadId_t)ID_Phares, (1<<2));
+			osThreadFlagsSet((osThreadId_t)ID_Phares, (1<<1));
 			if (verrouillage == 1){
 				osThreadFlagsSet((osThreadId_t)ID_Clignotants, (1<<0));
 				eteindre_led(led_rouge);
