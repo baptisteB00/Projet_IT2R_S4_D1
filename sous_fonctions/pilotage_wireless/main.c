@@ -129,7 +129,7 @@ void Thread_Bluetooth (void const* argument){
 		
 		// Direction
 //		data_transmit[0] = (char) (data[0] -133) / 1.5;
-		data_transmit[0] = (data[0]- 122) /2;
+		data_transmit[0] = -1*((data[0]- 130) /1.3);
 		//Envoi
 		Driver_USART1.Send(data_transmit,3);	
 		while(Driver_USART1.GetTxCount() < 2);		

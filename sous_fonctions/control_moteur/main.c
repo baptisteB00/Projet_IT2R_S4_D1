@@ -4,18 +4,21 @@ Auteurs : Alexandre Ho, Lucas VINCENTI
 
 repris sur base Baptiste Bousset
 --------------------------------------
-Programme acquisition Trames Bluetooth
+Programme Controle moteur wireless avec rtos
 -------------------------------------*/
 
+/* ------------- Bibliotheques -------------------*/
 #include "Driver_I2C.h"
 #include "Board_GLCD.h"
 #include "GLCD_Config.h"
 #include "stdio.h"
 #include "RTE_Components.h"
 #include  CMSIS_device_header
-#include "Board_ADC.h"                  // Board Support:A/D Converter
-
+#include "Board_GLCD.h"
+#include "GLCD_Config.h"
 #include "Driver_USART.h"  
+#include "cmsis_os2.h"
+
 /*................PIN....................
 P0.23 => moteur de la voiture
 P2.25 => servo moteur de direction
@@ -26,27 +29,29 @@ extern ARM_DRIVER_USART Driver_USART1;
 enum sens {AVANT, ARRIERE, STOP_HAUT,STOP_BAS,DESACTIVE};
 enum return_vit{vitOK,vitERROR};
 
+int i;
+
+/* ------------ Prototypes des fonctions -----------*/
 void init_moteur_motricite(void);
 void init_servo_moteur();
-
 enum return_vit control_vitesse(uint8_t val_vitesse);
 void direction_roue(int16_t angle);
 void control_hacheur(enum sens direction );
 void USART_Init(void);
-#include "Board_GLCD.h"
-#include "GLCD_Config.h"
 
+/* ------------ Parametres Threads -----------*/
+osThreadId_t ID_Thread_Bluetooth; // Définition de l'identifiant de la tâche 
+void Thread_Bluetooth(void const * argument); // Prototype de la fonction de la tâche 
+osThreadAttr_t configT1 = {.priority = osPriorityNormal} ;
+osMutexId_t mut_bl;
 extern GLCD_FONT GLCD_Font_16x24;
 int main(void){
-	char cmd_bluth[3],tab[32],tab2[32];
-	int i;
+	SystemCoreClockUpdate();
 	USART_Init();
   init_moteur_motricite();
 	
 	init_servo_moteur();
-
-	ADC_Initialize();
-	
+	osKernelInitialize();         
 	LPC_PWM1->MR2 =500;
 
 	direction_roue(90);
@@ -55,11 +60,24 @@ int main(void){
 	GLCD_Initialize();// Initialisation du LCD
 	GLCD_ClearScreen();
 	GLCD_SetFont(&GLCD_Font_16x24);
-
-	while (1){
-		// Reception Bluetooth
-		Driver_USART1.Receive(cmd_bluth, 3);
+	
+	ID_Thread_Bluetooth = osThreadNew((osThreadFunc_t)Thread_Bluetooth, NULL, &configT1);
+	
+	osKernelStart();        
+	for (;;) {}
+}
+/* --------------------------------------------
+Definitions Thread
+----------------------------------------------*/
+//Thread Nunchuck
+void Thread_Bluetooth(void const * argument){
+	(void)argument;
+	signed char cmd_bluth[3],tab[32],tab2[32];
+	while(1){
+	osMutexAcquire(mut_bl,osWaitForever);
+	Driver_USART1.Receive(cmd_bluth, 3);
 		while (Driver_USART1.GetRxCount() == 0);
+		osDelay(20);
 		
 		// Serialisation
 		sprintf(tab," S%02X  Dir%d ",cmd_bluth[0],cmd_bluth[1]);
@@ -68,35 +86,21 @@ int main(void){
 		GLCD_DrawString(10,10,tab);
 		GLCD_DrawString(10,50,tab2);
 		for ( i =0; i>200;i++); // delay 
-
-		ADC_StartConversion();
-		while(ADC_ConversionDone()!=0);
-		float valeur = ADC_GetValue();
-		valeur/=4096.0f;
-		direction_roue((valeur * 180.0f)-90);
-		//control_vitesse(valeur*100);
 		
-		if((LPC_GPIO1->FIOPIN & (1<<23))==1<<23){
-			control_hacheur(ARRIERE);
-		}else if ((LPC_GPIO1->FIOPIN & (1<<25))==1<<25){
-			control_hacheur(AVANT);
-		}
 		// Controle Direction
-//		if(cmd_bluth[1] == 0x7F){direction_roue(0);}
-//		else if(cmd_bluth[1] == 0x80){direction_roue(60);}
-//		else{direction_roue(30);}
-		direction_roue(cmd_bluth[1]+30);
-		
-		control_vitesse (cmd_bluth[2]);
+		direction_roue(cmd_bluth[1]);
 		// Controle Vitesse
-//		if (cmd_bluth[2]== 0x7F){control_hacheur(AVANT);}
-//		else if (cmd_bluth[2]== 0x80){control_hacheur(ARRIERE);}
+		control_vitesse (cmd_bluth[2]);
+		// Controle Sens
 		if((cmd_bluth[0] & 0x04) == 0x04){control_hacheur(AVANT);}
 		else if((cmd_bluth[0] & 0x04) == 0x00){control_hacheur(ARRIERE);}
-		//else{control_hacheur(DESACTIVE);}
+	osMutexRelease(mut_bl);
 	}
 }
 
+/* --------------------------------------------
+Definititons Fonctions
+----------------------------------------------*/
 void USART_Init(void){
 		Driver_USART1.Initialize(NULL);
 	Driver_USART1.PowerControl(ARM_POWER_FULL);
