@@ -72,7 +72,6 @@ void thread_ReceptUART(void *argument)
 		// On envoie la trame complète au thread de décodage
     osMessageQueuePut(ID_BAL_DECODE,&Message.data , NULL, osWaitForever);
 		idx = 0;
-
 		osDelay(100);
 	}
 }
@@ -128,10 +127,11 @@ void thread_Decode(void *argument)
 				  Coordonnee.longitude = strtok (NULL, separateur);
 				  Coordonnee.est_ouest = strtok (NULL, separateur);
 				}		
-				while ( strToken != NULL ) {
-        // On demande le token suivant.
-        strToken = strtok ( NULL, separateur );
-				}		
+//				while ( strToken != NULL ) {
+//        // On demande le token suivant.
+//        strToken = strtok ( NULL, separateur );
+//				}	
+		osMessageQueuePut(ID_BAL_EMET_CAN,&Coordonnee , NULL, osWaitForever);
 		}
 		
 		else if (retour_val_GPGGA == NULL) 	// Renvo
@@ -146,50 +146,15 @@ void thread_Decode(void *argument)
 				  Coordonnee.longitude = strtok (NULL, separateur);
 				  Coordonnee.est_ouest = strtok (NULL, separateur);
 				}	
-			while ( strToken != NULL ) {
-        // On demande le token suivant.
-        strToken = strtok ( NULL, separateur );
-				}				
-		}
-		
-		else if (retour_val_GPRMCb == NULL)		// En fonction de ce qu'on reçoit au début de la trame, notre code va dans une de ses conditions pour décoder la bonne trame
-		{
-			strToken = strtok(MessageRecu.data, separateur);
-			
-			if (strToken != NULL)
-				{
-					Coordonnee.temps 		 = strtok (NULL, separateur); 
-					Coordonnee.alerte 	 = strtok (NULL, separateur); 
-					Coordonnee.latitude  = strtok (NULL, separateur);
-				  Coordonnee.nord_sud  = strtok (NULL, separateur);
-				  Coordonnee.longitude = strtok (NULL, separateur);
-				  Coordonnee.est_ouest = strtok (NULL, separateur);
-				}		
-				while ( strToken != NULL ) {
-        // On demande le token suivant.
-        strToken = strtok ( NULL, separateur );
-				}
-		}
-		
-		else if (retour_val_GPGGAb == NULL) 	// Renvo
-		{
-			strToken = strtok(MessageRecu.data, separateur);
-			 
-			if (strToken != NULL)
-				{
-					Coordonnee.temps 		 = strtok (NULL, separateur); 
-					Coordonnee.latitude  = strtok (NULL, separateur);
-				  Coordonnee.nord_sud  = strtok (NULL, separateur);
-				  Coordonnee.longitude = strtok (NULL, separateur);
-				  Coordonnee.est_ouest = strtok (NULL, separateur);
-				}			
-				while ( strToken != NULL ) {
-        // On demande le token suivant.
-        strToken = strtok ( NULL, separateur );
-				}
-		}
-		
+//			while ( strToken != NULL ) {
+//        // On demande le token suivant.
+//        strToken = strtok ( NULL, separateur );
+//				}
+			i--;
 		osMessageQueuePut(ID_BAL_EMET_CAN,&Coordonnee , NULL, osWaitForever);
+		}
+			
+	
 		i++;
 	}
 }
@@ -200,14 +165,9 @@ void thread_EmissionCAN(void *argument)
 	
 	DataCoordonnee Coordonnee;
 	ARM_CAN_MSG_INFO tx_msg_info;
-//	char *ptr;
-//	uint8_t data_buff_temps[8];
-//	uint8_t data_buff_latitude[8];
-//	uint8_t data_buff_longitude[8];
-//	uint16_t i = 0;
-	
+
 	 // Configuration commune pour toutes nos trames
-   tx_msg_info.rtr = 0; // Trame de données
+//   tx_msg_info.rtr = 0; // Trame de données
 
 	while(1)
 	{
@@ -215,22 +175,23 @@ void thread_EmissionCAN(void *argument)
 		
 		 // --- Envoi du temps ---
 
-		tx_msg_info.id = ARM_CAN_STANDARD_ID(0x0F6);
-		Driver_CAN2.MessageSend(1, &tx_msg_info, (uint8_t*)Coordonnee.temps, 6);
+		tx_msg_info.id = 0x0F6;
+		tx_msg_info.rtr = 0; // Trame de données
+		Driver_CAN2.MessageSend(2U, &tx_msg_info, (uint8_t*)Coordonnee.temps, 6);
 		// Attente que le contrôleur CAN ait fini l'envoi
     osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);
 
 		 // --- Envoi de la latitude ---
 
 		tx_msg_info.id = ARM_CAN_STANDARD_ID(0x0F7);
-		Driver_CAN2.MessageSend(1, &tx_msg_info, (uint8_t*)Coordonnee.latitude, 8);
+		Driver_CAN2.MessageSend(2U, &tx_msg_info, (uint8_t*)Coordonnee.latitude, 8);
 		// Attente que le contrôleur CAN ait fini l'envoi
     osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);
 
 		 // --- Envoi de la longitude ---
 
 		tx_msg_info.id = ARM_CAN_STANDARD_ID(0x0F8);
-		Driver_CAN2.MessageSend(1, &tx_msg_info, (uint8_t*)Coordonnee.longitude, 8);
+		Driver_CAN2.MessageSend(2U, &tx_msg_info, (uint8_t*)Coordonnee.longitude, 8);
 		// Attente que le contrôleur CAN ait fini l'envoi
     osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);		
 
@@ -261,7 +222,7 @@ void thread_EmissionCAN(void *argument)
 //		Driver_CAN2.MessageSend(1, &tx_msg_info, data_buff_longitude, 5);
 		
 //		osThreadFlagsWait(0x0002, osFlagsWaitAll, osWaitForever);
-		osDelay(200);
+		osDelay(500);
 	}
 	
 }
@@ -323,42 +284,6 @@ void Init_UART_GPS(void)
 void UART_Callback_GPS(uint32_t event)
 {
 	
-//	if(event & ARM_USART_EVENT_RECEIVE_COMPLETE)
-//	{
-//		 // On vérifie si on vient de recevoir le caractère de fin de trame
-//		if (Message.data[idx] == '\n') 
-//		{
-//			//Message.data[idx + 1] = '\0'; // Fin de chaîne 
-////			idx=0;
-//			
-//			osThreadFlagsSet(ID_ReceptUART, 0x0001); // reveille la reception
-//		}
-//		else
-//		{
-//			if (idx < 100)
-//			{
-//				idx++;
-//				Driver_USART3.Receive(&Message.data[idx], 1);
-//			}
-//		}
-//	}
-	
-	
-//	if(event & ARM_USART_EVENT_RECEIVE_COMPLETE)
-//	{
-//	
-//		if ( (Message.data[idx] != '\n') && (idx < 100) )
-//		{
-//			idx++;
-//			Driver_USART3.Receive(&Message.data[idx], 1);
-//		}
-//		else 
-//		{
-//			osThreadFlagsSet(ID_ReceptUART, 0x0001); // reveille la reception
-//		}
-//		}
-//	
-
 	if (event & ARM_USART_EVENT_RECEIVE_COMPLETE)
 	{
 		if (idx == 0)
@@ -375,34 +300,7 @@ void UART_Callback_GPS(uint32_t event)
 			}
 			else if ( (idx !=0) && (Message.data[idx] == '\n') ) osThreadFlagsSet(ID_ReceptUART, 0x0001); // reveille la reception
 		}
-		
-		
-		
-		
 	}
-		
-		
-		
-	
-//	
-//	if(event & ARM_USART_EVENT_RECEIVE_COMPLETE)
-//	{
-//		if (Message.data[idx] == '$')
-//		{
-//			if (Message.data[idx] != '\n')
-//			{
-//				idx++;
-//				Driver_USART3.Receive(&Message.data[idx], 1);
-//			}
-//			
-//		}
-//	else 
-//	{
-//		idx = 0;
-//		osThreadFlagsSet(ID_ReceptUART, 0x0001); // reveille la reception
-//	}
-//		
-		
 	}
 
 /* --------------------------------------------------------
@@ -421,6 +319,10 @@ void Init_CAN_Emission(void)
 														ARM_CAN_BIT_PHASE_SEG1(1U) |
 														ARM_CAN_BIT_PHASE_SEG2(1U) |
 														ARM_CAN_BIT_SJW(1U));
+	
+	Driver_CAN2.ObjectConfigure(2U,ARM_CAN_OBJ_TX); // Objet 2 pour émission
+	Driver_CAN2.SetMode(ARM_CAN_MODE_NORMAL); // fin initialisation
+
 }
 
 /* --------------------------------------------------------
