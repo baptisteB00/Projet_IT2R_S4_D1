@@ -118,7 +118,7 @@ void Thread_Bluetooth (void const* argument){
 	(void)argument;
 	char data_transmit[3]; // [ Direction --> -128° to 127° , vitesse --> -128 to 127], reversible avec valeur negative
 
-		while (1){
+	while (1){
 		data_transmit[2] = data[5] & 0x03; // Lecture BP
 				
 		// Vitesse 
@@ -127,9 +127,8 @@ void Thread_Bluetooth (void const* argument){
 		if (data[1] < 0x7B){data_transmit[2] &= 0xFB;} // Sens negatif			
 		else{data_transmit[2] |= 0x04;} // Sens positif	
 		
-		// Direction
-//		data_transmit[0] = (char) (data[0] -133) / 1.5;
-		data_transmit[0] = (data[0]- 122) /2;
+		// direction
+		data_transmit[0] = -1*((data[0]- 130)/1.2) ;
 		//Envoi
 		Driver_USART1.Send(data_transmit,3);	
 		while(Driver_USART1.GetTxCount() < 2);		

@@ -14,7 +14,8 @@ Programme acquisition Trames Bluetooth
 #include "RTE_Components.h"
 #include  CMSIS_device_header
 #include "Board_ADC.h"                  // Board Support:A/D Converter
-
+#include "Board_GLCD.h"
+#include "GLCD_Config.h"
 #include "Driver_USART.h"  
 /*................PIN....................
 P0.23 => moteur de la voiture
@@ -33,12 +34,11 @@ enum return_vit control_vitesse(uint8_t val_vitesse);
 void direction_roue(int16_t angle);
 void control_hacheur(enum sens direction );
 void USART_Init(void);
-#include "Board_GLCD.h"
-#include "GLCD_Config.h"
+
 
 extern GLCD_FONT GLCD_Font_16x24;
 int main(void){
-	char cmd_bluth[3],tab[32],tab2[32];
+	signed char cmd_bluth[3],tab[32],tab2[32];
 	int i;
 	USART_Init();
   init_moteur_motricite();
@@ -62,38 +62,22 @@ int main(void){
 		while (Driver_USART1.GetRxCount() == 0);
 		
 		// Serialisation
-		sprintf(tab," S%02X  Dir%d ",cmd_bluth[0],cmd_bluth[1]);
-		sprintf(tab2," Vit%d",cmd_bluth[2]);
+		sprintf(tab," S%02d  Dir%d ",cmd_bluth[0],cmd_bluth[1]);
+		sprintf(tab2," Vit%3d",cmd_bluth[2]);
 		// Affichage LCD
 		GLCD_DrawString(10,10,tab);
 		GLCD_DrawString(10,50,tab2);
 		for ( i =0; i>200;i++); // delay 
-
-		ADC_StartConversion();
-		while(ADC_ConversionDone()!=0);
-		float valeur = ADC_GetValue();
-		valeur/=4096.0f;
-		direction_roue((valeur * 180.0f)-90);
-		//control_vitesse(valeur*100);
 		
-		if((LPC_GPIO1->FIOPIN & (1<<23))==1<<23){
-			control_hacheur(ARRIERE);
-		}else if ((LPC_GPIO1->FIOPIN & (1<<25))==1<<25){
-			control_hacheur(AVANT);
-		}
 		// Controle Direction
-//		if(cmd_bluth[1] == 0x7F){direction_roue(0);}
-//		else if(cmd_bluth[1] == 0x80){direction_roue(60);}
-//		else{direction_roue(30);}
-		direction_roue(cmd_bluth[1]+30);
+		direction_roue(cmd_bluth[1]);
 		
 		control_vitesse (cmd_bluth[2]);
 		// Controle Vitesse
-//		if (cmd_bluth[2]== 0x7F){control_hacheur(AVANT);}
-//		else if (cmd_bluth[2]== 0x80){control_hacheur(ARRIERE);}
+		
 		if((cmd_bluth[0] & 0x04) == 0x04){control_hacheur(AVANT);}
 		else if((cmd_bluth[0] & 0x04) == 0x00){control_hacheur(ARRIERE);}
-		//else{control_hacheur(DESACTIVE);}
+
 	}
 }
 
