@@ -2144,7 +2144,7 @@
 
 // <e> CAN2 (Controller Area Network 2) [Driver_CAN2]
 // <i> Configuration settings for Driver_CAN2 in component ::CMSIS Driver:CAN
-#define RTE_CAN2                        0
+#define RTE_CAN2                        1
 
 //   <o> CAN2_RX Pin <0=>PB5 <1=>PB12 <2=>PG11
 #define RTE_CAN2_RX_PORT_ID             0

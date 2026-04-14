@@ -5,6 +5,7 @@
 #include "rtx_os.h"                     // CMSIS:RTOS2:Keil RTX5&&Source
 
 ADC_HandleTypeDef ADC8_Hand;
+extern ARM_DRIVER_CAN Driver_CAN2;
 
 /*------ ID des tâches ------*/
 
@@ -34,17 +35,24 @@ void Thread_ReceptData(void * argument)
 {
 	(void)argument; 
 	
-	SensorLiquid LiquidSensor;
+	SensorLiquid donnee_capteur;
 
 	while(1)
 	{
 		HAL_ADC_Start(&ADC8_Hand); 			// Début de la conversion ADC
 		
-		HAL_ADC_ConvCpltCallback(&ADC8_Hand); // Callback fonctionnelle ???
-		
-		LiquidSensor.valeur_capteur = HAL_ADC_GetValue(&ADC8_Hand);			// Valeur réceptionné
-		
-		osMessageQueuePut(ID_BAL_DATA_RECEPT, &LiquidSensor, NULL, osWaitForever);			// BAL pour le thread traitement
+		 if (HAL_ADC_PollForConversion(&ADC8_Hand, 10) == HAL_OK)
+        {
+            // Lire la valeur brute du capteur
+            donnee_capteur.valeur_capteur = HAL_ADC_GetValue(&ADC8_Hand);
+            
+            // Envoyer à la file de messages pour traitement
+            osMessageQueuePut(ID_BAL_DATA_RECEPT, &donnee_capteur, 0, osWaitForever);
+        }
+
+//		HAL_ADC_ConvCpltCallback(&ADC8_Hand); // Callback fonctionnelle ???
+				
+		HAL_ADC_Stop(&ADC8_Hand);
 		
 		osDelay(100);
 	}
@@ -54,13 +62,26 @@ void Thread_Traitement(void * argument)
 {
 	(void) argument;
 	
-	SensorLiquid LiquidSensor;
+	SensorLiquid donnee_a_traiter;
+	osStatus_t statut;
+
 
 	while(1)
 	{
-		osMessageQueueGet(ID_BAL_DATA_RECEPT, &LiquidSensor, NULL, osWaitForever);	// Reception BAL du thread ReceptData
+		statut = osMessageQueueGet(ID_BAL_DATA_RECEPT, &donnee_a_traiter, NULL, osWaitForever);	// Reception BAL du thread ReceptData
 		
-		LiquidSensor.liquid_level = ConvertToCm(LiquidSensor.valeur_capteur);
+		 if (statut == osOK)
+        {
+            // Conversion de la valeur brute en centimètres
+            donnee_a_traiter.liquid_level = ConvertToCm(donnee_a_traiter.valeur_capteur);
+            
+            // Ici, je peux ajouter la logique du projet
+            // Exemple : Envoyer vers le bus CAN si le niveau change
+            osMessageQueuePut(ID_BAL_EMISSION_CAN, &donnee_a_traiter, 0, 0);
+        }
+
+		
+//		donnee_a_traiter.liquid_level = ConvertToCm(donnee_a_traiter.valeur_capteur);
 		
 		osDelay(100);
 	}
@@ -72,11 +93,9 @@ osThreadAttr_t config_Traitement = { .priority = osPriorityNormal };
 int main (void)
 {
 	SystemCoreClockUpdate();
+	HAL_Init(); // Important pour initialiser les timers de délai
 	osKernelInitialize();
 	
-//	uint32_t valeur_sensor = 0;
-//	float valeur = 0;
-//	uint32_t i =0;
 	
 	ADC_Initialize(&ADC8_Hand, 8);
 		
@@ -104,24 +123,35 @@ int main (void)
 
 float ConvertToCm(uint32_t mesure) {
 	
-    float voltage = (mesure * 3.3f) / 4096.0f;
+		const uint32_t ADC_MIN = 9;  // Valeur lue quand le capteur est sec
+    const uint32_t ADC_MAX = 4095; // Valeur lue quand le capteur est à 4.8cm
+	
+		if (mesure <= ADC_MIN) return 0.0f;
+    else if (mesure >= ADC_MAX) return 4.8f;
 
-    if (voltage <= 0.05f) return 0.0f; // Seuil bas (Air)
-    
-    // Segment 1 : 0 à 0.5 cm (0V à 1.3V)
-    if (voltage <= 1.30f) {
-        return (voltage / 1.30f) * 0.5f;
-    }
-    // Segment 2 : 0.5 à 1.0 cm (1.3V à 1.53V)
-    if (voltage <= 1.53f) {
-        return 0.5f + ((voltage - 1.30f) * 0.5f) / (1.53f - 1.30f);
-    }
-    // Segment 3 : 1.0 à 4.8 cm (1.53V à 1.88V)
-    if (voltage <= 1.88f) {
-        return 1.0f + ((voltage - 1.53f) * 3.8f) / (1.88f - 1.53f);
-    }
-
-    return 4.8f; // Maximum physique du capteur
+		 // Calcul de la pente 
+    // Niveau = (Mesure - Min) * (ProfondeurMax / (Max - Min))
+    else return (float)(mesure - ADC_MIN) * (4.8f / (float)(ADC_MAX - ADC_MIN));
 }
+
+//    float voltage = (mesure * 3.3f) / 4096.0f;
+
+//    if (voltage <= 0.05f) return 0.0f; // Seuil bas (Air)
+//    
+//    // Segment 1 : 0 à 0.5 cm (0V à 1.3V)
+//    if (voltage <= 1.30f) {
+//        return (voltage / 1.30f) * 0.5f;
+//    }
+//    // Segment 2 : 0.5 à 1.0 cm (1.3V à 1.53V)
+//    if (voltage <= 1.53f) {
+//        return 0.5f + ((voltage - 1.30f) * 0.5f) / (1.53f - 1.30f);
+//    }
+//    // Segment 3 : 1.0 à 4.8 cm (1.53V à 1.88V)
+//    if (voltage <= 1.88f) {
+//        return 1.0f + ((voltage - 1.53f) * 3.8f) / (1.88f - 1.53f);
+//    }
+
+//    return 4.8f; // Maximum physique du capteur
+//}
 
 
