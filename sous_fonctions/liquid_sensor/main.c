@@ -3,6 +3,7 @@
 #include "adc_F4.h"
 #include "os_tick.h"                    // CMSIS:OS Tick
 #include "rtx_os.h"                     // CMSIS:RTOS2:Keil RTX5&&Source
+#include "Driver_CAN.h" // Driver spécifique CMSIS-Driver
 
 ADC_HandleTypeDef ADC8_Hand;
 extern ARM_DRIVER_CAN Driver_CAN2;
@@ -52,8 +53,7 @@ void Thread_ReceptData(void * argument)
 
 //		HAL_ADC_ConvCpltCallback(&ADC8_Hand); // Callback fonctionnelle ???
 				
-		HAL_ADC_Stop(&ADC8_Hand);
-		
+		//HAL_ADC_Stop(&ADC8_Hand);
 		osDelay(100);
 	}
 }
@@ -64,6 +64,11 @@ void Thread_Traitement(void * argument)
 	
 	SensorLiquid donnee_a_traiter;
 	osStatus_t statut;
+	
+	// Structure pour les infos de la trame (ID, type, etc.)
+    ARM_CAN_MSG_INFO infos_trame;
+    uint8_t buffer_donnees[1]; // On envoie 1 seul octet pour le niveau
+
 
 
 	while(1)
@@ -76,12 +81,18 @@ void Thread_Traitement(void * argument)
             donnee_a_traiter.liquid_level = ConvertToCm(donnee_a_traiter.valeur_capteur);
             
             // Ici, je peux ajouter la logique du projet
-            // Exemple : Envoyer vers le bus CAN si le niveau change
-            osMessageQueuePut(ID_BAL_EMISSION_CAN, &donnee_a_traiter, 0, 0);
-        }
+					 infos_trame.id = ARM_CAN_STANDARD_ID(0x200); // Identifiant de ton capteur
+            infos_trame.rtr = 0;                         // Trame de données
+            infos_trame.dlc = 1;     // 1 octet suffit pour 0-100%
 
-		
-//		donnee_a_traiter.liquid_level = ConvertToCm(donnee_a_traiter.valeur_capteur);
+            // Exemple : Envoyer vers le bus CAN si le niveau change
+					
+					// On envoie le niveau en pourcentage (0 à 100)
+            buffer_donnees[0] = (uint8_t)((donnee_a_traiter.liquid_level / 4.8f) * 100);
+					 Driver_CAN2.MessageSend(2, &infos_trame, buffer_donnees, 1);
+
+//            osMessageQueuePut(ID_BAL_EMISSION_CAN, &donnee_a_traiter, 0, 0);
+        }
 		
 		osDelay(100);
 	}
@@ -105,17 +116,6 @@ int main (void)
 	ID_ReceptData = osThreadNew ((osThreadFunc_t) Thread_ReceptData , NULL , &config_ReceptData) ;
 	ID_Traitement = osThreadNew ((osThreadFunc_t) Thread_Traitement , NULL , &config_Traitement) ;
 	
-//	while (1)
-//	{
-//		HAL_ADC_Start(&ADC8_Hand); 
-//		
-//		// Lecture de la valeur brute (0 à 4095)
-//    valeur_sensor = HAL_ADC_GetValue(&ADC8_Hand);
-//		valeur = ConvertToCm(valeur_sensor);
-//		i++;
-//	
-//	
-//	}
 	osKernelStart();
 	
 	return 0;
@@ -123,15 +123,15 @@ int main (void)
 
 float ConvertToCm(uint32_t mesure) {
 	
-		const uint32_t ADC_MIN = 9;  // Valeur lue quand le capteur est sec
-    const uint32_t ADC_MAX = 4095; // Valeur lue quand le capteur est à 4.8cm
+//		const uint32_t ADC_MIN = 77;  // Valeur lue quand le capteur est sec
+//    const uint32_t ADC_MAX = 3839; // Valeur lue quand le capteur est à 4.8cm
 	
-		if (mesure <= ADC_MIN) return 0.0f;
-    else if (mesure >= ADC_MAX) return 4.8f;
+//		if (mesure <= ADC_MIN) return 0.0f;
+//    else if (mesure >= ADC_MAX) return 4.8f;
 
 		 // Calcul de la pente 
     // Niveau = (Mesure - Min) * (ProfondeurMax / (Max - Min))
-    else return (float)(mesure - ADC_MIN) * (4.8f / (float)(ADC_MAX - ADC_MIN));
+    return (float)((mesure  * 4.8) / 4095);
 }
 
 //    float voltage = (mesure * 3.3f) / 4096.0f;
