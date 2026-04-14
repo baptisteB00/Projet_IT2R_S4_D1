@@ -157,6 +157,8 @@ void TacheControlMoteur(void){
 	commande_voiture commandes = {0.0, 0.0};
 	remplir_liste_couple(NB_VITESSE_DWA, NB_ANGLE_DWA);
 	
+	DataLidar DataStock;
+	
 	for (int i = 0; i < NB_LUT; i++)/////////////////////////////////////////
 	{
 			// On calcule le float, on le multiplie par l'échelle Q15, et on force la conversion en int16_t
@@ -164,6 +166,7 @@ void TacheControlMoteur(void){
 	}
 	
 		while (1){
+			osMessageQueueGet(MSQ_BAL_DATA, &DataStock, NULL, osWaitForever);
 			
 			  LidarScan lidarscan;////////////////////////////////////
         lidarscan.nb_mesures = LIDAR_NB_RAYON;/////////////////////////////////////////
