@@ -1,0 +1,6 @@
+#define LIDAR_NB_RAYON 360
+#define LIDAR_RANGE_MAX 1600
+#define LIDAR_RANGE_MIN 20
+
+#define PI2 2*M_PI 
+#define M_PI       3.14159265358979323846
