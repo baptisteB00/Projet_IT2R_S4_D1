@@ -50,7 +50,9 @@
 #define ID_CAN_Porte 0x031
 #define ID_CAN_DFP 0x032
 #define ID_CAN_Capteurs 0x033
-#define ID_CAN_GPS 0x034
+#define ID_CAN_GPS_Heure 0x034
+#define ID_CAN_GPS_Lattitude 0x035
+#define ID_CAN_GPS_Longitude 0x036
 
 //Déclarations Externes
 extern ARM_DRIVER_USART Driver_USART2;
@@ -82,15 +84,18 @@ void write1byte(uint8_t addr, uint8_t reg, uint8_t val);
 uint8_t read1byte(uint8_t addr, uint8_t reg);
 uint16_t get_distance(uint8_t addr);
 void Init_CAN(void);
-void Init_LEDs(void);
+void Init_LEDs(void);*
 void Envoi_SPI(void);
-void allumerPhares(void);
-void eteindrePhares(void);
+void allumerPharesAvant(void);
+void allumerPharesArriere(void);
+void eteindrePharesAvant(void);
+void eteindrePharesArriere(void);
 void Disco(void);
 void Envoi_CAN(uint32_t ID, uint8_t data[], uint8_t rtr, uint8_t dlc);
+void Init_GPIO(void);
 
 //Tâches
-osThreadId_t tid_mySPI_Thread, ID_Allumer1, ID_RFID, ID_Envoi_SPI, ID_Phares, ID_Clignotants, ID_DFP, ID_Klaxon, ID_Sensorlight, ID_Radar_Droit, ID_Radar_Gauche, ID_CANR, ID_CANT, ID_Disco;
+osThreadId_t tid_mySPI_Thread, ID_Allumer1, ID_RFID, ID_Envoi_SPI, ID_Phares, ID_Clignotants, ID_DFP, ID_Klaxon, ID_Sensorlight, ID_Radar_Droit, ID_Radar_Gauche, ID_CANT, ID_Disco;
 osMutexId_t MUT_LEDs, MUT_DFP, MUT_I2C;
 osMessageQueueId_t MB_Radars;
 
@@ -111,31 +116,45 @@ void tacheRFID(void){
 }
 void Phares(void){
 	uint32_t flag;
-	bool phares = 0;
+	bool pharesAvant = 0, pharesArriere = 0;
   while (1) {
 		flag = osThreadFlagsWait(0xFF, osFlagsWaitAny, osWaitForever);
 		if (verrouillage == 0){
-			if ((phares == 1)||(flag == (1<<2))){
-				allumerPhares();
+			if ((pharesAvant == 1)||(flag == (1<<2))){
+				allumerPharesAvant();
 			}
 			else {
-				eteindrePhares();
+				eteindrePharesAvant();
+			}
+			if ((pharesArriere == 1)||(flag == (1<<2))){
+				allumerPharesArriere();
+			}
+			else {
+				eteindrePharesArriere();
 			}
 		}
 		if (flag == (1<<0)){
-				phares = 1-phares;
+			pharesAvant = 1-pharesAvant;
 		}
-		else if (flag == (1<<1)){
-				allumerPhares();
-				osDelay(125);
-				eteindrePhares();
-				osDelay(125);
-				allumerPhares();
-				osDelay(125);
-				eteindrePhares();
+		if (flag == (1<<1)){
+			pharesArriere = 1-pharesArriere;
+		}
+		else if (flag == (1<<2)){
+			allumerPharesAvant();
+			allumerPharesArriere();
+			osDelay(125);
+			eteindrePharesAvant();
+			eteindrePharesArriere();
+			osDelay(125);
+			allumerPharesAvant();
+			allumerPharesArriere();				
+			osDelay(125);
+			eteindrePharesAvant();
+			eteindrePharesArriere();
 			}
 		else {
-				eteindrePhares();
+			eteindrePharesAvant();
+			eteindrePharesArriere();
 		}
   }
 }
@@ -375,14 +394,36 @@ void My_CAN_Callback (uint32_t obj_idx, uint32_t event) {
 			osThreadFlagsSet((osThreadId_t)ID_Radar_Droit, (1<<0));
 			osThreadFlagsSet((osThreadId_t)ID_Radar_Gauche, (1<<0));
 		}
-		if ((msg_info.id == ID_CAN_LEDs)&&(data_buf[0] == 0x04)){
+		if ((msg_info.id == ID_CAN_LEDs)&&(data_buf[0] == (1<<2))){
 			osThreadFlagsSet((osThreadId_t)ID_Phares, (1<<0));
 		}
-		if ((msg_info.id == ID_CAN_LEDs)&&(data_buf[0] == 0x01)){
+		if ((msg_info.id == ID_CAN_LEDs)&&(data_buf[0] == (1<<3))){
+			osThreadFlagsSet((osThreadId_t)ID_Phares, (1<<1));
+		}
+		if ((msg_info.id == ID_CAN_LEDs)&&(data_buf[0] == (1<<0))){
 			osThreadFlagsSet((osThreadId_t)ID_Clignotants, (1<<2));
 		}
-		if ((msg_info.id == ID_CAN_LEDs)&&(data_buf[0] == 0x02)){
+		if ((msg_info.id == ID_CAN_LEDs)&&(data_buf[0] == (1<<1))){
 			osThreadFlagsSet((osThreadId_t)ID_Clignotants, (1<<3));
+		}
+		if (msg_info.id == ID_CAN_DFP){
+			if (data_buf[0] == 1){
+				if (data_buf[1] == Son_Clignotants){
+					osThreadFlagsSet((osThreadId_t)ID_DFP, (1<<1));
+				}
+				else if (data_buf[1] == Son_Demarrage){
+					osThreadFlagsSet((osThreadId_t)ID_DFP, (1<<2));
+				}
+				else if (data_buf[1] == Son_Radar){
+					osThreadFlagsSet((osThreadId_t)ID_DFP, (1<<3));
+				}
+				else if (data_buf[1] == Son_Klaxon){
+					osThreadFlagsSet((osThreadId_t)ID_DFP, (1<<4));
+				}
+				else if (data_buf[1] == Son_Demarrage){
+					osThreadFlagsSet((osThreadId_t)ID_DFP, (1<<5));
+				}
+			}
 		}
 	}
 }
@@ -394,50 +435,35 @@ void EXTI0_IRQHandler(void) {
 
 //Main
 int main(void) {		
-		//Init LEDs
-		RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN; // Enable the clock of port D of the GPIO (LEDs)
-		GPIOD->MODER |= GPIO_MODER_MODER12_0; // Green LED, set pin 12 as output
-		GPIOD->MODER |= GPIO_MODER_MODER13_0; // Orange LED, set pin 13 as output
-		GPIOD->MODER |= GPIO_MODER_MODER14_0; // Red LED, set pin 14 as output
-		GPIOD->MODER |= GPIO_MODER_MODER15_0; // Blue LED, set pin 15 as output
-		GPIOD->BSRR = 0; //Eteindre toutes les LEDs sur la carte
-		
-		//Init Bouton (en interruption)
-		RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN; // Enable the clock of port D of the GPIO (Bouton)
-		RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN; // Activer horloge système config
-    SYSCFG->EXTICR[0] &= ~SYSCFG_EXTICR1_EXTI0; // Relier EXTI0 à PA0
-    EXTI->IMR |= EXTI_IMR_MR0;    // Démasquer l'interruption 0
-    EXTI->RTSR |= EXTI_RTSR_TR0;  // Front montant (Rising Edge)
-    NVIC_EnableIRQ(EXTI0_IRQn);   // Activer dans le NVIC
+	ADC_Initialize(&ADC1_Hand,1);
+	Init_UART();
+	Init_SPI();
+	HAL_Init();
+	Init_I2C();
+	Init_CAN();
+	Init_LEDs();
+	Init_GPIO();
 	
-		ADC_Initialize(&ADC1_Hand,1);
-    Init_UART();
-		Init_SPI();
-		HAL_Init();
-		Init_I2C();
-		Init_CAN();
-		Init_LEDs();
-		
-		osKernelInitialize();
+	osKernelInitialize();
+
+	ID_RFID = osThreadNew((osThreadId_t)tacheRFID, NULL, NULL);
+	ID_Phares = osThreadNew ((osThreadId_t)Phares, NULL, NULL);
+	ID_Clignotants = osThreadNew((osThreadId_t)Clignotants, NULL, NULL);
+	ID_DFP = osThreadNew((osThreadId_t)DFP, NULL, NULL);
+	ID_Sensorlight = osThreadNew((osThreadId_t)SensorLight, NULL, NULL);
+	ID_Radar_Gauche = osThreadNew((osThreadId_t)RadarGauche, NULL, NULL);
+	ID_Radar_Droit = osThreadNew((osThreadId_t)RadarDroit, NULL, NULL);
+	ID_CANT = osThreadNew((osThreadId_t)CANT, NULL, NULL);
+	ID_Envoi_SPI = osThreadNew((osThreadId_t)Envoi_SPI, NULL, NULL);
+	ID_Disco = osThreadNew((osThreadId_t)Disco, NULL, NULL);
 	
-	  ID_RFID = osThreadNew((osThreadId_t)tacheRFID, NULL, NULL);
-		ID_Phares = osThreadNew ((osThreadId_t)Phares, NULL, NULL);
-		ID_Clignotants = osThreadNew((osThreadId_t)Clignotants, NULL, NULL);
-		ID_DFP = osThreadNew((osThreadId_t)DFP, NULL, NULL);
-		ID_Sensorlight = osThreadNew((osThreadId_t)SensorLight, NULL, NULL);
-		ID_Radar_Gauche = osThreadNew((osThreadId_t)RadarGauche, NULL, NULL);
-		ID_Radar_Droit = osThreadNew((osThreadId_t)RadarDroit, NULL, NULL);
-		ID_CANT = osThreadNew((osThreadId_t)CANT, NULL, NULL);
-		ID_Envoi_SPI = osThreadNew((osThreadId_t)Envoi_SPI, NULL, NULL);
-		ID_Disco = osThreadNew((osThreadId_t)Disco, NULL, NULL);
-		
-		MUT_LEDs = osMutexNew(NULL);
-		MUT_DFP = osMutexNew(NULL);
-		MUT_I2C = osMutexNew(NULL);
-		
-		MB_Radars = osMessageQueueNew(16, sizeof(MSGQUEUE_OBJ_t), NULL);
+	MUT_LEDs = osMutexNew(NULL);
+	MUT_DFP = osMutexNew(NULL);
+	MUT_I2C = osMutexNew(NULL);
 	
-		osKernelStart();
+	MB_Radars = osMessageQueueNew(16, sizeof(MSGQUEUE_OBJ_t), NULL);
+
+	osKernelStart();
 }
 
 //Initialisation
@@ -523,6 +549,23 @@ void Init_LEDs(void){
 		led[i] = Eteint;
 	}
 	Driver_SPI1.Send(led,(NbLEDs)*4);
+}
+void Init_GPIO(void){
+	//Init LEDs
+		RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN; // Enable the clock of port D of the GPIO (LEDs)
+		GPIOD->MODER |= GPIO_MODER_MODER12_0; // Green LED, set pin 12 as output
+		GPIOD->MODER |= GPIO_MODER_MODER13_0; // Orange LED, set pin 13 as output
+		GPIOD->MODER |= GPIO_MODER_MODER14_0; // Red LED, set pin 14 as output
+		GPIOD->MODER |= GPIO_MODER_MODER15_0; // Blue LED, set pin 15 as output
+		GPIOD->BSRR = 0; //Eteindre toutes les LEDs sur la carte
+		
+		//Init Bouton (en interruption)
+		RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN; // Enable the clock of port D of the GPIO (Bouton)
+		RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN; // Activer horloge système config
+    SYSCFG->EXTICR[0] &= ~SYSCFG_EXTICR1_EXTI0; // Relier EXTI0 à PA0
+    EXTI->IMR |= EXTI_IMR_MR0;    // Démasquer l'interruption 0
+    EXTI->RTSR |= EXTI_RTSR_TR0;  // Front montant (Rising Edge)
+    NVIC_EnableIRQ(EXTI0_IRQn);   // Activer dans le NVIC
 }
 
 //Badge
@@ -663,7 +706,7 @@ uint16_t get_distance(uint8_t capt_addr) {
     return (uint16_t)((high << 8) | low); // Reconstruction 16-bits 
 }
 
-void allumerPhares(void){
+void allumerPharesAvant(void){
 	allumer1LED(1,BLANC);
 	allumer1LED(2,BLANC);
 	allumer1LED(3,BLANC);
@@ -673,12 +716,14 @@ void allumerPhares(void){
 	allumer1LED(6,BLANC);
 	allumer1LED(7,BLANC);
 	allumer1LED(8,BLANC);
-	
+}
+
+void allumerPharesArriere (void){
 	allumer1LED(13,ROUGE);
 	allumer1LED(14,ROUGE);
 }
 
-void eteindrePhares(void){
+void eteindrePharesAvant(void){
 	eteindre1LED(1);
 	eteindre1LED(2);
 	eteindre1LED(3);
@@ -688,7 +733,9 @@ void eteindrePhares(void){
 	eteindre1LED(6);
 	eteindre1LED(7);
 	eteindre1LED(8);
-	
+}
+
+void eteindrePharesArriere(void){
 	eteindre1LED(13);
 	eteindre1LED(14);
 }
