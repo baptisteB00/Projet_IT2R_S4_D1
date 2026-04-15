@@ -3,7 +3,7 @@
 #include "GUI.h"
 #include "AppWizard.h"
 #include <stdio.h>
-
+#define GUI_CONST_STORAGE  const __attribute__((aligned(4)))
 /*----------------------------------------------------------------------------
  *      GUIThread: GUI Thread for Single-Task Execution Model
  *---------------------------------------------------------------------------*/

@@ -61,7 +61,7 @@ void myCAN1_callback(uint32_t obj_idx, uint32_t event)
     if (event == ARM_CAN_EVENT_RECEIVE)
 		{
         /* 	Message was received successfully by the obj_idx object.  */
-				Driver_CAN1.MessageRead(0, &mail.rx_msg_info, mail.data_buf, 8); // 8 data max
+				Driver_CAN1.MessageRead(0, &mail.rx_msg_info, mail.data_buf, 2); // 8 data max
         //osThreadFlagsSet(id_CANthreadR, 1<<0); //réveille la tâche de réception
 				osMessageQueuePut (ID_BAL, &mail, 0, 0);
     }
@@ -126,7 +126,7 @@ ARM_CAN_BIT_SJW(1U) // Resync. Seg = 1 TQ
 // Filtre objet 0 sur Identifiants de 0x120 à 0x126
 //Driver_CAN1.ObjectSetFilter( 0, ARM_CAN_FILTER_ID_RANGE_ADD , ARM_CAN_STANDARD_ID(0x0),ARM_CAN_STANDARD_ID(0x200)) ;
 	Driver_CAN1.ObjectSetFilter(0,ARM_CAN_FILTER_ID_EXACT_ADD , ARM_CAN_STANDARD_ID(0x128),0);
-Driver_CAN1.ObjectConfigure(2,ARM_CAN_OBJ_TX); // Objet 1 pour émission
+Driver_CAN1.ObjectConfigure(2,ARM_CAN_OBJ_TX); // Objet 2 pour émission
 Driver_CAN1.ObjectConfigure(0,ARM_CAN_OBJ_RX); // Objet 0 pour réception
 Driver_CAN1.SetMode(ARM_CAN_MODE_NORMAL); // fin initialisation
 }
@@ -155,21 +155,34 @@ void CANthreadR(void)
 		osMessageQueueGet(ID_BAL, &mail, NULL, osWaitForever);
 
 		switch ( mail.rx_msg_info.id){
-			case 296:
-			{
-				if (mail.data_buf[0]>50){
-					LED_Off(0);
-					APPW_SetVarData(ID_VAR_Cadena, 0);
-				}else{
-					LED_On(0);
-					APPW_SetVarData(ID_VAR_Cadena, 1);
-				}
 			case ID_CAN_GestionPORTE:
 			{
-	
-				
-			 break;
-			}
+				if ((mail.data_buf[0]==1)&&(mail.data_buf[1]==0)){
+					APPW_SetVarData(ID_VAR_Cadena, 1);
+				}
+				else if ((mail.data_buf[0]==1)&&(mail.data_buf[1]==1)){
+					APPW_SetVarData(ID_VAR_Cadena, 0);
+				}
+		case 0x033: // ID_CAN_Capteur (ou celui de ton huile)
+    {
+        // On récupère l'octet en hexa (0x00 à 0x64)
+        uint8_t valeurHexa = data_buf[7]; 
+				if(valeurHexa==0x64){
+					valeurHexa=100;
+				}
+				if(valeurHexa==0x32){
+					valeurHexa=50;
+				}
+				if(valeurHexa==0x00){
+					valeurHexa=0;
+				}
+        // Pas besoin de conversion compliquée si tu as mis le Max à 100 dans AppWizard,
+        // car 0x64 en hexa est lu directement comme 100 par le C.
+        
+        // On envoie la valeur à la variable AppWizard
+        APPW_SetVarData(ID_VAR_HUILE, 50);
+    }
+    break;
 			}
 		}
 

@@ -83,6 +83,7 @@ extern GUI_CONST_STORAGE unsigned char acCligno_GAUCHE_60x60[];
 #define ID_VAR_MODE_LUMIERE (GUI_ID_USER + 2052)
 #define ID_VAR_Cadena (GUI_ID_USER + 2053)
 #define ID_VAR_Phare (GUI_ID_USER + 2054)
+#define ID_VAR_HUILE (GUI_ID_USER + 2055)
 
 /*********************************************************************
 *

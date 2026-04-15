@@ -70,6 +70,7 @@
     Item=4100,ID_VAR_MODE_LUMIERE,0
     Item=4101,ID_VAR_Cadena,0
     Item=4102,ID_VAR_Phare,0
+    Item=4103,ID_VAR_HUILE,0
   </Variables>
   <FocusInfo>
     Color=ff2777b3
@@ -1097,7 +1098,7 @@
         </X0>
         <Y0>
           Mode=2
-          Off=46
+          Off=47
           Id=0
         </Y0>
         <X1>
@@ -1107,7 +1108,7 @@
         </X1>
         <Y1>
           Mode=2
-          Off=31
+          Off=30
           Id=0
         </Y1>
       </Dispose>
@@ -1943,7 +1944,7 @@
         ySize=0
         <X0>
           Mode=2
-          Off=434
+          Off=430
           Id=0
         </X0>
         <Y0>
@@ -1953,7 +1954,7 @@
         </Y0>
         <X1>
           Mode=2
-          Off=26
+          Off=30
           Id=0
         </X1>
         <Y1>
@@ -1963,8 +1964,8 @@
         </Y1>
       </Dispose>
       <SetRange>
-        Min=0
-        Max=100
+        Min=3
+        Max=102
       </SetRange>
       <SetVertical>
         Vertical=true
@@ -1978,9 +1979,6 @@
       <SetColor>
         Color=ff2c2c30
       </SetColor>
-      <SetValue>
-        Value=40
-      </SetValue>
       <SetSbitmaps>
         Index0=DARK_Progbar_Tile_V_Blue_16x1.png
         Index1=DARK_Progbar_Tile_V_Gray_16x1.png
@@ -2457,6 +2455,27 @@
         Disclose=0
       </Para>
     </SHIFTSCREEN>
+    <NULL>
+      RootId=6145
+      IdSrc=ID_BUTTON_clignoD
+      NCode=WM_NOTIFICATION_CLICKED
+      Slot=ID_SCREEN_FEUX__ID_BUTTON_clignoD__WM_NOTIFICATION_CLICKED
+      Flags=0
+    </NULL>
+    <NULL>
+      RootId=6145
+      IdSrc=ID_BUTTON_clignoG
+      NCode=WM_NOTIFICATION_CLICKED
+      Slot=ID_SCREEN_FEUX__ID_BUTTON_clignoG__WM_NOTIFICATION_CLICKED
+      Flags=0
+    </NULL>
+    <NULL>
+      RootId=6145
+      IdSrc=ID_BUTTON_Phare
+      NCode=WM_NOTIFICATION_CLICKED
+      Slot=ID_SCREEN_FEUX__ID_BUTTON_Phare__WM_NOTIFICATION_CLICKED
+      Flags=0
+    </NULL>
     <SHIFTSCREEN>
       RootId=6146
       IdSrc=ID_BUTTON_ACCUEIL
@@ -2600,6 +2619,17 @@
         Value=0
       </Para>
     </SETX0>
+    <SETVALUE>
+      RootId=6147
+      IdSrc=ID_VAR_HUILE
+      NCode=WM_NOTIFICATION_VALUE_CHANGED
+      IdDst=ID_HUILE_JAUGE
+      Slot=ID_SCREEN_VITESSE__ID_HUILE_JAUGE__WM_NOTIFICATION_VALUE_CHANGED
+      Flags=0
+      <Para>
+        Value=0
+      </Para>
+    </SETVALUE>
     <SHIFTSCREEN>
       RootId=6148
       IdSrc=ID_BUTTON_ACCUEIL

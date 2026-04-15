@@ -1,8 +1,5 @@
-./objects/id_screen_feux_slots.o: \
-  AppWizzard\Source\CustomCode\ID_SCREEN_FEUX_Slots.c \
+./objects/phare_off.o: AppWizzard\Resource\Image\PHARE_off.c \
   RTE\_Target_1\Pre_Include_Global.h \
-  AppWizzard\Source\CustomCode\Application.h \
-  AppWizzard\Source\CustomCode\..\Generated\Resource.h \
   C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\AppWizard.h \
   C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\DIALOG.h \
   C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\WM.h \
@@ -75,43 +72,4 @@
   C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\LISTVIEW_Private.h \
   C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\LISTBOX_Private.h \
   C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\WHEEL_Private.h \
-  C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\MOVIE_Private.h \
-  AppWizzard\Source\CustomCode\..\Generated\ID_SCREEN_FEUX.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f746xx.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Core\Include\core_cm7.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\system_stm32f7xx.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal.h \
-  RTE\Device\STM32F746NGHx\stm32f7xx_hal_conf.h \
-  RTE\_Target_1\RTE_Components.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_rcc.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_def.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_rcc_ex.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_gpio.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_gpio_ex.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dma.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dma_ex.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_cortex.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_can.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dma2d.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_flash.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_flash_ex.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_sdram.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_fmc.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_i2c.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_i2c_ex.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_ltdc.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_ltdc_ex.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_pwr.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_pwr_ex.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_uart.h \
-  C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.16.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_uart_ex.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Include\rtx_os.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\RTOS2\Include\cmsis_os2.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS-RTX\5.9.0\Include\rtx_def.h \
-  RTE\CMSIS\RTX_Config.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Driver\Include\Driver_CAN.h \
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Driver\Include\Driver_Common.h \
-  AppWizzard\Source\Generated\Resource.h \
-  C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.17.0\Board\Board_LED.h
+  C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware_Graphics\1.3.1\emWin\Include\MOVIE_Private.h

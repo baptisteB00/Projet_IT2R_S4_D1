@@ -71,6 +71,7 @@ static APPW_VAR_OBJECT _aVarList[] = {
   { ID_VAR_MODE_LUMIERE, 0, 0, NULL },
   { ID_VAR_Cadena, 0, 0, NULL },
   { ID_VAR_Phare, 0, 0, NULL },
+  { ID_VAR_HUILE, 0, 0, NULL },
 };
 
 /*********************************************************************

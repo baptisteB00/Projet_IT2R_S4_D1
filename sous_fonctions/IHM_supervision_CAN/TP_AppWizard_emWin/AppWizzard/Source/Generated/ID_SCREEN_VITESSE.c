@@ -107,9 +107,9 @@ static APPW_CREATE_ITEM _aCreate[] = {
   },
   { WM_OBJECT_PROGBAR_Create,
     ID_HUILE_JAUGE, ID_SCREEN_VITESSE,
-    { { { DISPOSE_MODE_REL_PARENT, 434, 0, 0 },
+    { { { DISPOSE_MODE_REL_PARENT, 430, 0, 0 },
         { DISPOSE_MODE_REL_PARENT, 60, 0, 0 },
-        { DISPOSE_MODE_REL_PARENT, 26, 0, 0 },
+        { DISPOSE_MODE_REL_PARENT, 30, 0, 0 },
         { DISPOSE_MODE_REL_PARENT, 68, 0, 0 },
       },
       0, 0, 0, 0, 0, 0
@@ -211,13 +211,12 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_BATTERIE_JAUGE,  APPW_SET_PROP_SBITMAPS,     { ARG_VP(0, acDARK_Progbar_Tile_V_Blue_16x1),
                                                       ARG_VP(0, acDARK_Progbar_Tile_V_Gray_16x1), } },
   { ID_BATTERIE_JAUGE,  APPW_SET_PROP_TILE,         { ARG_V(0) } },
-  { ID_HUILE_JAUGE,     APPW_SET_PROP_RANGE,        { ARG_V(0),
-                                                      ARG_V(100) } },
+  { ID_HUILE_JAUGE,     APPW_SET_PROP_RANGE,        { ARG_V(3),
+                                                      ARG_V(102) } },
   { ID_HUILE_JAUGE,     APPW_SET_PROP_VERTICAL,     { ARG_V(0) } },
   { ID_HUILE_JAUGE,     APPW_SET_PROP_RADIUS,       { ARG_V(5) } },
   { ID_HUILE_JAUGE,     APPW_SET_PROP_FRAME,        { ARG_V(2) } },
   { ID_HUILE_JAUGE,     APPW_SET_PROP_COLOR,        { ARG_V(0xff2c2c30) } },
-  { ID_HUILE_JAUGE,     APPW_SET_PROP_VALUE,        { ARG_V(40) } },
   { ID_HUILE_JAUGE,     APPW_SET_PROP_SBITMAPS,     { ARG_VP(0, acDARK_Progbar_Tile_V_Blue_16x1),
                                                       ARG_VP(0, acDARK_Progbar_Tile_V_Gray_16x1), } },
   { ID_HUILE_JAUGE,     APPW_SET_PROP_TILE,         { ARG_V(0) } },
@@ -288,6 +287,10 @@ static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
     }, 65537, NULL
   },
   { ID_Var_ClignoD,     WM_NOTIFICATION_VALUE_CHANGED,    ID_IMAGE_03,        APPW_JOB_SETX0,          ID_SCREEN_VITESSE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_03__APPW_JOB_SETX0_0,
+    { ARG_V(0),
+    }, 0, NULL
+  },
+  { ID_VAR_HUILE,       WM_NOTIFICATION_VALUE_CHANGED,    ID_HUILE_JAUGE,     APPW_JOB_SETVALUE,       ID_SCREEN_VITESSE__ID_HUILE_JAUGE__WM_NOTIFICATION_VALUE_CHANGED,
     { ARG_V(0),
     }, 0, NULL
   },

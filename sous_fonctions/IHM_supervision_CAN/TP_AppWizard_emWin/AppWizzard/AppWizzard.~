@@ -65,11 +65,12 @@
   <Variables>
     Item=4096,ID_PositionViseurX,270
     Item=4097,ID_PositionViseurY,130
-    Item=4098,ID_Var_ClignoG,0
-    Item=4099,ID_Var_ClignoD,0
+    Item=4098,ID_Var_ClignoG,1
+    Item=4099,ID_Var_ClignoD,1
     Item=4100,ID_VAR_MODE_LUMIERE,0
     Item=4101,ID_VAR_Cadena,0
     Item=4102,ID_VAR_Phare,0
+    Item=4103,ID_VAR_HUILE,0
   </Variables>
   <FocusInfo>
     Color=ff2777b3
@@ -200,7 +201,7 @@
         </X0>
         <Y0>
           Mode=2
-          Off=38
+          Off=56
           Id=0
         </Y0>
       </Dispose>
@@ -223,16 +224,16 @@
       IdPrev=0
       IdPost=0
       <Dispose>
-        xSize=100
+        xSize=115
         ySize=30
         <X0>
           Mode=2
-          Off=190
+          Off=183
           Id=0
         </X0>
         <Y0>
           Mode=2
-          Off=81
+          Off=121
           Id=0
         </Y0>
       </Dispose>
@@ -264,7 +265,7 @@
         </X0>
         <Y0>
           Mode=2
-          Off=129
+          Off=183
           Id=0
         </Y0>
       </Dispose>
@@ -291,12 +292,12 @@
         ySize=30
         <X0>
           Mode=2
-          Off=190
+          Off=577
           Id=0
         </X0>
         <Y0>
           Mode=2
-          Off=174
+          Off=175
           Id=0
         </Y0>
       </Dispose>
@@ -323,12 +324,12 @@
         ySize=30
         <X0>
           Mode=2
-          Off=190
+          Off=577
           Id=0
         </X0>
         <Y0>
           Mode=2
-          Off=225
+          Off=242
           Id=0
         </Y0>
       </Dispose>
@@ -346,195 +347,6 @@
       <SetColor>
         Color=ffffffff
       </SetColor>
-    </Button>
-    <Screen>
-      ParentId=0
-      IdString=ID_SCREEN_PANNEAU
-      Id=2048
-      IdPrev=0
-      IdPost=0
-      RootId=6149
-      <Dispose>
-        xSize=0
-        ySize=0
-        <X0>
-          Mode=2
-          Off=0
-          Id=0
-        </X0>
-        <Y0>
-          Mode=2
-          Off=0
-          Id=0
-        </Y0>
-        <X1>
-          Mode=2
-          Off=0
-          Id=0
-        </X1>
-        <Y1>
-          Mode=2
-          Off=0
-          Id=0
-        </Y1>
-      </Dispose>
-    </Screen>
-    <Box>
-      ParentId=2048
-      IdString=ID_BOX_05
-      Id=2049
-      IdPrev=0
-      IdPost=0
-      <Dispose>
-        xSize=0
-        ySize=0
-        <X0>
-          Mode=2
-          Off=0
-          Id=0
-        </X0>
-        <Y0>
-          Mode=2
-          Off=0
-          Id=0
-        </Y0>
-        <X1>
-          Mode=2
-          Off=0
-          Id=0
-        </X1>
-        <Y1>
-          Mode=2
-          Off=0
-          Id=0
-        </Y1>
-      </Dispose>
-      <SetColor>
-        Color=ffffffff
-      </SetColor>
-    </Box>
-    <Text>
-      ParentId=2048
-      IdString=ID_TEXT_00
-      Id=2050
-      IdPrev=0
-      IdPost=0
-      <Dispose>
-        xSize=199
-        ySize=32
-        <X0>
-          Mode=2
-          Off=141
-          Id=0
-        </X0>
-        <Y0>
-          Mode=2
-          Off=0
-          Id=0
-        </Y0>
-      </Dispose>
-      <SetColor>
-        Color=ff000000
-      </SetColor>
-      <SetTextAlign>
-        Alignment=14
-        xOff=0
-        yOff=0
-      </SetTextAlign>
-      <SetFont>
-        Font=Roboto_32_Normal_EXT_AA4.xbf
-      </SetFont>
-      <SetTextId>
-        Id=4
-      </SetTextId>
-      <SetUntouchable>
-        SetUntouchable=true
-      </SetUntouchable>
-    </Text>
-    <Button>
-      ParentId=2048
-      IdString=ID_BUTTON_NEXT
-      Id=2051
-      IdPrev=0
-      IdPost=0
-      <Dispose>
-        xSize=50
-        ySize=50
-        <X0>
-          Mode=2
-          Off=430
-          Id=0
-        </X0>
-        <Y0>
-          Mode=2
-          Off=222
-          Id=0
-        </Y0>
-      </Dispose>
-      <SetSbitmaps>
-        Index0=UNPRESS_right.png
-        Index1=PRESS_right.png
-      </SetSbitmaps>
-      <SetColors>
-        Color0=ffc0c0c0
-        Color1=ffc0c0c0
-      </SetColors>
-    </Button>
-    <Button>
-      ParentId=2048
-      IdString=ID_BUTTON_ACCUEIL
-      Id=2052
-      IdPrev=0
-      IdPost=0
-      <Dispose>
-        xSize=50
-        ySize=50
-        <X0>
-          Mode=2
-          Off=380
-          Id=0
-        </X0>
-        <Y0>
-          Mode=2
-          Off=222
-          Id=0
-        </Y0>
-      </Dispose>
-      <SetSbitmaps>
-        Index0=UNPRESS_home.png
-        Index1=PRESS_home.png
-      </SetSbitmaps>
-      <SetColors>
-      </SetColors>
-    </Button>
-    <Button>
-      ParentId=2048
-      IdString=ID_BUTTON_PREVIOUS
-      Id=2053
-      IdPrev=0
-      IdPost=0
-      <Dispose>
-        xSize=50
-        ySize=50
-        <X0>
-          Mode=2
-          Off=330
-          Id=0
-        </X0>
-        <Y0>
-          Mode=2
-          Off=222
-          Id=0
-        </Y0>
-      </Dispose>
-      <SetSbitmaps>
-        Index0=UNPRESS_left.png
-        Index1=PRESS_left.png
-      </SetSbitmaps>
-      <SetColors>
-        Color0=ffc0c0c0
-        Color1=ffc0c0c0
-      </SetColors>
     </Button>
     <Screen>
       ParentId=0
@@ -779,6 +591,9 @@
       <SetEndless>
         Endless=true
       </SetEndless>
+      <SetUntouchable>
+        SetUntouchable=true
+      </SetUntouchable>
     </Movie>
     <Movie>
       ParentId=2048
@@ -806,6 +621,9 @@
       <SetEndless>
         Endless=true
       </SetEndless>
+      <SetUntouchable>
+        SetUntouchable=true
+      </SetUntouchable>
     </Movie>
     <Image>
       ParentId=2048
@@ -1280,7 +1098,7 @@
         </X0>
         <Y0>
           Mode=2
-          Off=46
+          Off=47
           Id=0
         </Y0>
         <X1>
@@ -1290,7 +1108,7 @@
         </X1>
         <Y1>
           Mode=2
-          Off=31
+          Off=30
           Id=0
         </Y1>
       </Dispose>
@@ -1844,10 +1662,10 @@
         Value=999
       </SetValue>
     </Gauge>
-    <Button>
+    <Image>
       ParentId=2048
-      IdString=ID_BUTTON_00
-      Id=2068
+      IdString=ID_IMAGE_00
+      Id=2055
       IdPrev=0
       IdPost=0
       <Dispose>
@@ -1855,24 +1673,19 @@
         ySize=43
         <X0>
           Mode=2
-          Off=195
+          Off=206
           Id=0
         </X0>
         <Y0>
           Mode=2
-          Off=115
+          Off=116
           Id=0
         </Y0>
       </Dispose>
-      <SetSbitmaps>
-        Index0=Cadenas_FERME.png
-        Index1=Cadenas_ouvert.png
-      </SetSbitmaps>
-      <SetColors>
-        Color0=ffc0c0c0
-        Color1=ffc0c0c0
-      </SetColors>
-    </Button>
+      <SetSbitmap>
+        Image=Cadenas_FERME.png
+      </SetSbitmap>
+    </Image>
     <Screen>
       ParentId=0
       IdString=ID_SCREEN_VITESSE
@@ -2131,7 +1944,7 @@
         ySize=0
         <X0>
           Mode=2
-          Off=435
+          Off=430
           Id=0
         </X0>
         <Y0>
@@ -2141,7 +1954,7 @@
         </Y0>
         <X1>
           Mode=2
-          Off=25
+          Off=30
           Id=0
         </X1>
         <Y1>
@@ -2151,8 +1964,8 @@
         </Y1>
       </Dispose>
       <SetRange>
-        Min=0
-        Max=100
+        Min=3
+        Max=102
       </SetRange>
       <SetVertical>
         Vertical=true
@@ -2166,9 +1979,6 @@
       <SetColor>
         Color=ff2c2c30
       </SetColor>
-      <SetValue>
-        Value=40
-      </SetValue>
       <SetSbitmaps>
         Index0=DARK_Progbar_Tile_V_Blue_16x1.png
         Index1=DARK_Progbar_Tile_V_Gray_16x1.png
@@ -2295,8 +2105,8 @@
       IdPrev=0
       IdPost=0
       <Dispose>
-        xSize=200
-        ySize=100
+        xSize=214
+        ySize=103
         <X0>
           Mode=2
           Off=0
@@ -2604,48 +2414,6 @@
       </Para>
     </SHIFTSCREEN>
     <SHIFTSCREEN>
-      RootId=6149
-      IdSrc=ID_BUTTON_ACCUEIL
-      NCode=WM_NOTIFICATION_CLICKED
-      Slot=ID_SCREEN_PANNEAU__ID_BUTTON_ACCUEIL__WM_NOTIFICATION_CLICKED
-      Flags=0
-      <Para>
-        RootId=6144
-        Edge=APPW_EDGE_TOP
-        Ease=ANIM_LINEAR
-        Period=500
-        Disclose=0
-      </Para>
-    </SHIFTSCREEN>
-    <SHIFTSCREEN>
-      RootId=6149
-      IdSrc=ID_BUTTON_NEXT
-      NCode=WM_NOTIFICATION_CLICKED
-      Slot=ID_SCREEN_PANNEAU__ID_BUTTON_NEXT__WM_NOTIFICATION_CLICKED
-      Flags=0
-      <Para>
-        RootId=6145
-        Edge=APPW_EDGE_LEFT
-        Ease=ANIM_LINEAR
-        Period=500
-        Disclose=0
-      </Para>
-    </SHIFTSCREEN>
-    <SHIFTSCREEN>
-      RootId=6149
-      IdSrc=ID_BUTTON_PREVIOUS
-      NCode=WM_NOTIFICATION_CLICKED
-      Slot=ID_SCREEN_PANNEAU__ID_BUTTON_PREVIOUS__WM_NOTIFICATION_CLICKED
-      Flags=0
-      <Para>
-        RootId=6148
-        Edge=APPW_EDGE_RIGHT
-        Ease=ANIM_LINEAR
-        Period=500
-        Disclose=0
-      </Para>
-    </SHIFTSCREEN>
-    <SHIFTSCREEN>
       RootId=6145
       IdSrc=ID_BUTTON_ACCUEIL
       NCode=WM_NOTIFICATION_CLICKED
@@ -2680,29 +2448,27 @@
       Slot=ID_SCREEN_FEUX__ID_BUTTON_PREVIOUS__WM_NOTIFICATION_CLICKED
       Flags=0
       <Para>
-        RootId=6149
+        RootId=6147
         Edge=APPW_EDGE_RIGHT
         Ease=ANIM_LINEAR
         Period=500
         Disclose=0
       </Para>
     </SHIFTSCREEN>
-    <START>
-      RootId=6145
-      IdSrc=ID_BUTTON_clignoG
-      NCode=WM_NOTIFICATION_CLICKED
-      IdDst=ID_MOVIE_01
-      Slot=ID_SCREEN_FEUX__ID_BUTTON_clignoG__WM_NOTIFICATION_CLICKED
-      Flags=65536
-    </START>
-    <START>
+    <NULL>
       RootId=6145
       IdSrc=ID_BUTTON_clignoD
       NCode=WM_NOTIFICATION_CLICKED
-      IdDst=ID_MOVIE_00
       Slot=ID_SCREEN_FEUX__ID_BUTTON_clignoD__WM_NOTIFICATION_CLICKED
-      Flags=65536
-    </START>
+      Flags=0
+    </NULL>
+    <NULL>
+      RootId=6145
+      IdSrc=ID_BUTTON_clignoG
+      NCode=WM_NOTIFICATION_CLICKED
+      Slot=ID_SCREEN_FEUX__ID_BUTTON_clignoG__WM_NOTIFICATION_CLICKED
+      Flags=0
+    </NULL>
     <NULL>
       RootId=6145
       IdSrc=ID_BUTTON_Phare
@@ -2710,105 +2476,6 @@
       Slot=ID_SCREEN_FEUX__ID_BUTTON_Phare__WM_NOTIFICATION_CLICKED
       Flags=0
     </NULL>
-    <START>
-      RootId=6145
-      IdSrc=ID_Var_ClignoG
-      NCode=WM_NOTIFICATION_VALUE_CHANGED
-      IdDst=ID_MOVIE_00
-      Slot=ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_00__APPW_JOB_START
-      Flags=65536
-      Condition=A,1,V: ID_Var_ClignoG,==,C: 1
-    </START>
-    <STOP>
-      RootId=6145
-      IdSrc=ID_Var_ClignoG
-      NCode=WM_NOTIFICATION_VALUE_CHANGED
-      IdDst=ID_MOVIE_00
-      Slot=ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_00__APPW_JOB_STOP
-      Flags=0
-      Condition=A,1,V: ID_Var_ClignoG,==,C: 0
-    </STOP>
-    <START>
-      RootId=6145
-      IdSrc=ID_Var_ClignoD
-      NCode=WM_NOTIFICATION_VALUE_CHANGED
-      IdDst=ID_MOVIE_01
-      Slot=ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_01__APPW_JOB_START
-      Flags=65536
-      Condition=A,1,V: ID_Var_ClignoG,==,C: 1
-    </START>
-    <STOP>
-      RootId=6145
-      IdSrc=ID_Var_ClignoD
-      NCode=WM_NOTIFICATION_VALUE_CHANGED
-      IdDst=ID_MOVIE_01
-      Slot=ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_01__APPW_JOB_STOP
-      Flags=0
-      Condition=A,1,V: ID_Var_ClignoD,==,C: 0
-    </STOP>
-    <SETBITMAP>
-      RootId=6145
-      IdSrc=ID_VAR_MODE_LUMIERE
-      NCode=WM_NOTIFICATION_VALUE_CHANGED
-      IdDst=ID_IMAGE_Mode_lumiere
-      Slot=ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_Mode_lumiere__APPW_JOB_SETBITMAP
-      Flags=0
-      Condition=A,1,V: ID_VAR_MODE_LUMIERE,==,C: 1
-      <Para>
-        Index=0
-        Image=soleil.png
-      </Para>
-    </SETBITMAP>
-    <SETBITMAP>
-      RootId=6145
-      IdSrc=ID_VAR_MODE_LUMIERE
-      NCode=WM_NOTIFICATION_VALUE_CHANGED
-      IdDst=ID_IMAGE_Mode_lumiere
-      Slot=ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_MOVIE_00__APPW_JOB_SETBITMAP
-      Flags=0
-      Condition=A,1,V: ID_VAR_MODE_LUMIERE,==,C: 0
-      <Para>
-        Index=0
-        Image=lune.png
-      </Para>
-    </SETBITMAP>
-    <SETBITMAP>
-      RootId=6145
-      IdSrc=ID_VAR_Phare
-      NCode=WM_NOTIFICATION_VALUE_CHANGED
-      IdDst=ID_IMAGE_Phare
-      Slot=ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_BUTTON_Phare__APPW_JOB_SETBITMAP
-      Flags=0
-      Condition=A,1,V: ID_VAR_Phare,==,C: 2
-      <Para>
-        Index=0
-        Image=vide.png
-      </Para>
-    </SETBITMAP>
-    <SETBITMAP>
-      RootId=6145
-      IdSrc=ID_VAR_Phare
-      NCode=WM_NOTIFICATION_VALUE_CHANGED
-      IdDst=ID_IMAGE_Phare
-      Slot=ID_SCREEN_FEUX__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_Phare__APPW_JOB_SETBITMAP
-      Flags=0
-      Condition=A,1,V: ID_VAR_Phare,!=,C: 2
-      <Para>
-        Index=0
-        Image=PHARE.png
-      </Para>
-    </SETBITMAP>
-    <ADDVALUE>
-      RootId=6145
-      IdSrc=ID_BUTTON_Phare
-      NCode=WM_NOTIFICATION_CLICKED
-      IdDst=ID_VAR_Phare
-      Slot=ID_SCREEN_FEUX__ID_BUTTON_Phare__WM_NOTIFICATION_CLICKED_0
-      Flags=0
-      <Para>
-        Value=1
-      </Para>
-    </ADDVALUE>
     <SHIFTSCREEN>
       RootId=6146
       IdSrc=ID_BUTTON_ACCUEIL
@@ -2855,7 +2522,7 @@
       RootId=6146
       IdSrc=ID_VAR_Cadena
       NCode=WM_NOTIFICATION_VALUE_CHANGED
-      IdDst=ID_IMAGE_Voiture
+      IdDst=ID_IMAGE_00
       Slot=ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_00__APPW_JOB_SETBITMAP
       Flags=0
       Condition=A,1,V: ID_VAR_Cadena,==,C: 0
@@ -2868,7 +2535,7 @@
       RootId=6146
       IdSrc=ID_VAR_Cadena
       NCode=WM_NOTIFICATION_VALUE_CHANGED
-      IdDst=ID_IMAGE_Voiture
+      IdDst=ID_IMAGE_00
       Slot=ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_00__APPW_JOB_SETBITMAP_0
       Flags=0
       Condition=A,1,V: ID_VAR_Cadena,==,C: 1
@@ -2898,7 +2565,7 @@
       Slot=ID_SCREEN_VITESSE__ID_BUTTON_NEXT__WM_NOTIFICATION_CLICKED
       Flags=0
       <Para>
-        RootId=6148
+        RootId=6145
         Edge=APPW_EDGE_LEFT
         Ease=ANIM_LINEAR
         Period=500
@@ -2941,6 +2608,28 @@
         Value=4097
       </Para>
     </SETY0>
+    <SETX0>
+      RootId=6147
+      IdSrc=ID_Var_ClignoD
+      NCode=WM_NOTIFICATION_VALUE_CHANGED
+      IdDst=ID_IMAGE_03
+      Slot=ID_SCREEN_VITESSE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_03__APPW_JOB_SETX0_0
+      Flags=0
+      <Para>
+        Value=0
+      </Para>
+    </SETX0>
+    <SETVALUE>
+      RootId=6147
+      IdSrc=ID_VAR_HUILE
+      NCode=WM_NOTIFICATION_VALUE_CHANGED
+      IdDst=ID_HUILE_JAUGE
+      Slot=ID_SCREEN_VITESSE__ID_HUILE_JAUGE__WM_NOTIFICATION_VALUE_CHANGED
+      Flags=0
+      <Para>
+        Value=0
+      </Para>
+    </SETVALUE>
     <SHIFTSCREEN>
       RootId=6148
       IdSrc=ID_BUTTON_ACCUEIL
@@ -2984,10 +2673,6 @@
       </Para>
     </SHIFTSCREEN>
   </Interactions>
-  <Selection>
-    Root=ID_SCREEN_FEUX
-    Object=2050
-  </Selection>
   <Terms>
   </Terms>
   <DrawingItems>

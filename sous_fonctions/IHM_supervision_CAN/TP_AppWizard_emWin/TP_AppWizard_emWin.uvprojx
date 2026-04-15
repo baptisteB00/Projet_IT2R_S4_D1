@@ -450,11 +450,6 @@
               <FilePath>AppWizzard/Source/Generated/ID_SCREEN_SON.c</FilePath>
             </File>
             <File>
-              <FileName>ID_SCREEN_PANNEAU.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>AppWizzard/Source/Generated/ID_SCREEN_PANNEAU.c</FilePath>
-            </File>
-            <File>
               <FileName>ID_SCREEN_ACCUEIL_Slots.c</FileName>
               <FileType>1</FileType>
               <FilePath>AppWizzard/Source/CustomCode/ID_SCREEN_ACCUEIL_Slots.c</FilePath>
@@ -479,25 +474,20 @@
               <FileType>1</FileType>
               <FilePath>AppWizzard/Source/CustomCode/ID_SCREEN_SON_Slots.c</FilePath>
             </File>
-            <File>
-              <FileName>ID_SCREEN_PANNEAU_Slots.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>AppWizzard/Source/CustomCode/ID_SCREEN_PANNEAU_Slots.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Resource AppWizard</GroupName>
           <Files>
             <File>
-              <FileName>DARK_Button_Up_100x30.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>AppWizzard/Resource/Image/DARK_Button_Up_100x30.c</FilePath>
-            </File>
-            <File>
               <FileName>DARK_Button_Down_100x30.c</FileName>
               <FileType>1</FileType>
               <FilePath>AppWizzard/Resource/Image/DARK_Button_Down_100x30.c</FilePath>
+            </File>
+            <File>
+              <FileName>DARK_Button_Up_100x30.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>AppWizzard/Resource/Image/DARK_Button_Up_100x30.c</FilePath>
             </File>
             <File>
               <FileName>UNPRESS_right.c</FileName>

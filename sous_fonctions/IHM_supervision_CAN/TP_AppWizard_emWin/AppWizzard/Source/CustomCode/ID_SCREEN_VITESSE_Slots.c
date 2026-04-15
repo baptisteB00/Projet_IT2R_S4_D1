@@ -101,4 +101,15 @@ void ID_SCREEN_VITESSE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_03__APPW_JOB_SET
   GUI_USE_PARA(pResult);
 }
 
+/*********************************************************************
+*
+*       ID_SCREEN_VITESSE__ID_HUILE_JAUGE__WM_NOTIFICATION_VALUE_CHANGED
+*/
+void ID_SCREEN_VITESSE__ID_HUILE_JAUGE__WM_NOTIFICATION_VALUE_CHANGED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
+  GUI_USE_PARA(pAction);
+  GUI_USE_PARA(hScreen);
+  GUI_USE_PARA(pMsg);
+  GUI_USE_PARA(pResult);
+}
+
 /*************************** End of file ****************************/

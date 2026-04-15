@@ -272,6 +272,12 @@ static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
       ARG_V(0),
     }, 0, NULL
   },
+  { ID_BUTTON_clignoD,     WM_NOTIFICATION_CLICKED,          0,                     APPW_JOB_NULL,           ID_SCREEN_FEUX__ID_BUTTON_clignoD__WM_NOTIFICATION_CLICKED,
+  },
+  { ID_BUTTON_clignoG,     WM_NOTIFICATION_CLICKED,          0,                     APPW_JOB_NULL,           ID_SCREEN_FEUX__ID_BUTTON_clignoG__WM_NOTIFICATION_CLICKED,
+  },
+  { ID_BUTTON_Phare,       WM_NOTIFICATION_CLICKED,          0,                     APPW_JOB_NULL,           ID_SCREEN_FEUX__ID_BUTTON_Phare__WM_NOTIFICATION_CLICKED,
+  },
 };
 
 /*********************************************************************

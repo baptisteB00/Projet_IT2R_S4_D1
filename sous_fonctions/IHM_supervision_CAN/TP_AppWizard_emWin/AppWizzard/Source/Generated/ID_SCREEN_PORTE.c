@@ -130,9 +130,9 @@ static APPW_CREATE_ITEM _aCreate[] = {
   { WM_OBJECT_GAUGE_Create,
     ID_GAUGE_3AD, ID_SCREEN_PORTE,
     { { { DISPOSE_MODE_REL_PARENT, 168, 0, 0 },
-        { DISPOSE_MODE_REL_PARENT, 46, 0, 0 },
+        { DISPOSE_MODE_REL_PARENT, 47, 0, 0 },
         { DISPOSE_MODE_REL_PARENT, 58, 0, 0 },
-        { DISPOSE_MODE_REL_PARENT, 31, 0, 0 },
+        { DISPOSE_MODE_REL_PARENT, 30, 0, 0 },
       },
       0, 0, 0, 0, 0, 0
     },
