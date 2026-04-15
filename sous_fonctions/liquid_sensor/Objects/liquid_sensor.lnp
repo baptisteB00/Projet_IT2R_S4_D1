@@ -17,6 +17,7 @@
 ".\objects\rtx_timer.o"
 ".\objects\os_systick.o"
 ".\objects\rtx_config.o"
+".\objects\can_stm32f4xx.o"
 ".\objects\stm32f4xx_hal.o"
 ".\objects\stm32f4xx_hal_adc.o"
 ".\objects\stm32f4xx_hal_adc_ex.o"
