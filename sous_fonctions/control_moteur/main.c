@@ -115,12 +115,13 @@ int main(void){
 	osKernelInitialize();
 	
 	MSQ_BAL_DATA_UART = osMessageQueueNew(10, sizeof(DataRecept),NULL);
-	MSQ_BAL_DATA 		 = osMessageQueueNew(10, sizeof(DataLidar), NULL);
-	MSQ_BAL_BLUETOOTH = osMessageQueueNew(10, sizeof(DataBrut), 	NULL);
-	MSQ_BAL_STOCK 		 = osMessageQueueNew(10, sizeof(DataLidar), NULL);
+	MSQ_BAL_DATA 		 =  osMessageQueueNew(10, sizeof(DataLidar), NULL);
+	MSQ_BAL_BLUETOOTH = osMessageQueueNew(10, sizeof(DataBrut), NULL);
+	MSQ_BAL_STOCK 	  = osMessageQueueNew(10, sizeof(DataLidar), NULL);
 
 	ID_Envoie_et_Reception = osThreadNew ( (osThreadFunc_t) TacheEnvoiRecept , NULL , NULL) ;
 	ID_TacheTraitement 		 = osThreadNew ( (osThreadFunc_t) TacheTraitement  , NULL , NULL) ;
+	ID_TacheControlMoteur	 = osThreadNew ( (osThreadFunc_t) TacheControlMoteur,NULL ,NULL);
 	//ID_DataStock					 = osThreadNew ( (osThreadFunc_t) thread_DataStock 	 , NULL	, &configDataStock);
 	
 	osKernelStart();                      // Start thread execution
@@ -158,23 +159,28 @@ void TacheControlMoteur(void){
 	remplir_liste_couple(NB_VITESSE_DWA, NB_ANGLE_DWA);
 	
 	DataLidar DataStock;
-	
+	/*
 	for (int i = 0; i < NB_LUT; i++)/////////////////////////////////////////
 	{
 			// On calcule le float, on le multiplie par l'échelle Q15, et on force la conversion en int16_t
 			LUT_TRIGO_INT[i] = (int16_t)(cos((float)i / (NB_LUT - 1) * M_PI/2) * 32767.0f);
-	}
+	}*/
 	
 		while (1){
-			osMessageQueueGet(MSQ_BAL_DATA, &DataStock, NULL, osWaitForever);
-			
-			  LidarScan lidarscan;////////////////////////////////////
+				// osMessageQueueGet(MSQ_BAL_DATA, &DataStock, NULL, osWaitForever);
+			/*
+			  LidarScan lidarscan ;////////////////////////////////////
         lidarscan.nb_mesures = LIDAR_NB_RAYON;/////////////////////////////////////////
         //lidarscan.distances = car.Lidar.distances;///////////////////////////////////
-        distance = ALGO_analyser_zones_moyenne(&lidarscan);/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////uniquement V1 v2
-        ALGO_decision_V2(&distance,&commandes);////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        distance = ALGO_analyser_zones_moyenne(&lidarscan);//////////////////////////////////////////////////////////////////////////////////////////////////////uniquement V1 v2
+        ALGO_decision_V2(&distance,&commandes);//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			*/
+			
+			direction_roue(-15);
+			control_vitesse(20);
+			
 /*--------------------------------Qlqch ici-------------------------------------------------------*/	
-		// Reception Bluetooth
+/*		// Reception Bluetooth
 		Driver_USART1.Receive(cmd_bluth, 3);
 		while (Driver_USART1.GetRxCount() == 0);
 		
@@ -199,7 +205,7 @@ void TacheControlMoteur(void){
 //		else if (cmd_bluth[2]== 0x80){control_hacheur(ARRIERE);}
 		if((cmd_bluth[0] & 0x04) == 0x04){control_hacheur(AVANT);}
 		else if((cmd_bluth[0] & 0x04) == 0x00){control_hacheur(ARRIERE);}
-		//else{control_hacheur(DESACTIVE);}
+		//else{control_hacheur(DESACTIVE);}*/
 /*----------------------------------------Qqlch la--------------------------------------*/
 	}
 }
@@ -236,7 +242,7 @@ void TacheTraitement (void){
 		DataEnvoi.distance_mm = distance_q2 / 4;	// Divisé par 4 car la doc le précise	
 
 		osMessageQueuePut(MSQ_BAL_DATA, &DataEnvoi, NULL, osWaitForever);			// BAL pour le thread LED
-		osMessageQueuePut(MSQ_BAL_STOCK, &DataEnvoi, NULL, osWaitForever);			// BAL pour le thread DataStock
+		//osMessageQueuePut(MSQ_BAL_STOCK, &DataEnvoi, NULL, osWaitForever);			// BAL pour le thread DataStock
 		//osMessageQueuePut(MSQ_BAL_BLUETOOTH, &DataBrut, NULL, osWaitForever);	// BAL pour le thread Bluetooth
 	}
 }
@@ -360,7 +366,6 @@ void control_hacheur(enum sens direction) {
 //valeur entre 0 et 100
 enum return_vit control_vitesse(uint8_t val_vitesse){
 	if(val_vitesse<=100 && val_vitesse>=0){
-	
 	LPC_PWM1->MR2 = (uint16_t)(val_vitesse * 2499.0)/100.0; //*24.99 car MR0 entre 0 et 2499
 		return vitOK;
 	}else {
