@@ -49,10 +49,14 @@
 #define ID_CAN_LEDs 0x030
 #define ID_CAN_Porte 0x031
 #define ID_CAN_DFP 0x032
-#define ID_CAN_Capteurs 0x033
-#define ID_CAN_GPS_Heure 0x034
-#define ID_CAN_GPS_Lattitude 0x035
-#define ID_CAN_GPS_Longitude 0x036
+#define ID_CAN_Light_Sensor 0x033
+#define ID_CAN_Liquid_Sensor 0x034
+#define ID_CAN_GPS_Heure 0x035
+#define ID_CAN_GPS_Lattitude 0x036
+#define ID_CAN_GPS_Longitude 0x037
+
+//RTOS
+#define FlagTimeout 0x80000000
 
 //Déclarations Externes
 extern ARM_DRIVER_USART Driver_USART2;
@@ -63,8 +67,8 @@ extern ARM_DRIVER_CAN Driver_CAN2;
 
 uint8_t buffer_rfid[14]; 
 uint32_t led[17];
-bool verrouillage = 1;
-bool pharesAvant = 0, pharesArriere = 0, cg = 0, cd = 0;
+int valADC;
+bool verrouillage = 1, pharesAvant = 0, pharesArriere = 0, cg = 0, cd = 0;
 
 
 ADC_HandleTypeDef ADC1_Hand;
@@ -99,7 +103,7 @@ void Init_GPIO(void);
 //Tâches
 osThreadId_t tid_mySPI_Thread, ID_Allumer1, ID_RFID, ID_Envoi_SPI, ID_Phares, ID_Clignotants, ID_DFP, ID_Klaxon, ID_Sensorlight, ID_Radar_Droit, ID_Radar_Gauche, ID_CANT, ID_Disco;
 osMutexId_t MUT_LEDs, MUT_DFP, MUT_I2C;
-osMessageQueueId_t MB_Radars;
+osMessageQueueId_t MB_Radars, MB_Light_Sensor;
 
 typedef struct {                             
   uint16_t Buf[16];
@@ -126,7 +130,6 @@ void Phares(void){
 				pharesAvant = 1;
 				pharesArriere = 1;    
 			}
-
 			// 3. Application physique de l'état sur les LEDs
 			if (verrouillage == 0) {
 					// Phares avants
@@ -136,7 +139,6 @@ void Phares(void){
 					else {
 						eteindrePharesAvant();
 					}
-
 					// Phares arrières
 					if (pharesArriere == 1){
 						allumerPharesArriere();
@@ -153,37 +155,25 @@ void Phares(void){
 }
 
 void Clignotants(void){
-    uint32_t flag;
-    uint32_t timeout;
+    uint32_t flag, timeout;
 
     while (1) {
-        // 1. GESTION DU BLOCAGE (Timeout)
         if (cg == 1 || cd == 1) {
             timeout = 10; 
         }
 				else {
             timeout = osWaitForever;
         }
-
-        // On écoute les événements (Flags 0, 1, 2 et 3)
         flag = osThreadFlagsWait(((1<<0)|(1<<1)|(1<<2)|(1<<3)), osFlagsWaitAny, timeout);
-
-        // 2. LECTURE DES ORDRES (Si on a reçu un flag et non une erreur de timeout)
-        if ((flag & 0x80000000) == 0) { 
-            
-            // Ordre : Clignotant Gauche
-            if ((flag & (1<<2)) == (1<<2)) {
+        if ((flag & FlagTimeout) == 0) {            
+            if ((flag & (1<<3)) == (1<<3)) {
                 cg = 1 - cg;         // Bascule (On/Off)
                 if (cg == 1) cd = 0; // Désactive la droite si on allume la gauche
             }
-            
-            // Ordre : Clignotant Droit
-            if ((flag & (1<<3)) == (1<<3)) {
+            if ((flag & (1<<2)) == (1<<2)) {
                 cd = 1 - cd;         // Bascule (On/Off)
                 if (cd == 1) cg = 0; // Désactive la gauche si on allume la droite
             }
-
-            // Ordre : Animation Déverrouillage RFID (Flag 0)
             if ((flag & (1<<0)) == (1<<0)) {
                 allumer1LED(10,VERT);
                 allumer1LED(11,VERT);
@@ -191,8 +181,6 @@ void Clignotants(void){
                 eteindre1LED(10);
                 eteindre1LED(11);
             }
-            
-            // Ordre : Animation Verrouillage/Erreur RFID (Flag 1)
             else if ((flag & (1<<1)) == (1<<1)) {
                 for (int i=0; i<3; i++){
                     allumer1LED(10,ROUGE);
@@ -204,24 +192,17 @@ void Clignotants(void){
                 }
             }
         }
-
-        // 3. APPLICATION PHYSIQUE (Le Clignotement)
         if (verrouillage == 0) {
-            
-            // Allumage
             if (cg == 1) {
                 allumer1LED(0,ORANGE);
                 allumer1LED(15,ORANGE);
             }
-            if (cd == 1) { // CORRECTION DU BUG ICI (c'était cg)
+            if (cd == 1) { 
                 allumer1LED(9,ORANGE);
                 allumer1LED(12,ORANGE);
             }
-            
-            // Si au moins un clignotant est actif, on gère la temporisation
             if (cg == 1 || cd == 1) {
-                osDelay(300); // Temps allumé
-                
+                osDelay(300); 
                 if (cg == 1) {
                     eteindre1LED(0);
                     eteindre1LED(15);
@@ -230,12 +211,10 @@ void Clignotants(void){
                     eteindre1LED(9);
                     eteindre1LED(12);
                 }
-                
-                osDelay(300); // Temps éteint
+                osDelay(300);
             }
         }
 				else {
-            // Si la voiture est verrouillée, on force l'arrêt des clignotants
             cg = 0;
             cd = 0;
             eteindre1LED(0);
@@ -281,13 +260,12 @@ void DFP(void){
 }
 
 void SensorLight(void){
-	int valeur;
 	while(1){
 		if (verrouillage == 0){
 			HAL_ADC_Start(&ADC1_Hand);
 			while(HAL_ADC_PollForConversion(&ADC1_Hand, 1000) != HAL_OK);
-			valeur = HAL_ADC_GetValue(&ADC1_Hand);
-			if (valeur < 3000) {
+			valADC = HAL_ADC_GetValue(&ADC1_Hand);
+			if (valADC < 3000) {
 				osThreadFlagsSet(ID_Phares, (1<<1)); 
 			}
 		}
@@ -306,19 +284,15 @@ void RadarDroit(void){
 	while(1){
 		if (verrouillage == 0){
 			osThreadFlagsWait((1<<0), osFlagsWaitAll, osWaitForever);
-			//osMutexAcquire(MUT_I2C, osWaitForever);
 			distD = get_distance(CAPTAvD);
 			if (distD != 0){
 				if ((distD < 25)){
-					//osThreadFlagsSet(ID_DFP, (1<<3));
 					allumer_led(led_bleue);
-					//osThreadFlagsSet(ID_DFP, (1<<3));
 					osThreadFlagsSet(ID_Clignotants, (1<<3));
 					osDelay(distD*distD);
 					eteindre_led(led_bleue);
 				}
 			}
-			//osMutexRelease(MUT_I2C);
 			msg.Buf[0] = distD;
 			msg.Idx = 0;
 			osMessageQueuePut(MB_Radars, &msg, NULL, osWaitForever);
@@ -333,18 +307,15 @@ void RadarGauche(void){
 	while(1){
 		if (verrouillage == 0){
 			osThreadFlagsWait((1<<0), osFlagsWaitAll, osWaitForever);
-			//osMutexAcquire(MUT_I2C, osWaitForever);
 			distG = get_distance(CAPTAvG);
 			if (distG != 0){
 				if ((distG < 25)){
-					//osThreadFlagsSet(ID_DFP, (1<<3));
 					allumer_led(led_orange);
 					osThreadFlagsSet(ID_Clignotants, (1<<2));
 					osDelay(distG*distG);
 					eteindre_led(led_orange);
 				}
 			}
-			//osMutexRelease(MUT_I2C);
 			msg.Buf[0] = distG;
 			msg.Idx = 1;
 			osMessageQueuePut(MB_Radars, &msg, NULL, osWaitForever);
@@ -358,18 +329,13 @@ void Disco(void){
 	uint32_t flag;
 	bool disco_actif = 0;
 	int i;
-
 	while(1) {
 			if (disco_actif == 0) {
 					flag = osThreadFlagsWait((1<<0), osFlagsWaitAny, osWaitForever);
-					if (flag == (1<<0)) {
-							disco_actif = 1;
-					}
+					if (flag == (1<<0)) disco_actif = 1;
 			} 
 			else {
-
-					flag = osThreadFlagsWait((1<<1), osFlagsWaitAny, 150);
-					
+				flag = osThreadFlagsWait((1<<1), osFlagsWaitAny, 150);
 					if (flag == (1<<1)) {
 							disco_actif = 0;
 							for (i = 0; i < NbLEDs; i++) {
@@ -392,7 +358,7 @@ void CANT(void){
 	uint16_t msg;
 	uint32_t flag;
 	while(1){
-		flag = osThreadFlagsWait(0xFFFF, osFlagsWaitAny, osWaitForever);
+		flag = osThreadFlagsWait(0xF, osFlagsWaitAny, osWaitForever);
 		if ((flag & 3) == 3){
 			data[0] = 0;
 			osMessageQueueGet(MB_Radars, &msg, NULL, osWaitForever);
@@ -407,6 +373,10 @@ void CANT(void){
 			data[0] = 1;
 			data[1] = verrouillage;
 			Envoi_CAN(ID_CAN_Porte, data, 0, 2);
+		}
+		if ((flag & (1<<3)) == (1<<3)){
+			data[0] = (uint8_t)(100*valADC/4095.0);
+			Envoi_CAN(ID_CAN_Porte, data, 0, 1);
 		}
 	}
 }
@@ -428,59 +398,35 @@ void My_I2C_Callback(uint32_t event) {
 void My_CAN_Callback (uint32_t obj_idx, uint32_t event) {
     ARM_CAN_MSG_INFO msg_info;
     uint8_t data_buf[8];
-
     if (event & ARM_CAN_EVENT_RECEIVE) {
         Driver_CAN2.MessageRead(obj_idx, &msg_info, data_buf, 8);
-        
         if ((msg_info.id == ID_CAN_Radars_Avants) && (msg_info.rtr == 1)){
             osThreadFlagsSet(ID_Radar_Droit, (1<<0));
             osThreadFlagsSet(ID_Radar_Gauche, (1<<0));
         }
-        if ((msg_info.id == ID_CAN_LEDs) && (data_buf[0] == (1<<2))){
-            pharesAvant = 1 - pharesAvant;
-						if (pharesAvant == 1){
-							allumer_led(led_orange);
+        if (msg_info.id == ID_CAN_LEDs){
+						if ((data_buf[0] == (1<<2))){
+								pharesAvant = 1 - pharesAvant;
+								osThreadFlagsSet(ID_Phares, (1<<0));
 						}
-						else{
-							eteindre_led(led_orange);
+						if (data_buf[0] == (1<<3)){
+								pharesArriere = 1 - pharesArriere;
+								osThreadFlagsSet(ID_Phares, (1<<0));
 						}
-            osThreadFlagsSet(ID_Phares, (1<<0));
-        }
-        if ((msg_info.id == ID_CAN_LEDs) && (data_buf[0] == (1<<3))){
-            pharesArriere = 1 - pharesArriere;
-						if (pharesAvant == 1){
-								allumer_led(led_bleue);
-						}
-						else{
-							eteindre_led(led_bleue);
-						}
-            osThreadFlagsSet(ID_Phares, (1<<0));
-        }
-        if ((msg_info.id == ID_CAN_LEDs) && (data_buf[0] == (1<<0))){
-            osThreadFlagsSet(ID_Clignotants, (1<<2));
-        }
-        if ((msg_info.id == ID_CAN_LEDs) && (data_buf[0] == (1<<1))){
-            osThreadFlagsSet(ID_Clignotants, (1<<3));
-        }
+						if (data_buf[0] == (1<<0))osThreadFlagsSet(ID_Clignotants, (1<<2));
+						if (data_buf[0] == (1<<1))osThreadFlagsSet(ID_Clignotants, (1<<3));
+				}
         if (msg_info.id == ID_CAN_DFP){
             if (data_buf[0] == 1){
-                if (data_buf[1] == Son_Clignotants){
-                    osThreadFlagsSet(ID_DFP, (1<<1));
-                }
-                else if (data_buf[1] == Son_Demarrage){
-                    osThreadFlagsSet(ID_DFP, (1<<2));
-                }
-                else if (data_buf[1] == Son_Radar){
-                    osThreadFlagsSet(ID_DFP, (1<<3));
-                }
-                else if (data_buf[1] == Son_Klaxon){
-                    osThreadFlagsSet(ID_DFP, (1<<4));
-                }
-                else if (data_buf[1] == Son_Deverouillage){ // Correction ici aussi (c'était Son_Demarrage en doublon)
-                    osThreadFlagsSet(ID_DFP, (1<<5));
-                }
+                if (data_buf[1] == Son_Clignotants) osThreadFlagsSet(ID_DFP, (1<<1));
+                else if (data_buf[1] == Son_Demarrage) osThreadFlagsSet(ID_DFP, (1<<2));
+                else if (data_buf[1] == Son_Radar) osThreadFlagsSet(ID_DFP, (1<<3));
+                else if (data_buf[1] == Son_Klaxon) osThreadFlagsSet(ID_DFP, (1<<4));
+                else if (data_buf[1] == Son_Deverouillage) osThreadFlagsSet(ID_DFP, (1<<5));
             }
         }
+				if ((msg_info.id == ID_CAN_Porte) && (msg_info.rtr = 1)) osThreadFlagsSet((osThreadId_t)ID_CANT, (1<<2));
+				if ((msg_info.id == ID_CAN_Light_Sensor) && (msg_info.rtr = 1)) osThreadFlagsSet((osThreadId_t)ID_CANT, (1<<3));
     }
 }
 
@@ -579,9 +525,7 @@ void Init_CAN (void) {
         ARM_CAN_BIT_PHASE_SEG2(1U) | // phase seg2 = 1 TQ
         ARM_CAN_BIT_SJW(1U) // Resync. Seg = 1 TQ
     );
-		Driver_CAN2.ObjectSetFilter( 0U,
-											ARM_CAN_FILTER_ID_EXACT_ADD ,
-											ARM_CAN_STANDARD_ID(0x030), 0);
+		Driver_CAN2.ObjectSetFilter(0U, ARM_CAN_FILTER_ID_MASKABLE_ADD, ARM_CAN_STANDARD_ID(0x000), 0x7C0); // Masque autorisant les ID souhaitées
     Driver_CAN2.ObjectConfigure(2U, ARM_CAN_OBJ_TX); // TX en emmission
 		Driver_CAN2.ObjectConfigure(0U, ARM_CAN_OBJ_RX); // RX en reception
 		Driver_CAN2.SetMode(ARM_CAN_MODE_NORMAL);
