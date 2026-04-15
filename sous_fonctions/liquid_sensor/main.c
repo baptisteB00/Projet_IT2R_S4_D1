@@ -3,12 +3,12 @@
 #include "adc_F4.h"
 #include "os_tick.h"                    // CMSIS:OS Tick
 #include "rtx_os.h"                     // CMSIS:RTOS2:Keil RTX5&&Source
-#include "Driver_CAN.h" // Driver spÈcifique CMSIS-Driver
+#include "Driver_CAN.h" // Driver sp√©cifique CMSIS-Driver
 
 ADC_HandleTypeDef ADC8_Hand;
 extern ARM_DRIVER_CAN Driver_CAN2;
 
-/*------ ID des t‚ches ------*/
+/*------ ID des t√¢ches ------*/
 
 osThreadId_t ID_ReceptData;
 osThreadId_t ID_Traitement;
@@ -30,7 +30,7 @@ typedef struct
 
 float ConvertToCm(uint32_t mesure);
 
-/*------ T‚ches ------*/
+/*------ T√¢ches ------*/
 
 void Thread_ReceptData(void * argument)
 {
@@ -40,14 +40,14 @@ void Thread_ReceptData(void * argument)
 
 	while(1)
 	{
-		HAL_ADC_Start(&ADC8_Hand); 			// DÈbut de la conversion ADC
+		HAL_ADC_Start(&ADC8_Hand); 			// D√©but de la conversion ADC
 		
 		 if (HAL_ADC_PollForConversion(&ADC8_Hand, 10) == HAL_OK)
         {
             // Lire la valeur brute du capteur
             donnee_capteur.valeur_capteur = HAL_ADC_GetValue(&ADC8_Hand);
             
-            // Envoyer ‡ la file de messages pour traitement
+            // Envoyer √† la file de messages pour traitement
             osMessageQueuePut(ID_BAL_DATA_RECEPT, &donnee_capteur, 0, osWaitForever);
         }
 
@@ -77,17 +77,17 @@ void Thread_Traitement(void * argument)
 		
 		 if (statut == osOK)
         {
-            // Conversion de la valeur brute en centimËtres
+            // Conversion de la valeur brute en centim√®tres
             donnee_a_traiter.liquid_level = ConvertToCm(donnee_a_traiter.valeur_capteur);
             
             // Ici, je peux ajouter la logique du projet
-					 infos_trame.id = ARM_CAN_STANDARD_ID(0x200); // Identifiant de ton capteur
-            infos_trame.rtr = 0;                         // Trame de donnÈes
+					 infos_trame.id = ARM_CAN_STANDARD_ID(0x200); // Identifiant dU capteur
+            infos_trame.rtr = 0;                         // Trame de donn√©es
             infos_trame.dlc = 1;     // 1 octet suffit pour 0-100%
 
             // Exemple : Envoyer vers le bus CAN si le niveau change
 					
-					// On envoie le niveau en pourcentage (0 ‡ 100)
+					// On envoie le niveau en pourcentage (0 √† 100)
             buffer_donnees[0] = (uint8_t)((donnee_a_traiter.liquid_level / 4.8f) * 100);
 					 Driver_CAN2.MessageSend(2, &infos_trame, buffer_donnees, 1);
 
@@ -104,7 +104,7 @@ osThreadAttr_t config_Traitement = { .priority = osPriorityNormal };
 int main (void)
 {
 	SystemCoreClockUpdate();
-	HAL_Init(); // Important pour initialiser les timers de dÈlai
+	HAL_Init(); // Important pour initialiser les timers de d√©lai
 	osKernelInitialize();
 	
 	
@@ -124,7 +124,7 @@ int main (void)
 float ConvertToCm(uint32_t mesure) {
 	
 //		const uint32_t ADC_MIN = 77;  // Valeur lue quand le capteur est sec
-//    const uint32_t ADC_MAX = 3839; // Valeur lue quand le capteur est ‡ 4.8cm
+//    const uint32_t ADC_MAX = 3839; // Valeur lue quand le capteur est √† 4.8cm
 	
 //		if (mesure <= ADC_MIN) return 0.0f;
 //    else if (mesure >= ADC_MAX) return 4.8f;
@@ -138,15 +138,15 @@ float ConvertToCm(uint32_t mesure) {
 
 //    if (voltage <= 0.05f) return 0.0f; // Seuil bas (Air)
 //    
-//    // Segment 1 : 0 ‡ 0.5 cm (0V ‡ 1.3V)
+//    // Segment 1 : 0 √† 0.5 cm (0V √† 1.3V)
 //    if (voltage <= 1.30f) {
 //        return (voltage / 1.30f) * 0.5f;
 //    }
-//    // Segment 2 : 0.5 ‡ 1.0 cm (1.3V ‡ 1.53V)
+//    // Segment 2 : 0.5 √† 1.0 cm (1.3V √† 1.53V)
 //    if (voltage <= 1.53f) {
 //        return 0.5f + ((voltage - 1.30f) * 0.5f) / (1.53f - 1.30f);
 //    }
-//    // Segment 3 : 1.0 ‡ 4.8 cm (1.53V ‡ 1.88V)
+//    // Segment 3 : 1.0 √† 4.8 cm (1.53V √† 1.88V)
 //    if (voltage <= 1.88f) {
 //        return 1.0f + ((voltage - 1.53f) * 3.8f) / (1.88f - 1.53f);
 //    }
