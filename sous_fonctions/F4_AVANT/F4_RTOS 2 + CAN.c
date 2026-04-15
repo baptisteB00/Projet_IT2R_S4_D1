@@ -84,7 +84,7 @@ void write1byte(uint8_t addr, uint8_t reg, uint8_t val);
 uint8_t read1byte(uint8_t addr, uint8_t reg);
 uint16_t get_distance(uint8_t addr);
 void Init_CAN(void);
-void Init_LEDs(void);*
+void Init_LEDs(void);
 void Envoi_SPI(void);
 void allumerPharesAvant(void);
 void allumerPharesArriere(void);
