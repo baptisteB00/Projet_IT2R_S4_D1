@@ -110,6 +110,8 @@ typedef struct {
   uint8_t Idx;
 } MSGQUEUE_OBJ_t;
 
+uint16_t distG = 0, distD = 0;
+
 
 void tacheRFID(void){
 	unsigned char badge_maitre[12] = {0x33,0x43,0x30,0x30,0x34,0x44,0x39,0x35,0x44,0x32,0x33,0x36};
@@ -125,12 +127,6 @@ void Phares(void){
 
     while (1) {
 			flag = osThreadFlagsWait(0xFFFF, osFlagsWaitAny, osWaitForever);
-			// 1. Mise à jour de l'état par le SensorLight (Flags 1)
-			if ((flag & (1<<1)) == (1<<1)){
-				pharesAvant = 1;
-				pharesArriere = 1;    
-			}
-			// 3. Application physique de l'état sur les LEDs
 			if (verrouillage == 0) {
 					// Phares avants
 					if (pharesAvant == 1){
@@ -293,17 +289,12 @@ void RadarDroit(void){
 					eteindre_led(led_bleue);
 				}
 			}
-			msg.Buf[0] = distD;
-			msg.Idx = 0;
-			osMessageQueuePut(MB_Radars, &msg, NULL, osWaitForever);
 			osThreadFlagsSet((osThreadId_t)ID_CANT, (1<<0));
 		}
 	}
 }
 
 void RadarGauche(void){
-	MSGQUEUE_OBJ_t msg;
-	uint16_t distG=0;
 	while(1){
 		if (verrouillage == 0){
 			osThreadFlagsWait((1<<0), osFlagsWaitAll, osWaitForever);
@@ -316,9 +307,6 @@ void RadarGauche(void){
 					eteindre_led(led_orange);
 				}
 			}
-			msg.Buf[0] = distG;
-			msg.Idx = 1;
-			osMessageQueuePut(MB_Radars, &msg, NULL, osWaitForever);
 			osThreadFlagsSet((osThreadId_t)ID_CANT, (1<<1));
 		}
 	}
@@ -361,12 +349,10 @@ void CANT(void){
 		flag = osThreadFlagsWait(0xF, osFlagsWaitAny, osWaitForever);
 		if ((flag & 3) == 3){
 			data[0] = 0;
-			osMessageQueueGet(MB_Radars, &msg, NULL, osWaitForever);
-			data[1] = ((msg & 0xFF00)>>8);
-			data[2] = (uint8_t)(msg & 0x00FF);
-			osMessageQueueGet(MB_Radars, &msg, NULL, osWaitForever);
-			data[2] = ((msg & 0xFF00)>>8);
-			data[3] = (uint8_t)(msg & 0x00FF);
+			data[1] = ((distG & 0xFF00)>>8);
+			data[2] = (uint8_t)(distG & 0x00FF);
+			data[2] = ((distD & 0xFF00)>>8);
+			data[3] = (uint8_t)(distD & 0x00FF);
 			Envoi_CAN(ID_CAN_Radars_Avants, data, 0, 4);
 		}
 		if ((flag & (1<<2)) == (1<<2)){
@@ -507,8 +493,7 @@ void Init_SPI(void){
 void Init_I2C(void){
 	Driver_I2C1.Initialize(My_I2C_Callback);
 	Driver_I2C1.PowerControl(ARM_POWER_FULL);
-	Driver_I2C1.Control(	ARM_I2C_BUS_SPEED,				// 2nd argument = debit
-							ARM_I2C_BUS_SPEED_STANDARD  );	// 100 kHz
+	Driver_I2C1.Control(	ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_STANDARD  );	// 100 kHz
 //	Driver_I2C1.Control(	ARM_I2C_BUS_CLEAR,
 //							0 );
 }
@@ -632,7 +617,6 @@ void sendDFCommand(uint8_t cmd, uint8_t para1, uint8_t para2) {
 		osDelay(2);
 	}
 	osMutexRelease(MUT_DFP);
-	osDelay(500);
 }
 
 //LEDs

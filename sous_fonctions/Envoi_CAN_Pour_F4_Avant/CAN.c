@@ -20,8 +20,18 @@
 #define ID_CAN_LEDs 0x030
 #define ID_CAN_Porte 0x031
 #define ID_CAN_DFP 0x032
-#define ID_CAN_Capteurs 0x033
-#define ID_CAN_GPS 0x034
+#define ID_CAN_Light_Sensor 0x033
+#define ID_CAN_Liquid_Sensor 0x034
+#define ID_CAN_GPS_Heure 0x035
+#define ID_CAN_GPS_Lattitude 0x036
+#define ID_CAN_GPS_Longitude 0x037
+
+//DFP
+#define Son_Clignotants 0x01
+#define Son_Demarrage 0x02
+#define Son_Radar 0x03
+#define Son_Klaxon 0x04
+#define Son_Deverouillage 0x05
 
 extern ARM_DRIVER_CAN Driver_CAN2;
 
@@ -60,8 +70,9 @@ void CANT(void){
 	uint8_t data[8];
 	while(1){
 		data[0] = (1<<0);
+		data[1] = Son_Demarrage;
 		osThreadFlagsWait((1<<0), osFlagsWaitAll, osWaitForever);
-		Envoi_CAN(ID_CAN_LEDs, data, 0, 1);
+		Envoi_CAN(ID_CAN_DFP, data, 0, 2);
 	}
 }
 
@@ -144,18 +155,7 @@ void Init_CAN (void) {
 			ARM_CAN_BIT_PHASE_SEG2(1U) | // phase seg2 = 1 TQ
 			ARM_CAN_BIT_SJW(1U) // Resync. Seg = 1 TQ
 	);
-	Driver_CAN2.ObjectSetFilter( 0U,
-										ARM_CAN_FILTER_ID_RANGE_ADD ,
-										ARM_CAN_STANDARD_ID(0x010),
-										ARM_CAN_STANDARD_ID(0x013)) ;
-	Driver_CAN2.ObjectSetFilter( 0U,
-											ARM_CAN_FILTER_ID_RANGE_ADD ,
-											ARM_CAN_STANDARD_ID(0x020),
-											ARM_CAN_STANDARD_ID(0x021)) ;
-	Driver_CAN2.ObjectSetFilter( 0U,
-											ARM_CAN_FILTER_ID_RANGE_ADD ,
-											ARM_CAN_STANDARD_ID(0x030),
-											ARM_CAN_STANDARD_ID(0x034)) ;
+	Driver_CAN2.ObjectSetFilter(0U, ARM_CAN_FILTER_ID_MASKABLE_ADD, ARM_CAN_STANDARD_ID(0x000), 0x7C0); // Masque autorisant les ID souhaitées
 	Driver_CAN2.ObjectConfigure(2U, ARM_CAN_OBJ_TX); // TX en emmission
 	Driver_CAN2.ObjectConfigure(0U, ARM_CAN_OBJ_RX); // RX en reception
 	Driver_CAN2.SetMode(ARM_CAN_MODE_NORMAL);
