@@ -71,6 +71,13 @@
     Item=4101,ID_VAR_Cadena,0
     Item=4102,ID_VAR_Phare,0
     Item=4103,ID_VAR_HUILE,0
+    Item=4104,ID_VAR_vitesse,0
+    Item=4105,ID_VAR_1AD,0
+    Item=4106,ID_VAR_1AG,0
+    Item=4107,ID_VAR_2AD,0
+    Item=4108,ID_VAR_2AG,0
+    Item=4109,ID_VAR_3AD,0
+    Item=4110,ID_VAR_3AG,0
   </Variables>
   <FocusInfo>
     Color=ff2777b3
@@ -1007,7 +1014,7 @@
       </SetRange>
       <SetValueSpan>
         Min=0
-        Max=999
+        Max=100
       </SetValueSpan>
       <SetRadius>
         Radius=60
@@ -1021,7 +1028,7 @@
         Value1=16
       </SetValues>
       <SetValue>
-        Value=999
+        Value=100
       </SetValue>
     </Gauge>
     <Gauge>
@@ -1065,7 +1072,7 @@
       </SetRange>
       <SetValueSpan>
         Min=0
-        Max=999
+        Max=100
       </SetValueSpan>
       <SetRadius>
         Radius=80
@@ -1079,7 +1086,7 @@
         Value1=16
       </SetValues>
       <SetValue>
-        Value=999
+        Value=100
       </SetValue>
     </Gauge>
     <Gauge>
@@ -1123,7 +1130,7 @@
       </SetRange>
       <SetValueSpan>
         Min=0
-        Max=999
+        Max=100
       </SetValueSpan>
       <SetRadius>
         Radius=100
@@ -1137,7 +1144,7 @@
         Value1=16
       </SetValues>
       <SetValue>
-        Value=999
+        Value=100
       </SetValue>
     </Gauge>
     <Gauge>
@@ -1181,7 +1188,7 @@
       </SetRange>
       <SetValueSpan>
         Min=0
-        Max=999
+        Max=100
       </SetValueSpan>
       <SetRadius>
         Radius=60
@@ -1195,7 +1202,7 @@
         Value1=16
       </SetValues>
       <SetValue>
-        Value=999
+        Value=100
       </SetValue>
     </Gauge>
     <Gauge>
@@ -1239,7 +1246,7 @@
       </SetRange>
       <SetValueSpan>
         Min=0
-        Max=999
+        Max=100
       </SetValueSpan>
       <SetRadius>
         Radius=80
@@ -1253,7 +1260,7 @@
         Value1=16
       </SetValues>
       <SetValue>
-        Value=999
+        Value=100
       </SetValue>
     </Gauge>
     <Gauge>
@@ -1297,7 +1304,7 @@
       </SetRange>
       <SetValueSpan>
         Min=0
-        Max=999
+        Max=100
       </SetValueSpan>
       <SetRadius>
         Radius=100
@@ -1311,7 +1318,7 @@
         Value1=16
       </SetValues>
       <SetValue>
-        Value=999
+        Value=100
       </SetValue>
     </Gauge>
     <Gauge>
@@ -1355,7 +1362,7 @@
       </SetRange>
       <SetValueSpan>
         Min=0
-        Max=999
+        Max=100
       </SetValueSpan>
       <SetRadius>
         Radius=60
@@ -1369,7 +1376,7 @@
         Value1=16
       </SetValues>
       <SetValue>
-        Value=999
+        Value=100
       </SetValue>
     </Gauge>
     <Gauge>
@@ -1413,7 +1420,7 @@
       </SetRange>
       <SetValueSpan>
         Min=0
-        Max=999
+        Max=100
       </SetValueSpan>
       <SetRadius>
         Radius=80
@@ -1427,7 +1434,7 @@
         Value1=16
       </SetValues>
       <SetValue>
-        Value=999
+        Value=100
       </SetValue>
     </Gauge>
     <Gauge>
@@ -1471,7 +1478,7 @@
       </SetRange>
       <SetValueSpan>
         Min=0
-        Max=999
+        Max=100
       </SetValueSpan>
       <SetRadius>
         Radius=100
@@ -1485,7 +1492,7 @@
         Value1=16
       </SetValues>
       <SetValue>
-        Value=999
+        Value=100
       </SetValue>
     </Gauge>
     <Gauge>
@@ -1529,7 +1536,7 @@
       </SetRange>
       <SetValueSpan>
         Min=0
-        Max=999
+        Max=100
       </SetValueSpan>
       <SetRadius>
         Radius=60
@@ -1543,7 +1550,7 @@
         Value1=16
       </SetValues>
       <SetValue>
-        Value=999
+        Value=100
       </SetValue>
     </Gauge>
     <Gauge>
@@ -1645,7 +1652,7 @@
       </SetRange>
       <SetValueSpan>
         Min=0
-        Max=999
+        Max=100
       </SetValueSpan>
       <SetRadius>
         Radius=100
@@ -1659,7 +1666,7 @@
         Value1=16
       </SetValues>
       <SetValue>
-        Value=999
+        Value=100
       </SetValue>
     </Gauge>
     <Image>
@@ -1879,8 +1886,8 @@
     </Button>
     <Progbar>
       ParentId=2048
-      IdString=ID_BATTERIE_JAUGE
-      Id=2055
+      IdString=ID_HUILE_JAUGE
+      Id=2058
       IdPrev=0
       IdPost=0
       <Dispose>
@@ -1888,22 +1895,22 @@
         ySize=0
         <X0>
           Mode=2
-          Off=385
+          Off=414
           Id=0
         </X0>
         <Y0>
           Mode=2
-          Off=60
+          Off=64
           Id=0
         </Y0>
         <X1>
           Mode=2
-          Off=75
+          Off=50
           Id=0
         </X1>
         <Y1>
           Mode=2
-          Off=68
+          Off=62
           Id=0
         </Y1>
       </Dispose>
@@ -1923,93 +1930,16 @@
       <SetColor>
         Color=ff2c2c30
       </SetColor>
+      <SetSbitmaps>
+        Index0=DARK_Progbar_Tile_V_Blue_16x1.png
+        Index1=DARK_Progbar_Tile_V_Gray_16x1.png
+      </SetSbitmaps>
+      <SetTile>
+      </SetTile>
       <SetValue>
-        Value=40
+        Value=0
       </SetValue>
-      <SetSbitmaps>
-        Index0=DARK_Progbar_Tile_V_Blue_16x1.png
-        Index1=DARK_Progbar_Tile_V_Gray_16x1.png
-      </SetSbitmaps>
-      <SetTile>
-      </SetTile>
     </Progbar>
-    <Progbar>
-      ParentId=2048
-      IdString=ID_HUILE_JAUGE
-      Id=2058
-      IdPrev=0
-      IdPost=0
-      <Dispose>
-        xSize=0
-        ySize=0
-        <X0>
-          Mode=2
-          Off=430
-          Id=0
-        </X0>
-        <Y0>
-          Mode=2
-          Off=60
-          Id=0
-        </Y0>
-        <X1>
-          Mode=2
-          Off=30
-          Id=0
-        </X1>
-        <Y1>
-          Mode=2
-          Off=68
-          Id=0
-        </Y1>
-      </Dispose>
-      <SetRange>
-        Min=3
-        Max=102
-      </SetRange>
-      <SetVertical>
-        Vertical=true
-      </SetVertical>
-      <SetRadius>
-        Radius=5
-      </SetRadius>
-      <SetFrame>
-        Frame=2
-      </SetFrame>
-      <SetColor>
-        Color=ff2c2c30
-      </SetColor>
-      <SetSbitmaps>
-        Index0=DARK_Progbar_Tile_V_Blue_16x1.png
-        Index1=DARK_Progbar_Tile_V_Gray_16x1.png
-      </SetSbitmaps>
-      <SetTile>
-      </SetTile>
-    </Progbar>
-    <Image>
-      ParentId=2048
-      IdString=ID_IMAGE_00
-      Id=2056
-      IdPrev=0
-      IdPost=0
-      <Dispose>
-        xSize=40
-        ySize=40
-        <X0>
-          Mode=2
-          Off=375
-          Id=0
-        </X0>
-        <Y0>
-          Mode=2
-          Off=16
-          Id=0
-        </Y0>
-      </Dispose>
-      <SetSbitmap>
-        Image=ICONE_BATTERIE.png
-      </SetSbitmap>
-    </Image>
     <Image>
       ParentId=2048
       IdString=ID_IMAGE_01
@@ -2021,12 +1951,12 @@
         ySize=25
         <X0>
           Mode=2
-          Off=424
+          Off=405
           Id=0
         </X0>
         <Y0>
           Mode=2
-          Off=24
+          Off=16
           Id=0
         </Y0>
       </Dispose>
@@ -2045,7 +1975,7 @@
         ySize=0
         <X0>
           Mode=2
-          Off=190
+          Off=211
           Id=0
         </X0>
         <Y0>
@@ -2055,7 +1985,7 @@
         </Y0>
         <X1>
           Mode=2
-          Off=130
+          Off=109
           Id=0
         </X1>
         <Y1>
@@ -2083,7 +2013,7 @@
         ySize=26
         <X0>
           Mode=2
-          Off=257
+          Off=278
           Id=0
         </X0>
         <Y0>
@@ -2129,7 +2059,7 @@
       </SetRange>
       <SetValueSpan>
         Min=0
-        Max=999
+        Max=100
       </SetValueSpan>
       <SetRadius>
         Radius=80
@@ -2147,200 +2077,9 @@
       <SetRoundedEnd>
       </SetRoundedEnd>
       <SetValue>
-        Value=250
+        Value=1
       </SetValue>
     </Gauge>
-    <Screen>
-      ParentId=0
-      IdString=ID_SCREEN_SON
-      Id=2048
-      IdPrev=0
-      IdPost=0
-      RootId=6148
-      <Dispose>
-        xSize=0
-        ySize=0
-        <X0>
-          Mode=2
-          Off=0
-          Id=0
-        </X0>
-        <Y0>
-          Mode=2
-          Off=0
-          Id=0
-        </Y0>
-        <X1>
-          Mode=2
-          Off=0
-          Id=0
-        </X1>
-        <Y1>
-          Mode=2
-          Off=0
-          Id=0
-        </Y1>
-      </Dispose>
-    </Screen>
-    <Box>
-      ParentId=2048
-      IdString=ID_BOX_04
-      Id=2049
-      IdPrev=0
-      IdPost=0
-      <Dispose>
-        xSize=0
-        ySize=0
-        <X0>
-          Mode=2
-          Off=0
-          Id=0
-        </X0>
-        <Y0>
-          Mode=2
-          Off=0
-          Id=0
-        </Y0>
-        <X1>
-          Mode=2
-          Off=0
-          Id=0
-        </X1>
-        <Y1>
-          Mode=2
-          Off=0
-          Id=0
-        </Y1>
-      </Dispose>
-      <SetColor>
-        Color=ffffffff
-      </SetColor>
-    </Box>
-    <Text>
-      ParentId=2048
-      IdString=ID_TEXT_00
-      Id=2050
-      IdPrev=0
-      IdPost=0
-      <Dispose>
-        xSize=152
-        ySize=53
-        <X0>
-          Mode=2
-          Off=164
-          Id=0
-        </X0>
-        <Y0>
-          Mode=2
-          Off=0
-          Id=0
-        </Y0>
-      </Dispose>
-      <SetColor>
-        Color=ff000000
-      </SetColor>
-      <SetTextAlign>
-        Alignment=14
-        xOff=0
-        yOff=0
-      </SetTextAlign>
-      <SetFont>
-        Font=Roboto_32_Normal_EXT_AA4.xbf
-      </SetFont>
-      <SetTextId>
-        Id=0
-      </SetTextId>
-      <SetUntouchable>
-        SetUntouchable=true
-      </SetUntouchable>
-    </Text>
-    <Button>
-      ParentId=2048
-      IdString=ID_BUTTON_NEXT
-      Id=2051
-      IdPrev=0
-      IdPost=0
-      <Dispose>
-        xSize=50
-        ySize=50
-        <X0>
-          Mode=2
-          Off=430
-          Id=0
-        </X0>
-        <Y0>
-          Mode=2
-          Off=222
-          Id=0
-        </Y0>
-      </Dispose>
-      <SetSbitmaps>
-        Index0=UNPRESS_right.png
-        Index1=PRESS_right.png
-      </SetSbitmaps>
-      <SetColors>
-        Color0=ffc0c0c0
-        Color1=ffc0c0c0
-      </SetColors>
-    </Button>
-    <Button>
-      ParentId=2048
-      IdString=ID_BUTTON_ACCUEIL
-      Id=2052
-      IdPrev=0
-      IdPost=0
-      <Dispose>
-        xSize=50
-        ySize=50
-        <X0>
-          Mode=2
-          Off=380
-          Id=0
-        </X0>
-        <Y0>
-          Mode=2
-          Off=222
-          Id=0
-        </Y0>
-      </Dispose>
-      <SetSbitmaps>
-        Index0=UNPRESS_home.png
-        Index1=PRESS_home.png
-      </SetSbitmaps>
-      <SetColors>
-        Color0=ffc0c0c0
-        Color1=ffc0c0c0
-      </SetColors>
-    </Button>
-    <Button>
-      ParentId=2048
-      IdString=ID_BUTTON_PREVIOUS
-      Id=2053
-      IdPrev=0
-      IdPost=0
-      <Dispose>
-        xSize=50
-        ySize=50
-        <X0>
-          Mode=2
-          Off=330
-          Id=0
-        </X0>
-        <Y0>
-          Mode=2
-          Off=222
-          Id=0
-        </Y0>
-      </Dispose>
-      <SetSbitmaps>
-        Index0=UNPRESS_left.png
-        Index1=PRESS_left.png
-      </SetSbitmaps>
-      <SetColors>
-        Color0=ffc0c0c0
-        Color1=ffc0c0c0
-      </SetColors>
-    </Button>
   </Objects>
   <Interactions>
     <SHIFTSCREEN>
@@ -2544,6 +2283,48 @@
         Image=Cadenas_ouvert.png
       </Para>
     </SETBITMAP>
+    <NULL>
+      RootId=6146
+      IdSrc=ID_VAR_1AD
+      NCode=WM_NOTIFICATION_VALUE_CHANGED
+      Slot=ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED
+      Flags=0
+    </NULL>
+    <NULL>
+      RootId=6146
+      IdSrc=ID_VAR_1AG
+      NCode=WM_NOTIFICATION_VALUE_CHANGED
+      Slot=ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED_0
+      Flags=0
+    </NULL>
+    <NULL>
+      RootId=6146
+      IdSrc=ID_VAR_2AD
+      NCode=WM_NOTIFICATION_VALUE_CHANGED
+      Slot=ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED_1
+      Flags=0
+    </NULL>
+    <NULL>
+      RootId=6146
+      IdSrc=ID_VAR_2AG
+      NCode=WM_NOTIFICATION_VALUE_CHANGED
+      Slot=ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED_2
+      Flags=0
+    </NULL>
+    <NULL>
+      RootId=6146
+      IdSrc=ID_VAR_3AD
+      NCode=WM_NOTIFICATION_VALUE_CHANGED
+      Slot=ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED_3
+      Flags=0
+    </NULL>
+    <NULL>
+      RootId=6146
+      IdSrc=ID_VAR_3AG
+      NCode=WM_NOTIFICATION_VALUE_CHANGED
+      Slot=ID_SCREEN_PORTE__WM_NOTIFICATION_VALUE_CHANGED_4
+      Flags=0
+    </NULL>
     <SHIFTSCREEN>
       RootId=6147
       IdSrc=ID_BUTTON_ACCUEIL
@@ -2619,59 +2400,20 @@
         Value=0
       </Para>
     </SETX0>
-    <SETVALUE>
+    <NULL>
       RootId=6147
       IdSrc=ID_VAR_HUILE
       NCode=WM_NOTIFICATION_VALUE_CHANGED
-      IdDst=ID_HUILE_JAUGE
-      Slot=ID_SCREEN_VITESSE__ID_HUILE_JAUGE__WM_NOTIFICATION_VALUE_CHANGED
+      Slot=ID_SCREEN_VITESSE__WM_NOTIFICATION_VALUE_CHANGED
       Flags=0
-      <Para>
-        Value=0
-      </Para>
-    </SETVALUE>
-    <SHIFTSCREEN>
-      RootId=6148
-      IdSrc=ID_BUTTON_ACCUEIL
-      NCode=WM_NOTIFICATION_CLICKED
-      Slot=ID_SCREEN_SON__ID_BUTTON_ACCUEIL__WM_NOTIFICATION_CLICKED
+    </NULL>
+    <NULL>
+      RootId=6147
+      IdSrc=ID_VAR_vitesse
+      NCode=WM_NOTIFICATION_VALUE_CHANGED
+      Slot=ID_SCREEN_VITESSE__WM_NOTIFICATION_VALUE_CHANGED_0
       Flags=0
-      <Para>
-        RootId=6144
-        Edge=APPW_EDGE_TOP
-        Ease=ANIM_LINEAR
-        Period=500
-        Disclose=0
-      </Para>
-    </SHIFTSCREEN>
-    <SHIFTSCREEN>
-      RootId=6148
-      IdSrc=ID_BUTTON_NEXT
-      NCode=WM_NOTIFICATION_CLICKED
-      Slot=ID_SCREEN_SON__ID_BUTTON_NEXT__WM_NOTIFICATION_CLICKED
-      Flags=0
-      <Para>
-        RootId=6149
-        Edge=APPW_EDGE_LEFT
-        Ease=ANIM_LINEAR
-        Period=500
-        Disclose=0
-      </Para>
-    </SHIFTSCREEN>
-    <SHIFTSCREEN>
-      RootId=6148
-      IdSrc=ID_BUTTON_PREVIOUS
-      NCode=WM_NOTIFICATION_CLICKED
-      Slot=ID_SCREEN_SON__ID_BUTTON_PREVIOUS__WM_NOTIFICATION_CLICKED
-      Flags=0
-      <Para>
-        RootId=6147
-        Edge=APPW_EDGE_RIGHT
-        Ease=ANIM_LINEAR
-        Period=500
-        Disclose=0
-      </Para>
-    </SHIFTSCREEN>
+    </NULL>
   </Interactions>
   <Terms>
   </Terms>

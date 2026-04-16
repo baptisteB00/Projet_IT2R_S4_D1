@@ -194,7 +194,7 @@ static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
     }, 0, NULL
   },
   { ID_BUTTON_SON,     WM_NOTIFICATION_CLICKED,          0,                 APPW_JOB_SHIFTSCREEN,    ID_SCREEN_ACCUEIL__ID_BUTTON_00_Copy3__WM_NOTIFICATION_CLICKED,
-    { ARG_V(ID_SCREEN_SON),
+    { ARG_V(0),
       ARG_V(APPW_EDGE_LEFT),
       ARG_F((void (*)(void))ANIM_LINEAR),
       ARG_V(500),

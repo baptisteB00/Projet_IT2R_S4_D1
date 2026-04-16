@@ -108,5 +108,7 @@
   RTE\CMSIS\RTX_Config.h \
   C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Driver\Include\Driver_CAN.h \
   C:\Keil_v5\ARM\PACK\ARM\CMSIS\6.3.0\CMSIS\Driver\Include\Driver_Common.h \
+  AppWizzard\Source\Generated\..\Generated\Resource.h \
+  AppWizzard\Source\Generated\..\Generated\ID_SCREEN_VITESSE.h \
   AppWizzard\Source\Generated\Resource.h \
   C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.17.0\Board\Board_LED.h

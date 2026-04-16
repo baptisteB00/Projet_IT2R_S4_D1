@@ -59,7 +59,6 @@ extern GUI_CONST_STORAGE unsigned char acVoiture_Dessus[];
 extern GUI_CONST_STORAGE unsigned char acCadenas_FERME[];
 extern GUI_CONST_STORAGE unsigned char acDARK_Progbar_Tile_V_Blue_16x1[];
 extern GUI_CONST_STORAGE unsigned char acDARK_Progbar_Tile_V_Gray_16x1[];
-extern GUI_CONST_STORAGE unsigned char acICONE_BATTERIE[];
 extern GUI_CONST_STORAGE unsigned char acICONE_HUILE[];
 extern GUI_CONST_STORAGE unsigned char acviseur_nunchuk[];
 extern GUI_CONST_STORAGE unsigned char acDARK_Switch_Thumb_26x26[];
@@ -84,6 +83,13 @@ extern GUI_CONST_STORAGE unsigned char acCligno_GAUCHE_60x60[];
 #define ID_VAR_Cadena (GUI_ID_USER + 2053)
 #define ID_VAR_Phare (GUI_ID_USER + 2054)
 #define ID_VAR_HUILE (GUI_ID_USER + 2055)
+#define ID_VAR_vitesse (GUI_ID_USER + 2056)
+#define ID_VAR_1AD (GUI_ID_USER + 2057)
+#define ID_VAR_1AG (GUI_ID_USER + 2058)
+#define ID_VAR_2AD (GUI_ID_USER + 2059)
+#define ID_VAR_2AG (GUI_ID_USER + 2060)
+#define ID_VAR_3AD (GUI_ID_USER + 2061)
+#define ID_VAR_3AG (GUI_ID_USER + 2062)
 
 /*********************************************************************
 *
@@ -105,13 +111,11 @@ extern GUI_CONST_STORAGE APPW_CONTENT ID_CONTENT_000_Data;
 #define ID_SCREEN_FEUX (GUI_ID_USER + 4097)
 #define ID_SCREEN_PORTE (GUI_ID_USER + 4098)
 #define ID_SCREEN_VITESSE (GUI_ID_USER + 4099)
-#define ID_SCREEN_SON (GUI_ID_USER + 4100)
 
 extern APPW_ROOT_INFO ID_SCREEN_ACCUEIL_RootInfo;
 extern APPW_ROOT_INFO ID_SCREEN_FEUX_RootInfo;
 extern APPW_ROOT_INFO ID_SCREEN_PORTE_RootInfo;
 extern APPW_ROOT_INFO ID_SCREEN_VITESSE_RootInfo;
-extern APPW_ROOT_INFO ID_SCREEN_SON_RootInfo;
 
 #define APPW_INITIAL_SCREEN &ID_SCREEN_ACCUEIL_RootInfo
 
@@ -119,7 +123,7 @@ extern APPW_ROOT_INFO ID_SCREEN_SON_RootInfo;
 *
 *       Project path
 */
-#define APPW_PROJECT_PATH "C:/Etudiants/git/Projet_IT2R_S4_D1/sous_fonctions/IHM_supervision_CAN/TP_AppWizard_emWin/AppWizzard"
+#define APPW_PROJECT_PATH "C:/Etudiants/git/projet_IT2R_NASSIM/Projet_IT2R_S4_D1/sous_fonctions/IHM_supervision_CAN/TP_AppWizard_emWin/AppWizzard"
 
 #endif  // RESOURCE_H
 

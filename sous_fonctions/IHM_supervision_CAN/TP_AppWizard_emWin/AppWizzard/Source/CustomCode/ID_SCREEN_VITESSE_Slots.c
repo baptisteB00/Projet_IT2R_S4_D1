@@ -103,13 +103,28 @@ void ID_SCREEN_VITESSE__WM_NOTIFICATION_VALUE_CHANGED__ID_IMAGE_03__APPW_JOB_SET
 
 /*********************************************************************
 *
-*       ID_SCREEN_VITESSE__ID_HUILE_JAUGE__WM_NOTIFICATION_VALUE_CHANGED
+*       ID_SCREEN_VITESSE__WM_NOTIFICATION_VALUE_CHANGED
 */
-void ID_SCREEN_VITESSE__ID_HUILE_JAUGE__WM_NOTIFICATION_VALUE_CHANGED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
+void ID_SCREEN_VITESSE__WM_NOTIFICATION_VALUE_CHANGED(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
   GUI_USE_PARA(pAction);
   GUI_USE_PARA(hScreen);
   GUI_USE_PARA(pMsg);
   GUI_USE_PARA(pResult);
+	
+	APPW_SetValue(ID_SCREEN_VITESSE, ID_HUILE_JAUGE, APPW_GetVarData(ID_VAR_HUILE, NULL));
+}
+
+/*********************************************************************
+*
+*       ID_SCREEN_VITESSE__WM_NOTIFICATION_VALUE_CHANGED_0
+*/
+void ID_SCREEN_VITESSE__WM_NOTIFICATION_VALUE_CHANGED_0(APPW_ACTION_ITEM * pAction, WM_HWIN hScreen, WM_MESSAGE * pMsg, int * pResult) {
+  GUI_USE_PARA(pAction);
+  GUI_USE_PARA(hScreen);
+  GUI_USE_PARA(pMsg);
+  GUI_USE_PARA(pResult);
+	
+	APPW_SetValue(ID_SCREEN_VITESSE, ID_GAUGE_00, APPW_GetVarData(ID_VAR_vitesse, NULL));
 }
 
 /*************************** End of file ****************************/

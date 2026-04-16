@@ -50,7 +50,6 @@ static APPW_ROOT_INFO * _apRootList[] = {
   &ID_SCREEN_FEUX_RootInfo,
   &ID_SCREEN_PORTE_RootInfo,
   &ID_SCREEN_VITESSE_RootInfo,
-  &ID_SCREEN_SON_RootInfo,
 };
 
 /*********************************************************************
@@ -72,6 +71,13 @@ static APPW_VAR_OBJECT _aVarList[] = {
   { ID_VAR_Cadena, 0, 0, NULL },
   { ID_VAR_Phare, 0, 0, NULL },
   { ID_VAR_HUILE, 0, 0, NULL },
+  { ID_VAR_vitesse, 0, 0, NULL },
+  { ID_VAR_1AD, 0, 0, NULL },
+  { ID_VAR_1AG, 0, 0, NULL },
+  { ID_VAR_2AD, 0, 0, NULL },
+  { ID_VAR_2AG, 0, 0, NULL },
+  { ID_VAR_3AD, 0, 0, NULL },
+  { ID_VAR_3AG, 0, 0, NULL },
 };
 
 /*********************************************************************

@@ -445,11 +445,6 @@
               <FilePath>AppWizzard/Source/Generated/ID_SCREEN_VITESSE.c</FilePath>
             </File>
             <File>
-              <FileName>ID_SCREEN_SON.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>AppWizzard/Source/Generated/ID_SCREEN_SON.c</FilePath>
-            </File>
-            <File>
               <FileName>ID_SCREEN_ACCUEIL_Slots.c</FileName>
               <FileType>1</FileType>
               <FilePath>AppWizzard/Source/CustomCode/ID_SCREEN_ACCUEIL_Slots.c</FilePath>
@@ -468,11 +463,6 @@
               <FileName>ID_SCREEN_VITESSE_Slots.c</FileName>
               <FileType>1</FileType>
               <FilePath>AppWizzard/Source/CustomCode/ID_SCREEN_VITESSE_Slots.c</FilePath>
-            </File>
-            <File>
-              <FileName>ID_SCREEN_SON_Slots.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>AppWizzard/Source/CustomCode/ID_SCREEN_SON_Slots.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -570,11 +560,6 @@
               <FilePath>AppWizzard/Resource/Image/DARK_Progbar_Tile_V_Gray_16x1.c</FilePath>
             </File>
             <File>
-              <FileName>ICONE_BATTERIE.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>AppWizzard/Resource/Image/ICONE_BATTERIE.c</FilePath>
-            </File>
-            <File>
               <FileName>ICONE_HUILE.c</FileName>
               <FileType>1</FileType>
               <FilePath>AppWizzard/Resource/Image/ICONE_HUILE.c</FilePath>
@@ -612,7 +597,7 @@
             <File>
               <FileName>APPW_X_FS.c</FileName>
               <FileType>1</FileType>
-              <FilePath>AppWizzard/APPW_X_FS.c</FilePath>
+              <FilePath>..\..\..\..\..\Projet_IT2R_S4_D1\sous_fonctions\IHM_supervision_CAN\TP_AppWizard_emWin\AppWizzard\APPW_X_FS.c</FilePath>
             </File>
           </Files>
         </Group>
